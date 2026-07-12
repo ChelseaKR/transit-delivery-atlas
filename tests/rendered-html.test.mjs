@@ -38,8 +38,8 @@ test("server-renders the complete atlas home page", async () => {
   assert.match(html, /Twenty-one directive units/);
   assert.match(html, /Showing[\s\S]{0,80}21[\s\S]{0,80}of[\s\S]{0,80}21/);
   assert.match(html, /aria-live="polite"/);
-  assert.match(html, /property="og:image"[^>]+https:\/\/transit-delivery-atlas\.ckellyreif\.chatgpt\.site\/og\.png/i);
-  assert.match(html, /rel="canonical"[^>]+href="https:\/\/transit-delivery-atlas\.ckellyreif\.chatgpt\.site\/"/i);
+  assert.match(html, /property="og:image"[^>]+https:\/\/transit\.chelseakr\.com\/og\.png/i);
+  assert.match(html, /rel="canonical"[^>]+href="https:\/\/transit\.chelseakr\.com\/"/i);
   assert.match(html, /aria-label="Inspect source and analysis for directive 1\(a\):/i);
   assert.match(html, /No explicit completion deadline in the signed order/);
   assert.doesNotMatch(html, /codex-preview|Your site is taking shape|react-loading-skeleton/i);

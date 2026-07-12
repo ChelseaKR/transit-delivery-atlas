@@ -4,6 +4,8 @@
 
 ![Transit Delivery Atlas handoff rail from source to entity, timing, and analysis](public/og.png)
 
+**Live site:** [transit.chelseakr.com](https://transit.chelseakr.com)
+
 **Transit Delivery Atlas** is an independent, source-linked crosswalk for
 California Executive Order N-7-26. It turns each actionable directive into a
 navigable record of source language, explicitly named entities, timing,

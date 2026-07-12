@@ -20,7 +20,7 @@ const body = Atkinson_Hyperlegible({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://transit-delivery-atlas.ckellyreif.chatgpt.site"),
+  metadataBase: new URL("https://transit.chelseakr.com"),
   title: {
     default: "Transit Delivery Atlas",
     template: "%s | Transit Delivery Atlas",

@@ -133,9 +133,9 @@ Suggested topics: `public-transit`, `california`, `executive-order`, `civic-tech
 
 ## Domain strategy
 
-1. Preferred: `transitdeliveryatlas.org`
-2. Optional defensive redirect: `transitdeliveryatlas.com`
-3. Immediate fallback: project hosting URL or GitHub Pages
+1. Current canonical domain: `transit.chelseakr.com`
+2. Future standalone option: `transitdeliveryatlas.org`
+3. Optional defensive redirect if the standalone domain is adopted: `transitdeliveryatlas.com`
 
 As of July 12, 2026, authoritative RDAP returned no registration record for the
 exact-match `.org` and `.com`. This is a preliminary availability signal, not
