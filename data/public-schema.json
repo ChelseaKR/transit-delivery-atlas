@@ -1,0 +1,303 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:transit-delivery-atlas:data-schema:0.1.0",
+  "title": "Transit Delivery Atlas public dataset",
+  "type": "object",
+  "required": ["project", "schemaVersion", "dataReviewedThrough", "source", "orderMetadata", "organizations", "themes", "directives"],
+  "properties": {
+    "project": { "const": "Transit Delivery Atlas" },
+    "schemaVersion": { "const": "0.1.0" },
+    "dataReviewedThrough": { "$ref": "#/$defs/date" },
+    "source": { "$ref": "#/$defs/source" },
+    "orderMetadata": { "$ref": "#/$defs/orderMetadata" },
+    "organizations": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/organization" }
+    },
+    "themes": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/theme" }
+    },
+    "directives": {
+      "type": "array",
+      "minItems": 21,
+      "maxItems": 21,
+      "items": { "$ref": "#/$defs/directive" }
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "date": {
+      "type": "string",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+    },
+    "identifier": {
+      "type": "string",
+      "pattern": "^[a-z0-9-]+$"
+    },
+    "locator": {
+      "type": "object",
+      "required": ["section", "pages"],
+      "properties": {
+        "section": { "type": "string", "minLength": 1 },
+        "pages": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "integer", "minimum": 1, "maximum": 5 }
+        }
+      },
+      "additionalProperties": false
+    },
+    "source": {
+      "type": "object",
+      "required": ["id", "type", "title", "publisher", "issuedOn", "effectiveOn", "url", "contextUrl", "retrievedOn", "sha256", "notes"],
+      "properties": {
+        "id": { "$ref": "#/$defs/identifier" },
+        "type": { "const": "executive-order" },
+        "title": { "type": "string", "minLength": 1 },
+        "publisher": { "type": "string", "minLength": 1 },
+        "issuedOn": { "$ref": "#/$defs/date" },
+        "effectiveOn": { "$ref": "#/$defs/date" },
+        "url": { "type": "string", "format": "uri" },
+        "contextUrl": { "type": "string", "format": "uri" },
+        "retrievedOn": { "$ref": "#/$defs/date" },
+        "sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+        "notes": { "type": "string", "minLength": 1 }
+      },
+      "additionalProperties": false
+    },
+    "organization": {
+      "type": "object",
+      "required": ["id", "name", "shortName", "kind"],
+      "properties": {
+        "id": { "$ref": "#/$defs/identifier" },
+        "name": { "type": "string", "minLength": 1 },
+        "shortName": { "type": "string", "minLength": 1 },
+        "kind": {
+          "enum": ["state-agency", "state-commission", "state-program", "state-office", "federal-agency", "role-group"]
+        }
+      },
+      "additionalProperties": false
+    },
+    "theme": {
+      "type": "object",
+      "required": ["id", "name"],
+      "properties": {
+        "id": { "$ref": "#/$defs/identifier" },
+        "name": { "type": "string", "minLength": 1 }
+      },
+      "additionalProperties": false
+    },
+    "administrativeDirective": {
+      "type": "object",
+      "required": ["locator", "excerpt", "timingText"],
+      "properties": {
+        "locator": { "$ref": "#/$defs/locator" },
+        "excerpt": { "type": "string", "minLength": 20 },
+        "timingText": { "type": "string", "minLength": 1 }
+      },
+      "additionalProperties": false
+    },
+    "sourceContext": {
+      "type": "object",
+      "required": ["id", "locator", "excerpt", "appliesToDirectiveIds", "mentionedOrgIds"],
+      "properties": {
+        "id": { "$ref": "#/$defs/identifier" },
+        "locator": { "$ref": "#/$defs/locator" },
+        "excerpt": { "type": "string", "minLength": 20 },
+        "appliesToDirectiveIds": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/identifier" }
+        },
+        "mentionedOrgIds": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/identifier" }
+        }
+      },
+      "additionalProperties": false
+    },
+    "sourceNotice": {
+      "type": "object",
+      "required": ["id", "locator", "excerpt"],
+      "properties": {
+        "id": { "$ref": "#/$defs/identifier" },
+        "locator": { "$ref": "#/$defs/locator" },
+        "excerpt": { "type": "string", "minLength": 20 }
+      },
+      "additionalProperties": false
+    },
+    "orderMetadata": {
+      "type": "object",
+      "required": ["directiveCount", "administrativeDirectives", "sourceContexts", "sourceNotices"],
+      "properties": {
+        "directiveCount": { "const": 21 },
+        "administrativeDirectives": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/administrativeDirective" }
+        },
+        "sourceContexts": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/sourceContext" }
+        },
+        "sourceNotices": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/sourceNotice" }
+        }
+      },
+      "additionalProperties": false
+    },
+    "qualifier": {
+      "type": "object",
+      "required": ["text", "appliesTo"],
+      "properties": {
+        "text": { "type": "string", "minLength": 1 },
+        "appliesTo": { "type": "string", "minLength": 1 }
+      },
+      "additionalProperties": false
+    },
+    "sourceNote": {
+      "type": "object",
+      "required": ["type", "text"],
+      "properties": {
+        "type": { "const": "transcription" },
+        "text": { "type": "string", "minLength": 1 }
+      },
+      "additionalProperties": false
+    },
+    "timing": {
+      "type": "object",
+      "required": ["sourceText", "kind", "value", "unit", "derivedDate", "derivation", "appliesTo"],
+      "properties": {
+        "sourceText": { "type": "string", "minLength": 1 },
+        "kind": { "const": "relative" },
+        "value": { "type": "integer", "minimum": 1 },
+        "unit": { "enum": ["calendar-days", "calendar-year"] },
+        "derivedDate": { "$ref": "#/$defs/date" },
+        "derivation": { "type": "string", "minLength": 1 },
+        "appliesTo": { "type": "string", "minLength": 1 }
+      },
+      "additionalProperties": false
+    },
+    "analyticalItem": {
+      "type": "object",
+      "required": ["text", "origin", "confidence"],
+      "properties": {
+        "text": { "type": "string", "minLength": 1 },
+        "origin": { "const": "inferred" },
+        "confidence": { "enum": ["low", "medium", "high"] }
+      },
+      "additionalProperties": false
+    },
+    "dependency": {
+      "type": "object",
+      "required": ["text", "relatedDirectiveIds", "origin", "confidence"],
+      "properties": {
+        "text": { "type": "string", "minLength": 1 },
+        "relatedDirectiveIds": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/identifier" }
+        },
+        "origin": { "const": "inferred" },
+        "confidence": { "enum": ["low", "medium", "high"] }
+      },
+      "additionalProperties": false
+    },
+    "analysis": {
+      "type": "object",
+      "required": ["directiveId", "summary", "themeIds", "expectedOutputs", "dependencies", "openQuestions", "themes"],
+      "properties": {
+        "directiveId": { "$ref": "#/$defs/identifier" },
+        "summary": { "type": "string", "minLength": 20 },
+        "themeIds": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/identifier" }
+        },
+        "expectedOutputs": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/analyticalItem" }
+        },
+        "dependencies": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/dependency" }
+        },
+        "openQuestions": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "string", "minLength": 10 }
+        },
+        "themes": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "string", "minLength": 1 }
+        }
+      },
+      "additionalProperties": false
+    },
+    "directive": {
+      "type": "object",
+      "required": ["id", "order", "label", "title", "titleOrigin", "sourceId", "locator", "excerpt", "leadOrgIds", "collaboratorOrgIds", "mentionedOrgIds", "sourceContextIds", "qualifiers", "sourceNotes", "timing", "lastReviewedOn", "sourceUrl", "leadOrganizations", "collaboratorOrganizations", "mentionedOrganizations", "analysis"],
+      "properties": {
+        "id": { "$ref": "#/$defs/identifier" },
+        "order": { "type": "integer", "minimum": 1, "maximum": 21 },
+        "label": { "type": "string", "minLength": 1 },
+        "title": { "type": "string", "minLength": 1 },
+        "titleOrigin": { "const": "editorial" },
+        "sourceId": { "$ref": "#/$defs/identifier" },
+        "locator": { "$ref": "#/$defs/locator" },
+        "excerpt": { "type": "string", "minLength": 20 },
+        "leadOrgIds": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/identifier" }
+        },
+        "collaboratorOrgIds": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/identifier" }
+        },
+        "mentionedOrgIds": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/identifier" }
+        },
+        "sourceContextIds": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/identifier" }
+        },
+        "qualifiers": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/qualifier" }
+        },
+        "sourceNotes": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/sourceNote" }
+        },
+        "timing": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/timing" }
+        },
+        "lastReviewedOn": { "$ref": "#/$defs/date" },
+        "sourceUrl": { "type": "string", "format": "uri" },
+        "leadOrganizations": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "collaboratorOrganizations": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "mentionedOrganizations": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "analysis": { "$ref": "#/$defs/analysis" }
+      },
+      "additionalProperties": false
+    }
+  }
+}

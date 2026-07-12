@@ -1,0 +1,9 @@
+[
+  { "id": "planning-governance", "name": "Planning and governance" },
+  { "id": "delivery-permitting", "name": "Project delivery and permitting" },
+  { "id": "funding-grants", "name": "Funding and grants" },
+  { "id": "data-shared-systems", "name": "Data, payments, and shared systems" },
+  { "id": "reporting-administration", "name": "Reporting and administration" },
+  { "id": "priority-complete-trips", "name": "Transit priority and complete trips" },
+  { "id": "environment-assets", "name": "Environmental review and public assets" }
+]

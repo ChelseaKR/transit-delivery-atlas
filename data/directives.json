@@ -1,0 +1,560 @@
+{
+  "schemaVersion": "0.1.0",
+  "orderMetadata": {
+    "directiveCount": 21,
+    "administrativeDirectives": [
+      {
+        "locator": { "section": "Filing and notice clause", "pages": [5] },
+        "excerpt": "I FURTHER DIRECT that as soon as hereafter possible, this Order be filed in the Office of the Secretary of State and that widespread publicity and notice be given of this Order.",
+        "timingText": "as soon as hereafter possible"
+      }
+    ],
+    "sourceContexts": [
+      {
+        "id": "section-3-preamble",
+        "locator": { "section": "3 preamble", "pages": [3] },
+        "excerpt": "Caltrans is directed to implement recommendations documented in the 2025 Transit Transformation Task Force Report to formalize the California Integrated Mobility Program through the following actions:",
+        "appliesToDirectiveIds": [
+          "n-7-26-3a",
+          "n-7-26-3b",
+          "n-7-26-3c",
+          "n-7-26-3d",
+          "n-7-26-3e",
+          "n-7-26-3f",
+          "n-7-26-3g",
+          "n-7-26-3h",
+          "n-7-26-3i",
+          "n-7-26-3j"
+        ],
+        "mentionedOrgIds": ["caltrans", "cimp"]
+      }
+    ],
+    "sourceNotices": [
+      {
+        "id": "non-enforceability",
+        "locator": { "section": "Non-enforceability clause", "pages": [5] },
+        "excerpt": "This Order is not intended to, and does not, create any rights or benefits, substantive or procedural, enforceable at law or in equity, against the State of California, its agencies, departments, entities, officers, employees, or any other person."
+      }
+    ]
+  },
+  "directives": [
+    {
+      "id": "n-7-26-1a",
+      "order": 1,
+      "label": "1(a)",
+      "title": "Statewide transit priority project list",
+      "titleOrigin": "editorial",
+      "sourceId": "ca-eo-n-7-26",
+      "locator": { "section": "1(a)", "pages": [2] },
+      "excerpt": "develop a list of transit priority projects statewide that can be updated regularly",
+      "leadOrgIds": ["caltrans"],
+      "collaboratorOrgIds": ["local-partners"],
+      "mentionedOrgIds": [],
+      "sourceContextIds": [],
+      "qualifiers": [
+        { "text": "where applicable", "appliesTo": "consistency with relevant local or regional transportation plans" }
+      ],
+      "sourceNotes": [],
+      "timing": [
+        {
+          "sourceText": "Within 120 days of this Order",
+          "kind": "relative",
+          "value": 120,
+          "unit": "calendar-days",
+          "derivedDate": "2026-10-24",
+          "derivation": "120 calendar days after the effective date",
+          "appliesTo": "directive action"
+        }
+      ],
+      "lastReviewedOn": "2026-07-12"
+    },
+    {
+      "id": "n-7-26-1b",
+      "order": 2,
+      "label": "1(b)",
+      "title": "State mobility-management role",
+      "titleOrigin": "editorial",
+      "sourceId": "ca-eo-n-7-26",
+      "locator": { "section": "1(b)", "pages": [2] },
+      "excerpt": "Establish Caltrans as a Mobility Manager, as defined by the Federal Transit Administration",
+      "leadOrgIds": ["caltrans"],
+      "collaboratorOrgIds": [],
+      "mentionedOrgIds": ["fta", "grantees-subrecipients"],
+      "sourceContextIds": [],
+      "qualifiers": [
+        { "text": "as defined by the Federal Transit Administration", "appliesTo": "Caltrans Mobility Manager role" }
+      ],
+      "sourceNotes": [],
+      "timing": [
+        {
+          "sourceText": "Within 120 days of this Order",
+          "kind": "relative",
+          "value": 120,
+          "unit": "calendar-days",
+          "derivedDate": "2026-10-24",
+          "derivation": "120 calendar days after the effective date",
+          "appliesTo": "directive action"
+        }
+      ],
+      "lastReviewedOn": "2026-07-12"
+    },
+    {
+      "id": "n-7-26-1c",
+      "order": 3,
+      "label": "1(c)",
+      "title": "Section 5307 direct-recipient option",
+      "titleOrigin": "editorial",
+      "sourceId": "ca-eo-n-7-26",
+      "locator": { "section": "1(c)", "pages": [2] },
+      "excerpt": "Notify jurisdictions receiving FTA Section 5307 Urbanized Area Formula Program funding that Caltrans is available to serve as the direct recipient",
+      "leadOrgIds": ["caltrans"],
+      "collaboratorOrgIds": ["fta-5307-jurisdictions"],
+      "mentionedOrgIds": ["fta"],
+      "sourceContextIds": [],
+      "qualifiers": [
+        { "text": "if they elect to do so", "appliesTo": "jurisdictions choosing Caltrans as direct recipient" }
+      ],
+      "sourceNotes": [],
+      "timing": [
+        {
+          "sourceText": "Within 120 days of this Order",
+          "kind": "relative",
+          "value": 120,
+          "unit": "calendar-days",
+          "derivedDate": "2026-10-24",
+          "derivation": "120 calendar days after the effective date",
+          "appliesTo": "directive action"
+        }
+      ],
+      "lastReviewedOn": "2026-07-12"
+    },
+    {
+      "id": "n-7-26-1d",
+      "order": 4,
+      "label": "1(d)",
+      "title": "Service-led State Transit Plan",
+      "titleOrigin": "editorial",
+      "sourceId": "ca-eo-n-7-26",
+      "locator": { "section": "1(d)", "pages": [3] },
+      "excerpt": "future iterations of the State Transit Plan shall adopt a service-led planning approach that aligns with the California State Rail Plan",
+      "leadOrgIds": ["caltrans"],
+      "collaboratorOrgIds": [],
+      "mentionedOrgIds": [],
+      "sourceContextIds": [],
+      "qualifiers": [
+        { "text": "future iterations", "appliesTo": "State Transit Plan adoption of a service-led planning approach" }
+      ],
+      "sourceNotes": [],
+      "timing": [
+        {
+          "sourceText": "Within 120 days of this Order",
+          "kind": "relative",
+          "value": 120,
+          "unit": "calendar-days",
+          "derivedDate": "2026-10-24",
+          "derivation": "120 calendar days after the effective date",
+          "appliesTo": "necessary steps"
+        }
+      ],
+      "lastReviewedOn": "2026-07-12"
+    },
+    {
+      "id": "n-7-26-1e",
+      "order": 5,
+      "label": "1(e)",
+      "title": "Transit infrastructure design and permitting materials",
+      "titleOrigin": "editorial",
+      "sourceId": "ca-eo-n-7-26",
+      "locator": { "section": "1(e)", "pages": [3] },
+      "excerpt": "Begin the process of developing design guidance for transit infrastructure on the state highway system",
+      "leadOrgIds": ["caltrans"],
+      "collaboratorOrgIds": [],
+      "mentionedOrgIds": [],
+      "sourceContextIds": [],
+      "qualifiers": [
+        { "text": "Begin the process", "appliesTo": "development of design guidance, standard plans and specifications, policy, and permitting procedures" }
+      ],
+      "sourceNotes": [],
+      "timing": [
+        {
+          "sourceText": "Within 120 days of this Order",
+          "kind": "relative",
+          "value": 120,
+          "unit": "calendar-days",
+          "derivedDate": "2026-10-24",
+          "derivation": "120 calendar days after the effective date",
+          "appliesTo": "process start"
+        },
+        {
+          "sourceText": "within one year",
+          "kind": "relative",
+          "value": 1,
+          "unit": "calendar-year",
+          "derivedDate": "2027-06-26",
+          "derivation": "one calendar-year anniversary of the effective date",
+          "appliesTo": "materials completion and inclusion"
+        }
+      ],
+      "lastReviewedOn": "2026-07-12"
+    },
+    {
+      "id": "n-7-26-1f",
+      "order": 6,
+      "label": "1(f)",
+      "title": "CEQA transit-delivery report",
+      "titleOrigin": "editorial",
+      "sourceId": "ca-eo-n-7-26",
+      "locator": { "section": "1(f)", "pages": [3] },
+      "excerpt": "Report to CalSTA how recent changes to the California Environmental Quality Act (CEQA) ... will be used to expedite transit projects",
+      "leadOrgIds": ["caltrans"],
+      "collaboratorOrgIds": ["local-partners"],
+      "mentionedOrgIds": ["calsta"],
+      "sourceContextIds": [],
+      "qualifiers": [
+        { "text": "including but not limited to, Senate Bill 71 (Chapter 742, Statutes of 2025)", "appliesTo": "recent changes to CEQA covered by the report" },
+        { "text": "in consultation with local partners", "appliesTo": "use of recent CEQA changes to expedite transit projects" }
+      ],
+      "sourceNotes": [],
+      "timing": [
+        {
+          "sourceText": "Within 120 days of this Order",
+          "kind": "relative",
+          "value": 120,
+          "unit": "calendar-days",
+          "derivedDate": "2026-10-24",
+          "derivation": "120 calendar days after the effective date",
+          "appliesTo": "report"
+        }
+      ],
+      "lastReviewedOn": "2026-07-12"
+    },
+    {
+      "id": "n-7-26-1g",
+      "order": 7,
+      "label": "1(g)",
+      "title": "Active transportation delivery support team",
+      "titleOrigin": "editorial",
+      "sourceId": "ca-eo-n-7-26",
+      "locator": { "section": "1(g)", "pages": [3] },
+      "excerpt": "Establish a Statewide Active Transportation Delivery Support Team",
+      "leadOrgIds": ["caltrans"],
+      "collaboratorOrgIds": ["local-regional-agencies"],
+      "mentionedOrgIds": [],
+      "sourceContextIds": [],
+      "qualifiers": [
+        { "text": "projects funded with state resources", "appliesTo": "Active Transportation Program projects supported by the team" },
+        { "text": "where feasible", "appliesTo": "partnering with local and regional agencies to provide additional project delivery capacity" }
+      ],
+      "sourceNotes": [],
+      "timing": [
+        {
+          "sourceText": "Within 120 days of this Order",
+          "kind": "relative",
+          "value": 120,
+          "unit": "calendar-days",
+          "derivedDate": "2026-10-24",
+          "derivation": "120 calendar days after the effective date",
+          "appliesTo": "team establishment"
+        }
+      ],
+      "lastReviewedOn": "2026-07-12"
+    },
+    {
+      "id": "n-7-26-2",
+      "order": 8,
+      "label": "2",
+      "title": "Transit and rail funding dashboards",
+      "titleOrigin": "editorial",
+      "sourceId": "ca-eo-n-7-26",
+      "locator": { "section": "2", "pages": [3] },
+      "excerpt": "create real time dashboards that track the status of all available funding programs",
+      "leadOrgIds": ["caltrans"],
+      "collaboratorOrgIds": [],
+      "mentionedOrgIds": [],
+      "sourceContextIds": [],
+      "qualifiers": [
+        { "text": "including but not limited to", "appliesTo": "the listed dashboard measures" },
+        { "text": "as grant funding is consolidated into a system of record", "appliesTo": "addition of relevant performance measures" }
+      ],
+      "sourceNotes": [],
+      "timing": [],
+      "lastReviewedOn": "2026-07-12"
+    },
+    {
+      "id": "n-7-26-3a",
+      "order": 9,
+      "label": "3(a)",
+      "title": "Federal formula-fund flexibility",
+      "titleOrigin": "editorial",
+      "sourceId": "ca-eo-n-7-26",
+      "locator": { "section": "3(a)", "pages": [3] },
+      "excerpt": "Explore opportunities to support regions that reprogram Federal Highway Administration (FHWA) formula funds for transit uses",
+      "leadOrgIds": ["caltrans"],
+      "collaboratorOrgIds": [],
+      "mentionedOrgIds": ["fhwa", "regions"],
+      "sourceContextIds": ["section-3-preamble"],
+      "qualifiers": [
+        { "text": "as allowable by law", "appliesTo": "reprogramming FHWA formula funds for transit uses" },
+        { "text": "where available and appropriate", "appliesTo": "matching state share dollars" }
+      ],
+      "sourceNotes": [],
+      "timing": [],
+      "lastReviewedOn": "2026-07-12"
+    },
+    {
+      "id": "n-7-26-3b",
+      "order": 10,
+      "label": "3(b)",
+      "title": "Small-agency TDA and NTD reporting automation",
+      "titleOrigin": "editorial",
+      "sourceId": "ca-eo-n-7-26",
+      "locator": { "section": "3(b)", "pages": [3] },
+      "excerpt": "Take steps to automate Transportation Development Act and National Transit Database reporting for rural and small agencies",
+      "leadOrgIds": ["caltrans"],
+      "collaboratorOrgIds": [],
+      "mentionedOrgIds": [],
+      "sourceContextIds": ["section-3-preamble"],
+      "qualifiers": [
+        { "text": "Take steps to automate", "appliesTo": "Transportation Development Act and National Transit Database reporting" },
+        { "text": "for rural and small agencies", "appliesTo": "agencies covered by the reporting-automation action" }
+      ],
+      "sourceNotes": [],
+      "timing": [],
+      "lastReviewedOn": "2026-07-12"
+    },
+    {
+      "id": "n-7-26-3c",
+      "order": 11,
+      "label": "3(c)",
+      "title": "Faster and more flexible fund distribution",
+      "titleOrigin": "editorial",
+      "sourceId": "ca-eo-n-7-26",
+      "locator": { "section": "3(c)", "pages": [3] },
+      "excerpt": "Identify and implement measures to reduce the timelines for distribution of funds wherever feasible",
+      "leadOrgIds": ["caltrans"],
+      "collaboratorOrgIds": [],
+      "mentionedOrgIds": [],
+      "sourceContextIds": ["section-3-preamble"],
+      "qualifiers": [
+        { "text": "wherever feasible", "appliesTo": "reducing timelines for distribution of funds" },
+        { "text": "where practicable", "appliesTo": "lifting limits imposed on use of funds" },
+        { "text": "where allowed", "appliesTo": "providing pre-award authority for federal funds" }
+      ],
+      "sourceNotes": [],
+      "timing": [],
+      "lastReviewedOn": "2026-07-12"
+    },
+    {
+      "id": "n-7-26-3d",
+      "order": 12,
+      "label": "3(d)",
+      "title": "Federal environmental-review assignment",
+      "titleOrigin": "editorial",
+      "sourceId": "ca-eo-n-7-26",
+      "locator": { "section": "3(d)", "pages": [3, 4] },
+      "excerpt": "Begin the process of obtaining a National Environmental Protection Act (NEPA) assignment from the U.S. Department of Transportation and Federal Transit Administration",
+      "leadOrgIds": ["caltrans"],
+      "collaboratorOrgIds": [],
+      "mentionedOrgIds": ["usdot", "fta"],
+      "sourceContextIds": ["section-3-preamble"],
+      "qualifiers": [
+        { "text": "subject to applicable federal law", "appliesTo": "obtaining the NEPA assignment" }
+      ],
+      "sourceNotes": [
+        {
+          "type": "transcription",
+          "text": "The excerpt preserves the signed order's use of “National Environmental Protection Act (NEPA)” rather than silently changing the source wording."
+        }
+      ],
+      "timing": [],
+      "lastReviewedOn": "2026-07-12"
+    },
+    {
+      "id": "n-7-26-3e",
+      "order": 13,
+      "label": "3(e)",
+      "title": "BRT and bus-lane technical assistance",
+      "titleOrigin": "editorial",
+      "sourceId": "ca-eo-n-7-26",
+      "locator": { "section": "3(e)", "pages": [4] },
+      "excerpt": "Provide technical assistance to local agencies, where feasible, with the implementation of Bus Rapid Transit (BRT) / Bus Only lanes",
+      "leadOrgIds": ["caltrans"],
+      "collaboratorOrgIds": [],
+      "mentionedOrgIds": ["local-agencies"],
+      "sourceContextIds": ["section-3-preamble"],
+      "qualifiers": [
+        { "text": "where feasible", "appliesTo": "technical assistance to local agencies for BRT, bus-only lanes, and associated infrastructure" },
+        { "text": "where possible via the cooperative agreement process", "appliesTo": "assistance with planning, engineering, and implementation" }
+      ],
+      "sourceNotes": [],
+      "timing": [],
+      "lastReviewedOn": "2026-07-12"
+    },
+    {
+      "id": "n-7-26-3f",
+      "order": 14,
+      "label": "3(f)",
+      "title": "Digital real-property system, holdings digitization, and condition inventory",
+      "titleOrigin": "editorial",
+      "sourceId": "ca-eo-n-7-26",
+      "locator": { "section": "3(f)", "pages": [4] },
+      "excerpt": "In coordination with the Department of General Services, create an implementation plan for the creation of a centralized, digital real property asset management system and fully digitize its real estate holdings, inventory buildings and their state of repair.",
+      "leadOrgIds": ["caltrans"],
+      "collaboratorOrgIds": ["dgs"],
+      "mentionedOrgIds": [],
+      "sourceContextIds": ["section-3-preamble"],
+      "qualifiers": [
+        { "text": "In coordination with the Department of General Services", "appliesTo": "the implementation plan, holdings digitization, and building repair-state inventory" }
+      ],
+      "sourceNotes": [],
+      "timing": [],
+      "lastReviewedOn": "2026-07-12"
+    },
+    {
+      "id": "n-7-26-3g",
+      "order": 15,
+      "label": "3(g)",
+      "title": "Airspace policy for zero-emission fleets",
+      "titleOrigin": "editorial",
+      "sourceId": "ca-eo-n-7-26",
+      "locator": { "section": "3(g)", "pages": [4] },
+      "excerpt": "Identify updates to its existing exception policy around the use of Caltrans airspace",
+      "leadOrgIds": ["caltrans"],
+      "collaboratorOrgIds": [],
+      "mentionedOrgIds": ["transit-rail-operators"],
+      "sourceContextIds": ["section-3-preamble"],
+      "qualifiers": [
+        { "text": "where vehicles are already being stored", "appliesTo": "operator-controlled land beneath or adjacent to Caltrans facilities" },
+        { "text": "where consistent with state policy and safety and operational requirements", "appliesTo": "airspace exception-policy updates" }
+      ],
+      "sourceNotes": [],
+      "timing": [],
+      "lastReviewedOn": "2026-07-12"
+    },
+    {
+      "id": "n-7-26-3h",
+      "order": 16,
+      "label": "3(h)",
+      "title": "Excess toll-revenue guidance",
+      "titleOrigin": "editorial",
+      "sourceId": "ca-eo-n-7-26",
+      "locator": { "section": "3(h)", "pages": [4] },
+      "excerpt": "provide guidance to toll operators on how to prioritize excess toll revenues for unmet transit operational and capital needs",
+      "leadOrgIds": ["caltrans"],
+      "collaboratorOrgIds": ["ctc"],
+      "mentionedOrgIds": ["toll-operators"],
+      "sourceContextIds": ["section-3-preamble"],
+      "qualifiers": [
+        { "text": "in accordance with state and federal law", "appliesTo": "guidance on prioritizing excess toll revenues" },
+        { "text": "where feasible", "appliesTo": "Caltrans consideration of excess revenue for transit within planned managed-lane corridors" }
+      ],
+      "sourceNotes": [],
+      "timing": [],
+      "lastReviewedOn": "2026-07-12"
+    },
+    {
+      "id": "n-7-26-3i",
+      "order": 17,
+      "label": "3(i)",
+      "title": "Transit updates to the California MUTCD",
+      "titleOrigin": "editorial",
+      "sourceId": "ca-eo-n-7-26",
+      "locator": { "section": "3(i)", "pages": [4] },
+      "excerpt": "Initiate an update to the state Manual of Uniform Traffic Control Devices (MUTCD) to address transit infrastructure",
+      "leadOrgIds": ["caltrans"],
+      "collaboratorOrgIds": [],
+      "mentionedOrgIds": ["federal-agencies"],
+      "sourceContextIds": ["section-3-preamble"],
+      "qualifiers": [
+        { "text": "including but not limited to", "appliesTo": "transit infrastructure addressed by the MUTCD update, including transit signal priority and bus lanes" },
+        { "text": "any necessary approvals", "appliesTo": "federal approvals for the MUTCD updates" }
+      ],
+      "sourceNotes": [],
+      "timing": [],
+      "lastReviewedOn": "2026-07-12"
+    },
+    {
+      "id": "n-7-26-3j",
+      "order": 18,
+      "label": "3(j)",
+      "title": "Prohousing transit-funding priority",
+      "titleOrigin": "editorial",
+      "sourceId": "ca-eo-n-7-26",
+      "locator": { "section": "3(j)", "pages": [4] },
+      "excerpt": "develop funding criteria that prioritize funding to, and award processing for, transit projects located in a jurisdiction with a Pro-Housing Designation",
+      "leadOrgIds": ["caltrans"],
+      "collaboratorOrgIds": ["hcd", "ctc"],
+      "mentionedOrgIds": [],
+      "sourceContextIds": ["section-3-preamble"],
+      "qualifiers": [
+        { "text": "In consultation with the Department of Housing and Community Development and CTC", "appliesTo": "development of Pro-Housing funding and award-processing criteria" }
+      ],
+      "sourceNotes": [],
+      "timing": [],
+      "lastReviewedOn": "2026-07-12"
+    },
+    {
+      "id": "n-7-26-4",
+      "order": 19,
+      "label": "4",
+      "title": "CHSRA NEPA delegation and programmatic review",
+      "titleOrigin": "editorial",
+      "sourceId": "ca-eo-n-7-26",
+      "locator": { "section": "4", "pages": [4] },
+      "excerpt": "identify and implement opportunities to leverage CHSRA's Federal Railroad Administration (FRA) NEPA Delegation",
+      "leadOrgIds": ["calsta"],
+      "collaboratorOrgIds": ["caltrans-rail"],
+      "mentionedOrgIds": ["chsr", "fra"],
+      "sourceContextIds": [],
+      "qualifiers": [
+        { "text": "where possible", "appliesTo": "undertaking programmatic environmental review" }
+      ],
+      "sourceNotes": [],
+      "timing": [],
+      "lastReviewedOn": "2026-07-12"
+    },
+    {
+      "id": "n-7-26-5",
+      "order": 20,
+      "label": "5",
+      "title": "State and federal funding support for transit priority and complete trips",
+      "titleOrigin": "editorial",
+      "sourceId": "ca-eo-n-7-26",
+      "locator": { "section": "5", "pages": [4, 5] },
+      "excerpt": "CalSTA, in coordination with Caltrans and the CTC, shall update state funding program guidelines to incentivize the delivery of transit priority infrastructure and first- and last-mile connectivity including, but not limited to, Solutions for Congested Corridor Program (SCCP), the Active Transportation Program (ATP), Local Partnership Program (LPP), and Transit and Intercity Rail Capital Program (TIRCP). Caltrans shall also identify federal funding programs that will support transit priority and first and last-mile connectivity efforts.",
+      "leadOrgIds": ["calsta", "caltrans"],
+      "collaboratorOrgIds": ["ctc"],
+      "mentionedOrgIds": [],
+      "sourceContextIds": [],
+      "qualifiers": [
+        { "text": "in coordination with Caltrans and the CTC", "appliesTo": "CalSTA update of state funding program guidelines" },
+        { "text": "including, but not limited to", "appliesTo": "state funding programs whose guidelines are to be updated" }
+      ],
+      "sourceNotes": [],
+      "timing": [],
+      "lastReviewedOn": "2026-07-12"
+    },
+    {
+      "id": "n-7-26-6",
+      "order": 21,
+      "label": "6",
+      "title": "Transit-data guidelines and grant CRM",
+      "titleOrigin": "editorial",
+      "sourceId": "ca-eo-n-7-26",
+      "locator": { "section": "6", "pages": [5] },
+      "excerpt": "publish guidelines for consistent transit and passenger rail data availability",
+      "leadOrgIds": ["caltrans"],
+      "collaboratorOrgIds": ["caltrans-it"],
+      "mentionedOrgIds": ["calitp", "cimp", "grantees-subrecipients"],
+      "sourceContextIds": [],
+      "qualifiers": [
+        { "text": "implementing standards that allow for efficient integration between systems", "appliesTo": "guidelines for consistent transit and passenger rail data availability" },
+        { "text": "ensuring that consistent information is available to the public", "appliesTo": "transit and passenger rail data availability" },
+        { "text": "so that grantees receive streamlined, coordinated communications from a single source", "appliesTo": "implementation of the grant Customer Relationship Management system" }
+      ],
+      "sourceNotes": [],
+      "timing": [],
+      "lastReviewedOn": "2026-07-12"
+    }
+  ]
+}
