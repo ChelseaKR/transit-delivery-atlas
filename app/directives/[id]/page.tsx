@@ -22,6 +22,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   return {
     title: `${directive.label} ${directive.title}`,
     description: `Source-linked record for Executive Order N-7-26, section ${directive.locator.section}, with named entities, timing, and separately labeled independent analysis.`,
+    alternates: { canonical: `/directives/${directive.id}` },
   };
 }
 

@@ -7,6 +7,7 @@ export const metadata: Metadata = {
   title: "Methodology",
   description:
     "How Transit Delivery Atlas separates signed source language, date calculations, and independent analysis.",
+  alternates: { canonical: "/methodology" },
 };
 
 export default function MethodologyPage() {
