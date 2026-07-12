@@ -4,7 +4,10 @@
 
 ![Transit Delivery Atlas handoff rail from source to entity, timing, and analysis](public/og.png)
 
-**Live site:** [transit.chelseakr.com](https://transit.chelseakr.com)
+**Project links**
+
+- Live site: [transit.chelseakr.com](https://transit.chelseakr.com)
+- Source repository: [github.com/ChelseaKR/transit-delivery-atlas](https://github.com/ChelseaKR/transit-delivery-atlas)
 
 **Transit Delivery Atlas** is an independent, source-linked crosswalk for
 California Executive Order N-7-26. It turns each actionable directive into a

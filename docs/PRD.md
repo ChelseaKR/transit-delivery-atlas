@@ -3,6 +3,8 @@
 **Status:** Implementation approved
 **Target release:** July 13, 2026
 **Primary source review date:** July 12, 2026
+**Live product:** [transit.chelseakr.com](https://transit.chelseakr.com)
+**Source repository:** [github.com/ChelseaKR/transit-delivery-atlas](https://github.com/ChelseaKR/transit-delivery-atlas)
 
 ## Problem statement
 

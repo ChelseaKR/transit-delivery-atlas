@@ -13,6 +13,10 @@ Order N-7-26.
 
 **Repository and package slug:** `transit-delivery-atlas`
 
+**Live site:** [transit.chelseakr.com](https://transit.chelseakr.com)
+
+**Source repository:** [github.com/ChelseaKR/transit-delivery-atlas](https://github.com/ChelseaKR/transit-delivery-atlas)
+
 ### Shortlist considered
 
 1. Transit Delivery Atlas — selected; clear, speakable, and extensible
