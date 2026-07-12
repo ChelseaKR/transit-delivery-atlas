@@ -1,0 +1,259 @@
+{
+  "schemaVersion": "0.1.0",
+  "analysis": [
+    {
+      "directiveId": "n-7-26-1a",
+      "summary": "Create a regularly maintainable statewide list that connects transit-priority projects to location needs, applicable plans, and eligible funding.",
+      "themeIds": ["planning-governance", "funding-grants"],
+      "expectedOutputs": [
+        { "text": "A versioned statewide priority-project list with funding eligibility and plan crosswalks", "origin": "inferred", "confidence": "high" }
+      ],
+      "dependencies": [
+        { "text": "Stable project and location identifiers plus an update and approval process", "relatedDirectiveIds": ["n-7-26-3e", "n-7-26-4", "n-7-26-5"], "origin": "inferred", "confidence": "medium" }
+      ],
+      "openQuestions": ["What determines inclusion and priority?", "What is the refresh and conflict-resolution process?"]
+    },
+    {
+      "directiveId": "n-7-26-1b",
+      "summary": "Establish a statewide mobility-management role that coordinates trips and shared planning, scheduling, payment, and asset technologies across grantees.",
+      "themeIds": ["planning-governance", "data-shared-systems"],
+      "expectedOutputs": [
+        { "text": "A mobility-management operating model and portfolio of shared coordination tools", "origin": "inferred", "confidence": "high" }
+      ],
+      "dependencies": [
+        { "text": "Governance, data stewardship, procurement, cost allocation, and participant onboarding", "relatedDirectiveIds": ["n-7-26-6"], "origin": "inferred", "confidence": "medium" }
+      ],
+      "openQuestions": ["Which formal action establishes the role?", "Which services are shared, optional, or required?"]
+    },
+    {
+      "directiveId": "n-7-26-1c",
+      "summary": "Offer eligible Section 5307 jurisdictions the option to use Caltrans as direct recipient and coordinate resulting federal changes.",
+      "themeIds": ["funding-grants", "planning-governance"],
+      "expectedOutputs": [
+        { "text": "Jurisdiction notice, election workflow, and federal recipient-change process", "origin": "inferred", "confidence": "high" }
+      ],
+      "dependencies": [
+        { "text": "Eligible-jurisdiction register, recipient-readiness controls, and federal compliance procedures", "relatedDirectiveIds": [], "origin": "inferred", "confidence": "medium" }
+      ],
+      "openQuestions": ["How is “more rapid” disbursement measured?", "How do compliance duties and reversibility work after an election?"]
+    },
+    {
+      "directiveId": "n-7-26-1d",
+      "summary": "Prepare future State Transit Plan iterations to use service-led planning aligned with the State Rail Plan.",
+      "themeIds": ["planning-governance"],
+      "expectedOutputs": [
+        { "text": "A documented service-led planning method and rail-plan alignment crosswalk", "origin": "inferred", "confidence": "medium" }
+      ],
+      "dependencies": [
+        { "text": "A shared definition of service-led planning and measurable alignment", "relatedDirectiveIds": ["n-7-26-4"], "origin": "inferred", "confidence": "medium" }
+      ],
+      "openQuestions": ["What steps satisfy the directive before the next plan is published?", "How will alignment be measured and approved?"]
+    },
+    {
+      "directiveId": "n-7-26-1e",
+      "summary": "Start and complete a coordinated set of design, specification, policy, and permitting materials for transit infrastructure on the State Highway System.",
+      "themeIds": ["delivery-permitting", "priority-complete-trips"],
+      "expectedOutputs": [
+        { "text": "Published design guidance, standard plans and specifications, policies, procedures, and updated manuals", "origin": "inferred", "confidence": "high" }
+      ],
+      "dependencies": [
+        { "text": "Named document owners, adoption authorities, accessibility requirements, and alignment with traffic-control standards", "relatedDirectiveIds": ["n-7-26-3i"], "origin": "inferred", "confidence": "high" }
+      ],
+      "openQuestions": ["Which exact documents are in scope?", "What review and adoption process applies to each artifact?"]
+    },
+    {
+      "directiveId": "n-7-26-1f",
+      "summary": "Explain to the transportation agency how recent CEQA changes can be applied to expedite transit projects after consultation with local partners.",
+      "themeIds": ["environment-assets", "reporting-administration"],
+      "expectedOutputs": [
+        { "text": "A report connecting recent CEQA changes to eligible transit-project pathways", "origin": "inferred", "confidence": "high" }
+      ],
+      "dependencies": [
+        { "text": "Legal and project-category crosswalk, local consultation record, and a baseline for expedited delivery", "relatedDirectiveIds": ["n-7-26-3d", "n-7-26-4"], "origin": "inferred", "confidence": "medium" }
+      ],
+      "openQuestions": ["Will the report be public?", "Which project categories and measures define expedited delivery?"]
+    },
+    {
+      "directiveId": "n-7-26-1g",
+      "summary": "Create a statewide team that can add technical and delivery capacity for state-funded active-transportation projects.",
+      "themeIds": ["delivery-permitting", "priority-complete-trips"],
+      "expectedOutputs": [
+        { "text": "A staffed support team with an intake, triage, assistance, and delivery-capacity model", "origin": "inferred", "confidence": "high" }
+      ],
+      "dependencies": [
+        { "text": "Charter, staffing and budget, project inventory, service levels, and outcome measures", "relatedDirectiveIds": [], "origin": "inferred", "confidence": "medium" }
+      ],
+      "openQuestions": ["Where will the team sit organizationally?", "How are projects prioritized and how long does support last?"]
+    },
+    {
+      "directiveId": "n-7-26-2",
+      "summary": "Create funding-program dashboards covering applications, awards, contracting, reimbursement, and other performance measures to support transparency and equitable access.",
+      "themeIds": ["funding-grants", "data-shared-systems"],
+      "expectedOutputs": [
+        { "text": "Public dashboards and a documented metric/data model spanning available transit and rail funding programs", "origin": "inferred", "confidence": "high" }
+      ],
+      "dependencies": [
+        { "text": "Canonical program, cycle, application, award, contract, and invoice timestamps with public-data rules", "relatedDirectiveIds": ["n-7-26-6"], "origin": "inferred", "confidence": "high" }
+      ],
+      "openQuestions": ["Which programs and records are in scope?", "What update interval and system of record support the term “real time”?"]
+    },
+    {
+      "directiveId": "n-7-26-3a",
+      "summary": "Explore lawful ways to help regions shift federal highway formula funds to transit, including possible state-share matching.",
+      "themeIds": ["funding-grants"],
+      "expectedOutputs": [
+        { "text": "An opportunity and eligibility analysis for reprogramming and state-match support", "origin": "inferred", "confidence": "medium" }
+      ],
+      "dependencies": [
+        { "text": "Program-by-program legal eligibility, state-match availability, and a regional project pipeline", "relatedDirectiveIds": [], "origin": "inferred", "confidence": "medium" }
+      ],
+      "openQuestions": ["What artifact completes the instruction to explore?", "Which programs, match sources, and decision authorities are included?"]
+    },
+    {
+      "directiveId": "n-7-26-3b",
+      "summary": "Take steps to automate Transportation Development Act and National Transit Database reporting for rural and small agencies.",
+      "themeIds": ["reporting-administration", "data-shared-systems"],
+      "expectedOutputs": [
+        { "text": "A field-level reporting crosswalk, automation boundary, provenance model, and implementation roadmap", "origin": "inferred", "confidence": "medium" }
+      ],
+      "dependencies": [
+        { "text": "Authoritative reporting definitions, source-system evidence, validation, audit trail, and submitter certification", "relatedDirectiveIds": ["n-7-26-6"], "origin": "inferred", "confidence": "high" }
+      ],
+      "openQuestions": ["How are rural, small, and automate defined?", "Which fields can be derived, which can only be assisted, and who remains the legal submitter?"]
+    },
+    {
+      "directiveId": "n-7-26-3c",
+      "summary": "Reduce fund-distribution timelines where feasible and examine additional flexibility for uses and federal pre-award authority.",
+      "themeIds": ["funding-grants"],
+      "expectedOutputs": [
+        { "text": "Program-specific timeline-reduction and fund-flexibility measures", "origin": "inferred", "confidence": "high" }
+      ],
+      "dependencies": [
+        { "text": "Baseline and target timelines plus legal authority for each administrative or policy change", "relatedDirectiveIds": ["n-7-26-2"], "origin": "inferred", "confidence": "medium" }
+      ],
+      "openQuestions": ["Which programs and process stages are covered?", "Which changes are administrative, statutory, or federal?"]
+    },
+    {
+      "directiveId": "n-7-26-3d",
+      "summary": "Begin pursuing federal environmental-review assignment for transit and commuter-rail projects, subject to federal law.",
+      "themeIds": ["environment-assets", "delivery-permitting"],
+      "expectedOutputs": [
+        { "text": "An assignment pathway with legal authority, agreements, staffing, and quality controls", "origin": "inferred", "confidence": "medium" }
+      ],
+      "dependencies": [
+        { "text": "Federal eligibility, state authority, liability terms, and an assignment agreement", "relatedDirectiveIds": ["n-7-26-1f", "n-7-26-4"], "origin": "inferred", "confidence": "medium" }
+      ],
+      "openQuestions": ["Which assignment mechanism and project classes are contemplated?", "What state legislation or agreement would be required?"]
+    },
+    {
+      "directiveId": "n-7-26-3e",
+      "summary": "Offer feasible planning, engineering, implementation, and cooperative-agreement assistance for BRT and bus-only infrastructure on state highways.",
+      "themeIds": ["delivery-permitting", "priority-complete-trips"],
+      "expectedOutputs": [
+        { "text": "A technical-assistance offer, intake route, and cooperative-agreement pathway", "origin": "inferred", "confidence": "high" }
+      ],
+      "dependencies": [
+        { "text": "Standard assistance scope, project intake, agreements, and design/permitting guidance", "relatedDirectiveIds": ["n-7-26-1a", "n-7-26-1e"], "origin": "inferred", "confidence": "high" }
+      ],
+      "openQuestions": ["Is assistance request-driven or tied to the priority-project list?", "What phases, service levels, and cost-sharing rules apply?"]
+    },
+    {
+      "directiveId": "n-7-26-3f",
+      "summary": "Create an implementation plan for a centralized digital real-property asset management system, fully digitize Caltrans real-estate holdings, and inventory buildings and their state of repair in coordination with DGS.",
+      "themeIds": ["environment-assets", "data-shared-systems"],
+      "expectedOutputs": [
+        { "text": "A delivery model linking the implementation plan, completed holdings digitization, and building repair-state inventory", "origin": "inferred", "confidence": "high" }
+      ],
+      "dependencies": [
+        { "text": "Canonical property identifiers, geospatial and condition standards, system ownership, and digitization rules", "relatedDirectiveIds": ["n-7-26-3g"], "origin": "inferred", "confidence": "high" }
+      ],
+      "openQuestions": ["What completion criteria and quality controls define “fully digitize”?", "Which holdings, buildings, and repair-state categories are in scope?"]
+    },
+    {
+      "directiveId": "n-7-26-3g",
+      "summary": "Identify airspace-policy changes that could allow existing operator-controlled storage sites to support zero-emission vehicle storage and energy infrastructure.",
+      "themeIds": ["environment-assets", "delivery-permitting"],
+      "expectedOutputs": [
+        { "text": "A documented set of exception-policy updates and eligible-site conditions", "origin": "inferred", "confidence": "high" }
+      ],
+      "dependencies": [
+        { "text": "Current policy, parcel and airspace inventory, safety and structural review, utilities, and operator agreements", "relatedDirectiveIds": ["n-7-26-3f"], "origin": "inferred", "confidence": "medium" }
+      ],
+      "openQuestions": ["Does identify include adoption and implementation?", "How are operator control, existing storage, and eligible sites defined?"]
+    },
+    {
+      "directiveId": "n-7-26-3h",
+      "summary": "Develop lawful guidance for directing excess toll revenue toward unmet transit operating and capital needs, including managed-lane corridors.",
+      "themeIds": ["funding-grants", "priority-complete-trips"],
+      "expectedOutputs": [
+        { "text": "Guidance defining eligible needs, excess revenue, corridor relationship, and prioritization", "origin": "inferred", "confidence": "high" }
+      ],
+      "dependencies": [
+        { "text": "Toll-facility and revenue inventory plus state and federal legal restrictions", "relatedDirectiveIds": [], "origin": "inferred", "confidence": "medium" }
+      ],
+      "openQuestions": ["Is the guidance binding or advisory?", "How are excess revenue, unmet need, and corridor benefit calculated?"]
+    },
+    {
+      "directiveId": "n-7-26-3i",
+      "summary": "Start a California traffic-control-manual update for transit infrastructure and seek any required federal approvals.",
+      "themeIds": ["delivery-permitting", "priority-complete-trips"],
+      "expectedOutputs": [
+        { "text": "A scoped MUTCD update, stakeholder process, draft, approvals, and adoption path", "origin": "inferred", "confidence": "high" }
+      ],
+      "dependencies": [
+        { "text": "Manual change control, federal conformity, stakeholder review, and alignment with design standards", "relatedDirectiveIds": ["n-7-26-1e"], "origin": "inferred", "confidence": "high" }
+      ],
+      "openQuestions": ["Which chapters and devices are in scope?", "What draft, approval, and adoption milestones apply?"]
+    },
+    {
+      "directiveId": "n-7-26-3j",
+      "summary": "Develop criteria that prioritize both funding and award processing for transit projects in Prohousing-designated jurisdictions.",
+      "themeIds": ["funding-grants", "planning-governance"],
+      "expectedOutputs": [
+        { "text": "Program criteria and processing rules tied to an authoritative Prohousing designation record", "origin": "inferred", "confidence": "high" }
+      ],
+      "dependencies": [
+        { "text": "Designation data, effective dates, cross-jurisdiction rules, and program scoring authority", "relatedDirectiveIds": ["n-7-26-5"], "origin": "inferred", "confidence": "high" }
+      ],
+      "openQuestions": ["Which programs and weighting or queue mechanics are covered?", "How are projects spanning jurisdictions and designation changes handled?"]
+    },
+    {
+      "directiveId": "n-7-26-4",
+      "summary": "Identify and implement opportunities to use CHSRA’s FRA NEPA Delegation for State Rail Plan projects, working with the Caltrans Division of Rail and, where possible, undertaking programmatic environmental review.",
+      "themeIds": ["environment-assets", "delivery-permitting"],
+      "expectedOutputs": [
+        { "text": "An eligibility and delivery pathway for candidate State Rail Plan projects", "origin": "inferred", "confidence": "high" }
+      ],
+      "dependencies": [
+        { "text": "Canonical rail-project IDs, delegation scope, sponsor acceptance and reimbursement, staffing, and candidate criteria", "relatedDirectiveIds": ["n-7-26-1a", "n-7-26-1d", "n-7-26-3d"], "origin": "inferred", "confidence": "high" }
+      ],
+      "openQuestions": ["Which projects are eligible and who funds the review?", "How are candidates prioritized against available review capacity?"]
+    },
+    {
+      "directiveId": "n-7-26-5",
+      "summary": "Update state program guidelines to incentivize transit-priority and first- and last-mile delivery, and identify federal programs that support those efforts.",
+      "themeIds": ["funding-grants", "priority-complete-trips"],
+      "expectedOutputs": [
+        { "text": "Updated state program guidelines with defined incentives", "origin": "inferred", "confidence": "high" },
+        { "text": "A documented identification of applicable federal funding programs", "origin": "inferred", "confidence": "high" }
+      ],
+      "dependencies": [
+        { "text": "Program-cycle calendars, legal authority, shared definitions and measures, and federal eligibility rules", "relatedDirectiveIds": ["n-7-26-1a", "n-7-26-3j"], "origin": "inferred", "confidence": "high" }
+      ],
+      "openQuestions": ["Which guideline cycles and owners apply?", "How are transit priority, connectivity, and incentive magnitude defined?"]
+    },
+    {
+      "directiveId": "n-7-26-6",
+      "summary": "Publish transit and passenger-rail data-availability guidelines through Cal-ITP and implement a coordinated grant CRM through CIMP in partnership with Caltrans IT.",
+      "themeIds": ["data-shared-systems", "funding-grants", "reporting-administration"],
+      "expectedOutputs": [
+        { "text": "Transit and passenger-rail data availability guidelines with standards and governance", "origin": "inferred", "confidence": "high" },
+        { "text": "A grant CRM covering availability, applications, management, and information campaigns", "origin": "inferred", "confidence": "high" }
+      ],
+      "dependencies": [
+        { "text": "Standards inventory, version governance, canonical grant schema, product ownership, integration, migration, privacy, accessibility, and language controls", "relatedDirectiveIds": ["n-7-26-1b", "n-7-26-2", "n-7-26-3b"], "origin": "inferred", "confidence": "high" }
+      ],
+      "openQuestions": ["Which data domains and standards are mandatory or advisory?", "Is the CRM the system of record behind the funding dashboards, and what does “single source” mean operationally?"]
+    }
+  ]
+}
