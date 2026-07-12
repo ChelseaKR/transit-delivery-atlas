@@ -6,6 +6,7 @@ export const metadata: Metadata = {
   title: "Open data",
   description:
     "Download the Transit Delivery Atlas directive crosswalk as JSON or CSV and review its schema.",
+  alternates: { canonical: "/data" },
 };
 
 const fields = [

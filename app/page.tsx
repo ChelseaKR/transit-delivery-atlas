@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { DirectiveExplorer } from "@/components/DirectiveExplorer";
 import { HandoffRail } from "@/components/HandoffRail";
 import { SiteFooter } from "@/components/SiteFooter";
@@ -9,6 +10,10 @@ import {
   themes,
 } from "@/lib/data";
 import { formatDate } from "@/lib/format";
+
+export const metadata: Metadata = {
+  alternates: { canonical: "/" },
+};
 
 export default function Home() {
   const explorerDirectives = directives.map((directive) => ({

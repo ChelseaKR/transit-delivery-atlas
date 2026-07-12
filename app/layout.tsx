@@ -20,6 +20,7 @@ const body = Atkinson_Hyperlegible({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://transit-delivery-atlas.ckellyreif.chatgpt.site"),
   title: {
     default: "Transit Delivery Atlas",
     template: "%s | Transit Delivery Atlas",
@@ -31,6 +32,7 @@ export const metadata: Metadata = {
   robots: { index: true, follow: true },
   openGraph: {
     type: "website",
+    url: "/",
     siteName: "Transit Delivery Atlas",
     title: "Transit Delivery Atlas",
     description:

@@ -6,6 +6,7 @@ export const metadata: Metadata = {
   title: "Accessibility",
   description:
     "Accessibility standards, test scope, and known limitations for Transit Delivery Atlas.",
+  alternates: { canonical: "/accessibility" },
 };
 
 export default function AccessibilityPage() {
