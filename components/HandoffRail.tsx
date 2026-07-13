@@ -2,6 +2,7 @@ const steps = [
   { className: "source", label: "Source", detail: "Signed language" },
   { className: "entity", label: "Entity", detail: "Explicitly named" },
   { className: "timing", label: "Timing", detail: "Stated or not stated" },
+  { className: "evidence", label: "Evidence", detail: "Dated public records" },
   { className: "analysis", label: "Analysis", detail: "Outputs and questions" },
 ];
 

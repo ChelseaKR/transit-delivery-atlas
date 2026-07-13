@@ -35,7 +35,7 @@ relevant; it does not make this repository an official or certified system.
 - No hover-only information or keyboard traps
 - Content remains usable at 200% zoom and narrow viewport widths
 - Reduced-motion preference respected
-- Source and analytical layers named in text and structure
+- Source, reviewed-evidence, and analytical layers named in text and structure
 - Data downloads have plain-language descriptions and stable formats
 - Errors and empty states explain the next available action
 
@@ -56,9 +56,10 @@ Pending before any conformance claim:
 2. **Zoom and low vision:** full 200% and 400% zoom, text-spacing, forced-colors,
    and narrow-width review across every route.
 3. **Assistive technology:** VoiceOver and NVDA or JAWS review of the explorer,
-   directive detail, methodology, and data download flows.
-4. **Human evaluation:** testing with disabled users and a documented decision
-   about the inaccessible external source PDF.
+   directive detail, evidence index, methodology, and data download flows.
+4. **Human evaluation:** testing with disabled users and documented decisions
+   about external source and evidence-file accessibility, including the
+   inaccessible signed source.
 
 Automated results are quality controls, not certification. Until the pending
 reviews are complete and exceptions are documented, the project does not claim
@@ -74,6 +75,12 @@ semantic HTML summaries, short reviewed excerpts, and page locators to reduce
 that barrier, but those are not a complete alternative version and do not alter
 or remediate the official source file. The signed source image remains
 authoritative.
+
+Reviewed public artifacts are external files and remain outside this
+repository's conformance scope. The evidence layer records cautious artifact
+metadata and an accessibility note without claiming that a tagged PDF conforms
+to PDF/UA, WCAG, or Section 508. Links remain usable even when an external
+artifact has accessibility limitations.
 
 ## Primary references
 

@@ -194,9 +194,9 @@ export function DirectiveExplorer({
                     <Link
                       className="inspect-link"
                       href={`/directives/${directive.id}`}
-                      aria-label={`Inspect source and analysis for directive ${directive.label}: ${directive.title}`}
+                      aria-label={`Inspect source, evidence, and analysis for directive ${directive.label}: ${directive.title}`}
                     >
-                      Inspect source and analysis <span aria-hidden="true">→</span>
+                      Inspect source, evidence, and analysis <span aria-hidden="true">→</span>
                     </Link>
                   </div>
                 </article>

@@ -21,7 +21,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   if (!directive) return {};
   return {
     title: `${directive.label} ${directive.title}`,
-    description: `Source-linked record for Executive Order N-7-26, section ${directive.locator.section}, with named entities, timing, and separately labeled independent analysis.`,
+    description: `Source-linked record for Executive Order N-7-26, section ${directive.locator.section}, with named entities, timing, public-evidence coverage, and separately labeled independent analysis.`,
     alternates: { canonical: `/directives/${directive.id}` },
   };
 }
@@ -150,6 +150,131 @@ export default async function DirectivePage({ params }: PageProps) {
             <a className="source-button" href={`${source.url}#page=${pageFragment}`} rel="noreferrer">
               Verify in signed PDF, page {pageFragment} (scanned, untagged) <span aria-hidden="true">↗</span>
             </a>
+          </section>
+
+          <section className="record-layer record-layer--evidence" aria-labelledby="evidence-layer-title">
+            <LayerLabel type="evidence" />
+            <h2 id="evidence-layer-title">What is documented publicly</h2>
+            <p className="layer-intro">
+              When included, the records below are dated public artifacts linked
+              to this directive. Inclusion documents a source relationship; it does not establish
+              implementation status, completion, compliance, or activity beyond
+              the cited record.
+            </p>
+
+            {directive.evidence.length > 0 ? (
+              <ul className="evidence-list">
+                {directive.evidence.map((record) => {
+                  const directiveLink = record.directiveLinks.find(
+                    (link) => link.directiveId === directive.id,
+                  );
+                  if (!directiveLink) return null;
+
+                  return (
+                    <li key={record.id}>
+                      <article
+                        className="evidence-card"
+                        aria-labelledby={`evidence-${record.id}-title`}
+                      >
+                        <p className="utility-label">Reviewed public artifact</p>
+                        <h3 id={`evidence-${record.id}-title`}>{record.title}</h3>
+
+                        <dl className="evidence-meta">
+                          <div>
+                            <dt>Record type</dt>
+                            <dd>{record.evidenceType.replaceAll("-", " ")}</dd>
+                          </div>
+                          <div>
+                            <dt>Publisher</dt>
+                            <dd>{record.publisher}</dd>
+                          </div>
+                          <div>
+                            <dt>Date shown in record</dt>
+                            <dd>
+                              <time dateTime={record.datedOn}>{formatDate(record.datedOn)}</time>
+                              {record.dateKind === "scheduled-event" ? (
+                                <span>Scheduled event date</span>
+                              ) : null}
+                            </dd>
+                          </div>
+                          <div>
+                            <dt>Atlas review</dt>
+                            <dd>
+                              <time dateTime={record.lastReviewedOn}>
+                                {formatDate(record.lastReviewedOn)}
+                              </time>
+                            </dd>
+                          </div>
+                          <div>
+                            <dt>Source locator</dt>
+                            <dd>
+                              Pages {directiveLink.locator.pages.join("–")}
+                              <span>{directiveLink.locator.locations.join("; ")}</span>
+                            </dd>
+                          </div>
+                          <div>
+                            <dt>Artifact format</dt>
+                            <dd>
+                              PDF · {record.pageCount}{" "}
+                              {record.pageCount === 1 ? "page" : "pages"}
+                            </dd>
+                          </div>
+                        </dl>
+
+                        <div className="evidence-card__section">
+                          <h4>What the public record documents</h4>
+                          <p>{record.editorialSummary}</p>
+                        </div>
+
+                        <div className="evidence-card__section">
+                          <h4>Independent mapping note</h4>
+                          <p>
+                            The artifact explicitly cites this directive: “{directiveLink.excerpt}”
+                          </p>
+                        </div>
+
+                        <div className="evidence-card__section evidence-card__limitations">
+                          <h4>Limitations</h4>
+                          <ul>
+                            {record.limitations.map((limitation) => (
+                              <li key={limitation}>{limitation}</li>
+                            ))}
+                          </ul>
+                        </div>
+
+                        <p className="evidence-card__accessibility">
+                          <strong>Artifact accessibility note:</strong>{" "}
+                          {record.accessibility.note}
+                        </p>
+
+                        <div className="evidence-card__links">
+                          <a href={record.url} rel="noreferrer">
+                            Open public record: {record.title}{" "}
+                            <span aria-hidden="true">↗</span>
+                          </a>
+                          <a href={record.contextUrl} rel="noreferrer">
+                            Open publishing context <span aria-hidden="true">↗</span>
+                          </a>
+                        </div>
+                      </article>
+                    </li>
+                  );
+                })}
+              </ul>
+            ) : (
+              <div className="evidence-empty">
+                <p>
+                  No reviewed public artifacts are included for this directive in
+                  the current Atlas release. This is a statement about Atlas
+                  coverage, not evidence that no implementation activity or public
+                  record exists.
+                </p>
+              </div>
+            )}
+
+            <p className="evidence-method-link">
+              <Link href="/evidence">Read the evidence scope and review method</Link>
+            </p>
           </section>
 
           <section className="record-layer record-layer--analysis" aria-labelledby="analysis-layer-title">

@@ -1,5 +1,6 @@
 import analysisRaw from "@/data/analysis.json";
 import directivesRaw from "@/data/directives.json";
+import evidenceRaw from "@/data/evidence.json";
 import organizationsRaw from "@/data/organizations.json";
 import sourcesRaw from "@/data/sources.json";
 import themesRaw from "@/data/themes.json";
@@ -9,6 +10,7 @@ export type Theme = (typeof themesRaw)[number];
 export type Source = (typeof sourcesRaw)[number];
 export type Directive = (typeof directivesRaw.directives)[number];
 export type Analysis = (typeof analysisRaw.analysis)[number];
+export type EvidenceRecord = (typeof evidenceRaw.evidence)[number];
 export type SourceContext = (typeof directivesRaw.orderMetadata.sourceContexts)[number];
 export type SourceNotice = (typeof directivesRaw.orderMetadata.sourceNotices)[number];
 
@@ -19,6 +21,7 @@ export type DirectiveView = Directive & {
   mentionedOrganizations: Organization[];
   sourceContexts: SourceContext[];
   themes: Theme[];
+  evidence: EvidenceRecord[];
 };
 
 const analysisByDirective = new Map<string, Analysis>(
@@ -33,6 +36,14 @@ const themeById = new Map<string, Theme>(
 const sourceContextById = new Map<string, SourceContext>(
   directivesRaw.orderMetadata.sourceContexts.map((item) => [item.id, item] as const),
 );
+const evidenceByDirective = new Map<string, EvidenceRecord[]>();
+for (const record of evidenceRaw.evidence) {
+  for (const link of record.directiveLinks) {
+    const records = evidenceByDirective.get(link.directiveId) ?? [];
+    records.push(record);
+    evidenceByDirective.set(link.directiveId, records);
+  }
+}
 
 function required<K, V>(map: Map<K, V>, key: K, context: string): V {
   const value = map.get(key);
@@ -44,6 +55,12 @@ export const source = sourcesRaw[0];
 export const themes = themesRaw;
 export const organizations = organizationsRaw;
 export const orderMetadata = directivesRaw.orderMetadata;
+export const evidenceRecords = evidenceRaw.evidence;
+export const evidenceScope = {
+  scope: evidenceRaw.scope,
+  lastUpdatedOn: evidenceRaw.lastUpdatedOn,
+  coverageNote: evidenceRaw.coverageNote,
+};
 
 export const directives: DirectiveView[] = directivesRaw.directives.map(
   (directive) => {
@@ -70,6 +87,7 @@ export const directives: DirectiveView[] = directivesRaw.directives.map(
       themes: analysis.themeIds.map((id) =>
         required(themeById, id, "theme"),
       ),
+      evidence: evidenceByDirective.get(directive.id) ?? [],
     };
   },
 );

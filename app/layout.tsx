@@ -26,7 +26,7 @@ export const metadata: Metadata = {
     template: "%s | Transit Delivery Atlas",
   },
   description:
-    "Independent, source-linked crosswalk of California Executive Order N-7-26 directives, named entities, timing, dependencies, and open questions.",
+    "Independent, source-linked crosswalk of California Executive Order N-7-26 directives, named entities, timing, reviewed public evidence, dependencies, and open questions.",
   applicationName: "Transit Delivery Atlas",
   category: "public-interest research",
   robots: { index: true, follow: true },
@@ -42,7 +42,7 @@ export const metadata: Metadata = {
         url: "/og.png",
         width: 1200,
         height: 630,
-        alt: "Transit Delivery Atlas handoff rail from source to entity, timing, and analysis",
+        alt: "Transit Delivery Atlas handoff rail from source to entity, timing, public evidence, and analysis",
       },
     ],
   },
@@ -50,7 +50,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Transit Delivery Atlas",
     description:
-      "An independent, source-linked crosswalk for California Executive Order N-7-26.",
+      "An independent, source-linked crosswalk with reviewed public evidence for California Executive Order N-7-26.",
     images: ["/og.png"],
   },
 };

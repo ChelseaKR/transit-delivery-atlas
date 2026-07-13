@@ -53,12 +53,16 @@ export default function Home() {
                 </h1>
                 <p className="hero__dek">
                   A source-linked crosswalk of what the signed order directs,
-                  which entities it names, when timing is explicit, and which
-                  delivery questions remain open.
+                  which entities it names, when timing is explicit, which dated
+                  public artifacts have been reviewed, and which delivery
+                  questions remain open.
                 </p>
                 <div className="hero__actions">
                   <a className="button" href="#directives">
                     Explore directives
+                  </a>
+                  <a className="button button--secondary" href="/evidence">
+                    Review public evidence
                   </a>
                   <a className="button button--secondary" href="/methodology">
                     Read the method
@@ -128,13 +132,14 @@ export default function Home() {
               <h2 id="boundary-title">This is not a progress dashboard.</h2>
             </div>
             <p>
-              The atlas maps requirements and analytical dependencies. It does
-              not claim that work has started, stopped, succeeded, failed, or
-              occurred outside the public record. Sections 2–6 are shown as
-              having no explicit completion deadline in the signed order—not as
-              having no deadline anywhere else. The order’s separate
-              non-enforceability clause is also preserved in the source model
-              and methodology.
+              The atlas maps requirements, reviewed public artifacts, and
+              analytical dependencies. Evidence links document only what the
+              cited records show; they do not establish that work has started,
+              stopped, succeeded, failed, or occurred outside the public record.
+              Sections 2–6 are shown as having no explicit completion deadline
+              in the signed order—not as having no deadline anywhere else. The
+              order’s separate non-enforceability clause is also preserved in
+              the source model and methodology.
             </p>
           </div>
         </section>
@@ -142,11 +147,12 @@ export default function Home() {
         <section id="directives" className="directives-section" aria-labelledby="directives-title">
           <div className="section-shell">
             <div className="section-intro section-intro--wide">
-              <p className="utility-label">Signed structure + analytical crosswalk</p>
+              <p className="utility-label">Signed structure + public evidence + analysis</p>
               <h2 id="directives-title">Twenty-one directive units</h2>
               <p>
                 Filter the signed document structure. Every detail page shows
-                source language first and independent analysis second.
+                source language first, reviewed public evidence second, and
+                independent analysis third.
               </p>
             </div>
             <DirectiveExplorer

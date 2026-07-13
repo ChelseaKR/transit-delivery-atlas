@@ -17,6 +17,21 @@ Source corrections and analytical changes are reviewed as separate concepts,
 even when proposed together. Do not silently move an inference into a source
 record.
 
+An evidence correction should include:
+
+1. Evidence ID
+2. Public artifact URL and publishing-context URL
+3. Linked directive ID and the artifact's exact citation
+4. Artifact page and section locator
+5. Current value and proposed replacement
+6. Retrieval or review date and a current SHA-256 when the artifact changed
+
+Evidence is a selective, date-bounded layer. Adding a record requires an
+explicit source relationship and limitations that prevent the record from
+implying completion, compliance, performance, or comprehensive coverage.
+Scheduled-event dates must remain labeled as scheduled unless a later reviewed
+record supports different wording.
+
 ## Product changes
 
 Before opening a pull request:
@@ -35,8 +50,9 @@ records.
 - Cite primary government or standards sources for factual additions.
 - Label interpretations and dependencies as inference.
 - Preserve qualifiers and uncertainty.
-- Do not claim implementation status without a separately designed evidence
-  model and review policy.
+- Keep source, evidence, and analysis in their separate canonical files.
+- Do not turn reviewed evidence into implementation status, progress, scoring,
+  compliance, or performance claims.
 - Do not introduce agency logos, seals, official wrappers, trackers, or
   personal acknowledgments.
 - Describe accessibility tests accurately; never call automated checks a

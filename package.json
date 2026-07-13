@@ -1,6 +1,6 @@
 {
   "name": "transit-delivery-atlas",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Independent, source-linked crosswalk of California transit directives, named entities, timing, dependencies, and open questions.",
   "private": true,
   "engines": {

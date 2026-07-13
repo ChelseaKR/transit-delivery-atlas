@@ -69,9 +69,9 @@ System fallbacks are acceptable if font delivery becomes a launch risk.
 
 ### Signature element
 
-A functional **handoff rail** connects four shapes:
+A functional **handoff rail** connects five shapes:
 
-`source → named entity → timing → expected output`
+`source → named entity → timing → reviewed evidence → analysis`
 
 The shapes act as a legend and information architecture, not decoration. They
 are built with HTML and CSS, remain legible without color, and collapse into a
@@ -86,7 +86,7 @@ vertical sequence on narrow screens.
 │ TRANSIT DELIVERY ATLAS                                       │
 │ California’s transit directives, mapped for delivery.        │
 │                                                               │
-│ [source]────[named entity]────◇ timing────● expected output   │
+│ [source]──[named entity]──◇ timing──▣ evidence──● analysis    │
 ├───────────────────┬───────────────────────────────────────────┤
 │ Filters           │ 1(a)  Priority project list              │
 │ Theme             │ What the order says                       │
