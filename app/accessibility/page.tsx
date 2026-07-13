@@ -51,12 +51,13 @@ export default function AccessibilityPage() {
               <ul className="test-layers">
                 <li><strong>Static:</strong> lint, canonical-data validation, and rendered HTML assertions.</li>
                 <li><strong>Structure:</strong> checks for page language, titles, skip navigation, main regions, layer labels, and the result-count live region.</li>
+                <li><strong>Relationship view:</strong> source and analysis remain consecutive semantic sections; native filters, written role labels, and complete text links duplicate decorative rails and nodes.</li>
                 <li><strong>Automated review:</strong> representative-route scans plus programmatic reflow, focus-order, and reduced-motion spot checks.</li>
               </ul>
               <h3>Pending before any conformance claim</h3>
               <ul className="test-layers">
                 <li><strong>Keyboard:</strong> complete user-flow review in current Chrome, Firefox, and Safari.</li>
-                <li><strong>Assistive technology:</strong> VoiceOver and NVDA or JAWS review of the explorer, directive detail, evidence index, method, and download flows.</li>
+                <li><strong>Assistive technology:</strong> VoiceOver and NVDA or JAWS review of the directive and handoff explorers, directive detail, evidence index, method, and download flows.</li>
                 <li><strong>Low vision:</strong> full 200% and 400% zoom, text-spacing, forced-colors, and narrow-width review across every route.</li>
                 <li><strong>Human evaluation:</strong> testing with disabled users and documented decisions about external source and evidence-file accessibility, including the inaccessible signed source.</li>
               </ul>

@@ -7,6 +7,7 @@
 **Project links**
 
 - Live site: [transit.chelseakr.com](https://transit.chelseakr.com)
+- Relationship view: [transit.chelseakr.com/handoffs](https://transit.chelseakr.com/handoffs)
 - Source repository: [github.com/ChelseaKR/transit-delivery-atlas](https://github.com/ChelseaKR/transit-delivery-atlas)
 
 **Transit Delivery Atlas** is an independent, source-linked crosswalk for
@@ -26,6 +27,8 @@ dependencies, expected outputs, and open implementation questions.
 - A structured reading of the signed executive order
 - A traceable separation among source language, reviewed public evidence, and analysis
 - A public dataset with section locators, review dates, and stable identifiers
+- A relationship index separating explicitly named bodies from inferred
+  cross-directive links
 - A way to surface delivery questions that the primary source does not answer
 
 ## What this is not
@@ -35,6 +38,8 @@ dependencies, expected outputs, and open implementation questions.
 - Evidence that work has or has not occurred outside the public record
 - A comprehensive or live catalog of implementation activity
 - A geographic map, transit-feed validator, or reporting automation system
+- An official workflow, responsibility matrix, critical path, or interagency
+  handoff record
 
 ## Primary sources
 
@@ -59,13 +64,19 @@ and CSV under `public/data/`.
 
 The public JSON keeps those layers separate. `directives.csv` contains the
 source/analysis crosswalk, while `evidence.csv` contains the public-artifact
-records and their explicit directive relationships. Omission from the evidence
-collection does not show that no activity or public record exists; inclusion
-does not establish completion, compliance, or performance.
+records and their explicit directive relationships.
+`directive-organizations.csv` normalizes the 50 source-role links, and
+`directive-relationships.csv` normalizes the 27 inferred cross-references.
+The latter preserves analytical-record provenance without asserting workflow
+direction. Omission from the evidence collection does not show that no
+activity or public record exists; inclusion does not establish completion,
+compliance, or performance.
 
-See [the methodology](docs/METHODOLOGY.md), [evidence model](docs/EVIDENCE-MODEL.md),
-and [product specification](docs/PRD.md) for the classification model,
-acceptance criteria, and known limitations.
+See [the methodology](docs/METHODOLOGY.md),
+[relationship model](docs/RELATIONSHIP-MODEL.md),
+[evidence model](docs/EVIDENCE-MODEL.md), and
+[product specification](docs/PRD.md) for the classification model, acceptance
+criteria, and known limitations.
 
 ## Local development
 

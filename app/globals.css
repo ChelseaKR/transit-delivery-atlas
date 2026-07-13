@@ -843,6 +843,390 @@ h4 {
   cursor: pointer;
 }
 
+.document-hero--handoffs {
+  background:
+    linear-gradient(
+      90deg,
+      var(--timetable-blue) 0 0.3rem,
+      var(--transfer-teal) 0.3rem 0.6rem,
+      transparent 0.6rem
+    ),
+    var(--route-paper);
+}
+
+.handoff-hero__inner {
+  padding-bottom: 0;
+}
+
+.handoff-hero__actions {
+  margin-top: 1.6rem;
+}
+
+.relationship-manifest {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1px;
+  margin: clamp(2.5rem, 6vw, 5rem) 0 0;
+  border: 1px solid var(--control-border);
+  background: var(--control-border);
+}
+
+.relationship-manifest div {
+  min-width: 0;
+  display: grid;
+  gap: 0.3rem;
+  padding: 1rem;
+  background: white;
+}
+
+.relationship-manifest dt {
+  color: var(--night-soft);
+  font-family: var(--font-utility), monospace;
+  font-size: 0.7rem;
+  font-weight: 600;
+  line-height: 1.3;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.relationship-manifest dd {
+  grid-row: 1;
+  margin: 0;
+  color: var(--night-platform);
+  font-family: var(--font-display), "Arial Narrow", sans-serif;
+  font-size: clamp(2rem, 5vw, 3.4rem);
+  font-weight: 700;
+  line-height: 1;
+}
+
+.transfer-seam {
+  position: relative;
+  height: 5.2rem;
+  overflow: hidden;
+}
+
+.transfer-seam__source,
+.transfer-seam__analysis {
+  position: absolute;
+  top: 2.5rem;
+  width: calc(50% + 0.15rem);
+  height: 0.22rem;
+}
+
+.transfer-seam__source {
+  left: 0;
+  background: var(--timetable-blue);
+}
+
+.transfer-seam__analysis {
+  right: 0;
+  background: var(--transfer-teal);
+}
+
+.transfer-seam__junction {
+  position: absolute;
+  z-index: 1;
+  top: 1.9rem;
+  left: 50%;
+  width: 1.4rem;
+  height: 1.4rem;
+  border: 0.22rem solid var(--night-platform);
+  border-radius: 50%;
+  background: var(--route-paper);
+  transform: translateX(-50%);
+}
+
+.handoff-section {
+  padding-block: clamp(4rem, 8vw, 7rem);
+}
+
+.handoff-section--source {
+  background: white;
+}
+
+.handoff-section--analysis {
+  border-top: 1px solid var(--rail-steel-dark);
+  background: var(--analysis-wash);
+}
+
+.relationship-explorer .filters {
+  position: static;
+  border-top-color: var(--timetable-blue);
+  background: var(--source-wash);
+}
+
+.relationship-explorer .filters--analysis {
+  border-top-color: var(--transfer-teal);
+  background: white;
+}
+
+.organization-list,
+.dependency-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.organization-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  align-items: start;
+}
+
+.organization-list__featured {
+  grid-column: 1 / -1;
+}
+
+.organization-card {
+  display: grid;
+  grid-template-columns: 2.6rem minmax(0, 1fr);
+  border: 1px solid var(--control-border);
+  background: white;
+  transition: border-color 120ms ease, box-shadow 120ms ease;
+}
+
+.organization-card:hover,
+.organization-card:focus-within {
+  border-color: var(--night-platform);
+  box-shadow: 0.35rem 0.35rem 0 var(--rail-steel);
+}
+
+.organization-card__signal {
+  display: flex;
+  justify-content: center;
+  border-right: 1px solid var(--control-border);
+  padding-top: 1.25rem;
+  background: var(--source-wash);
+}
+
+.organization-card__signal span {
+  width: 0.9rem;
+  height: 0.9rem;
+  border: 0.16rem solid var(--timetable-blue);
+  background: white;
+}
+
+.organization-card__body {
+  min-width: 0;
+  padding: 1.25rem;
+}
+
+.organization-card h4 {
+  margin-bottom: 0.35rem;
+  font-family: var(--font-display), "Arial Narrow", sans-serif;
+  font-size: 1.8rem;
+  text-transform: uppercase;
+}
+
+.organization-card__name {
+  margin-bottom: 1.2rem;
+  color: var(--night-soft);
+}
+
+.role-counts {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1px;
+  margin: 0 0 1.25rem;
+  border: 1px solid var(--rail-steel-dark);
+  background: var(--rail-steel-dark);
+}
+
+.role-counts div {
+  min-width: 0;
+  display: grid;
+  gap: 0.2rem;
+  padding: 0.65rem;
+  background: var(--route-paper);
+}
+
+.role-counts dt {
+  color: var(--night-soft);
+  font-family: var(--font-utility), monospace;
+  font-size: 0.62rem;
+  line-height: 1.3;
+  text-transform: uppercase;
+}
+
+.role-counts dd {
+  grid-row: 1;
+  margin: 0;
+  color: var(--timetable-blue);
+  font-family: var(--font-utility), monospace;
+  font-weight: 700;
+}
+
+.organization-card__roles {
+  display: grid;
+  gap: 1.2rem;
+}
+
+.organization-card__roles section + section {
+  padding-top: 1.2rem;
+  border-top: 1px solid var(--rail-steel);
+}
+
+.organization-card__roles h5,
+.dependency-route__connections h5 {
+  margin: 0 0 0.45rem;
+  font-family: var(--font-utility), monospace;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.organization-card__roles ul,
+.dependency-route__connections ul {
+  display: grid;
+  gap: 0.3rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.organization-list__featured .organization-card__roles ul {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.3rem 1.25rem;
+}
+
+.organization-card__roles a,
+.dependency-route__connections a {
+  min-height: 2.75rem;
+  display: grid;
+  grid-template-columns: 3.2rem 1fr;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.45rem 0;
+  color: var(--night-platform);
+  font-size: 0.9rem;
+  line-height: 1.3;
+  text-decoration: none;
+}
+
+.organization-card__roles a:hover,
+.dependency-route__connections a:hover {
+  color: var(--timetable-blue);
+  text-decoration: underline;
+}
+
+.organization-card__roles a span,
+.dependency-route__connections a span {
+  padding: 0.25rem 0.35rem;
+  border: 1px solid currentColor;
+  color: var(--timetable-blue);
+  font-family: var(--font-utility), monospace;
+  font-size: 0.66rem;
+  font-weight: 700;
+  text-align: center;
+}
+
+.dependency-list {
+  display: grid;
+  gap: 1rem;
+}
+
+.dependency-route {
+  display: grid;
+  grid-template-columns: 5rem minmax(0, 1fr);
+  border: 1px solid var(--control-border);
+  background: white;
+  transition: border-color 120ms ease, box-shadow 120ms ease;
+}
+
+.dependency-route:hover,
+.dependency-route:focus-within {
+  border-color: var(--night-platform);
+  box-shadow: 0.35rem 0.35rem 0 var(--rail-steel);
+}
+
+.dependency-route__origin {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  border-right: 1px solid var(--control-border);
+  padding-top: 1.25rem;
+  background: var(--analysis-wash);
+}
+
+.dependency-route__origin::after {
+  content: "";
+  position: absolute;
+  top: 3.9rem;
+  bottom: 1.25rem;
+  left: 50%;
+  width: 0.18rem;
+  background: var(--transfer-teal);
+  transform: translateX(-50%);
+}
+
+.dependency-route__origin > span {
+  position: relative;
+  z-index: 1;
+  align-self: flex-start;
+  min-width: 2.9rem;
+  padding: 0.38rem 0.42rem;
+  border: 1px solid var(--transfer-teal);
+  border-radius: 1rem;
+  background: white;
+  color: var(--transfer-teal);
+  font-family: var(--font-utility), monospace;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-align: center;
+}
+
+.dependency-route__body {
+  min-width: 0;
+  padding: 1.35rem;
+}
+
+.dependency-route h4 {
+  margin-bottom: 0.9rem;
+  font-size: 1.35rem;
+}
+
+.dependency-route__record-link {
+  color: var(--night-platform);
+  text-decoration-color: var(--transfer-teal);
+}
+
+.dependency-route__record-link:hover {
+  color: var(--transfer-teal);
+}
+
+.dependency-route__text {
+  margin-bottom: 0.55rem;
+  color: var(--night-platform);
+  font-size: 1.08rem;
+}
+
+.dependency-route__confidence {
+  color: var(--night-soft);
+  font-family: var(--font-utility), monospace;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.dependency-route__connections {
+  margin-top: 1.25rem;
+  padding: 1rem;
+  border-left: 0.3rem solid var(--transfer-teal);
+  background: var(--analysis-wash);
+}
+
+.dependency-route__connections a span {
+  color: var(--transfer-teal);
+}
+
+.dependency-route__empty {
+  margin: 1.25rem 0 0;
+  padding: 1rem;
+  border: 1px dashed var(--control-border);
+  color: var(--night-soft);
+}
+
 .document-page,
 .directive-page {
   min-height: 70vh;
@@ -1643,6 +2027,22 @@ code {
     grid-template-columns: 1fr;
   }
 
+  .relationship-manifest {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .organization-list {
+    grid-template-columns: 1fr;
+  }
+
+  .organization-list__featured {
+    grid-column: auto;
+  }
+
+  .organization-list__featured .organization-card__roles ul {
+    grid-template-columns: 1fr;
+  }
+
   .deadline-rail {
     border-top: 0;
     border-left: 0.18rem solid var(--night-platform);
@@ -1727,6 +2127,35 @@ code {
     grid-column: auto;
   }
 
+  .relationship-manifest,
+  .role-counts {
+    grid-template-columns: 1fr;
+  }
+
+  .organization-card,
+  .dependency-route {
+    display: block;
+  }
+
+  .organization-card__signal,
+  .dependency-route__origin {
+    min-height: 3.5rem;
+    justify-content: flex-start;
+    border-right: 0;
+    border-bottom: 1px solid var(--control-border);
+    padding: 0.8rem 1rem;
+  }
+
+  .dependency-route__origin::after {
+    top: 50%;
+    right: 1rem;
+    bottom: auto;
+    left: 4.7rem;
+    width: auto;
+    height: 0.18rem;
+    transform: translateY(-50%);
+  }
+
   .directive-card {
     display: block;
   }
@@ -1773,7 +2202,10 @@ code {
   .record-layer,
   .download-card,
   .evidence-card,
-  .evidence-empty {
+  .evidence-empty,
+  .organization-card,
+  .dependency-route,
+  .relationship-manifest {
     border: 2px solid CanvasText;
     box-shadow: none;
   }
@@ -1786,6 +2218,10 @@ code {
     border-color: CanvasText;
     background: Canvas;
     box-shadow: none;
+  }
+
+  .transfer-seam {
+    display: none;
   }
 }
 
@@ -1804,10 +2240,34 @@ code {
     color: black;
   }
 
+  .boundary-section {
+    background: white;
+    color: black;
+  }
+
+  .boundary-grid .utility-label,
+  .boundary-grid > p {
+    color: black;
+  }
+
   .record-layer,
   .directive-card,
-  .evidence-card {
+  .evidence-card,
+  .organization-card,
+  .dependency-route {
     break-inside: avoid;
     box-shadow: none;
+  }
+
+  .organization-list__featured .organization-card {
+    break-inside: auto;
+  }
+
+  .transfer-seam {
+    display: none;
+  }
+
+  .handoff-section--analysis {
+    background: white;
   }
 }

@@ -287,9 +287,9 @@ const sourceContextIds = directiveData.orderMetadata.sourceContexts.map(({ id })
 const sourceNoticeIds = directiveData.orderMetadata.sourceNotices.map(({ id }) => id);
 const sourceContextIdSet = new Set(sourceContextIds);
 
-unique([...sourceIds], "Source IDs");
-unique([...organizationIds], "Organization IDs");
-unique([...themeIds], "Theme IDs");
+unique(sources.map(({ id }) => id), "Source IDs");
+unique(organizations.map(({ id }) => id), "Organization IDs");
+unique(themes.map(({ id }) => id), "Theme IDs");
 unique(directiveIds, "Directive IDs");
 unique(analysisData.analysis.map(({ directiveId }) => directiveId), "Analysis IDs");
 unique(evidenceData.evidence.map(({ id }) => id), "Evidence IDs");
@@ -490,16 +490,33 @@ for (const record of analysisData.analysis) {
   if (!directiveIds.includes(record.directiveId)) {
     throw new Error(`Orphan analysis record ${record.directiveId}.`);
   }
+  unique(record.themeIds, `${record.directiveId} analytical themes`);
   for (const themeId of record.themeIds) {
     if (!themeIds.has(themeId)) {
       throw new Error(`${record.directiveId} references unknown theme ${themeId}.`);
     }
   }
   for (const dependency of record.dependencies) {
+    unique(
+      dependency.relatedDirectiveIds,
+      `${record.directiveId} dependency related directives`,
+    );
+    if (dependency.relatedDirectiveIds.includes(record.directiveId)) {
+      throw new Error(`${record.directiveId} dependency cannot reference itself.`);
+    }
     for (const relatedId of dependency.relatedDirectiveIds) {
       if (!directiveIds.includes(relatedId)) {
         throw new Error(`${record.directiveId} references unknown directive ${relatedId}.`);
       }
+    }
+    const relatedOrders = dependency.relatedDirectiveIds.map(
+      (relatedId) => directiveById.get(relatedId).order,
+    );
+    const sortedOrders = [...relatedOrders].sort((left, right) => left - right);
+    if (JSON.stringify(relatedOrders) !== JSON.stringify(sortedOrders)) {
+      throw new Error(
+        `${record.directiveId} dependency references must remain in signed-document order.`,
+      );
     }
   }
 }

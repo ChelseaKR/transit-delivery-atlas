@@ -5,7 +5,7 @@ import { SiteHeader } from "@/components/SiteHeader";
 export const metadata: Metadata = {
   title: "Open data",
   description:
-    "Download the Transit Delivery Atlas directive and public-evidence crosswalk as JSON or CSV and review its schema.",
+    "Download the Transit Delivery Atlas directive, named-body, analytical-relationship, and public-evidence crosswalks and review the public schema.",
   alternates: { canonical: "/data" },
 };
 
@@ -15,6 +15,8 @@ const fields = [
   ["locator", "Signed section and source PDF page"],
   ["excerpt", "Short independently reviewed transcription"],
   ["leadOrgIds", "Organizations explicitly directed as leads"],
+  ["collaboratorOrgIds", "Organizations explicitly named as collaborators"],
+  ["mentionedOrgIds", "Other bodies or role groups explicitly named in the directive"],
   ["timing", "Source phrase, transparent calculation, and what it applies to"],
   ["analysis", "Separately stored summary, themes, outputs, dependencies, and questions"],
   ["evidenceScope", "Selective-coverage statement for the reviewed public-artifact layer"],
@@ -37,7 +39,8 @@ export default function DataPage() {
             <p>
               The interface and downloads are generated from the same 21 source
               records, separately stored analytical records, and selective
-              public-evidence collection.
+              public-evidence collection. Normalized relationship tables are
+              derived during the same deterministic build.
             </p>
           </div>
         </header>
@@ -62,6 +65,16 @@ export default function DataPage() {
                   <strong>Flattened evidence table</strong>
                   <small>One row per reviewed public artifact</small>
                 </a>
+                <a className="download-card" href="/data/directive-organizations.csv" download>
+                  <span className="file-type">SOURCE LINKS CSV</span>
+                  <strong>Directive-to-body relationships</strong>
+                  <small>One row per explicit lead, collaborator, or other named party</small>
+                </a>
+                <a className="download-card" href="/data/directive-relationships.csv" download>
+                  <span className="file-type">ANALYSIS LINKS CSV</span>
+                  <strong>Directive cross-references</strong>
+                  <small>One row per related-directive ID in an inferred dependency statement</small>
+                </a>
                 <a className="download-card" href="/data/schema.json">
                   <span className="file-type">SCHEMA</span>
                   <strong>JSON Schema</strong>
@@ -79,6 +92,22 @@ export default function DataPage() {
                 Schema is the exhaustive contract for the JSON dataset. Evidence
                 is a separate top-level collection so a public artifact never
                 silently changes the signed source or analytical record.
+              </p>
+              <p>
+                The normalized relationship CSVs flatten explicit source-role
+                assignments and recorded cross-reference edges already present
+                in that JSON contract. They are not replacements for the complete
+                JSON: dependency statements without a related directive remain in
+                the JSON and interface. In the analytical table,
+                <code>record_directive_id</code> identifies the record carrying the
+                statement; it does not assert workflow direction, sequence,
+                ownership, or implementation status.
+              </p>
+              <p>
+                Product and data-contract versions are tracked independently.
+                Release 0.3 adds this interface and normalized CSVs without
+                changing the canonical JSON shape, so that schema remains at
+                version 0.2.0.
               </p>
               <div className="table-scroll" tabIndex={0} role="region" aria-label="Data dictionary table">
                 <table>

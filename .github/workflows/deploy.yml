@@ -108,7 +108,7 @@ jobs:
           deployed_sha=$(curl_edge "https://${site_domain}/version.json" | jq -r '.sha')
           test "$deployed_sha" = "$EXPECTED_SHA"
 
-          for route in / /evidence/ /methodology/ /data/ /accessibility/ /directives/n-7-26-5/; do
+          for route in / /handoffs/ /evidence/ /methodology/ /data/ /accessibility/ /directives/n-7-26-5/; do
             curl_edge "https://${site_domain}${route}" > /dev/null
           done
 
@@ -119,6 +119,11 @@ jobs:
           grep -Fq 'Public artifacts, linked with limits.' /tmp/evidence.html
           grep -Fq 'https://chelseakr.com/writing/signed-transit-order-start' /tmp/evidence.html
 
+          curl_edge "https://${site_domain}/handoffs/" > /tmp/handoffs.html
+          grep -Fq 'Trace the delivery relationships.' /tmp/handoffs.html
+          grep -Fq 'Explicit source-role links' /tmp/handoffs.html
+          grep -Fq 'A relationship is not a status.' /tmp/handoffs.html
+
           curl_edge "https://${site_domain}/directives/n-7-26-5/" > /tmp/directive.html
           grep -Fq 'Transit Executive Order N-7-26 Resource Material' /tmp/directive.html
 
@@ -128,6 +133,16 @@ jobs:
             | grep -Fq 'n-7-26-5'
           curl_edge "https://${site_domain}/data/evidence.csv" \
             | grep -Fq 'ctc-2026-07-15-order-5-reference-material'
+          curl_edge "https://${site_domain}/data/directive-organizations.csv" \
+            > /tmp/directive-organizations.csv
+          test "$(wc -l < /tmp/directive-organizations.csv | tr -d ' ')" = "51"
+          head -n 1 /tmp/directive-organizations.csv | grep -Fq '"source_role"'
+          grep -Fq '"explicit-collaborator"' /tmp/directive-organizations.csv
+          curl_edge "https://${site_domain}/data/directive-relationships.csv" \
+            > /tmp/directive-relationships.csv
+          test "$(wc -l < /tmp/directive-relationships.csv | tr -d ' ')" = "28"
+          head -n 1 /tmp/directive-relationships.csv | grep -Fq '"reciprocal_reference"'
+          grep -Fq '"inferred"' /tmp/directive-relationships.csv
           curl_edge "https://${site_domain}/og.png" > /tmp/og.png
           test "$(wc -c < /tmp/og.png)" -gt 10000
 

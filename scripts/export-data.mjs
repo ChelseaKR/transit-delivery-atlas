@@ -302,6 +302,113 @@ const evidenceCsv = [
   ...evidenceCsvRows.map((row) => row.map(csvCell).join(",")),
 ].join("\n");
 
+const directiveOrganizationsCsvColumns = [
+  "schema_version",
+  "directive_id",
+  "section",
+  "directive_title",
+  "organization_id",
+  "organization_name",
+  "organization_short_name",
+  "organization_kind",
+  "source_role",
+  "source_id",
+  "source_url",
+  "last_reviewed_on",
+];
+
+const sourceRoleGroups = [
+  ["explicit-lead", "leadOrgIds"],
+  ["explicit-collaborator", "collaboratorOrgIds"],
+  ["other-named-party", "mentionedOrgIds"],
+];
+
+const directiveOrganizationsCsvRows = directives.flatMap((directive) =>
+  sourceRoleGroups.flatMap(([sourceRole, field]) =>
+    directive[field].map((organizationId) => {
+      const organization = organizationById.get(organizationId);
+      if (!organization) {
+        throw new Error(
+          `Cannot export unknown organization ${organizationId} for ${directive.id}.`,
+        );
+      }
+      return [
+        directiveData.schemaVersion,
+        directive.id,
+        directive.label,
+        directive.title,
+        organization.id,
+        organization.name,
+        organization.shortName,
+        organization.kind,
+        sourceRole,
+        directive.sourceId,
+        directive.sourceUrl,
+        directive.lastReviewedOn,
+      ];
+    }),
+  ),
+);
+
+const directiveOrganizationsCsv = [
+  directiveOrganizationsCsvColumns.map(csvCell).join(","),
+  ...directiveOrganizationsCsvRows.map((row) => row.map(csvCell).join(",")),
+].join("\n");
+
+const directiveRelationshipsCsvColumns = [
+  "schema_version",
+  "record_directive_id",
+  "record_section",
+  "record_title",
+  "related_directive_id",
+  "related_section",
+  "related_title",
+  "dependency_text",
+  "origin",
+  "confidence",
+  "reciprocal_reference",
+];
+
+function hasReciprocalReference(recordDirectiveId, relatedDirectiveId) {
+  const relatedAnalysis = analysisById.get(relatedDirectiveId);
+  return Boolean(
+    relatedAnalysis?.dependencies.some((dependency) =>
+      dependency.relatedDirectiveIds.includes(recordDirectiveId),
+    ),
+  );
+}
+
+const directiveRelationshipsCsvRows = directives.flatMap((directive) =>
+  directive.analysis.dependencies.flatMap((dependency) =>
+    dependency.relatedDirectiveIds.map((relatedDirectiveId) => {
+      const relatedDirective = directives.find(({ id }) => id === relatedDirectiveId);
+      if (!relatedDirective) {
+        throw new Error(
+          `Cannot export unknown related directive ${relatedDirectiveId} for ${directive.id}.`,
+        );
+      }
+      return [
+        directiveData.schemaVersion,
+        directive.id,
+        directive.label,
+        directive.title,
+        relatedDirective.id,
+        relatedDirective.label,
+        relatedDirective.title,
+        dependency.text,
+        dependency.origin,
+        dependency.confidence,
+        hasReciprocalReference(directive.id, relatedDirective.id),
+      ];
+    }),
+  ),
+);
+
+const directiveRelationshipsCsv = [
+  directiveRelationshipsCsvColumns.map(csvCell).join(","),
+  ...directiveRelationshipsCsvRows.map((row) => row.map(csvCell).join(",")),
+].join("\n");
+
 validateAgainstSchema(publicData, schema, schema);
 
 const outputDir = new URL("public/data/", root);
@@ -314,11 +421,19 @@ await Promise.all([
   writeFile(new URL("directives.csv", outputDir), `${csv}\n`),
   writeFile(new URL("evidence.csv", outputDir), `${evidenceCsv}\n`),
   writeFile(
+    new URL("directive-organizations.csv", outputDir),
+    `${directiveOrganizationsCsv}\n`,
+  ),
+  writeFile(
+    new URL("directive-relationships.csv", outputDir),
+    `${directiveRelationshipsCsv}\n`,
+  ),
+  writeFile(
     new URL("schema.json", outputDir),
     `${JSON.stringify(schema, null, 2)}\n`,
   ),
 ]);
 
 console.log(
-  `Exported ${directives.length} directives and ${evidenceData.evidence.length} evidence record(s) to JSON and CSV.`,
+  `Exported ${directives.length} directives, ${evidenceData.evidence.length} evidence record(s), ${directiveOrganizationsCsvRows.length} source-role links, and ${directiveRelationshipsCsvRows.length} analytical cross-references.`,
 );

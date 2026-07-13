@@ -13,6 +13,7 @@ export function SiteFooter() {
           </p>
         </div>
         <div className="site-footer__links">
+          <Link href="/handoffs">Delivery relationships</Link>
           <Link href="/evidence">Public evidence</Link>
           <Link href="/methodology">Methodology</Link>
           <Link href="/data">Open data</Link>
