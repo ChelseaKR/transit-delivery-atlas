@@ -17,6 +17,7 @@
 /.next/
 /.vinext/
 /out/
+/public/version.json
 
 # misc
 .DS_Store

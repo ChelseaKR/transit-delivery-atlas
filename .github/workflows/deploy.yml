@@ -1,0 +1,150 @@
+name: Deploy
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-production
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - name: Check out source
+        uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5
+        with:
+          persist-credentials: false
+
+      - name: Set up Node.js
+        uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
+        with:
+          node-version: 22.19.0
+          cache: npm
+
+      - name: Install locked dependencies
+        run: npm ci
+
+      - name: Build and run release checks
+        run: npm run check
+        env:
+          BUILD_SHA: ${{ github.sha }}
+          NEXT_TELEMETRY_DISABLED: 1
+
+      - name: Upload static release artifact
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: site
+          path: out
+          if-no-files-found: error
+          retention-days: 7
+
+  deploy:
+    if: github.ref == 'refs/heads/main'
+    needs: verify
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    environment:
+      name: production
+      url: https://transit.chelseakr.com
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - name: Download static release artifact
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          name: site
+          path: out
+
+      - name: Configure AWS credentials with GitHub OIDC
+        uses: aws-actions/configure-aws-credentials@7474bc4690e29a8392af63c5b98e7449536d5c3a # v4
+        with:
+          role-to-assume: ${{ vars.AWS_DEPLOY_ROLE_ARN }}
+          aws-region: ${{ vars.AWS_REGION }}
+
+      - name: Upload immutable Next.js assets
+        run: |
+          aws s3 sync out/_next/static/ "s3://${{ vars.S3_BUCKET }}/_next/static/" \
+            --cache-control "public, max-age=31536000, immutable"
+
+      - name: Upload mutable pages, data, and media
+        run: |
+          aws s3 sync out/ "s3://${{ vars.S3_BUCKET }}/" \
+            --delete \
+            --exclude "_next/static/*" \
+            --cache-control "public, max-age=0, must-revalidate"
+
+      - name: Invalidate CloudFront and wait
+        run: |
+          invalidation_id=$(aws cloudfront create-invalidation \
+            --distribution-id "${{ vars.CLOUDFRONT_DISTRIBUTION_ID }}" \
+            --paths "/*" \
+            --query 'Invalidation.Id' \
+            --output text)
+          aws cloudfront wait invalidation-completed \
+            --distribution-id "${{ vars.CLOUDFRONT_DISTRIBUTION_ID }}" \
+            --id "$invalidation_id"
+
+      - name: Smoke the exact CloudFront release
+        env:
+          EXPECTED_SHA: ${{ github.sha }}
+          CLOUDFRONT_DOMAIN: ${{ vars.CLOUDFRONT_DOMAIN_NAME }}
+        run: |
+          site_domain="transit.chelseakr.com"
+          edge="${site_domain}:443:${CLOUDFRONT_DOMAIN}:443"
+          curl_edge() {
+            curl --fail --silent --show-error --location --compressed \
+              --connect-to "$edge" "$@"
+          }
+
+          deployed_sha=$(curl_edge "https://${site_domain}/version.json" | jq -r '.sha')
+          test "$deployed_sha" = "$EXPECTED_SHA"
+
+          for route in / /evidence/ /methodology/ /data/ /accessibility/ /directives/n-7-26-5/; do
+            curl_edge "https://${site_domain}${route}" > /dev/null
+          done
+
+          curl_edge "https://${site_domain}/" > /tmp/home.html
+          grep -Fq 'From directive to delivery' /tmp/home.html
+
+          curl_edge "https://${site_domain}/evidence/" > /tmp/evidence.html
+          grep -Fq 'Public artifacts, linked with limits.' /tmp/evidence.html
+          grep -Fq 'https://chelseakr.com/writing/signed-transit-order-start' /tmp/evidence.html
+
+          curl_edge "https://${site_domain}/directives/n-7-26-5/" > /tmp/directive.html
+          grep -Fq 'Transit Executive Order N-7-26 Resource Material' /tmp/directive.html
+
+          curl_edge "https://${site_domain}/data/directives.json" \
+            | jq -e '.schemaVersion == "0.2.0" and any(.evidence[]; .id == "ctc-2026-07-15-order-5-reference-material")' >/dev/null
+          curl_edge "https://${site_domain}/data/directives.csv" \
+            | grep -Fq 'n-7-26-5'
+          curl_edge "https://${site_domain}/data/evidence.csv" \
+            | grep -Fq 'ctc-2026-07-15-order-5-reference-material'
+          curl_edge "https://${site_domain}/og.png" > /tmp/og.png
+          test "$(wc -c < /tmp/og.png)" -gt 10000
+
+          status=$(curl --silent --output /tmp/not-found.html --write-out '%{http_code}' \
+            --connect-to "$edge" "https://${site_domain}/deploy-smoke-not-found/")
+          test "$status" = "404"
+          grep -Fq 'This page does not exist.' /tmp/not-found.html
+
+          curl --fail --silent --show-error --head --connect-to "$edge" \
+            "https://${site_domain}/" > /tmp/headers.txt
+          grep -Eiq '^strict-transport-security:' /tmp/headers.txt
+          grep -Eiq '^content-security-policy:' /tmp/headers.txt
+          grep -Eiq '^x-content-type-options: *nosniff' /tmp/headers.txt
+          grep -Eiq '^x-frame-options: *deny' /tmp/headers.txt
+          grep -Eiq '^referrer-policy: *strict-origin-when-cross-origin' /tmp/headers.txt
+          grep -Eiq '^permissions-policy:.*camera=\(\)' /tmp/headers.txt
+
+      - name: Deployment summary
+        run: |
+          echo "Deployed $GITHUB_SHA to https://transit.chelseakr.com" >> "$GITHUB_STEP_SUMMARY"

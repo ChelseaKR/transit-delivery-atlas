@@ -8,8 +8,8 @@ export default function NotFound() {
       <SiteHeader />
       <main id="main-content" className="not-found" tabIndex={-1}>
         <p className="utility-label">Not found</p>
-        <h1>This directive page does not exist.</h1>
-        <p>Return to the signed document order and choose one of the 21 directive units.</p>
+        <h1>This page does not exist.</h1>
+        <p>Return to the Atlas and explore the 21 directive units in signed document order.</p>
         <Link className="button" href="/#directives">Explore directives</Link>
       </main>
       <SiteFooter />
