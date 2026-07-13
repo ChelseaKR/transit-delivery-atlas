@@ -2,7 +2,7 @@
 
 ## Source hierarchy
 
-Version 0.2 uses the signed Executive Order N-7-26 as the controlling source.
+The Atlas uses the signed Executive Order N-7-26 as the controlling source.
 The Governor’s announcement provides context but does not override the signed
 text.
 
@@ -55,6 +55,24 @@ that no implementation activity or public record exists.
 An inference is never promoted to the source or evidence layer because it
 appears likely. An artifact never changes the signed source record.
 
+## Relationship and handoff view
+
+The handoff page joins existing records without adding an official workflow.
+Its source layer groups directive-level `leadOrgIds`, `collaboratorOrgIds`, and
+`mentionedOrgIds` under controlled source-role classifications. Its analytical
+layer shows every inferred dependency statement and any `relatedDirectiveIds`
+stored with that statement.
+
+Related directive IDs are cross-references, not typed workflow edges. They do
+not establish upstream or downstream direction, sequence, ownership,
+responsibility, implementation activity, or performance. Reciprocal references
+mean that two analytical records point to each other. Confidence labels describe
+the independent interpretation; they are not priority or risk scores.
+
+The normalized relationship CSVs are generated from the canonical source and
+analysis arrays. See the [relationship model](RELATIONSHIP-MODEL.md) for exact
+derivation and review rules.
+
 ## Timing calculations
 
 The order became effective June 26, 2026. Section 1 begins with “Within 120 days
@@ -93,6 +111,10 @@ dashboard behavior, not delivery timing.
 - Calculated dates are planning aids rather than legal interpretations.
 - Analytical dependencies identify questions for investigation, not official
   assignments.
+- Organization roles are classified at the directive level; compound directives
+  do not yet have action-level responsibility records.
+- Related directive IDs encode analytical relatedness, not a controlled or
+  directional handoff type.
 
 ## Corrections
 

@@ -1,7 +1,7 @@
 {
   "name": "transit-delivery-atlas",
-  "version": "0.2.0",
-  "description": "Independent, source-linked crosswalk of California transit directives, named entities, timing, dependencies, and open questions.",
+  "version": "0.3.0",
+  "description": "Independent, source-linked crosswalk of California transit directives, named bodies, timing, evidence, and analytical delivery relationships.",
   "private": true,
   "engines": {
     "node": ">=22.13.0"
@@ -11,7 +11,7 @@
     "build": "npm run data:export && node scripts/write-version.mjs && next build",
     "data:validate": "node scripts/validate-data.mjs",
     "data:export": "npm run data:validate && node scripts/export-data.mjs",
-    "test": "npm run build && node --test tests/data-integrity.test.mjs tests/rendered-html.test.mjs tests/hosting.test.mjs",
+    "test": "npm run build && node --experimental-strip-types --test tests/data-integrity.test.mjs tests/rendered-html.test.mjs tests/hosting.test.mjs",
     "lint": "eslint . --ignore-pattern dist --ignore-pattern .next",
     "typecheck": "tsc --noEmit --incremental false",
     "audit:production": "npm audit --omit=dev --audit-level=moderate",

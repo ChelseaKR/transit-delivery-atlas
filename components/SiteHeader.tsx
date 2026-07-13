@@ -16,6 +16,7 @@ export function SiteHeader() {
         </Link>
         <nav aria-label="Primary navigation">
           <Link href="/#directives">Directives</Link>
+          <Link href="/handoffs">Relationships</Link>
           <Link href="/evidence">Evidence</Link>
           <Link href="/methodology">Method</Link>
           <Link href="/data">Data</Link>

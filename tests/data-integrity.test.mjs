@@ -1,6 +1,10 @@
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import test from "node:test";
+import {
+  filterDependencyRoutes,
+  filterNamedBodies,
+} from "../lib/relationship-filters.ts";
 import { isIsoDate } from "../scripts/iso-date.mjs";
 
 const root = new URL("../", import.meta.url);
@@ -317,6 +321,236 @@ test("public JSON, JSON Schema, and evidence CSV expose one consistent evidence 
     );
     assert.equal(value("limitations"), record.limitations.join(" || "));
   }
+});
+
+test("normalized body-role export matches all 50 canonical source relationships", async () => {
+  const [directiveData, organizations, sources, csvText] = await Promise.all([
+    readJson("data/directives.json"),
+    readJson("data/organizations.json"),
+    readJson("data/sources.json"),
+    readFile(new URL("public/data/directive-organizations.csv", root), "utf8"),
+  ]);
+  const organizationById = new Map(organizations.map((item) => [item.id, item]));
+  const sourceById = new Map(sources.map((item) => [item.id, item]));
+  const roleFields = [
+    ["explicit-lead", "leadOrgIds"],
+    ["explicit-collaborator", "collaboratorOrgIds"],
+    ["other-named-party", "mentionedOrgIds"],
+  ];
+  const expected = directiveData.directives.flatMap((directive) =>
+    roleFields.flatMap(([role, field]) =>
+      directive[field].map((organizationId) => ({
+        schema_version: directiveData.schemaVersion,
+        directive_id: directive.id,
+        section: directive.label,
+        directive_title: directive.title,
+        organization_id: organizationId,
+        organization_name: organizationById.get(organizationId).name,
+        organization_short_name: organizationById.get(organizationId).shortName,
+        organization_kind: organizationById.get(organizationId).kind,
+        source_role: role,
+        source_id: directive.sourceId,
+        source_url: sourceById.get(directive.sourceId).url,
+        last_reviewed_on: directive.lastReviewedOn,
+      })),
+    ),
+  );
+
+  assert.equal(expected.length, 50);
+  assert.equal(new Set(expected.map(({ organization_id }) => organization_id)).size, 23);
+
+  const [header, ...rows] = parseCsv(csvText);
+  assert.deepEqual(header, [
+    "schema_version",
+    "directive_id",
+    "section",
+    "directive_title",
+    "organization_id",
+    "organization_name",
+    "organization_short_name",
+    "organization_kind",
+    "source_role",
+    "source_id",
+    "source_url",
+    "last_reviewed_on",
+  ]);
+  assert.equal(rows.length, expected.length);
+
+  const actual = rows.map((row) =>
+    Object.fromEntries(header.map((column, index) => [column, row[index]])),
+  );
+  for (const [index, expectedRow] of expected.entries()) {
+    for (const [column, value] of Object.entries(expectedRow)) {
+      assert.equal(actual[index][column], value, `${index}.${column}`);
+    }
+  }
+});
+
+test("normalized analytical relationships preserve 27 cross-references without workflow direction", async () => {
+  const [directiveData, analysisData, csvText] = await Promise.all([
+    readJson("data/directives.json"),
+    readJson("data/analysis.json"),
+    readFile(new URL("public/data/directive-relationships.csv", root), "utf8"),
+  ]);
+  const directiveById = new Map(
+    directiveData.directives.map((directive) => [directive.id, directive]),
+  );
+  const referenceKeys = new Set(
+    analysisData.analysis.flatMap((record) =>
+      record.dependencies.flatMap((dependency) =>
+        dependency.relatedDirectiveIds.map(
+          (relatedDirectiveId) => `${record.directiveId}->${relatedDirectiveId}`,
+        ),
+      ),
+    ),
+  );
+  const expected = analysisData.analysis.flatMap((record) =>
+    record.dependencies.flatMap((dependency) =>
+      dependency.relatedDirectiveIds.map((relatedDirectiveId) => {
+        assert.notEqual(relatedDirectiveId, record.directiveId);
+        return {
+          schema_version: analysisData.schemaVersion,
+          record_directive_id: record.directiveId,
+          record_section: directiveById.get(record.directiveId).label,
+          record_title: directiveById.get(record.directiveId).title,
+          related_directive_id: relatedDirectiveId,
+          related_section: directiveById.get(relatedDirectiveId).label,
+          related_title: directiveById.get(relatedDirectiveId).title,
+          dependency_text: dependency.text,
+          origin: dependency.origin,
+          confidence: dependency.confidence,
+          reciprocal_reference: String(
+            referenceKeys.has(`${relatedDirectiveId}->${record.directiveId}`),
+          ),
+        };
+      }),
+    ),
+  );
+
+  assert.equal(analysisData.analysis.flatMap(({ dependencies }) => dependencies).length, 21);
+  assert.equal(expected.length, 27);
+  assert.equal(
+    new Set(
+      expected.map(({ record_directive_id, related_directive_id }) =>
+        [record_directive_id, related_directive_id].sort().join("<->"),
+      ),
+    ).size,
+    15,
+  );
+  assert.equal(
+    expected.filter(({ reciprocal_reference }) => reciprocal_reference === "true").length,
+    24,
+  );
+
+  const [header, ...rows] = parseCsv(csvText);
+  assert.deepEqual(header, [
+    "schema_version",
+    "record_directive_id",
+    "record_section",
+    "record_title",
+    "related_directive_id",
+    "related_section",
+    "related_title",
+    "dependency_text",
+    "origin",
+    "confidence",
+    "reciprocal_reference",
+  ]);
+  assert.equal(rows.length, expected.length);
+  const actual = rows.map((row) =>
+    Object.fromEntries(header.map((column, index) => [column, row[index]])),
+  );
+  assert.deepEqual(actual, expected);
+});
+
+test("handoff filters cover source roles, body types, themes, confidence, and empty links", async () => {
+  const dataset = await readJson("public/data/directives.json");
+  const roleFields = [
+    ["lead", "leadOrgIds"],
+    ["collaborator", "collaboratorOrgIds"],
+    ["mentioned", "mentionedOrgIds"],
+  ];
+  const bodies = dataset.organizations
+    .map((organization) => ({
+      ...organization,
+      kindLabel: organization.kind.replaceAll("-", " "),
+      occurrences: dataset.directives.flatMap((directive) =>
+        roleFields.flatMap(([role, field]) =>
+          directive[field].includes(organization.id)
+            ? [{ label: directive.label, title: directive.title, role }]
+            : [],
+        ),
+      ),
+    }))
+    .filter(({ occurrences }) => occurrences.length > 0);
+  const directivesById = new Map(
+    dataset.directives.map((directive) => [directive.id, directive]),
+  );
+  const routes = dataset.directives.flatMap((directive) =>
+    directive.analysis.dependencies.map((dependency) => ({
+      directive,
+      text: dependency.text,
+      confidence: dependency.confidence,
+      themes: directive.analysis.themeIds.map((themeId) => ({
+        id: themeId,
+        name: dataset.themes.find(({ id }) => id === themeId).name,
+      })),
+      relatedDirectives: dependency.relatedDirectiveIds.map((id) =>
+        directivesById.get(id),
+      ),
+    })),
+  );
+
+  const emptyOrganizationFilters = { query: "", kind: "", role: "" };
+  assert.equal(filterNamedBodies(bodies, emptyOrganizationFilters).length, 23);
+  assert.deepEqual(
+    filterNamedBodies(bodies, { ...emptyOrganizationFilters, role: "lead" }).map(
+      ({ id }) => id,
+    ),
+    ["caltrans", "calsta"],
+  );
+  assert.equal(
+    filterNamedBodies(bodies, {
+      ...emptyOrganizationFilters,
+      kind: "federal-agency",
+    }).length,
+    4,
+  );
+  assert.deepEqual(
+    filterNamedBodies(bodies, { ...emptyOrganizationFilters, query: "CTC" }).map(
+      ({ id }) => id,
+    ),
+    ["ctc"],
+  );
+
+  const emptyDependencyFilters = {
+    query: "",
+    theme: "",
+    confidence: "",
+    connection: "",
+  };
+  assert.equal(filterDependencyRoutes(routes, emptyDependencyFilters).length, 21);
+  assert.equal(
+    filterDependencyRoutes(routes, {
+      ...emptyDependencyFilters,
+      connection: "unlinked",
+    }).length,
+    4,
+  );
+  assert.equal(
+    filterDependencyRoutes(routes, {
+      ...emptyDependencyFilters,
+      theme: "data-shared-systems",
+    }).length,
+    5,
+  );
+  assert.equal(
+    filterDependencyRoutes(routes, {
+      ...emptyDependencyFilters,
+      confidence: "high",
+    }).length,
+    10,
+  );
 });
 
 test("only Section 1 carries explicit timing and 1(e) carries two milestones", async () => {

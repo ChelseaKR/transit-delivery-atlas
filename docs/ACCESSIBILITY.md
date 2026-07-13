@@ -30,6 +30,8 @@ relevant; it does not make this repository an official or certified system.
 - Semantic page regions and heading hierarchy
 - Skip link and visible keyboard focus
 - Native, persistently labeled filter controls
+- Source-role and analytical-relationship layers remain consecutive and
+  text-complete without their decorative rails
 - Status and timing communicated with text, not color alone
 - Search-result changes announced through a restrained live region
 - No hover-only information or keyboard traps
@@ -56,7 +58,8 @@ Pending before any conformance claim:
 2. **Zoom and low vision:** full 200% and 400% zoom, text-spacing, forced-colors,
    and narrow-width review across every route.
 3. **Assistive technology:** VoiceOver and NVDA or JAWS review of the explorer,
-   directive detail, evidence index, methodology, and data download flows.
+   handoff filters, directive detail, evidence index, methodology, and data
+   download flows.
 4. **Human evaluation:** testing with disabled users and documented decisions
    about external source and evidence-file accessibility, including the
    inaccessible signed source.

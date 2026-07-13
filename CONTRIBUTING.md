@@ -32,6 +32,13 @@ implying completion, compliance, performance, or comprehensive coverage.
 Scheduled-event dates must remain labeled as scheduled unless a later reviewed
 record supports different wording.
 
+A relationship correction should identify whether it changes a signed-source
+role or an analytical cross-reference. Source-role changes require the signed
+section and page locator. Analytical changes require the dependency statement,
+record directive ID, related directive ID, and rationale. A related ID must not
+be described as workflow direction unless a future controlled edge model and
+review policy support that claim.
+
 ## Product changes
 
 Before opening a pull request:
@@ -42,8 +49,8 @@ npm run check
 ```
 
 Pull requests should explain what changed, why it changed, user impact, and the
-checks performed. Generated JSON, CSV, and schema files must match their source
-records.
+checks performed. Generated JSON, CSV, normalized relationship tables, and
+schema files must match their source records.
 
 ## Content rules
 
@@ -51,6 +58,8 @@ records.
 - Label interpretations and dependencies as inference.
 - Preserve qualifiers and uncertainty.
 - Keep source, evidence, and analysis in their separate canonical files.
+- Keep explicit body roles and inferred directive cross-references visibly and
+  structurally separate.
 - Do not turn reviewed evidence into implementation status, progress, scoring,
   compliance, or performance claims.
 - Do not introduce agency logos, seals, official wrappers, trackers, or

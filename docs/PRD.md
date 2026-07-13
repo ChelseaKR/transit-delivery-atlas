@@ -1,6 +1,6 @@
-# Product requirements: Transit Delivery Atlas v0.2
+# Product requirements: Transit Delivery Atlas v0.3
 
-**Status:** Implementation in progress
+**Status:** Active public release
 **Target release:** July 2026
 **Primary source review date:** July 12, 2026
 **Evidence review date:** July 13, 2026
@@ -22,7 +22,7 @@ summaries can accidentally invent deadlines, owners, progress, or obligations.
 
 ## Product thesis
 
-The atlas should answer five questions without claiming implementation status:
+The atlas should answer six questions without claiming implementation status:
 
 1. What does the order direct?
 2. Which organizations does it explicitly name?
@@ -30,6 +30,8 @@ The atlas should answer five questions without claiming implementation status:
 4. Which dated public artifacts have been reviewed, and why are they connected
    to a directive?
 5. What delivery dependencies and open questions follow as analysis?
+6. Where do explicit body roles and inferred cross-directive relationships
+   create potential handoffs worth investigating?
 
 ## Goals
 
@@ -45,6 +47,9 @@ The atlas should answer five questions without claiming implementation status:
    accessibility findings.
 6. Publish selectively reviewed public evidence without turning evidence
    presence or absence into implementation status.
+7. Make explicit body roles and analytical cross-references navigable without
+   representing either as an official workflow, responsibility matrix, or
+   critical path.
 
 ## Non-goals
 
@@ -54,9 +59,11 @@ The atlas should answer five questions without claiming implementation status:
   legal conclusions.
 - **A geographic map:** “atlas” refers to multiple navigational views of the
   delivery system.
-- **Live monitoring:** v0.2 uses curated source and evidence review, not scraping or
+- **Live monitoring:** v0.3 uses curated source and evidence review, not scraping or
   real-time data.
 - **Agency rankings:** the atlas does not grade agencies, staff, or vendors.
+- **Official handoffs:** relationship views do not claim sequence, ownership,
+  transfer, coordination, responsibility, or observed implementation activity.
 - **Reporting automation:** a TDA/NTD field crosswalk is a separately reviewed
   v0.1.1 research slice, not part of the initial release.
 - **Personalized advice or generated summaries:** no chat, RAG, or generative AI
@@ -86,6 +93,14 @@ The atlas should answer five questions without claiming implementation status:
   understand the order without specialized transportation vocabulary.
 - As a reader using assistive technology, I want semantic structure and fully
   labeled controls so that the complete crosswalk is available to me.
+
+### Delivery and program teams
+
+- As a delivery lead, I want to find every directive where a body or role group
+  is explicitly named and see the exact relationship label.
+- As a program analyst, I want a global register of inferred dependencies and
+  related directive IDs so that I can identify questions for follow-up without
+  mistaking analysis for an official handoff.
 
 ## P0 requirements
 
@@ -189,13 +204,35 @@ invalid hashes or locators, review-date inconsistencies, and status-like fields;
 rendered-page tests verify layer order, scheduled-date wording, and safe empty
 states.
 
+### P0.10 Relationship and potential-handoff view
+
+- Publish a dedicated relationship route containing two consecutive layers:
+  named bodies and groups from signed-source fields, followed by inferred
+  dependency statements and their related directive IDs.
+- Preserve the exact source-role labels: explicit lead, explicit collaborator,
+  and other named party.
+- Describe analytical related IDs as cross-references, not upstream, downstream,
+  blocking, prerequisite, or official dependency edges.
+- Include every current source-role link and every current analytical dependency
+  statement, including safe empty states when a statement has no related ID.
+- Provide native search and filter controls, polite result-count announcements,
+  visible reset actions, semantic text equivalents, and narrow-screen reflow.
+- Generate normalized CSVs with one source-role or analytical cross-reference
+  per row and enough provenance to trace each row to its canonical record.
+
+**Acceptance:** derived counts match canonical arrays; the route renders 23
+body/group records, 21 dependency statements, 50 source-role links, and 27
+analytical cross-references; tests verify layer order, boundary language,
+resolved links, normalized exports, and status-free semantics.
+
 ## P1 fast follows
 
-- Organization index with explicit relationship labels
 - Shareable filter URLs
 - Printable directive brief
 - Diff view for later source revisions
 - Cited four-field TDA/NTD reporting feasibility slice
+- Controlled directional edge types only after a documented review rubric and
+  manually reviewed seed collection
 
 ## P2 considerations
 
@@ -210,8 +247,10 @@ The build fails closed for duplicate IDs, missing locators or excerpts, unknown
 organization/theme IDs, orphan analysis, unresolved dependencies, derived dates
 without source timing and method, generated-export drift, or unsupported status
 language. Evidence validation also rejects orphan links, invalid hashes and
-locators, non-HTTPS URLs, and status-like fields. No mutable implementation-status
-field exists in v0.2.
+locators, non-HTTPS URLs, and status-like fields. Relationship validation rejects
+self-links, duplicate related IDs, unresolved references, and
+out-of-document-order cross-references. No mutable implementation-status field
+exists in v0.3.
 
 ## Success measures
 
@@ -222,6 +261,8 @@ field exists in v0.2.
 - 100% of inferred outputs/dependencies are stored in the analytical layer
 - JSON and CSV contain identical directive IDs
 - Public evidence JSON and CSV contain identical evidence IDs and directive links
+- The relationship route and normalized exports contain the same 50 explicit
+  source-role links and 27 analytical cross-references
 - All automated checks and production build pass
 
 ### Early use hypotheses
@@ -254,6 +295,8 @@ These are hypotheses, not claims about likely adoption.
 3. **Editorial hardening:** independent source/inference review and corrections.
 4. **Reviewed evidence:** selective public artifacts, provenance, exports, and
    coverage-safe rendering.
-5. **Reporting slice:** cited TDA/NTD research only after evidence review.
+5. **Relationship atlas:** explicit body/group index, analytical cross-reference
+   register, normalized exports, and accessible handoff boundaries.
+6. **Reporting slice:** cited TDA/NTD research only after evidence review.
 
 Each phase must build successfully and remain independently deployable.

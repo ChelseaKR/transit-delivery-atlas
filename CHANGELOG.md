@@ -5,6 +5,32 @@ recorded here.
 
 ## [Unreleased]
 
+## [0.3.0] - 2026-07-13
+
+### Added
+
+- Accessible potential-handoff view with all 23 named body/group records, 50
+  explicit source-role links, 21 inferred dependency statements, and 27
+  analytical cross-references
+- Separate native-filter experiences for signed-source roles and independent
+  analytical relationships, including coverage-safe empty states
+- Normalized `directive-organizations.csv` and
+  `directive-relationships.csv` exports derived from canonical records
+- Relationship-model documentation defining provenance, semantics,
+  accessibility, and review boundaries
+
+### Changed
+
+- Added relationship navigation and homepage entry points
+- Added fail-closed checks for duplicate themes and related IDs,
+  dependency self-links, and out-of-document-order cross-references
+- Expanded data, methodology, contribution, accessibility, and product
+  documentation for the relationship release
+- Kept the canonical JSON contract at schema version 0.2.0 because the new CSVs
+  normalize existing fields without changing the JSON shape
+
+## [0.2.0] - 2026-07-13
+
 ### Added
 
 - Selective reviewed-public-evidence layer with provenance, exact citations,

@@ -123,6 +123,41 @@ test("renders the selective public-evidence index", async () => {
   );
 });
 
+test("renders source relationships before separately labeled analytical cross-references", async () => {
+  const response = await render("/handoffs");
+  assert.equal(response.status, 200);
+  const html = await response.text();
+
+  assert.match(html, /<main[^>]*id="main-content"/i);
+  assert.match(html, /Trace the delivery relationships\./);
+  assert.match(html, /Potential handoff map/);
+  assert.match(html, /A relationship is not a status\./);
+  assert.match(html, /Bodies and groups named in the order/);
+  assert.match(html, /Inferred delivery dependencies/);
+  assertTextOrder(html, [
+    "Bodies and groups named in the order",
+    "Inferred delivery dependencies",
+  ]);
+  assert.match(html, /Explicit source-role links[\s\S]{0,100}>50</);
+  assert.match(html, /Analytical cross-references[\s\S]{0,100}>27</);
+  assert.match(html, /Showing[\s\S]{0,80}23[\s\S]{0,80}of[\s\S]{0,80}23/);
+  assert.match(
+    html,
+    /Showing[\s\S]{0,100}21[\s\S]{0,100}statements[\s\S]{0,100}27[\s\S]{0,100}of[\s\S]{0,100}27[\s\S]{0,100}cross-references/,
+  );
+  assert.equal((html.match(/aria-live="polite"/g) ?? []).length, 2);
+  assert.match(html, /Explicit lead/);
+  assert.match(html, /Explicit collaborator/);
+  assert.match(html, /Other named party/);
+  assert.match(html, /No cross-directive link is recorded for this dependency/);
+  assert.match(
+    html,
+    /href="\/directives\/n-7-26-1c\/"[^>]*>Section 5307 direct-recipient option<\/a>/,
+  );
+  assert.match(html, /rel="canonical"[^>]+\/handoffs/i);
+  assert.doesNotMatch(html, /critical path|percent complete|traffic light/i);
+});
+
 test("renders methodology, data, and accessibility pages", async () => {
   const paths = [
     ["/methodology", /Keep source, evidence, and interpretation apart\./],
@@ -136,5 +171,10 @@ test("renders methodology, data, and accessibility pages", async () => {
     const html = await response.text();
     assert.match(html, pattern);
     assert.match(html, /<main[^>]*id="main-content"/i);
+    if (path === "/data") {
+      assert.match(html, /href="\/data\/directive-organizations\.csv"/);
+      assert.match(html, /href="\/data\/directive-relationships\.csv"/);
+      assert.match(html, /record_directive_id/);
+    }
   }
 });

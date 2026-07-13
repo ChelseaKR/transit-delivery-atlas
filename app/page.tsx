@@ -61,11 +61,11 @@ export default function Home() {
                   <a className="button" href="#directives">
                     Explore directives
                   </a>
+                  <a className="button button--secondary" href="/handoffs">
+                    Explore delivery relationships
+                  </a>
                   <a className="button button--secondary" href="/evidence">
                     Review public evidence
-                  </a>
-                  <a className="button button--secondary" href="/methodology">
-                    Read the method
                   </a>
                 </div>
               </div>
