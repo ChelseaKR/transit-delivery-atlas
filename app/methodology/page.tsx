@@ -6,7 +6,7 @@ import { orderMetadata, source } from "@/lib/data";
 export const metadata: Metadata = {
   title: "Methodology",
   description:
-    "How Transit Delivery Atlas separates signed source language, date calculations, and independent analysis.",
+    "How Transit Delivery Atlas separates signed source language, reviewed public evidence, date calculations, and independent analysis.",
   alternates: { canonical: "/methodology" },
 };
 
@@ -19,10 +19,11 @@ export default function MethodologyPage() {
           <div className="document-hero__inner">
             <p className="independence-badge">Independent analysis · Unofficial</p>
             <p className="utility-label">Methodology</p>
-            <h1>Keep the source and the interpretation apart.</h1>
+            <h1>Keep source, evidence, and interpretation apart.</h1>
             <p>
               The atlas is useful only if a reader can tell what the signed order
-              says, what was calculated, and what remains analytical judgment.
+              says, what a dated public artifact documents, what was calculated,
+              and what remains analytical judgment.
             </p>
           </div>
         </header>
@@ -32,7 +33,7 @@ export default function MethodologyPage() {
             <p className="utility-label">On this page</p>
             <a href="#source">Source hierarchy</a>
             <a href="#units">Directive units</a>
-            <a href="#layers">Two data layers</a>
+            <a href="#layers">Three data layers</a>
             <a href="#timing">Timing calculations</a>
             <a href="#review">Review and corrections</a>
             <a href="#limits">Limitations</a>
@@ -76,13 +77,21 @@ export default function MethodologyPage() {
 
             <section id="layers">
               <p className="section-code">Method 03</p>
-              <h2>Two structural layers</h2>
+              <h2>Three structural layers</h2>
               <div className="method-layers">
                 <div className="method-layer method-layer--source">
                   <h3>Source record</h3>
                   <p>
                     Section and page locator, short reviewed excerpt, explicitly
                     named entities, qualifiers, timing language, and review date.
+                  </p>
+                </div>
+                <div className="method-layer method-layer--evidence">
+                  <h3>Reviewed public evidence</h3>
+                  <p>
+                    Dated public artifacts, publisher and retrieval provenance,
+                    explicit directive relationships, review dates, locators,
+                    accessibility notes, and limitations.
                   </p>
                 </div>
                 <div className="method-layer method-layer--analysis">
@@ -94,8 +103,16 @@ export default function MethodologyPage() {
                 </div>
               </div>
               <p>
-                An inference is never promoted to the source layer because it
-                appears likely. There is no mutable implementation-status field.
+                Evidence never changes what the order says, and an inference is
+                never promoted to the source or evidence layer because it appears
+                likely. There is no mutable implementation-status field.
+              </p>
+              <p>
+                The evidence collection is selective rather than comprehensive or
+                live. Inclusion documents a reviewed source relationship; it does
+                not establish completion, compliance, success, or agency
+                performance. An empty evidence list describes Atlas coverage—not
+                the absence of activity or public records.
               </p>
             </section>
 
@@ -126,8 +143,12 @@ export default function MethodologyPage() {
                 <li>Extract and transcribe a short directive anchor.</li>
                 <li>Verify section, page, organizations, qualifiers, and timing.</li>
                 <li>Review the separate analytical record.</li>
+                <li>
+                  Review each public artifact’s provenance, date kind, directive
+                  link, locator, and limitations separately.
+                </li>
                 <li>Run data, reference, timing, export, and rendered-page checks.</li>
-                <li>Record source and analytical corrections in the changelog.</li>
+                <li>Record source, evidence, and analytical corrections separately.</li>
               </ol>
             </section>
 
@@ -138,6 +159,7 @@ export default function MethodologyPage() {
                 <li>The source is a scanned, untagged PDF.</li>
                 <li>Short excerpts are independent transcriptions; the signed image controls.</li>
                 <li>The atlas does not assess implementation progress or unpublished work.</li>
+                <li>The public-evidence collection is selective and date-bounded.</li>
                 <li>Calculated dates are planning aids rather than legal interpretation.</li>
                 <li>Dependencies identify research questions, not official assignments.</li>
               </ul>

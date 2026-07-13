@@ -1,8 +1,9 @@
-# Product requirements: Transit Delivery Atlas v0.1
+# Product requirements: Transit Delivery Atlas v0.2
 
-**Status:** Implementation approved
-**Target release:** July 13, 2026
+**Status:** Implementation in progress
+**Target release:** July 2026
 **Primary source review date:** July 12, 2026
+**Evidence review date:** July 13, 2026
 **Live product:** [transit.chelseakr.com](https://transit.chelseakr.com)
 **Source repository:** [github.com/ChelseaKR/transit-delivery-atlas](https://github.com/ChelseaKR/transit-delivery-atlas)
 
@@ -21,12 +22,14 @@ summaries can accidentally invent deadlines, owners, progress, or obligations.
 
 ## Product thesis
 
-The atlas should answer four questions without claiming implementation status:
+The atlas should answer five questions without claiming implementation status:
 
 1. What does the order direct?
 2. Which organizations does it explicitly name?
 3. What timing language is explicit?
-4. What delivery dependencies and open questions follow as analysis?
+4. Which dated public artifacts have been reviewed, and why are they connected
+   to a directive?
+5. What delivery dependencies and open questions follow as analysis?
 
 ## Goals
 
@@ -40,6 +43,8 @@ The atlas should answer four questions without claiming implementation status:
    set as the interface.
 5. Ship with zero known critical data-integrity, build, or serious automated
    accessibility findings.
+6. Publish selectively reviewed public evidence without turning evidence
+   presence or absence into implementation status.
 
 ## Non-goals
 
@@ -49,7 +54,7 @@ The atlas should answer four questions without claiming implementation status:
   legal conclusions.
 - **A geographic map:** “atlas” refers to multiple navigational views of the
   delivery system.
-- **Live monitoring:** v0.1 uses a curated source review, not scraping or
+- **Live monitoring:** v0.2 uses curated source and evidence review, not scraping or
   real-time data.
 - **Agency rankings:** the atlas does not grade agencies, staff, or vendors.
 - **Reporting automation:** a TDA/NTD field crosswalk is a separately reviewed
@@ -165,6 +170,25 @@ relying on color.
 - Never claim certification, full conformance, or a completed Accessibility
   Conformance Report without the corresponding systematic evaluation.
 
+### P0.9 Reviewed public evidence
+
+- Store dated public artifacts in a third canonical file, separate from signed
+  source extraction and independent analysis.
+- Require publisher/title provenance, HTTPS URLs, retrieval and review dates,
+  SHA-256, media metadata, editorial summary, explicit limitations, and exact
+  directive citations with locators.
+- Publish collection scope as `selective` with a machine-readable coverage note.
+- Render the layer between signed source and analysis on every directive page,
+  using a coverage-safe empty state when no reviewed artifact is linked.
+- Label future event dates as scheduled and never infer adoption, occurrence,
+  completion, compliance, or performance.
+- Export evidence as a separate top-level JSON collection and separate CSV.
+
+**Acceptance:** validation rejects orphan or duplicate links, non-HTTPS URLs,
+invalid hashes or locators, review-date inconsistencies, and status-like fields;
+rendered-page tests verify layer order, scheduled-date wording, and safe empty
+states.
+
 ## P1 fast follows
 
 - Organization index with explicit relationship labels
@@ -177,8 +201,7 @@ relying on color.
 
 - Additional California transportation directives, only with a clear source
   inclusion policy
-- Versioned evidence records, without converting the product into a progress
-  scorecard
+- Additional evidence relationship types, only after a documented review policy
 - Community correction submissions through repository issues
 
 ## Data integrity rules
@@ -186,7 +209,9 @@ relying on color.
 The build fails closed for duplicate IDs, missing locators or excerpts, unknown
 organization/theme IDs, orphan analysis, unresolved dependencies, derived dates
 without source timing and method, generated-export drift, or unsupported status
-language. No mutable implementation-status field exists in v0.1.
+language. Evidence validation also rejects orphan links, invalid hashes and
+locators, non-HTTPS URLs, and status-like fields. No mutable implementation-status
+field exists in v0.2.
 
 ## Success measures
 
@@ -196,6 +221,7 @@ language. No mutable implementation-status field exists in v0.1.
 - 100% of source records have official URL, locator, and review date
 - 100% of inferred outputs/dependencies are stored in the analytical layer
 - JSON and CSV contain identical directive IDs
+- Public evidence JSON and CSV contain identical evidence IDs and directive links
 - All automated checks and production build pass
 
 ### Early use hypotheses
@@ -226,6 +252,8 @@ These are hypotheses, not claims about likely adoption.
 2. **Accessible atlas:** explorer, directive details, methodology, data page,
    and brand system.
 3. **Editorial hardening:** independent source/inference review and corrections.
-4. **Reporting slice:** cited TDA/NTD research only after evidence review.
+4. **Reviewed evidence:** selective public artifacts, provenance, exports, and
+   coverage-safe rendering.
+5. **Reporting slice:** cited TDA/NTD research only after evidence review.
 
 Each phase must build successfully and remain independently deployable.

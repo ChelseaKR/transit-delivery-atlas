@@ -56,9 +56,9 @@ export default function AccessibilityPage() {
               <h3>Pending before any conformance claim</h3>
               <ul className="test-layers">
                 <li><strong>Keyboard:</strong> complete user-flow review in current Chrome, Firefox, and Safari.</li>
-                <li><strong>Assistive technology:</strong> VoiceOver and NVDA or JAWS review of the explorer, directive detail, method, and download flows.</li>
+                <li><strong>Assistive technology:</strong> VoiceOver and NVDA or JAWS review of the explorer, directive detail, evidence index, method, and download flows.</li>
                 <li><strong>Low vision:</strong> full 200% and 400% zoom, text-spacing, forced-colors, and narrow-width review across every route.</li>
-                <li><strong>Human evaluation:</strong> testing with disabled users and a documented decision about the inaccessible external source PDF.</li>
+                <li><strong>Human evaluation:</strong> testing with disabled users and documented decisions about external source and evidence-file accessibility, including the inaccessible signed source.</li>
               </ul>
               <p>
                 Automated checks are quality controls, not certification. Until
@@ -70,7 +70,7 @@ export default function AccessibilityPage() {
             </section>
 
             <section className="known-limit">
-              <h2>Known external limitation</h2>
+              <h2>Known external limitations</h2>
               <p>
                 The signed executive order is hosted externally as a scanned,
                 untagged PDF outside this repository and the site evaluation
@@ -78,6 +78,13 @@ export default function AccessibilityPage() {
                 excerpts, and page locators to reduce that barrier, but those are
                 not a complete alternative version and cannot remediate the
                 authoritative source file.
+              </p>
+              <p>
+                Reviewed public artifacts are also externally hosted and remain
+                outside this repository&apos;s conformance scope. The evidence layer
+                records cautious accessibility metadata without claiming that a
+                tagged PDF conforms to PDF/UA, WCAG, or Section 508. The Atlas
+                cannot remediate those external files.
               </p>
             </section>
 

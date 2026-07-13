@@ -10,11 +10,13 @@ export function SiteHeader() {
             <i />
             <i />
             <i />
+            <i />
           </span>
           <span>Transit Delivery Atlas</span>
         </Link>
         <nav aria-label="Primary navigation">
           <Link href="/#directives">Directives</Link>
+          <Link href="/evidence">Evidence</Link>
           <Link href="/methodology">Method</Link>
           <Link href="/data">Data</Link>
           <Link href="/accessibility">Accessibility</Link>

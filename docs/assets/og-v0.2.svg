@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title description">
+  <title id="title">Transit Delivery Atlas</title>
+  <desc id="description">A five-step handoff rail from source to entity, timing, evidence, and analysis.</desc>
+  <defs>
+    <linearGradient id="paper" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ffffff" />
+      <stop offset="0.58" stop-color="#f5f9f8" />
+      <stop offset="1" stop-color="#edf4f2" />
+    </linearGradient>
+    <filter id="soft-shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="3" />
+    </filter>
+    <style>
+      .display { font-family: "DIN Condensed", "Arial Narrow", sans-serif; font-weight: 700; }
+      .body { font-family: "Avenir Next", Arial, sans-serif; }
+      .utility { font-family: "PT Mono", "Andale Mono", monospace; font-weight: 700; }
+      .guide { stroke: #d9e5e2; stroke-width: 1; stroke-dasharray: 4 4; }
+      .label { fill: #102a30; font-size: 24px; letter-spacing: 2.5px; text-anchor: middle; }
+    </style>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#paper)" />
+  <rect x="20" y="22" width="1160" height="588" fill="none" stroke="#00766c" stroke-width="1.5" />
+
+  <g opacity="0.72">
+    <path class="guide" d="M40 42H1160M40 416H1160M40 586H1160" />
+    <path class="guide" d="M42 42V586M300 42V586M600 42V586M900 42V586M1158 42V586" />
+  </g>
+
+  <text class="display" x="60" y="228" fill="#102a30" font-size="142" letter-spacing="-1">Transit Delivery Atlas</text>
+  <text class="body" x="96" y="320" fill="#102a30" font-size="40" font-weight="600">From directive to delivery—making the handoffs visible.</text>
+
+  <path d="M78 410H1122" stroke="#a9bdb8" stroke-width="11" stroke-linecap="round" />
+  <g fill="none" stroke="#a9bdb8" stroke-width="8" stroke-linecap="square" stroke-linejoin="miter">
+    <path d="M234 396L250 410L234 424" />
+    <path d="M467 396L483 410L467 424" />
+    <path d="M701 396L717 410L701 424" />
+    <path d="M935 396L951 410L935 424" />
+  </g>
+
+  <g transform="translate(132 410)">
+    <rect x="-39" y="-39" width="78" height="78" rx="3" fill="#f5f9f8" stroke="#145da0" stroke-width="8" />
+    <rect x="-20" y="-20" width="40" height="40" fill="#145da0" />
+  </g>
+  <text class="utility label" x="132" y="500">SOURCE</text>
+
+  <g transform="translate(366 410)">
+    <circle r="39" fill="#f5f9f8" stroke="#00766c" stroke-width="8" />
+    <circle r="20" fill="#00766c" />
+  </g>
+  <text class="utility label" x="366" y="500">ENTITY</text>
+
+  <g transform="translate(600 410)">
+    <rect x="-30" y="-30" width="60" height="60" transform="rotate(45)" fill="#f5f9f8" stroke="#c9471b" stroke-width="8" />
+    <rect x="-14" y="-14" width="28" height="28" transform="rotate(45)" fill="#c9471b" />
+  </g>
+  <text class="utility label" x="600" y="500">TIMING</text>
+
+  <g transform="translate(834 410)">
+    <rect x="-42" y="-36" width="84" height="72" rx="5" fill="#fff2ed" stroke="#c9471b" stroke-width="8" />
+    <path d="M-22 -14H22M-22 0H22M-22 14H8" stroke="#c9471b" stroke-width="6" stroke-linecap="round" />
+  </g>
+  <text class="utility label" x="834" y="500">EVIDENCE</text>
+
+  <g transform="translate(1068 410)">
+    <rect x="-46" y="-36" width="92" height="72" rx="36" fill="#f5f9f8" stroke="#00766c" stroke-width="8" />
+    <circle cx="-18" r="10" fill="#00766c" />
+    <circle cx="18" r="10" fill="#00766c" />
+  </g>
+  <text class="utility label" x="1068" y="500">ANALYSIS</text>
+
+  <text class="utility" x="600" y="562" fill="#102a30" font-size="25" letter-spacing="1" text-anchor="middle">Independent analysis · Unofficial</text>
+</svg>

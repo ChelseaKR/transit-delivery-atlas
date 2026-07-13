@@ -7,11 +7,13 @@ export function SiteFooter() {
         <div>
           <p className="utility-label">Independent analysis · Unofficial</p>
           <p>
-            Not an official State of California publication. Analytical content
-            is not an implementation status or legal conclusion.
+            Not an official State of California publication. Public evidence is
+            selective, and analytical content is not an implementation status
+            or legal conclusion.
           </p>
         </div>
         <div className="site-footer__links">
+          <Link href="/evidence">Public evidence</Link>
           <Link href="/methodology">Methodology</Link>
           <Link href="/data">Open data</Link>
           <Link href="/accessibility">Accessibility</Link>

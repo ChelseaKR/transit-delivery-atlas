@@ -2,7 +2,7 @@
 
 > From directive to delivery—making the handoffs visible.
 
-![Transit Delivery Atlas handoff rail from source to entity, timing, and analysis](public/og.png)
+![Transit Delivery Atlas handoff rail from source to entity, timing, evidence, and analysis](public/og.png)
 
 **Project links**
 
@@ -12,7 +12,8 @@
 **Transit Delivery Atlas** is an independent, source-linked crosswalk for
 California Executive Order N-7-26. It turns each actionable directive into a
 navigable record of source language, explicitly named entities, timing,
-analytical dependencies, expected outputs, and open implementation questions.
+public-evidence coverage (including explicit empty states), analytical
+dependencies, expected outputs, and open implementation questions.
 
 > [!IMPORTANT]
 > This is independent public-interest analysis, not an official State of
@@ -23,7 +24,7 @@ analytical dependencies, expected outputs, and open implementation questions.
 ## What this is
 
 - A structured reading of the signed executive order
-- A traceable separation between source language and analysis
+- A traceable separation among source language, reviewed public evidence, and analysis
 - A public dataset with section locators, review dates, and stable identifiers
 - A way to surface delivery questions that the primary source does not answer
 
@@ -32,6 +33,7 @@ analytical dependencies, expected outputs, and open implementation questions.
 - An official implementation or accountability dashboard
 - A determination of legal compliance or agency performance
 - Evidence that work has or has not occurred outside the public record
+- A comprehensive or live catalog of implementation activity
 - A geographic map, transit-feed validator, or reporting automation system
 
 ## Primary sources
@@ -52,9 +54,18 @@ and CSV under `public/data/`.
 - `directives.json` contains the 21 actionable directive units in document order
 - `analysis.json` contains plain-language summaries, themes, inferred outputs,
   dependencies, and open questions
+- `evidence.json` contains a selective collection of dated public artifacts,
+  exact directive citations, locators, hashes, review dates, and limitations
 
-See [the methodology](docs/METHODOLOGY.md) and [product specification](docs/PRD.md)
-for the classification model, acceptance criteria, and known limitations.
+The public JSON keeps those layers separate. `directives.csv` contains the
+source/analysis crosswalk, while `evidence.csv` contains the public-artifact
+records and their explicit directive relationships. Omission from the evidence
+collection does not show that no activity or public record exists; inclusion
+does not establish completion, compliance, or performance.
+
+See [the methodology](docs/METHODOLOGY.md), [evidence model](docs/EVIDENCE-MODEL.md),
+and [product specification](docs/PRD.md) for the classification model,
+acceptance criteria, and known limitations.
 
 ## Local development
 
@@ -73,9 +84,9 @@ npm run check
 
 ## Corrections and contributions
 
-Corrections should identify the directive ID, official source, section or page
-locator, and the proposed change. A correction to a source record must never be
-mixed silently with a change to analytical interpretation.
+Corrections should identify the directive or evidence ID, public source,
+section or page locator, and the proposed change. Source, evidence, and
+analytical changes are reviewed separately and must never be mixed silently.
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for the review and validation workflow.
 

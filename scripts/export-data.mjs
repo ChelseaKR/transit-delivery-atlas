@@ -1,4 +1,5 @@
 import { mkdir, readFile, writeFile } from "node:fs/promises";
+import { isIsoDate } from "./iso-date.mjs";
 
 const root = new URL("../", import.meta.url);
 
@@ -6,13 +7,14 @@ async function readJson(path) {
   return JSON.parse(await readFile(new URL(path, root), "utf8"));
 }
 
-const [sources, organizations, themes, directiveData, analysisData, schema] =
+const [sources, organizations, themes, directiveData, analysisData, evidenceData, schema] =
   await Promise.all([
     readJson("data/sources.json"),
     readJson("data/organizations.json"),
     readJson("data/themes.json"),
     readJson("data/directives.json"),
     readJson("data/analysis.json"),
+    readJson("data/evidence.json"),
     readJson("data/public-schema.json"),
   ]);
 
@@ -104,6 +106,14 @@ function validateAgainstSchema(value, schemaNode, rootSchema, path = "$") {
         schemaFailure(path, "expected a valid URI");
       }
     }
+    if (schemaNode.format === "date" && !isIsoDate(value)) {
+      schemaFailure(path, "expected a real ISO calendar date");
+    }
+    return;
+  }
+
+  if (schemaNode.type === "boolean") {
+    if (typeof value !== "boolean") schemaFailure(path, "expected boolean");
     return;
   }
 
@@ -115,6 +125,7 @@ function validateAgainstSchema(value, schemaNode, rootSchema, path = "$") {
     if (schemaNode.maximum !== undefined && value > schemaNode.maximum) {
       schemaFailure(path, `expected a value no greater than ${schemaNode.maximum}`);
     }
+    return;
   }
 }
 
@@ -142,6 +153,7 @@ const directives = directiveData.directives.map((directive) => {
 
 const dataReviewedThrough = directiveData.directives
   .map(({ lastReviewedOn }) => lastReviewedOn)
+  .concat(evidenceData.evidence.map(({ lastReviewedOn }) => lastReviewedOn))
   .sort()
   .at(-1);
 
@@ -154,6 +166,12 @@ const publicData = {
   organizations,
   themes,
   directives,
+  evidenceScope: {
+    scope: evidenceData.scope,
+    lastUpdatedOn: evidenceData.lastUpdatedOn,
+    coverageNote: evidenceData.coverageNote,
+  },
+  evidence: evidenceData.evidence,
 };
 
 function csvCell(value) {
@@ -212,6 +230,78 @@ const csv = [
   ...csvRows.map((row) => row.map(csvCell).join(",")),
 ].join("\n");
 
+const evidenceCsvColumns = [
+  "id",
+  "schema_version",
+  "scope",
+  "collection_last_updated_on",
+  "coverage_note",
+  "title",
+  "title_origin",
+  "publisher",
+  "evidence_type",
+  "dated_on",
+  "date_kind",
+  "date_origin",
+  "url",
+  "context_url",
+  "retrieved_on",
+  "last_reviewed_on",
+  "sha256",
+  "media_type",
+  "page_count",
+  "tagged",
+  "accessibility_note",
+  "editorial_summary",
+  "directive_ids",
+  "relationships",
+  "relationship_excerpts",
+  "relationship_locators",
+  "limitations",
+];
+
+const evidenceCsvRows = evidenceData.evidence.map((record) => [
+  record.id,
+  evidenceData.schemaVersion,
+  evidenceData.scope,
+  evidenceData.lastUpdatedOn,
+  evidenceData.coverageNote,
+  record.title,
+  record.titleOrigin,
+  record.publisher,
+  record.evidenceType,
+  record.datedOn,
+  record.dateKind,
+  record.dateOrigin,
+  record.url,
+  record.contextUrl,
+  record.retrievedOn,
+  record.lastReviewedOn,
+  record.sha256,
+  record.mediaType,
+  record.pageCount,
+  record.accessibility.tagged,
+  record.accessibility.note,
+  record.editorialSummary,
+  record.directiveLinks.map(({ directiveId }) => directiveId),
+  record.directiveLinks.map(({ relationship }) => relationship),
+  record.directiveLinks
+    .map(({ directiveId, excerpt }) => `${directiveId}: ${excerpt}`)
+    .join(" || "),
+  record.directiveLinks
+    .map(
+      ({ directiveId, locator }) =>
+        `${directiveId}: pages ${locator.pages.join(", ")}; ${locator.locations.join(" | ")}`,
+    )
+    .join(" || "),
+  record.limitations.join(" || "),
+]);
+
+const evidenceCsv = [
+  evidenceCsvColumns.map(csvCell).join(","),
+  ...evidenceCsvRows.map((row) => row.map(csvCell).join(",")),
+].join("\n");
+
 validateAgainstSchema(publicData, schema, schema);
 
 const outputDir = new URL("public/data/", root);
@@ -222,10 +312,13 @@ await Promise.all([
     `${JSON.stringify(publicData, null, 2)}\n`,
   ),
   writeFile(new URL("directives.csv", outputDir), `${csv}\n`),
+  writeFile(new URL("evidence.csv", outputDir), `${evidenceCsv}\n`),
   writeFile(
     new URL("schema.json", outputDir),
     `${JSON.stringify(schema, null, 2)}\n`,
   ),
 ]);
 
-console.log(`Exported ${directives.length} directives to JSON and CSV.`);
+console.log(
+  `Exported ${directives.length} directives and ${evidenceData.evidence.length} evidence record(s) to JSON and CSV.`,
+);

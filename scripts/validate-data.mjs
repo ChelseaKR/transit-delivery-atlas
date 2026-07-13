@@ -1,5 +1,6 @@
 import { readFile } from "node:fs/promises";
 import { z } from "zod";
+import { ISO_DATE_PATTERN, isIsoDate } from "./iso-date.mjs";
 
 const root = new URL("../", import.meta.url);
 
@@ -7,7 +8,10 @@ async function readJson(path) {
   return JSON.parse(await readFile(new URL(path, root), "utf8"));
 }
 
-const date = z.string().regex(/^\d{4}-\d{2}-\d{2}$/);
+const date = z
+  .string()
+  .regex(ISO_DATE_PATTERN)
+  .refine(isIsoDate, "must be a real ISO calendar date");
 const identifier = z.string().regex(/^[a-z0-9-]+$/);
 
 const locatorSchema = z
@@ -123,13 +127,63 @@ const analysisSchema = z
   })
   .strict();
 
-const [sources, organizations, themes, directiveData, analysisData] =
+const evidenceDirectiveLinkSchema = z
+  .object({
+    directiveId: identifier,
+    relationship: z.literal("explicit-citation"),
+    excerpt: z.string().min(10),
+    locator: z
+      .object({
+        pages: z.array(z.number().int().positive()).min(1),
+        locations: z.array(z.string().min(10)).min(1),
+      })
+      .strict(),
+  })
+  .strict();
+
+const evidenceSchema = z
+  .object({
+    id: identifier,
+    title: z.string().min(1),
+    titleOrigin: z.literal("publisher"),
+    publisher: z.string().min(1),
+    evidenceType: z.enum([
+      "reference-material",
+      "meeting-material",
+      "draft-guideline",
+      "final-guideline",
+      "report",
+    ]),
+    datedOn: date,
+    dateKind: z.enum(["scheduled-event", "published", "adopted", "effective"]),
+    dateOrigin: z.literal("artifact-header"),
+    url: z.string().url().startsWith("https://"),
+    contextUrl: z.string().url().startsWith("https://"),
+    retrievedOn: date,
+    lastReviewedOn: date,
+    sha256: z.string().regex(/^[a-f0-9]{64}$/),
+    mediaType: z.literal("application/pdf"),
+    pageCount: z.number().int().positive(),
+    accessibility: z
+      .object({
+        tagged: z.boolean(),
+        note: z.string().min(20),
+      })
+      .strict(),
+    editorialSummary: z.string().min(20),
+    directiveLinks: z.array(evidenceDirectiveLinkSchema).min(1),
+    limitations: z.array(z.string().min(20)).min(1),
+  })
+  .strict();
+
+const [sources, organizations, themes, directiveData, analysisData, evidenceData] =
   await Promise.all([
     readJson("data/sources.json"),
     readJson("data/organizations.json"),
     readJson("data/themes.json"),
     readJson("data/directives.json"),
     readJson("data/analysis.json"),
+    readJson("data/evidence.json"),
   ]);
 
 z.array(sourceSchema).min(1).parse(sources);
@@ -137,7 +191,7 @@ z.array(organizationSchema).min(1).parse(organizations);
 z.array(themeSchema).min(1).parse(themes);
 
 z.object({
-  schemaVersion: z.literal("0.1.0"),
+  schemaVersion: z.literal("0.2.0"),
   orderMetadata: z
     .object({
       directiveCount: z.literal(21),
@@ -178,11 +232,21 @@ z.object({
   .parse(directiveData);
 
 z.object({
-  schemaVersion: z.literal("0.1.0"),
+  schemaVersion: z.literal("0.2.0"),
   analysis: z.array(analysisSchema).length(21),
 })
   .strict()
   .parse(analysisData);
+
+z.object({
+  schemaVersion: z.literal("0.2.0"),
+  scope: z.literal("selective"),
+  lastUpdatedOn: date,
+  coverageNote: z.string().min(50),
+  evidence: z.array(evidenceSchema).min(1),
+})
+  .strict()
+  .parse(evidenceData);
 
 function unique(values, label) {
   const duplicates = values.filter((value, index) => values.indexOf(value) !== index);
@@ -228,6 +292,8 @@ unique([...organizationIds], "Organization IDs");
 unique([...themeIds], "Theme IDs");
 unique(directiveIds, "Directive IDs");
 unique(analysisData.analysis.map(({ directiveId }) => directiveId), "Analysis IDs");
+unique(evidenceData.evidence.map(({ id }) => id), "Evidence IDs");
+unique(evidenceData.evidence.map(({ url }) => url), "Evidence URLs");
 unique(sourceContextIds, "Source context IDs");
 unique(sourceNoticeIds, "Source notice IDs");
 
@@ -438,11 +504,51 @@ for (const record of analysisData.analysis) {
   }
 }
 
+for (const record of evidenceData.evidence) {
+  if (record.lastReviewedOn < record.retrievedOn) {
+    throw new Error(`${record.id} was reviewed before it was retrieved.`);
+  }
+  if (record.dateKind !== "scheduled-event" && record.datedOn > record.lastReviewedOn) {
+    throw new Error(`${record.id} has a future ${record.dateKind} date.`);
+  }
+  const linkedDirectiveIds = record.directiveLinks.map(({ directiveId }) => directiveId);
+  unique(linkedDirectiveIds, `${record.id} directive links`);
+  for (const link of record.directiveLinks) {
+    if (!directiveIds.includes(link.directiveId)) {
+      throw new Error(`${record.id} references unknown directive ${link.directiveId}.`);
+    }
+    for (const page of link.locator.pages) {
+      if (page > record.pageCount) {
+        throw new Error(`${record.id} cites page ${page} beyond its ${record.pageCount}-page artifact.`);
+      }
+    }
+    unique(link.locator.pages, `${record.id} locator pages`);
+    unique(link.locator.locations, `${record.id} locator descriptions`);
+  }
+}
+
+const evidenceLastUpdatedOn = evidenceData.evidence
+  .map(({ lastReviewedOn }) => lastReviewedOn)
+  .sort()
+  .at(-1);
+if (evidenceData.lastUpdatedOn !== evidenceLastUpdatedOn) {
+  throw new Error("Evidence lastUpdatedOn must equal the latest record review date.");
+}
+
 function rejectStatus(value, path = "root") {
   if (!value || typeof value !== "object") return;
+  const forbiddenKeys = new Set([
+    "status",
+    "progress",
+    "percentcomplete",
+    "compliance",
+    "rating",
+    "score",
+    "ontrack",
+  ]);
   for (const [key, child] of Object.entries(value)) {
-    if (key.toLowerCase() === "status") {
-      throw new Error(`Mutable implementation status is not supported (${path}.${key}).`);
+    if (forbiddenKeys.has(key.toLowerCase())) {
+      throw new Error(`Status-like implementation fields are not supported (${path}.${key}).`);
     }
     rejectStatus(child, `${path}.${key}`);
   }
@@ -450,5 +556,8 @@ function rejectStatus(value, path = "root") {
 
 rejectStatus(directiveData);
 rejectStatus(analysisData);
+rejectStatus(evidenceData);
 
-console.log("Validated 21 directive records, 21 analysis records, and all references.");
+console.log(
+  `Validated 21 directive records, 21 analysis records, ${evidenceData.evidence.length} evidence record(s), and all references.`,
+);
