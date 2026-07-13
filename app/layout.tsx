@@ -1,21 +1,29 @@
 import type { Metadata, Viewport } from "next";
-import {
-  Atkinson_Hyperlegible,
-  Barlow_Condensed,
-} from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 
-const display = Barlow_Condensed({
+const display = localFont({
+  src: "./fonts/barlow-condensed-latin-700.woff2",
   variable: "--font-display",
-  subsets: ["latin"],
   weight: "700",
+  style: "normal",
   display: "swap",
 });
 
-const body = Atkinson_Hyperlegible({
+const body = localFont({
+  src: [
+    {
+      path: "./fonts/atkinson-hyperlegible-latin-400.woff2",
+      weight: "400",
+      style: "normal",
+    },
+    {
+      path: "./fonts/atkinson-hyperlegible-latin-700.woff2",
+      weight: "700",
+      style: "normal",
+    },
+  ],
   variable: "--font-body",
-  subsets: ["latin"],
-  weight: ["400", "700"],
   display: "swap",
 });
 
@@ -29,7 +37,6 @@ export const metadata: Metadata = {
     "Independent, source-linked crosswalk of California Executive Order N-7-26 directives, named entities, timing, reviewed public evidence, dependencies, and open questions.",
   applicationName: "Transit Delivery Atlas",
   category: "public-interest research",
-  robots: { index: true, follow: true },
   openGraph: {
     type: "website",
     url: "/",
