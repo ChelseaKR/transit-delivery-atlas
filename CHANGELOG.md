@@ -5,6 +5,11 @@ recorded here.
 
 ## [Unreleased]
 
+### Changed
+
+- Set page-level headlines in sentence case while retaining uppercase for
+  compact wayfinding and data labels
+
 ## [0.4.0] - 2026-07-13
 
 ### Added
