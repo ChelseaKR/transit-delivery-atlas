@@ -5,6 +5,14 @@ recorded here.
 
 ## [Unreleased]
 
+## [0.4.0] - 2026-07-13
+
+### Added
+
+- Shareable explorer URLs for search, theme, named lead, and timing filters
+- Cited four-field TDA/NTD reporting feasibility page and JSON export
+- Repeatable expert-review and lightweight usability-test guide
+
 ## [0.3.0] - 2026-07-13
 
 ### Added

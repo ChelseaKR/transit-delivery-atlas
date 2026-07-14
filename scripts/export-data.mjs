@@ -7,7 +7,16 @@ async function readJson(path) {
   return JSON.parse(await readFile(new URL(path, root), "utf8"));
 }
 
-const [sources, organizations, themes, directiveData, analysisData, evidenceData, schema] =
+const [
+  sources,
+  organizations,
+  themes,
+  directiveData,
+  analysisData,
+  evidenceData,
+  feasibilityData,
+  schema,
+] =
   await Promise.all([
     readJson("data/sources.json"),
     readJson("data/organizations.json"),
@@ -15,6 +24,7 @@ const [sources, organizations, themes, directiveData, analysisData, evidenceData
     readJson("data/directives.json"),
     readJson("data/analysis.json"),
     readJson("data/evidence.json"),
+    readJson("data/tda-ntd-feasibility.json"),
     readJson("data/public-schema.json"),
   ]);
 
@@ -432,8 +442,12 @@ await Promise.all([
     new URL("schema.json", outputDir),
     `${JSON.stringify(schema, null, 2)}\n`,
   ),
+  writeFile(
+    new URL("tda-ntd-feasibility.json", outputDir),
+    `${JSON.stringify(feasibilityData, null, 2)}\n`,
+  ),
 ]);
 
 console.log(
-  `Exported ${directives.length} directives, ${evidenceData.evidence.length} evidence record(s), ${directiveOrganizationsCsvRows.length} source-role links, and ${directiveRelationshipsCsvRows.length} analytical cross-references.`,
+  `Exported ${directives.length} directives, ${evidenceData.evidence.length} evidence record(s), ${directiveOrganizationsCsvRows.length} source-role links, ${directiveRelationshipsCsvRows.length} analytical cross-references, and the four-field reporting slice.`,
 );

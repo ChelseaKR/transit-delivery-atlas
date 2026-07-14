@@ -1,9 +1,33 @@
 "use client";
 
 import Link from "next/link";
-import { useMemo, useRef, useState } from "react";
+import { useMemo, useRef, useSyncExternalStore } from "react";
 import type { Organization, Theme } from "@/lib/data";
+import {
+  EMPTY_DIRECTIVE_FILTERS,
+  parseDirectiveFilters,
+  serializeDirectiveFilters,
+} from "@/lib/directive-filters.mjs";
 import { formatDate } from "@/lib/format";
+
+const FILTER_CHANGE_EVENT = "directive-filters-change";
+
+function subscribeToFilterUrl(onStoreChange: () => void) {
+  window.addEventListener("popstate", onStoreChange);
+  window.addEventListener(FILTER_CHANGE_EVENT, onStoreChange);
+  return () => {
+    window.removeEventListener("popstate", onStoreChange);
+    window.removeEventListener(FILTER_CHANGE_EVENT, onStoreChange);
+  };
+}
+
+function getFilterUrlSnapshot() {
+  return window.location.search;
+}
+
+function getServerFilterUrlSnapshot() {
+  return "";
+}
 
 type ExplorerOrganization = Pick<Organization, "id" | "name" | "shortName">;
 
@@ -39,11 +63,43 @@ export function DirectiveExplorer({
   themes,
   leadOrganizations,
 }: Props) {
-  const [query, setQuery] = useState("");
-  const [theme, setTheme] = useState("");
-  const [lead, setLead] = useState("");
-  const [timing, setTiming] = useState("");
   const searchRef = useRef<HTMLInputElement>(null);
+  const urlSearch = useSyncExternalStore(
+    subscribeToFilterUrl,
+    getFilterUrlSnapshot,
+    getServerFilterUrlSnapshot,
+  );
+  const validFilterValues = useMemo(
+    () => ({
+      themeIds: themes.map((item) => item.id),
+      leadIds: leadOrganizations.map((item) => item.id),
+    }),
+    [leadOrganizations, themes],
+  );
+  const filters = useMemo(
+    () =>
+      parseDirectiveFilters(
+        new URLSearchParams(urlSearch),
+        validFilterValues,
+      ),
+    [urlSearch, validFilterValues],
+  );
+  const { query, theme, lead, timing } = filters;
+
+  function updateFilters(nextFilters: typeof filters) {
+    const currentUrl = new URL(window.location.href);
+    const search = serializeDirectiveFilters(
+      nextFilters,
+      currentUrl.searchParams,
+    );
+    const nextUrl = `${currentUrl.pathname}${search ? `?${search}` : ""}${currentUrl.hash}`;
+    const currentRelativeUrl = `${currentUrl.pathname}${currentUrl.search}${currentUrl.hash}`;
+
+    if (nextUrl !== currentRelativeUrl) {
+      window.history.replaceState(window.history.state, "", nextUrl);
+      window.dispatchEvent(new Event(FILTER_CHANGE_EVENT));
+    }
+  }
 
   const filtered = useMemo(() => {
     const normalizedQuery = query.trim().toLocaleLowerCase();
@@ -76,10 +132,7 @@ export function DirectiveExplorer({
   const hasFilters = Boolean(query || theme || lead || timing);
 
   function reset() {
-    setQuery("");
-    setTheme("");
-    setLead("");
-    setTiming("");
+    updateFilters(EMPTY_DIRECTIVE_FILTERS);
     requestAnimationFrame(() => searchRef.current?.focus());
   }
 
@@ -104,14 +157,21 @@ export function DirectiveExplorer({
             ref={searchRef}
             type="search"
             value={query}
-            onChange={(event) => setQuery(event.target.value)}
+            onChange={(event) =>
+              updateFilters({ ...filters, query: event.target.value })
+            }
             placeholder="Try ‘funding’, ‘Caltrans’, or ‘3(b)’"
           />
         </label>
 
         <label>
           <span>Theme</span>
-          <select value={theme} onChange={(event) => setTheme(event.target.value)}>
+          <select
+            value={theme}
+            onChange={(event) =>
+              updateFilters({ ...filters, theme: event.target.value })
+            }
+          >
             <option value="">All themes</option>
             {themes.map((item) => (
               <option key={item.id} value={item.id}>
@@ -123,7 +183,12 @@ export function DirectiveExplorer({
 
         <label>
           <span>Explicit lead</span>
-          <select value={lead} onChange={(event) => setLead(event.target.value)}>
+          <select
+            value={lead}
+            onChange={(event) =>
+              updateFilters({ ...filters, lead: event.target.value })
+            }
+          >
             <option value="">All named leads</option>
             {leadOrganizations.map((organization) => (
               <option key={organization.id} value={organization.id}>
@@ -135,7 +200,12 @@ export function DirectiveExplorer({
 
         <label>
           <span>Timing in the order</span>
-          <select value={timing} onChange={(event) => setTiming(event.target.value)}>
+          <select
+            value={timing}
+            onChange={(event) =>
+              updateFilters({ ...filters, timing: event.target.value })
+            }
+          >
             <option value="">All timing</option>
             <option value="explicit">Explicit timing</option>
             <option value="none">No explicit deadline stated</option>
