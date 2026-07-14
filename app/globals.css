@@ -289,10 +289,9 @@ h4 {
 }
 
 .hero h1 {
-  max-width: 13ch;
+  max-width: 16ch;
   margin-bottom: 1.5rem;
   font-size: clamp(3.4rem, 8.4vw, 7.4rem);
-  text-transform: uppercase;
 }
 
 .hero h1 span {
@@ -1263,10 +1262,9 @@ h4 {
 
 .document-hero h1,
 .directive-hero h1 {
-  max-width: 14ch;
+  max-width: 16ch;
   margin-bottom: 1.3rem;
   font-size: clamp(3.4rem, 8vw, 6.5rem);
-  text-transform: uppercase;
 }
 
 .document-hero__inner > p:last-child,
