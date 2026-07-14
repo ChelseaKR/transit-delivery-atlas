@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { LayerLabel } from "@/components/LayerLabel";
+import { PrintRecordButton } from "@/components/PrintRecordButton";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
 import { directiveById, directives, source } from "@/lib/data";
@@ -49,6 +50,7 @@ export default async function DirectivePage({ params }: PageProps) {
             </p>
             <p className="utility-label">Editorial record title</p>
             <h1>{directive.title}</h1>
+            <PrintRecordButton />
           </div>
         </header>
 
