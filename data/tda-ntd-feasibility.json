@@ -1,0 +1,218 @@
+{
+  "schemaVersion": "0.1.0",
+  "researchId": "tda-ntd-four-field-feasibility",
+  "directiveId": "n-7-26-3b",
+  "title": "Four-field TDA/NTD reporting feasibility slice",
+  "reviewedOn": "2026-07-13",
+  "basis": "Independent comparison of the State Controller's Transit Operator Financial Transactions Report, FTA's reduced-reporting policy, and Caltrans's published rural-subrecipient role. No agency source systems, submissions, or nonpublic intake workflows were inspected.",
+  "conclusion": "The public record supports conditionally automated draft calculations for vehicle revenue miles and hours, assisted preparation with human method review for passenger boardings, and account-level reconciliation for operating expense. It does not support unattended filing. Urban reduced reporters certify direct NTD submissions; California rural Section 5311 subrecipients provide data through Caltrans OTGC, which supplies forms and files the statewide report.",
+  "classificationDefinitions": [
+    {
+      "id": "conditionally-automatable",
+      "label": "Conditionally automatable",
+      "meaning": "A configured rule can calculate a draft from complete actual source records, but scope mapping, exception review, validation, provenance, and authorized approval remain human-controlled."
+    },
+    {
+      "id": "assistable-human-method-review",
+      "label": "Assistable · method review",
+      "meaning": "Software can collect or aggregate source data, but the reporting method, estimates, inclusions, or exceptions require documented human judgment before a draft is accepted."
+    },
+    {
+      "id": "reconciliation-required",
+      "label": "Reconciliation required",
+      "meaning": "Published totals differ in material inclusions, exclusions, or allocation rules. A reviewed reconciliation schedule is required before values can be reused."
+    }
+  ],
+  "sources": [
+    {
+      "id": "sco-transit-operator-ftr-2024-25",
+      "publisher": "California State Controller's Office",
+      "title": "Transit Operator Financial Transactions Report Instructions for the Fiscal Year Ended June 30, 2025",
+      "url": "https://www.sco.ca.gov/Files-ARD-Local/LocRep/TO_FTR_Instructions_24-25.pdf",
+      "publishedOn": "2025-11-18",
+      "retrievedOn": "2026-07-13",
+      "scopeNote": "Current instructions linked by the State Controller for the 2024–25 Transit Operator Financial Transactions Report."
+    },
+    {
+      "id": "ca-puc-99243",
+      "publisher": "California Legislative Information",
+      "title": "California Public Utilities Code section 99243",
+      "url": "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=PUC&sectionNum=99243.",
+      "publishedOn": "2026-01-01",
+      "retrievedOn": "2026-07-13",
+      "scopeNote": "Statutory annual-report requirement, audited-data language, and direction to include data required by the U.S. Department of Transportation."
+    },
+    {
+      "id": "fta-ntd-reduced-2026",
+      "publisher": "Federal Transit Administration",
+      "title": "National Transit Database 2026 Policy Manual — Reduced Reporting",
+      "url": "https://www.transit.dot.gov/sites/fta.dot.gov/files/2026-06/2026-NTD-Reduced-Manual_0.pdf",
+      "publishedOn": "2026-06-30",
+      "retrievedOn": "2026-07-13",
+      "scopeNote": "Current NTD policy manual for urban systems operating 30 or fewer vehicles in maximum service and for rural reporters, including State DOTs and subrecipients."
+    },
+    {
+      "id": "caltrans-state-management-plan-2026",
+      "publisher": "California Department of Transportation",
+      "title": "Caltrans State Management Plan for Federal Transit Programs",
+      "url": "https://dot.ca.gov/-/media/dot-media/programs/rail-mass-transportation/documents/state-management-plan/4-21-26-caltrans-state-management-plan-final-a11y.pdf",
+      "publishedOn": "2026-04-21",
+      "retrievedOn": "2026-07-13",
+      "scopeNote": "Current plan stating that Caltrans reports to NTD on behalf of its subrecipients, OTGC files the statewide summary, and OTGC supplies the reporting forms."
+    }
+  ],
+  "reportingPaths": [
+    {
+      "id": "urban-reduced-direct",
+      "label": "Urban reduced · direct NTD reporter",
+      "description": "An urban agency operating 30 or fewer vehicles in maximum service generally files its reduced report directly. Its annual package includes CEO certification; urban reporters also follow the applicable independent-auditor statement controls. FFA-10 collects the four-field allocation by served area for directly reporting urban reporters.",
+      "sourceIds": ["fta-ntd-reduced-2026"]
+    },
+    {
+      "id": "california-rural-5311",
+      "label": "California rural Section 5311 subrecipient",
+      "description": "Caltrans reports to NTD on behalf of its subrecipients. OTGC supplies the intake forms and files the statewide summary, so the current OTGC workbook, validation rules, and intake calendar are required before building a rural production workflow.",
+      "sourceIds": ["caltrans-state-management-plan-2026", "fta-ntd-reduced-2026"]
+    }
+  ],
+  "fields": [
+    {
+      "id": "unlinked-passenger-trips",
+      "label": "Passenger boardings",
+      "tda": {
+        "field": "Total Passengers — Annual",
+        "form": "Supplemental Operating Data Form",
+        "definition": "All passengers boarded on unlinked passenger trips.",
+        "sourceId": "sco-transit-operator-ftr-2024-25",
+        "locator": "Instructions p. 23"
+      },
+      "ntd": {
+        "field": "Unlinked Passenger Trips (UPT)",
+        "form": "RR-20; FFA-10 for direct urban reporting",
+        "definition": "Boardings on public transportation vehicles during the fiscal year, counted each time a passenger boards, with mode-specific rules and approved counting or estimation methods.",
+        "sourceId": "fta-ntd-reduced-2026",
+        "locator": "Manual pp. 85–93 and 157–158"
+      },
+      "classification": "assistable-human-method-review",
+      "confidence": "medium",
+      "finding": "The core unit is aligned: both count unlinked boardings. Transfer still depends on matching report entity, fiscal year, mode, type of service, public-transportation scope, and the treatment of attendants, vanpool drivers, sponsored trips, and estimates.",
+      "requiredControls": [
+        "Map the reporting entity, fiscal year, mode, and type of service before aggregation.",
+        "Retain the source method for each count, including APC, farebox, driver log, manual count, or approved estimate.",
+        "Run exception checks for interlining, employees, attendants and companions, vanpool drivers, ferry occupants, and sponsored service.",
+        "If counts are estimated, document the approved sampling method, precision, and any APC approval or benchmarking requirements.",
+        "Require the responsible officials to review and certify the resulting submissions."
+      ],
+      "remainingEvidence": [
+        "Agency-level passenger-count source systems and data dictionaries",
+        "Existing TDA and NTD aggregation workbooks or queries",
+        "Sampling, APC, and manual-count procedures used by candidate agencies"
+      ]
+    },
+    {
+      "id": "vehicle-revenue-miles",
+      "label": "Vehicle revenue miles",
+      "tda": {
+        "field": "Total Actual Vehicle Revenue Miles — Annual",
+        "form": "Supplemental Operating Data Form",
+        "definition": "Miles while in revenue service for the fiscal year by mode, excluding travel to and from storage facilities and other non-revenue travel.",
+        "sourceId": "sco-transit-operator-ftr-2024-25",
+        "locator": "Instructions p. 23"
+      },
+      "ntd": {
+        "field": "Vehicle Revenue Miles (VRM)",
+        "form": "RR-20; FFA-10 for direct urban reporting",
+        "definition": "Miles traveled while in revenue service, excluding deadhead, operator training, maintenance testing, and other non-revenue use; demand-response and taxi service have additional rules.",
+        "sourceId": "fta-ntd-reduced-2026",
+        "locator": "Manual pp. 81–84"
+      },
+      "classification": "conditionally-automatable",
+      "confidence": "medium",
+      "finding": "The published inclusions and exclusions are closely aligned. A shared calculation is plausible, but only after mode and type-of-service mapping and explicit handling of deadhead, demand-response, taxi, incidental service, and purchased transportation.",
+      "requiredControls": [
+        "Use actual trip- or block-level records and revenue-service flags; schedules or GTFS alone do not prove service operated.",
+        "Separate mode and type of service before producing report totals.",
+        "Document demand-response, taxi, incidental-service, and purchased-transportation rules.",
+        "Reconcile annual totals to source operational records and investigate year-over-year exceptions."
+      ],
+      "remainingEvidence": [
+        "AVL, scheduling, dispatch, and contractor data availability",
+        "Agency definitions for pull-out, pull-in, layover, deadhead, and no-show travel",
+        "Current validation tolerances and exception-resolution workflows"
+      ]
+    },
+    {
+      "id": "vehicle-revenue-hours",
+      "label": "Vehicle revenue hours",
+      "tda": {
+        "field": "Total Actual Vehicle Revenue Hours — Annual",
+        "form": "Supplemental Operating Data Form",
+        "definition": "Total actual hours of all vehicles in revenue service for weekdays, Saturdays, and Sundays, reported by mode.",
+        "sourceId": "sco-transit-operator-ftr-2024-25",
+        "locator": "Instructions p. 23"
+      },
+      "ntd": {
+        "field": "Vehicle Revenue Hours (VRH)",
+        "form": "RR-20; FFA-10 for direct urban reporting",
+        "definition": "Hours traveled while in revenue service; scheduled-service hours include running and layover or recovery time and exclude deadhead and other non-revenue use, with separate demand-response rules.",
+        "sourceId": "fta-ntd-reduced-2026",
+        "locator": "Manual pp. 81–84"
+      },
+      "classification": "conditionally-automatable",
+      "confidence": "medium",
+      "finding": "Both systems ask for actual revenue-service hours, but the California instructions are less detailed about layover and service-type boundaries. A common calculation should adopt explicit NTD-style event rules and retain a California-report aggregation view.",
+      "requiredControls": [
+        "Use actual timestamped operations data and define running, layover or recovery, deadhead, interruptions, and out-of-service time as separate event types.",
+        "Apply the correct fixed-route, demand-response, and taxi rules before aggregation.",
+        "Preserve weekday, Saturday, and Sunday subtotals required by the California form.",
+        "Reconcile calculated totals to schedules, dispatch records, and contractor invoices where applicable."
+      ],
+      "remainingEvidence": [
+        "Availability and quality of actual versus scheduled time records",
+        "Treatment of layover and recovery time in current California filings",
+        "Purchased-transportation contract data and validation practices"
+      ]
+    },
+    {
+      "id": "total-operating-expense",
+      "label": "Operating expense",
+      "tda": {
+        "field": "Total Operating Expenses",
+        "form": "Statement of Revenues, Expenses, and Changes in Fund Net Position",
+        "definition": "Sum of the California form's operating-expense categories, which include depreciation and amortization line items.",
+        "sourceId": "sco-transit-operator-ftr-2024-25",
+        "locator": "Instructions pp. 12–15"
+      },
+      "ntd": {
+        "field": "Operating Expense (OE)",
+        "form": "RR-20; FFA-10 for direct urban reporting",
+        "definition": "Day-to-day operating costs reported on an accrual basis under the NTD Uniform System of Accounts; capital expenses and reconciling items such as depreciation, leasing, and interest are treated separately.",
+        "sourceId": "fta-ntd-reduced-2026",
+        "locator": "Manual pp. 58–63"
+      },
+      "classification": "reconciliation-required",
+      "confidence": "high",
+      "finding": "The California total is not a safe direct substitute for NTD operating expense. The forms share many FTA account concepts, but depreciation, amortization, leases, interest, capitalization thresholds, fully allocated costs, purchased transportation, and non-transit activities require an account-level reconciliation.",
+      "requiredControls": [
+        "Map each general-ledger account to the current California form and NTD USOA treatment.",
+        "Produce a reconciliation schedule for depreciation, amortization, leases, interest, capital thresholds, and other reconciling items.",
+        "Allocate shared and purchased-transportation costs consistently by mode and type of service.",
+        "Tie the final values to audited financial statements when available and retain reviewer sign-off."
+      ],
+      "remainingEvidence": [
+        "Agency chart of accounts and existing TDA-to-NTD account mappings",
+        "Audited financial statements and year-end adjustment schedules",
+        "Cost-allocation plans, capitalization policies, and purchased-transportation contracts"
+      ]
+    }
+  ],
+  "crossCuttingControls": [
+    "Use one canonical agency identifier and an explicit crosswalk to State Controller and NTD reporter identifiers.",
+    "Record fiscal-year boundaries, mode, type of service, service-area allocation, source system, extraction time, transformation version, and reviewer for every derived value.",
+    "Version the shared source layer across different report calendars; do not assume the NTD and State Controller filings use one immutable annual snapshot.",
+    "Keep generated values in draft until report-specific validation passes and an authorized official approves submission.",
+    "Retain the submitted value, source snapshot, transformations, exceptions, reviewer decisions, and later revisions as an audit trail.",
+    "Treat changes to either reporting manual as versioned rule changes that require revalidation."
+  ],
+  "nextEvidenceStep": "Test the four-field mapping with two or three volunteer rural or small California operators using de-identified source extracts, their latest TDA and NTD workpapers, and the staff who prepare and certify each report."
+}

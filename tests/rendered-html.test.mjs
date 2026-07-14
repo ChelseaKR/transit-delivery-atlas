@@ -158,6 +158,26 @@ test("renders source relationships before separately labeled analytical cross-re
   assert.doesNotMatch(html, /critical path|percent complete|traffic light/i);
 });
 
+test("renders the cited TDA and NTD feasibility boundary", async () => {
+  const response = await render("/research/tda-ntd");
+  assert.equal(response.status, 200);
+
+  const html = await response.text();
+  assert.match(html, /Four fields\. One honest automation boundary/);
+  assert.match(html, /Automate preparation, not accountability/);
+  assert.match(html, /Passenger boardings/);
+  assert.match(html, /Vehicle revenue miles/);
+  assert.match(html, /Vehicle revenue hours/);
+  assert.match(html, /Operating expense/);
+  assert.match(html, /Conditionally automatable/);
+  assert.match(html, /Assistable · method review/);
+  assert.match(html, /Reconciliation required/);
+  assert.match(html, /California rural Section 5311 subrecipient/);
+  assert.match(html, /Unattended filings supported[\s\S]{0,120}>0</);
+  assert.match(html, /href="\/data\/tda-ntd-feasibility\.json"/);
+  assert.match(html, /rel="canonical"[^>]+\/research\/tda-ntd/i);
+});
+
 test("renders methodology, data, and accessibility pages", async () => {
   const paths = [
     ["/methodology", /Keep source, evidence, and interpretation apart\./],

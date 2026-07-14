@@ -3,6 +3,7 @@ import directivesRaw from "@/data/directives.json";
 import evidenceRaw from "@/data/evidence.json";
 import organizationsRaw from "@/data/organizations.json";
 import sourcesRaw from "@/data/sources.json";
+import tdaNtdFeasibilityRaw from "@/data/tda-ntd-feasibility.json";
 import themesRaw from "@/data/themes.json";
 
 export type Organization = (typeof organizationsRaw)[number];
@@ -13,6 +14,7 @@ export type Analysis = (typeof analysisRaw.analysis)[number];
 export type EvidenceRecord = (typeof evidenceRaw.evidence)[number];
 export type SourceContext = (typeof directivesRaw.orderMetadata.sourceContexts)[number];
 export type SourceNotice = (typeof directivesRaw.orderMetadata.sourceNotices)[number];
+export type TdaNtdFeasibility = typeof tdaNtdFeasibilityRaw;
 
 export type DirectiveView = Directive & {
   analysis: Analysis;
@@ -61,6 +63,7 @@ export const evidenceScope = {
   lastUpdatedOn: evidenceRaw.lastUpdatedOn,
   coverageNote: evidenceRaw.coverageNote,
 };
+export const tdaNtdFeasibility = tdaNtdFeasibilityRaw;
 
 export const directives: DirectiveView[] = directivesRaw.directives.map(
   (directive) => {

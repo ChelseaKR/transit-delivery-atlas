@@ -19,6 +19,7 @@ export function SiteHeader() {
           <Link href="/handoffs">Relationships</Link>
           <Link href="/evidence">Evidence</Link>
           <Link href="/methodology">Method</Link>
+          <Link href="/research/tda-ntd">Research</Link>
           <Link href="/data">Data</Link>
           <Link href="/accessibility">Accessibility</Link>
         </nav>

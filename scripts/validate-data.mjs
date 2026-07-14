@@ -176,7 +176,98 @@ const evidenceSchema = z
   })
   .strict();
 
-const [sources, organizations, themes, directiveData, analysisData, evidenceData] =
+const feasibilitySourceSchema = z
+  .object({
+    id: identifier,
+    publisher: z.string().min(1),
+    title: z.string().min(1),
+    url: z.string().url().startsWith("https://"),
+    publishedOn: date,
+    retrievedOn: date,
+    scopeNote: z.string().min(20),
+  })
+  .strict();
+
+const fieldDefinitionSchema = z
+  .object({
+    field: z.string().min(1),
+    form: z.string().min(1),
+    definition: z.string().min(20),
+    sourceId: identifier,
+    locator: z.string().min(1),
+  })
+  .strict();
+
+const feasibilityFieldSchema = z
+  .object({
+    id: identifier,
+    label: z.string().min(1),
+    tda: fieldDefinitionSchema,
+    ntd: fieldDefinitionSchema,
+    classification: z.enum([
+      "conditionally-automatable",
+      "assistable-human-method-review",
+      "reconciliation-required",
+    ]),
+    confidence: z.enum(["low", "medium", "high"]),
+    finding: z.string().min(50),
+    requiredControls: z.array(z.string().min(20)).min(3),
+    remainingEvidence: z.array(z.string().min(20)).min(2),
+  })
+  .strict();
+
+const feasibilitySchema = z
+  .object({
+    schemaVersion: z.literal("0.1.0"),
+    researchId: z.literal("tda-ntd-four-field-feasibility"),
+    directiveId: z.literal("n-7-26-3b"),
+    title: z.string().min(1),
+    reviewedOn: date,
+    basis: z.string().min(50),
+    conclusion: z.string().min(80),
+    classificationDefinitions: z
+      .array(
+        z
+          .object({
+            id: z.enum([
+              "conditionally-automatable",
+              "assistable-human-method-review",
+              "reconciliation-required",
+            ]),
+            label: z.string().min(1),
+            meaning: z.string().min(50),
+          })
+          .strict(),
+      )
+      .length(3),
+    sources: z.array(feasibilitySourceSchema).min(4),
+    reportingPaths: z
+      .array(
+        z
+          .object({
+            id: z.enum(["urban-reduced-direct", "california-rural-5311"]),
+            label: z.string().min(1),
+            description: z.string().min(80),
+            sourceIds: z.array(identifier).min(1),
+          })
+          .strict(),
+      )
+      .length(2),
+    fields: z.array(feasibilityFieldSchema).length(4),
+    crossCuttingControls: z.array(z.string().min(20)).min(4),
+    nextEvidenceStep: z.string().min(50),
+  })
+  .strict();
+
+const [
+  sources,
+  organizations,
+  themes,
+  directiveData,
+  analysisData,
+  evidenceData,
+  feasibilityData,
+] =
   await Promise.all([
     readJson("data/sources.json"),
     readJson("data/organizations.json"),
@@ -184,6 +275,7 @@ const [sources, organizations, themes, directiveData, analysisData, evidenceData
     readJson("data/directives.json"),
     readJson("data/analysis.json"),
     readJson("data/evidence.json"),
+    readJson("data/tda-ntd-feasibility.json"),
   ]);
 
 z.array(sourceSchema).min(1).parse(sources);
@@ -248,6 +340,8 @@ z.object({
   .strict()
   .parse(evidenceData);
 
+feasibilitySchema.parse(feasibilityData);
+
 function unique(values, label) {
   const duplicates = values.filter((value, index) => values.indexOf(value) !== index);
   if (duplicates.length > 0) {
@@ -296,6 +390,71 @@ unique(evidenceData.evidence.map(({ id }) => id), "Evidence IDs");
 unique(evidenceData.evidence.map(({ url }) => url), "Evidence URLs");
 unique(sourceContextIds, "Source context IDs");
 unique(sourceNoticeIds, "Source notice IDs");
+unique(
+  feasibilityData.classificationDefinitions.map(({ id }) => id),
+  "Feasibility classification IDs",
+);
+unique(
+  feasibilityData.sources.map(({ id }) => id),
+  "Feasibility source IDs",
+);
+unique(
+  feasibilityData.fields.map(({ id }) => id),
+  "Feasibility field IDs",
+);
+unique(
+  feasibilityData.reportingPaths.map(({ id }) => id),
+  "Feasibility reporting-path IDs",
+);
+
+const expectedFeasibilityFieldIds = [
+  "unlinked-passenger-trips",
+  "vehicle-revenue-miles",
+  "vehicle-revenue-hours",
+  "total-operating-expense",
+];
+
+if (
+  JSON.stringify(feasibilityData.fields.map(({ id }) => id)) !==
+  JSON.stringify(expectedFeasibilityFieldIds)
+) {
+  throw new Error("The TDA/NTD feasibility slice must preserve the reviewed four-field order.");
+}
+
+const feasibilitySourceIds = new Set(
+  feasibilityData.sources.map(({ id }) => id),
+);
+for (const field of feasibilityData.fields) {
+  for (const layer of ["tda", "ntd"]) {
+    if (!feasibilitySourceIds.has(field[layer].sourceId)) {
+      throw new Error(`${field.id}.${layer} references an unknown feasibility source.`);
+    }
+  }
+}
+for (const path of feasibilityData.reportingPaths) {
+  unique(path.sourceIds, `${path.id} feasibility source IDs`);
+  for (const sourceId of path.sourceIds) {
+    if (!feasibilitySourceIds.has(sourceId)) {
+      throw new Error(`${path.id} references an unknown feasibility source.`);
+    }
+  }
+}
+
+if (
+  feasibilityData.fields.filter(
+    ({ classification }) => classification === "conditionally-automatable",
+  ).length !== 2 ||
+  feasibilityData.fields.filter(
+    ({ classification }) => classification === "assistable-human-method-review",
+  ).length !== 1 ||
+  feasibilityData.fields.filter(
+    ({ classification }) => classification === "reconciliation-required",
+  ).length !== 1
+) {
+  throw new Error(
+    "The reviewed feasibility boundary must retain two conditional calculations, one assisted method review, and one reconciliation.",
+  );
+}
 
 if (JSON.stringify(directiveIds) !== JSON.stringify(expectedIds)) {
   throw new Error("Directive IDs or document order differ from the 21-unit signed structure.");
@@ -574,7 +733,8 @@ function rejectStatus(value, path = "root") {
 rejectStatus(directiveData);
 rejectStatus(analysisData);
 rejectStatus(evidenceData);
+rejectStatus(feasibilityData);
 
 console.log(
-  `Validated 21 directive records, 21 analysis records, ${evidenceData.evidence.length} evidence record(s), and all references.`,
+  `Validated 21 directive records, 21 analysis records, ${evidenceData.evidence.length} evidence record(s), the four-field reporting slice, and all references.`,
 );

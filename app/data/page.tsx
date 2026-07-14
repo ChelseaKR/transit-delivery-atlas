@@ -80,6 +80,15 @@ export default function DataPage() {
                   <strong>JSON Schema</strong>
                   <small>Public export contract for version 0.2.0</small>
                 </a>
+                <a
+                  className="download-card"
+                  href="/data/tda-ntd-feasibility.json"
+                  download
+                >
+                  <span className="file-type">RESEARCH</span>
+                  <strong>TDA/NTD four-field slice</strong>
+                  <small>Definitions, feasibility classes, controls, and evidence gaps</small>
+                </a>
               </div>
             </section>
 

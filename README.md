@@ -8,6 +8,7 @@
 
 - Live site: [transit.chelseakr.com](https://transit.chelseakr.com)
 - Relationship view: [transit.chelseakr.com/handoffs](https://transit.chelseakr.com/handoffs)
+- TDA/NTD research: [transit.chelseakr.com/research/tda-ntd](https://transit.chelseakr.com/research/tda-ntd)
 - Source repository: [github.com/ChelseaKR/transit-delivery-atlas](https://github.com/ChelseaKR/transit-delivery-atlas)
 
 **Transit Delivery Atlas** is an independent, source-linked crosswalk for
@@ -61,6 +62,15 @@ and CSV under `public/data/`.
   dependencies, and open questions
 - `evidence.json` contains a selective collection of dated public artifacts,
   exact directive citations, locators, hashes, review dates, and limitations
+- `tda-ntd-feasibility.json` contains the cited four-field reporting research,
+  feasibility classes, controls, and remaining evidence needs
+
+The first reporting slice compares passenger boardings, vehicle revenue miles,
+vehicle revenue hours, and operating expense across the State Controller's
+Transit Operator Financial Transactions Report and FTA's reduced-reporting
+framework. It supports assisted preparation and reconciliation—not automated
+certification or filing. The accompanying [expert review guide](docs/EXPERT_REVIEW_GUIDE.md)
+provides a repeatable usability and domain-review script.
 
 The public JSON keeps those layers separate. `directives.csv` contains the
 source/analysis crosswalk, while `evidence.csv` contains the public-artifact

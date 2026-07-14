@@ -16,6 +16,7 @@ export function SiteFooter() {
           <Link href="/handoffs">Delivery relationships</Link>
           <Link href="/evidence">Public evidence</Link>
           <Link href="/methodology">Methodology</Link>
+          <Link href="/research/tda-ntd">TDA/NTD research</Link>
           <Link href="/data">Open data</Link>
           <Link href="/accessibility">Accessibility</Link>
           <a

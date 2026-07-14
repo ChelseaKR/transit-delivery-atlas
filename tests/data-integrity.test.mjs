@@ -639,6 +639,37 @@ test("source-fidelity corrections retain compound actions and precise relationsh
   assert.deepEqual(records.get("n-7-26-6").collaboratorOrgIds, ["caltrans-it"]);
 });
 
+test("the public four-field reporting slice matches its reviewed source", async () => {
+  const [canonical, published] = await Promise.all([
+    readJson("data/tda-ntd-feasibility.json"),
+    readJson("public/data/tda-ntd-feasibility.json"),
+  ]);
+
+  assert.deepEqual(published, canonical);
+  assert.equal(published.directiveId, "n-7-26-3b");
+  assert.deepEqual(
+    published.fields.map(({ id, classification }) => [id, classification]),
+    [
+      ["unlinked-passenger-trips", "assistable-human-method-review"],
+      ["vehicle-revenue-miles", "conditionally-automatable"],
+      ["vehicle-revenue-hours", "conditionally-automatable"],
+      ["total-operating-expense", "reconciliation-required"],
+    ],
+  );
+  assert.deepEqual(
+    published.reportingPaths.map(({ id }) => id),
+    ["urban-reduced-direct", "california-rural-5311"],
+  );
+  assert.ok(
+    published.sources.every(({ url }) =>
+      /^https:\/\/(?:www\.)?(?:sco\.ca\.gov|leginfo\.legislature\.ca\.gov|transit\.dot\.gov|dot\.ca\.gov)\//.test(
+        url,
+      ),
+    ),
+  );
+  assert.doesNotMatch(JSON.stringify(published), /"status"\s*:/i);
+});
+
 test("public schema is controlled and closes every typed object", async () => {
   const schema = await readJson("data/public-schema.json");
   assert.equal(schema.$id, "urn:transit-delivery-atlas:data-schema:0.2.0");
