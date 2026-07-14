@@ -72,6 +72,10 @@ framework. It supports assisted preparation and reconciliation—not automated
 certification or filing. The accompanying [expert review guide](docs/EXPERT_REVIEW_GUIDE.md)
 provides a repeatable usability and domain-review script.
 
+Readers can [suggest a source-backed correction or share structured review
+feedback](https://transit.chelseakr.com/corrections/). Public submissions must
+exclude confidential records, personal data, credentials, and security details.
+
 The public JSON keeps those layers separate. `directives.csv` contains the
 source/analysis crosswalk, while `evidence.csv` contains the public-artifact
 records and their explicit directive relationships.

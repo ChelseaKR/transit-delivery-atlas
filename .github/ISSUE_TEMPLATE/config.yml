@@ -1,0 +1,5 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Report a security vulnerability privately
+    url: https://github.com/ChelseaKR/transit-delivery-atlas/security/advisories/new
+    about: Do not post credentials, sensitive infrastructure details, or exploit information in a public issue.

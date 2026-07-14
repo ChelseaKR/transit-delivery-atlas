@@ -108,7 +108,7 @@ jobs:
           deployed_sha=$(curl_edge "https://${site_domain}/version.json" | jq -r '.sha')
           test "$deployed_sha" = "$EXPECTED_SHA"
 
-          for route in / /handoffs/ /evidence/ /research/tda-ntd/ /methodology/ /data/ /accessibility/ /directives/n-7-26-5/; do
+          for route in / /handoffs/ /evidence/ /research/tda-ntd/ /corrections/ /methodology/ /data/ /accessibility/ /directives/n-7-26-5/; do
             curl_edge "https://${site_domain}${route}" > /dev/null
           done
 
@@ -127,6 +127,12 @@ jobs:
           curl_edge "https://${site_domain}/research/tda-ntd/" > /tmp/research.html
           grep -Fq 'Four fields. One honest automation boundary.' /tmp/research.html
           grep -Fq 'Automate preparation, not accountability.' /tmp/research.html
+          grep -Fq 'Share research feedback' /tmp/research.html
+
+          curl_edge "https://${site_domain}/corrections/" > /tmp/corrections.html
+          grep -Fq 'Challenge the record, with a source.' /tmp/corrections.html
+          grep -Fq '01-content-correction.yml' /tmp/corrections.html
+          grep -Fq '02-review-feedback.yml' /tmp/corrections.html
           curl_edge "https://${site_domain}/data/tda-ntd-feasibility.json" \
             | jq -e '.researchId == "tda-ntd-four-field-feasibility" and (.fields | length) == 4' >/dev/null
 

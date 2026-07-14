@@ -50,6 +50,8 @@ test("CloudFront clean-route function maps pages without rewriting assets", asyn
     ["/handoffs/", "/handoffs/index.html"],
     ["/research/tda-ntd", "/research/tda-ntd/index.html"],
     ["/research/tda-ntd/", "/research/tda-ntd/index.html"],
+    ["/corrections", "/corrections/index.html"],
+    ["/corrections/", "/corrections/index.html"],
     ["/directives/n-7-26-5", "/directives/n-7-26-5/index.html"],
     ["/data/directives.json", "/data/directives.json"],
     ["/data/directives.csv", "/data/directives.csv"],
