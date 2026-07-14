@@ -1,0 +1,88 @@
+name: Suggest a content correction
+description: Propose a source-backed correction to Atlas content or public data.
+title: "[Correction] "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this form for a factual or analytical correction. This issue and every response will be public.
+
+        Do not include private records, personal data, credentials, or security details. Report a vulnerability through the repository's security policy instead.
+
+  - type: dropdown
+    id: correction-layer
+    attributes:
+      label: Which layer needs correction?
+      description: Source, evidence, and analysis are reviewed separately, even when one change affects another.
+      options:
+        - Signed source transcription or metadata
+        - Reviewed public evidence
+        - Independent analysis
+        - Named-body or directive relationship
+        - TDA/NTD research
+        - Public data or documentation
+    validations:
+      required: true
+
+  - type: input
+    id: record-or-page
+    attributes:
+      label: Record ID or page
+      description: Provide a directive ID, evidence ID, research field, or Atlas page URL.
+      placeholder: "Example: n-7-26-3b or https://transit.chelseakr.com/research/tda-ntd/"
+    validations:
+      required: true
+
+  - type: textarea
+    id: current-content
+    attributes:
+      label: What currently appears?
+      description: Quote the current text or describe the current data value precisely.
+      placeholder: Paste the current text or value here.
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposed-correction
+    attributes:
+      label: What should replace it?
+      description: State the proposed correction and why it is more accurate.
+      placeholder: Describe the replacement text or value and the reason for the change.
+    validations:
+      required: true
+
+  - type: input
+    id: public-source-url
+    attributes:
+      label: Primary public source URL
+      description: Link to the government, standards, or other authoritative public source supporting the correction.
+      placeholder: https://
+    validations:
+      required: true
+
+  - type: input
+    id: exact-locator
+    attributes:
+      label: Exact locator
+      description: Give the page, section, table, field, paragraph, or timestamp that supports the correction.
+      placeholder: "Example: PDF page 12, Section 3(b), second paragraph"
+    validations:
+      required: true
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Additional context
+      description: Add any qualifier, date boundary, or limitation needed to interpret the source correctly.
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: confirmation
+    attributes:
+      label: Before submitting
+      options:
+        - label: I confirm that this report contains no confidential, personal, credential, or security information.
+          required: true
+        - label: I understand that source, evidence, and analytical changes are reviewed and recorded separately.
+          required: true

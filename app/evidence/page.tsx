@@ -7,6 +7,7 @@ import {
   evidenceRecords,
   evidenceScope,
 } from "@/lib/data";
+import { CONTENT_CORRECTION_URL } from "@/lib/feedback";
 import { formatDate } from "@/lib/format";
 
 export const metadata: Metadata = {
@@ -212,6 +213,12 @@ export default function EvidencePage() {
                 linked directive, exact locator, current value, and proposed
                 replacement. Evidence, source, and analytical changes are reviewed
                 as separate concepts.
+              </p>
+              <p>
+                <a href={CONTENT_CORRECTION_URL} rel="noreferrer">
+                  Suggest an evidence correction{" "}
+                  <span aria-hidden="true">↗</span>
+                </a>
               </p>
             </section>
           </article>

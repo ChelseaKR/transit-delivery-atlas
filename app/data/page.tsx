@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
+import { CONTENT_CORRECTION_URL } from "@/lib/feedback";
 
 export const metadata: Metadata = {
   title: "Open data",
@@ -150,6 +151,12 @@ export default function DataPage() {
                 source, exact locator, and proposed replacement. Source,
                 evidence, and analytical changes are reviewed as separate
                 concepts.
+              </p>
+              <p>
+                <a href={CONTENT_CORRECTION_URL} rel="noreferrer">
+                  Suggest a source-backed correction{" "}
+                  <span aria-hidden="true">↗</span>
+                </a>
               </p>
             </section>
           </article>

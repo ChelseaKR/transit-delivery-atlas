@@ -1363,6 +1363,23 @@ h4 {
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
+.correction-paths {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.correction-paths .method-layer {
+  display: flex;
+  flex-direction: column;
+}
+
+.correction-paths .method-layer ul {
+  margin-bottom: 1.5rem;
+}
+
+.correction-path__action {
+  margin-top: auto;
+}
+
 .method-layer {
   border-top: 0.4rem solid var(--timetable-blue);
   padding: 1.25rem;
@@ -2214,6 +2231,7 @@ code {
   .download-grid,
   .method-layers,
   .research-field .method-layers,
+  .correction-paths,
   .evidence-meta,
   .record-grid,
   .research-control-grid,

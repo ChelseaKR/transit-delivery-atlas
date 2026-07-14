@@ -3,6 +3,7 @@ import Link from "next/link";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
 import { tdaNtdFeasibility } from "@/lib/data";
+import { REVIEW_FEEDBACK_URL } from "@/lib/feedback";
 import { formatDate } from "@/lib/format";
 
 export const metadata: Metadata = {
@@ -142,6 +143,13 @@ export default function TdaNtdResearchPage() {
                   download
                 >
                   Download research JSON
+                </a>
+                <a
+                  className="button button--secondary"
+                  href={REVIEW_FEEDBACK_URL}
+                  rel="noreferrer"
+                >
+                  Share research feedback <span aria-hidden="true">↗</span>
                 </a>
               </div>
             </section>

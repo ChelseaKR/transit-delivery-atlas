@@ -1,0 +1,82 @@
+name: Share review feedback
+description: Report a navigation, clarity, accessibility, or research-review finding.
+title: "[Review] "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this form for an observed usability problem or a review finding that does not yet have a complete source-backed correction.
+
+        This issue and every response will be public. Do not include private records, personal data, credentials, or security details.
+
+  - type: dropdown
+    id: feedback-type
+    attributes:
+      label: What were you reviewing?
+      options:
+        - Navigation or findability
+        - Source, evidence, and analysis distinction
+        - TDA/NTD research
+        - Accessibility
+        - Data download or reuse
+        - Other Atlas content
+    validations:
+      required: true
+
+  - type: input
+    id: page
+    attributes:
+      label: Page or record
+      description: Link to the page or identify the record you were using.
+      placeholder: https://transit.chelseakr.com/
+    validations:
+      required: true
+
+  - type: textarea
+    id: task
+    attributes:
+      label: What were you trying to do?
+      description: Describe the question you were answering or the task you were attempting.
+    validations:
+      required: true
+
+  - type: textarea
+    id: observation
+    attributes:
+      label: What happened?
+      description: Record what you saw, where you hesitated, or what was unclear. Specific observations are more useful than a general rating.
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected-change
+    attributes:
+      label: What would make this clearer or more useful?
+      description: Describe the outcome you expected or the smallest change that would have helped.
+    validations:
+      required: true
+
+  - type: input
+    id: supporting-source
+    attributes:
+      label: Supporting public source, if applicable
+      description: Include a public URL when the finding also challenges a factual or methodological claim.
+      placeholder: https://
+    validations:
+      required: false
+
+  - type: input
+    id: review-setup
+    attributes:
+      label: Browser or assistive technology, if relevant
+      placeholder: "Example: Safari 19 with VoiceOver on macOS"
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: confirmation
+    attributes:
+      label: Before submitting
+      options:
+        - label: I confirm that this report contains no confidential, personal, credential, or security information.
+          required: true

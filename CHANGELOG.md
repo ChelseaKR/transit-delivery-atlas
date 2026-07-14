@@ -5,6 +5,11 @@ recorded here.
 
 ## [Unreleased]
 
+### Added
+
+- Public correction and review chooser with structured GitHub issue forms for
+  source-backed changes and observed usability or research findings
+
 ### Changed
 
 - Set page-level headlines in sentence case while retaining uppercase for

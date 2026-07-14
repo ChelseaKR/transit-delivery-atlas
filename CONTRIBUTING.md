@@ -5,6 +5,11 @@ independent posture.
 
 ## Corrections
 
+Start with the public [correction and review
+chooser](https://transit.chelseakr.com/corrections/). Use the structured content
+correction form for a source-backed change, or the review-feedback form for an
+observed navigation, clarity, accessibility, or research finding.
+
 A source correction should include:
 
 1. Directive ID

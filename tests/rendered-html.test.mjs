@@ -37,6 +37,11 @@ test("statically renders the complete atlas home page", async () => {
   assert.match(html, /Twenty-one directive units/);
   assert.match(html, /Showing[\s\S]{0,80}21[\s\S]{0,80}of[\s\S]{0,80}21/);
   assert.match(html, /aria-live="polite"/);
+  assert.match(html, /href="\/corrections\/?"[^>]*>Corrections and review/);
+  assert.match(
+    html,
+    /href="https:\/\/github\.com\/ChelseaKR\/transit-delivery-atlas\/issues\/new\/choose"/,
+  );
   assert.match(html, /property="og:image"[^>]+https:\/\/transit\.chelseakr\.com\/og\.png/i);
   assert.match(html, /rel="canonical"[^>]+href="https:\/\/transit\.chelseakr\.com\/"/i);
   assert.match(html, /aria-label="Inspect source, evidence, and analysis for directive 1\(a\):/i);
@@ -121,6 +126,10 @@ test("renders the selective public-evidence index", async () => {
     html,
     /href="https:\/\/catc\.ca\.gov\/-\/media\/ctc-media\/documents\/programs\/senate-bill-1\/july-15-sccp-and-lpp-c-workshop-transit-eo-resource-material-002-a11y\.pdf"/,
   );
+  assert.match(
+    html,
+    /href="https:\/\/github\.com\/ChelseaKR\/transit-delivery-atlas\/issues\/new\?template=01-content-correction\.yml"/,
+  );
 });
 
 test("renders source relationships before separately labeled analytical cross-references", async () => {
@@ -175,7 +184,31 @@ test("renders the cited TDA and NTD feasibility boundary", async () => {
   assert.match(html, /California rural Section 5311 subrecipient/);
   assert.match(html, /Unattended filings supported[\s\S]{0,120}>0</);
   assert.match(html, /href="\/data\/tda-ntd-feasibility\.json"/);
+  assert.match(
+    html,
+    /href="https:\/\/github\.com\/ChelseaKR\/transit-delivery-atlas\/issues\/new\?template=02-review-feedback\.yml"/,
+  );
   assert.match(html, /rel="canonical"[^>]+\/research\/tda-ntd/i);
+});
+
+test("renders the public correction and review funnel", async () => {
+  const response = await render("/corrections");
+  assert.equal(response.status, 200);
+
+  const html = await response.text();
+  assert.match(html, /Challenge the record, with a source\./);
+  assert.match(html, /Correct content or data/);
+  assert.match(html, /Share review feedback/);
+  assert.match(html, /public GitHub issue/);
+  assert.match(
+    html,
+    /href="https:\/\/github\.com\/ChelseaKR\/transit-delivery-atlas\/issues\/new\?template=01-content-correction\.yml"/,
+  );
+  assert.match(
+    html,
+    /href="https:\/\/github\.com\/ChelseaKR\/transit-delivery-atlas\/issues\/new\?template=02-review-feedback\.yml"/,
+  );
+  assert.match(html, /rel="canonical"[^>]+\/corrections/i);
 });
 
 test("renders methodology, data, and accessibility pages", async () => {
@@ -195,6 +228,10 @@ test("renders methodology, data, and accessibility pages", async () => {
       assert.match(html, /href="\/data\/directive-organizations\.csv"/);
       assert.match(html, /href="\/data\/directive-relationships\.csv"/);
       assert.match(html, /record_directive_id/);
+      assert.match(
+        html,
+        /href="https:\/\/github\.com\/ChelseaKR\/transit-delivery-atlas\/issues\/new\?template=01-content-correction\.yml"/,
+      );
     }
   }
 });
