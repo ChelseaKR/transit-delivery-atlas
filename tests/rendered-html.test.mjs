@@ -61,6 +61,10 @@ test("renders source, safe empty evidence, and analysis on an unlinked directive
   assert.match(html, /Source record/);
   assert.match(html, /Reviewed public evidence/);
   assert.match(html, /Independent analysis/);
+  // A print affordance is rendered on the directive record page; the button is
+  // hidden by the existing @media print rules so the printout stays clean.
+  assert.match(html, /class="print-record-button"/);
+  assert.match(html, /Print this record/);
   assert.match(html, /Oct 24, 2026/);
   assert.match(html, /Jun 26, 2027/);
   assert.match(html, /blockquote/i);

@@ -1260,6 +1260,22 @@ h4 {
   padding-block: clamp(3rem, 7vw, 6rem);
 }
 
+.print-record-button {
+  margin-top: 1.5rem;
+  padding: 0.6rem 1.2rem;
+  border: 1px solid var(--night-platform);
+  border-radius: 0.5rem;
+  background: var(--paper);
+  color: var(--night-platform);
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.print-record-button:hover {
+  background: var(--route-paper);
+}
+
 .document-hero h1,
 .directive-hero h1 {
   max-width: 16ch;
@@ -2453,6 +2469,7 @@ code {
   .filters,
   .hero__actions,
   .directive-pagination,
+  .print-record-button,
   .skip-link {
     display: none !important;
   }

@@ -7,6 +7,10 @@ recorded here.
 
 ### Added
 
+- Printable directive brief: a "Print this record" button on each directive
+  detail page triggers the browser print dialog, using the existing print
+  styles to produce a clean, chrome-free brief of the source excerpt, evidence,
+  and analysis. The button is hidden in the printout.
 - Public correction and review chooser with structured GitHub issue forms for
   source-backed changes and observed usability or research findings
 
