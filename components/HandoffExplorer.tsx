@@ -1,10 +1,18 @@
 "use client";
 
 import Link from "next/link";
-import { useMemo, useRef, useState } from "react";
+import { useMemo, useRef, useSyncExternalStore } from "react";
 import {
+  EMPTY_DEPENDENCY_FILTERS,
+  EMPTY_ORGANIZATION_FILTERS,
   filterDependencyRoutes,
   filterNamedBodies,
+  parseDependencyFilters,
+  parseOrganizationFilters,
+  serializeDependencyFilters,
+  serializeOrganizationFilters,
+  type DependencyFilterState,
+  type OrganizationFilterState,
 } from "@/lib/relationship-filters";
 import type {
   DependencyRoute,
@@ -25,11 +33,48 @@ const roleLabels: Record<SourceRole, string> = {
 
 const roleOrder: SourceRole[] = ["lead", "collaborator", "mentioned"];
 
+// The two explorers below sync their filters to the page URL so a filtered
+// view is shareable and survives reload, mirroring the directive explorer.
+// They share one subscription: any filter change re-reads window.location and
+// each explorer re-parses only its own namespaced parameters.
+const FILTER_CHANGE_EVENT = "relationship-filters-change";
+
+function subscribeToFilterUrl(onStoreChange: () => void) {
+  window.addEventListener("popstate", onStoreChange);
+  window.addEventListener(FILTER_CHANGE_EVENT, onStoreChange);
+  return () => {
+    window.removeEventListener("popstate", onStoreChange);
+    window.removeEventListener(FILTER_CHANGE_EVENT, onStoreChange);
+  };
+}
+
+function getFilterUrlSnapshot() {
+  return window.location.search;
+}
+
+function getServerFilterUrlSnapshot() {
+  return "";
+}
+
+/** Write `search` to the URL without a navigation and notify subscribers. */
+function commitFilterUrl(search: string) {
+  const currentUrl = new URL(window.location.href);
+  const nextUrl = `${currentUrl.pathname}${search ? `?${search}` : ""}${currentUrl.hash}`;
+  const currentRelativeUrl = `${currentUrl.pathname}${currentUrl.search}${currentUrl.hash}`;
+
+  if (nextUrl !== currentRelativeUrl) {
+    window.history.replaceState(window.history.state, "", nextUrl);
+    window.dispatchEvent(new Event(FILTER_CHANGE_EVENT));
+  }
+}
+
 export function OrganizationExplorer({ records }: { records: NamedBodyRecord[] }) {
-  const [query, setQuery] = useState("");
-  const [kind, setKind] = useState("");
-  const [role, setRole] = useState<"" | SourceRole>("");
   const searchRef = useRef<HTMLInputElement>(null);
+  const urlSearch = useSyncExternalStore(
+    subscribeToFilterUrl,
+    getFilterUrlSnapshot,
+    getServerFilterUrlSnapshot,
+  );
 
   const kinds = useMemo(
     () =>
@@ -39,6 +84,25 @@ export function OrganizationExplorer({ records }: { records: NamedBodyRecord[] }
     [records],
   );
 
+  const validValues = useMemo(
+    () => ({ kindIds: kinds.map((item) => item.id) }),
+    [kinds],
+  );
+  const filters = useMemo(
+    () => parseOrganizationFilters(new URLSearchParams(urlSearch), validValues),
+    [urlSearch, validValues],
+  );
+  const { query, kind, role } = filters;
+
+  function updateFilters(nextFilters: OrganizationFilterState) {
+    commitFilterUrl(
+      serializeOrganizationFilters(
+        nextFilters,
+        new URL(window.location.href).searchParams,
+      ),
+    );
+  }
+
   const filtered = useMemo(() => {
     return filterNamedBodies(records, { query, kind, role });
   }, [kind, query, records, role]);
@@ -46,9 +110,7 @@ export function OrganizationExplorer({ records }: { records: NamedBodyRecord[] }
   const hasFilters = Boolean(query || kind || role);
 
   function reset() {
-    setQuery("");
-    setKind("");
-    setRole("");
+    updateFilters(EMPTY_ORGANIZATION_FILTERS);
     requestAnimationFrame(() => searchRef.current?.focus());
   }
 
@@ -78,14 +140,21 @@ export function OrganizationExplorer({ records }: { records: NamedBodyRecord[] }
             ref={searchRef}
             type="search"
             value={query}
-            onChange={(event) => setQuery(event.target.value)}
+            onChange={(event) =>
+              updateFilters({ ...filters, query: event.target.value })
+            }
             placeholder="Try ‘federal’, ‘CTC’, or ‘3(j)’"
           />
         </label>
 
         <label>
           <span>Body or group type</span>
-          <select value={kind} onChange={(event) => setKind(event.target.value)}>
+          <select
+            value={kind}
+            onChange={(event) =>
+              updateFilters({ ...filters, kind: event.target.value })
+            }
+          >
             <option value="">All types</option>
             {kinds.map((item) => (
               <option key={item.id} value={item.id}>
@@ -99,7 +168,12 @@ export function OrganizationExplorer({ records }: { records: NamedBodyRecord[] }
           <span>Relationship in source</span>
           <select
             value={role}
-            onChange={(event) => setRole(event.target.value as "" | SourceRole)}
+            onChange={(event) =>
+              updateFilters({
+                ...filters,
+                role: event.target.value as "" | SourceRole,
+              })
+            }
           >
             <option value="">All source roles</option>
             {roleOrder.map((item) => (
@@ -208,11 +282,31 @@ export function DependencyExplorer({
   themes,
   totalReferences,
 }: DependencyExplorerProps) {
-  const [query, setQuery] = useState("");
-  const [theme, setTheme] = useState("");
-  const [confidence, setConfidence] = useState("");
-  const [connection, setConnection] = useState("");
   const searchRef = useRef<HTMLInputElement>(null);
+  const urlSearch = useSyncExternalStore(
+    subscribeToFilterUrl,
+    getFilterUrlSnapshot,
+    getServerFilterUrlSnapshot,
+  );
+
+  const validValues = useMemo(
+    () => ({ themeIds: themes.map((item) => item.id) }),
+    [themes],
+  );
+  const filters = useMemo(
+    () => parseDependencyFilters(new URLSearchParams(urlSearch), validValues),
+    [urlSearch, validValues],
+  );
+  const { query, theme, confidence, connection } = filters;
+
+  function updateFilters(nextFilters: DependencyFilterState) {
+    commitFilterUrl(
+      serializeDependencyFilters(
+        nextFilters,
+        new URL(window.location.href).searchParams,
+      ),
+    );
+  }
 
   const filtered = useMemo(() => {
     return filterDependencyRoutes(routes, { query, theme, confidence, connection });
@@ -225,10 +319,7 @@ export function DependencyExplorer({
   const hasFilters = Boolean(query || theme || confidence || connection);
 
   function reset() {
-    setQuery("");
-    setTheme("");
-    setConfidence("");
-    setConnection("");
+    updateFilters(EMPTY_DEPENDENCY_FILTERS);
     requestAnimationFrame(() => searchRef.current?.focus());
   }
 
@@ -258,14 +349,21 @@ export function DependencyExplorer({
             ref={searchRef}
             type="search"
             value={query}
-            onChange={(event) => setQuery(event.target.value)}
+            onChange={(event) =>
+              updateFilters({ ...filters, query: event.target.value })
+            }
             placeholder="Try ‘data’, ‘permitting’, or ‘6’"
           />
         </label>
 
         <label>
           <span>Analytical theme</span>
-          <select value={theme} onChange={(event) => setTheme(event.target.value)}>
+          <select
+            value={theme}
+            onChange={(event) =>
+              updateFilters({ ...filters, theme: event.target.value })
+            }
+          >
             <option value="">All themes</option>
             {themes.map((item) => (
               <option key={item.id} value={item.id}>
@@ -279,7 +377,9 @@ export function DependencyExplorer({
           <span>Analyst confidence</span>
           <select
             value={confidence}
-            onChange={(event) => setConfidence(event.target.value)}
+            onChange={(event) =>
+              updateFilters({ ...filters, confidence: event.target.value })
+            }
           >
             <option value="">All confidence labels</option>
             <option value="high">High</option>
@@ -292,7 +392,9 @@ export function DependencyExplorer({
           <span>Cross-reference</span>
           <select
             value={connection}
-            onChange={(event) => setConnection(event.target.value)}
+            onChange={(event) =>
+              updateFilters({ ...filters, connection: event.target.value })
+            }
           >
             <option value="">All dependency statements</option>
             <option value="linked">Names another directive</option>
