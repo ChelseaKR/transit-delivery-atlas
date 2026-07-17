@@ -7,6 +7,11 @@ recorded here.
 
 ### Added
 
+- Shareable explorer URLs for the delivery-relationship views: the named-bodies
+  and inferred-dependency filters on the handoffs page now sync to the URL
+  (namespaced query parameters so the two explorers never collide), so a
+  filtered view can be linked and survives reload, matching the directive
+  explorer
 - Printable directive brief: a "Print this record" button on each directive
   detail page triggers the browser print dialog, using the existing print
   styles to produce a clean, chrome-free brief of the source excerpt, evidence,
