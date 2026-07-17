@@ -1,0 +1,26 @@
+# CODEOWNERS — transit-delivery-atlas
+#
+# A single maintainer owns this project. @ChelseaKR is the catch-all owner of
+# every path; the explicit blocks below make the high-stakes surfaces of this
+# repo loud in review, not delegate them — a change to canonical source records,
+# the deploy pipeline, or the security policy is never silently skippable.
+#
+# Order matters: the last matching pattern wins, so the catch-all comes first
+# and the specific overrides follow.
+
+# Catch-all: @ChelseaKR owns everything in the repository.
+*                                       @ChelseaKR
+
+# Canonical source, evidence, and analysis records — the integrity core.
+# Source, evidence, and analytical layers must never be silently mixed
+# (see CONTRIBUTING.md and docs/METHODOLOGY.md).
+/data/                                  @ChelseaKR
+
+# Fail-closed validation and export scripts that generate the public dataset.
+/scripts/                               @ChelseaKR
+
+# Governance, workflows, and supply chain.
+/.github/                               @ChelseaKR
+/docs/adr/                              @ChelseaKR
+/SECURITY.md                            @ChelseaKR
+/infra/                                 @ChelseaKR
