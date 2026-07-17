@@ -138,6 +138,25 @@ cross-browser keyboard, screen-reader, zoom, forced-colors, and disabled-user
 evaluation remains pending. These checks are quality controls, not an
 accessibility certification or a conformance claim.
 
+## Standards Conformance
+
+Transit Delivery Atlas is developed against a shared set of portfolio
+engineering standards. Applicability and current state:
+
+| Standard | Applies? | State |
+|---|---|---|
+| Responsible-Tech Framework | Applies | Independent-analysis posture, correction workflow, and explicit non-affiliation labeling (see "What this is not") |
+| Code Quality | Applies | ESLint + strict TypeScript typecheck, fail-closed data validation; gated in CI (`npm run check`) |
+| Security & Supply-Chain | Applies | CodeQL SAST, TruffleHog full-history secret scan, Dependabot, npm production audit, SHA-pinned actions, SECURITY.md |
+| CI/CD | Applies | Quality gate on every push/PR; OIDC-based deploy with post-deploy smoke checks (`.github/workflows/`) |
+| Observability | Applies | Static site: build SHA published at `/version.json`; deploy workflow smoke-verifies the exact released SHA and security headers |
+| Accessibility | Applies | WCAG 2.2 AA target with Section 508 framing; rendered-HTML test assertions (see "Accessibility" above and docs/ACCESSIBILITY.md) |
+| Internationalization | Applies | Gap — English-only today, no locale catalogs yet; owner declaration pending (conservative default, tracked) |
+| AI Evaluation | N/A — source-linked deterministic site; no LLM/model component | N/A — no generative or model-driven component anywhere in the build or site |
+| Documentation | Applies | README, methodology/evidence/relationship models, ADR log (docs/adr/), CHANGELOG, CONTRIBUTING |
+| Quality & Metrics | Applies | Data-integrity, filter, rendered-HTML, and hosting test suites run in the release gate |
+| Release & Versioning | Applies | CHANGELOG (Keep-a-Changelog), semver in package.json, tag-triggered release workflow re-runs the full gate at the tagged commit |
+
 ## Licensing
 
 - Code: [MIT](LICENSE)

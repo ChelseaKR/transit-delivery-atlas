@@ -1,0 +1,24 @@
+cff-version: 1.2.0
+message: "If you use Transit Delivery Atlas data or analysis, please cite it as below."
+title: "Transit Delivery Atlas — a source-linked crosswalk of California Executive Order N-7-26"
+abstract: >-
+  An independent, source-linked crosswalk for California Executive Order N-7-26:
+  each actionable directive becomes a navigable record of source language,
+  explicitly named entities, timing, public-evidence coverage, analytical
+  dependencies, expected outputs, and open implementation questions, with
+  machine-readable JSON/CSV exports.
+type: software
+authors:
+  - given-names: Chelsea
+    family-names: Kelly-Reif
+license: MIT
+repository-code: "https://github.com/ChelseaKR/transit-delivery-atlas"
+url: "https://transit.chelseakr.com"
+version: "0.4.0"
+keywords:
+  - california
+  - transit
+  - executive-order
+  - public-interest
+  - open-data
+  - crosswalk

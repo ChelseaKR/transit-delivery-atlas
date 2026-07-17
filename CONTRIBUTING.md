@@ -50,8 +50,11 @@ Before opening a pull request:
 
 ```bash
 npm install
-npm run check
+make verify
 ```
+
+`make verify` runs the same release gate as CI (`npm run check`: lint,
+typecheck, build + tests, and a production dependency audit).
 
 Pull requests should explain what changed, why it changed, user impact, and the
 checks performed. Generated JSON, CSV, normalized relationship tables, and
