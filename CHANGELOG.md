@@ -21,6 +21,11 @@ recorded here.
 
 ### Changed
 
+- Relicensed code MIT → Apache-2.0 (explicit patent grant; prior released
+  snapshots remain MIT): `LICENSE` replaced with the canonical Apache License
+  2.0 text, `NOTICE` added, and `package.json`, `CITATION.cff`, README, and the
+  code-license cross-reference in `CONTENT-LICENSE.md` updated to match. The
+  content and data license (CC BY 4.0, `CONTENT-LICENSE.md`) is unchanged
 - Set page-level headlines in sentence case while retaining uppercase for
   compact wayfinding and data labels
 

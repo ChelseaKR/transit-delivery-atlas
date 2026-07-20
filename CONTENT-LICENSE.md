@@ -10,4 +10,4 @@ link to the repository and an indication of whether changes were made.
 
 Source excerpts, government publications, agency names, and other third-party
 material are not relicensed by this notice. Code and configuration remain under
-the MIT License in `LICENSE`.
+the Apache License 2.0 in `LICENSE`.

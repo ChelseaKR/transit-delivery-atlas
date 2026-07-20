@@ -159,7 +159,7 @@ engineering standards. Applicability and current state:
 
 ## Licensing
 
-- Code: [MIT](LICENSE)
+- Code: [Apache-2.0](LICENSE)
 - Original structured analysis and documentation: [CC BY 4.0](CONTENT-LICENSE.md)
 - Government source documents and quoted material remain subject to their own
   terms and are not relicensed by this project

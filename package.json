@@ -3,6 +3,7 @@
   "version": "0.4.0",
   "description": "Independent, source-linked crosswalk of California transit directives, named bodies, timing, evidence, and analytical delivery relationships.",
   "private": true,
+  "license": "Apache-2.0",
   "engines": {
     "node": ">=22.13.0"
   },
