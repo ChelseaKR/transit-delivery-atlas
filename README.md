@@ -23,6 +23,21 @@ dependencies, expected outputs, and open implementation questions.
 > California or any state or local agency. Analytical labels are not official
 > implementation statuses or legal conclusions.
 
+## Quickstart
+
+Requires Node.js 22.13 or newer.
+
+```bash
+npm install
+npm run dev
+```
+
+Before proposing a change:
+
+```bash
+npm run check
+```
+
 ## What this is
 
 - A structured reading of the signed executive order
@@ -91,21 +106,6 @@ See [the methodology](docs/METHODOLOGY.md),
 [evidence model](docs/EVIDENCE-MODEL.md), and
 [product specification](docs/PRD.md) for the classification model, acceptance
 criteria, and known limitations.
-
-## Local development
-
-Requires Node.js 22.13 or newer.
-
-```bash
-npm install
-npm run dev
-```
-
-Before proposing a change:
-
-```bash
-npm run check
-```
 
 ## Corrections and contributions
 
