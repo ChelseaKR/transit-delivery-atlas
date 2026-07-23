@@ -158,6 +158,27 @@ test("implementation evidence is selectively scoped with exact Order 5 provenanc
   });
   assert.match(record.limitations.join(" "), /proposed SCCP and LPP-C changes/i);
   assert.match(record.limitations.join(" "), /does not establish adoption, completion, compliance/i);
+
+  const presentation = evidenceData.evidence.find(
+    ({ id }) => id === "ctc-2026-07-15-order-5-workshop-presentation",
+  );
+  assert.ok(presentation);
+  assert.equal(presentation.publisher, "California Transportation Commission");
+  assert.equal(presentation.evidenceType, "meeting-material");
+  assert.equal(presentation.datedOn, "2026-07-15");
+  assert.equal(presentation.dateKind, "published");
+  assert.equal(
+    presentation.sha256,
+    "0ef1bc99da045d7b34feddbe0573ca2dfa3951b34bcee394da91aca69cc7dcf5",
+  );
+  assert.equal(presentation.pageCount, 20);
+  assert.deepEqual(
+    presentation.directiveLinks.map(({ directiveId }) => directiveId),
+    ["n-7-26-5"],
+  );
+  assert.deepEqual(presentation.directiveLinks[0].locator.pages, [12, 13, 14, 15]);
+  assert.match(presentation.editorialSummary, /not currently open/i);
+  assert.match(presentation.limitations.join(" "), /not a final guideline/i);
 });
 
 test("evidence records retain secure URLs, hashes, dates, and bounded locators", async () => {

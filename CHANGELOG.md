@@ -9,11 +9,19 @@ recorded here.
 
 - Public correction and review chooser with structured GitHub issue forms for
   source-backed changes and observed usability or research findings
+- Post-workshop California Transportation Commission presentation documenting
+  the Order 5 basis, proposed SCCP and LPP-C language, current guideline-cycle
+  boundary, exact page locators, artifact hash, and adoption-safe limitations
 
 ### Changed
 
 - Set page-level headlines in sentence case while retaining uppercase for
   compact wayfinding and data labels
+- Re-reviewed the earlier Order 5 reference material after the July 15 workshop
+  and replaced its future-event limitation with a link-safe distinction between
+  the pre-workshop artifact and later posted presentation and recording
+- Updated Next.js to 16.2.11 and pinned its optional Sharp dependency to 0.35.3
+  so release checks include the patched production dependency set
 
 ## [0.4.0] - 2026-07-13
 
