@@ -112,14 +112,14 @@ jobs:
           done
 
           curl_edge "https://${site_domain}/" > /tmp/home.html
-          grep -Fq 'From directive to delivery' /tmp/home.html
+          grep -Fq 'Directive register' /tmp/home.html
 
           curl_edge "https://${site_domain}/evidence/" > /tmp/evidence.html
-          grep -Fq 'Public artifacts, linked with limits.' /tmp/evidence.html
+          grep -Fq 'Reviewed public evidence' /tmp/evidence.html
           grep -Fq 'https://chelseakr.com/writing/signed-transit-order-start' /tmp/evidence.html
 
           curl_edge "https://${site_domain}/handoffs/" > /tmp/handoffs.html
-          grep -Fq 'Trace the delivery relationships.' /tmp/handoffs.html
+          grep -Fq 'Delivery relationships' /tmp/handoffs.html
           grep -Fq 'Explicit source-role links' /tmp/handoffs.html
           grep -Fq 'A relationship is not a status.' /tmp/handoffs.html
 

@@ -24,6 +24,13 @@ recorded here.
 
 ### Changed
 
+- Replaced the promotional operations-board interface with a compact public
+  research register: the home page now leads with the directive records,
+  filters are horizontal, source/evidence/analysis coverage is visible in each
+  row, navigation is simplified, and document pages use restrained headers and
+  flat evidence layers
+- Reworked the footer into a compact, high-contrast provenance band with
+  grouped navigation and separate correction and signed-source actions
 - Relicensed code MIT → Apache-2.0 (explicit patent grant; prior released
   snapshots remain MIT): `LICENSE` replaced with the canonical Apache License
   2.0 text, `NOTICE` added, and `package.json`, `CITATION.cff`, README, and the

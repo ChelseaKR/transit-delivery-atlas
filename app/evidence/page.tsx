@@ -25,8 +25,8 @@ export default function EvidencePage() {
         <header className="document-hero document-hero--evidence">
           <div className="document-hero__inner">
             <p className="independence-badge">Independent analysis · Unofficial</p>
-            <p className="utility-label">Reviewed public evidence</p>
-            <h1>Public artifacts, linked with limits.</h1>
+            <p className="utility-label">Evidence register</p>
+            <h1>Reviewed public evidence</h1>
             <p>
               A selective collection of dated public records connected to the
               signed directives, with provenance, review dates, and caveats kept

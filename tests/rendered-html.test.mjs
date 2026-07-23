@@ -34,7 +34,9 @@ test("statically renders the complete atlas home page", async () => {
   assert.match(html, /href="#main-content"[^>]*>\s*Skip to main content/i);
   assert.match(html, /<main[^>]*id="main-content"/i);
   assert.match(html, /Independent analysis/);
-  assert.match(html, /Twenty-one directive units/);
+  assert.match(html, /Directive register/);
+  assert.match(html, /Directive records[\s\S]{0,100}>21</);
+  assert.match(html, /Evidence records/);
   assert.match(html, /Showing[\s\S]{0,80}21[\s\S]{0,80}of[\s\S]{0,80}21/);
   assert.match(html, /aria-live="polite"/);
   assert.match(html, /href="\/corrections\/?"[^>]*>Corrections and review/);
@@ -44,8 +46,9 @@ test("statically renders the complete atlas home page", async () => {
   );
   assert.match(html, /property="og:image"[^>]+https:\/\/transit\.chelseakr\.com\/og\.png/i);
   assert.match(html, /rel="canonical"[^>]+href="https:\/\/transit\.chelseakr\.com\/"/i);
-  assert.match(html, /aria-label="Inspect source, evidence, and analysis for directive 1\(a\):/i);
-  assert.match(html, /Evidence[\s\S]{0,100}Dated public records/);
+  assert.match(html, /aria-label="Inspect directive 1\(a\):/i);
+  assert.match(html, /Record layer key/);
+  assert.match(html, /Source[\s\S]{0,100}Evidence[\s\S]{0,100}Analysis/);
   assert.match(html, /No explicit completion deadline in the signed order/);
   assert.doesNotMatch(html, /codex-preview|Your site is taking shape|react-loading-skeleton/i);
 });
@@ -121,7 +124,7 @@ test("renders the selective public-evidence index", async () => {
   const html = await response.text();
 
   assert.match(html, /<main[^>]*id="main-content"/i);
-  assert.match(html, /Public artifacts, linked with limits\./);
+  assert.match(html, /Reviewed public evidence/);
   assert.match(html, /Transit Executive Order N-7-26 Resource Material/);
   assert.match(html, /2026 SB1 Program Guidelines Development Workshop/);
   assert.match(html, /California Transportation Commission/);
@@ -153,8 +156,8 @@ test("renders source relationships before separately labeled analytical cross-re
   const html = await response.text();
 
   assert.match(html, /<main[^>]*id="main-content"/i);
-  assert.match(html, /Trace the delivery relationships\./);
-  assert.match(html, /Potential handoff map/);
+  assert.match(html, /Delivery relationships/);
+  assert.match(html, /Executive Order N-7-26/);
   assert.match(html, /A relationship is not a status\./);
   assert.match(html, /Bodies and groups named in the order/);
   assert.match(html, /Inferred delivery dependencies/);
