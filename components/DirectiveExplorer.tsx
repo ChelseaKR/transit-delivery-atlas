@@ -50,6 +50,7 @@ export interface ExplorerDirective {
     themeIds: string[];
   };
   themes: Theme[];
+  evidenceCount: number;
 }
 
 interface Props {
@@ -138,10 +139,10 @@ export function DirectiveExplorer({
 
   return (
     <div className="explorer">
-      <div className="filters" role="search" aria-labelledby="filter-title">
+      <div className="filters register-filters" role="search" aria-labelledby="filter-title">
         <div className="filters__heading">
           <div>
-            <p className="utility-label">Explore the signed structure</p>
+            <p className="utility-label">Filter the register</p>
             <h3 id="filter-title">Find a directive</h3>
           </div>
           {hasFilters ? (
@@ -215,64 +216,75 @@ export function DirectiveExplorer({
 
       <div className="results">
         <div className="results__heading">
-          <h3>Directive units</h3>
+          <h3>Records</h3>
           <p aria-live="polite" aria-atomic="true">
             Showing {filtered.length} of {directives.length}
           </p>
         </div>
 
         {filtered.length > 0 ? (
-          <ol className="directive-list">
+          <>
+            <div className="directive-register__header" aria-hidden="true">
+              <span>Section</span>
+              <span>Directive</span>
+              <span>Named lead</span>
+              <span>Timing</span>
+              <span>Layers</span>
+            </div>
+            <ol className="directive-list directive-register">
             {filtered.map((directive) => (
               <li key={directive.id}>
-                <article className="directive-card">
-                  <div className="directive-card__rail">
-                    <span><span className="visually-hidden">Directive </span>{directive.label}</span>
+                <article className="directive-row">
+                  <div className="directive-row__section">
+                    <span className="visually-hidden">Directive </span>{directive.label}
                   </div>
-                  <div className="directive-card__body">
-                    <p className="utility-label">Editorial record title</p>
-                    <h4>{directive.title}</h4>
-                    <div className="directive-card__source">
-                      <p className="utility-label">Source record</p>
-                      <p className="directive-card__excerpt">“{directive.excerpt}”</p>
-                      <p>
-                        <strong>Explicit lead:</strong>{" "}
-                        {directive.leadOrganizations.map((item) => item.shortName).join(", ")}
-                      </p>
-                      {directive.timing.length > 0 ? (
-                        <ul className="card-timing-list" aria-label="Timing in the signed order">
-                          {directive.timing.map((item) => (
-                            <li key={`${item.sourceText}-${item.appliesTo}`}>
-                              <strong>Calculated planning date: {formatDate(item.derivedDate)}</strong>
-                              <span>{item.sourceText} · applies to {item.appliesTo}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      ) : (
-                        <p className="timing-chip timing-chip--none">No explicit completion deadline in the signed order</p>
-                      )}
-                    </div>
-                    <div className="directive-card__analysis">
-                      <p className="utility-label">Independent analysis</p>
-                      <p>{directive.analysis.summary}</p>
-                      <ul className="tag-list" aria-label="Analytical themes">
-                        {directive.themes.map((item) => (
-                          <li key={item.id}>{item.name}</li>
+                  <div className="directive-row__main">
+                    <h4>
+                      <Link
+                        href={`/directives/${directive.id}`}
+                        aria-label={`Inspect directive ${directive.label}: ${directive.title}`}
+                      >
+                        {directive.title}
+                      </Link>
+                    </h4>
+                    <p>{directive.analysis.summary}</p>
+                    <span>{directive.themes.map((item) => item.name).join(" · ")}</span>
+                  </div>
+                  <div className="directive-row__meta">
+                    <span className="directive-row__label">Named lead</span>
+                    {directive.leadOrganizations.map((item) => item.shortName).join(", ")}
+                  </div>
+                  <div className="directive-row__timing">
+                    <span className="directive-row__label">Timing</span>
+                    {directive.timing.length > 0 ? (
+                      <ul aria-label="Timing in the signed order">
+                        {directive.timing.map((item) => (
+                          <li key={`${item.sourceText}-${item.appliesTo}`}>
+                            <time dateTime={item.derivedDate}>{formatDate(item.derivedDate)}</time>
+                          </li>
                         ))}
                       </ul>
-                    </div>
-                    <Link
-                      className="inspect-link"
-                      href={`/directives/${directive.id}`}
-                      aria-label={`Inspect source, evidence, and analysis for directive ${directive.label}: ${directive.title}`}
-                    >
-                      Inspect source, evidence, and analysis <span aria-hidden="true">→</span>
-                    </Link>
+                    ) : (
+                      <span title="No explicit completion deadline in the signed order">
+                        None stated
+                      </span>
+                    )}
+                  </div>
+                  <div
+                    className="directive-row__provenance"
+                    aria-label={`Source reviewed; ${directive.evidenceCount} evidence records; analysis available`}
+                  >
+                    <span>S</span>
+                    <span className={directive.evidenceCount > 0 ? "has-evidence" : ""}>
+                      E {directive.evidenceCount}
+                    </span>
+                    <span>A</span>
                   </div>
                 </article>
               </li>
             ))}
-          </ol>
+            </ol>
+          </>
         ) : (
           <div className="empty-state">
             <h4>No directives match these filters.</h4>

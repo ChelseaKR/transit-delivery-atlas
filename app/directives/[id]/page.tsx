@@ -48,7 +48,6 @@ export default async function DirectivePage({ params }: PageProps) {
               <span>{directive.label}</span>
               <span>Directive {directive.order} of {directives.length}</span>
             </p>
-            <p className="utility-label">Editorial record title</p>
             <h1>{directive.title}</h1>
             <PrintRecordButton />
           </div>

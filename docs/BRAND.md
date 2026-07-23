@@ -33,68 +33,68 @@ entities, timing clauses, outputs, and handoffs. The primary audience is a
 policy or program reader who needs to answer “who is named, what is directed,
 and when?” without losing the source/analysis boundary.
 
-The page’s single job is to make those handoffs inspectable.
+The page’s single job is to make those records inspectable.
 
 ## Visual direction
 
-The design begins as an **operations board crossed with engineering markup**.
-It does not imitate government web chrome, transit-agency branding, a newspaper,
-or a generic civic-tech dashboard.
+The design is a **public research register**: quiet, dense, source-led, and
+designed for repeated inspection. It should feel closer to an annotated
+catalogue than to a campaign landing page, operations dashboard, newspaper, or
+government website.
 
-An earlier field-guide direction using warm cream, a literary serif, and a
-red-brown accent was rejected because that combination has become a generic
-editorial-site default. The revised system is cooler, more operational, and
-grounded in the materials of transit delivery: timetable ink, transfer markers,
-signal paint, and annotated work plans.
+The interface leads with the records themselves. Large promotional headlines,
+decorative route diagrams, persistent filter sidebars, and stacked card surfaces
+are avoided because they delay access to the evidence model. Structure comes
+from document sequence, thin rules, compact locators, and the visible separation
+of source, evidence, and analysis.
 
 ### Palette
 
-- **Route paper** `#F5F9F8` — page background
-- **Night platform** `#102A30` — primary text and dark surfaces
-- **Timetable blue** `#145DA0` — links and source records
-- **Transfer teal** `#00766C` — focus and analytical-layer accent
-- **Signal orange** `#C9471B` — deadline markers and sparing emphasis
-- **Rail steel** `#D9E5E2` — borders and secondary panels
+- **Route paper** `#F5F7F6` — page background
+- **Paper** `#FFFFFF` — primary record surface
+- **Night platform** `#172126` — primary text
+- **Timetable blue** `#255F85` — links and source records
+- **Transfer teal** `#3F7068` — analytical-layer accent
+- **Signal orange** `#965932` — evidence-layer accent
+- **Rail steel** `#DFE4E2` — borders and secondary structure
 
 Color never carries meaning alone.
 
 ### Typography
 
-- **Barlow Condensed** — display headings, used with restraint like station
-  wayfinding rather than advertising
-- **Atkinson Hyperlegible** — body and interface text
-- **IBM Plex Mono** — section IDs, dates, locators, and data labels
+- **Atkinson Hyperlegible** — headings, body, and interface text
+- **Barlow Condensed** — directive numbers, source locators, and compact
+  wayfinding only
 
 System fallbacks are acceptable if font delivery becomes a launch risk.
 
 ### Signature element
 
-A functional **handoff rail** connects five shapes:
+A compact **provenance triplet** appears on directive rows:
 
-`source → named entity → timing → reviewed evidence → analysis`
+`S  E  A`
 
-The shapes act as a legend and information architecture, not decoration. They
-are built with HTML and CSS, remain legible without color, and collapse into a
-vertical sequence on narrow screens.
+It records the three available layers—signed source, reviewed evidence, and
+independent analysis. Evidence includes the number of linked records. The
+triplet acts as both a legend and a quick coverage scan; it remains legible
+without color.
 
 ### Layout sketch
 
 ```text
 ┌───────────────────────────────────────────────────────────────┐
-│ Independent analysis · Unofficial            Method  Data    │
+│ N-7-26  Transit Delivery Atlas     Atlas Evidence Research   │
 ├───────────────────────────────────────────────────────────────┤
-│ TRANSIT DELIVERY ATLAS                                       │
-│ California’s transit directives, mapped for delivery.        │
-│                                                               │
-│ [source]──[named entity]──◇ timing──▣ evidence──● analysis    │
-├───────────────────┬───────────────────────────────────────────┤
-│ Filters           │ 1(a)  Priority project list              │
-│ Theme             │ What the order says                       │
-│ Named lead        │ Analytical crosswalk                      │
-│ Timing            │ Open questions                            │
-│ Search            ├───────────────────────────────────────────┤
-│                   │ 1(b)  Mobility Manager                    │
-└───────────────────┴───────────────────────────────────────────┘
+│ Independent analysis · Unofficial                            │
+│ Transit Delivery Atlas             21 directives · 2 records │
+│ Source: signed Executive Order N-7-26                         │
+├───────────────────────────────────────────────────────────────┤
+│ Search        Theme        Named lead        Timing           │
+├──────┬──────────────────┬──────────┬────────────┬──────────────┤
+│ 1(a) │ Priority list    │ CalSTA   │ Oct 2026   │ S  E 0  A    │
+│ 1(b) │ Mobility Manager │ CalSTA   │ Oct 2026   │ S  E 0  A    │
+│ 5    │ Funding programs │ CTC      │ None stated│ S  E 2  A    │
+└──────┴──────────────────┴──────────┴────────────┴──────────────┘
 ```
 
 ## Voice

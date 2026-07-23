@@ -28,8 +28,8 @@ export default function HandoffsPage() {
         <header className="document-hero document-hero--handoffs">
           <div className="document-hero__inner handoff-hero__inner">
             <p className="independence-badge">Independent analysis · Unofficial</p>
-            <p className="utility-label">Potential handoff map</p>
-            <h1>Trace the delivery relationships.</h1>
+            <p className="utility-label">Executive Order N-7-26</p>
+            <h1>Delivery relationships</h1>
             <p>
               See which bodies and groups the signed order explicitly names,
               then inspect a separately labeled analytical layer of delivery
