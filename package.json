@@ -19,7 +19,7 @@
     "check": "npm run lint && npm run typecheck && npm test && npm run audit:production"
   },
   "dependencies": {
-    "next": "^16.2.10",
+    "next": "^16.2.11",
     "react": "^19.2.7",
     "react-dom": "^19.2.7",
     "zod": "^4.4.3"
@@ -36,7 +36,8 @@
   },
   "overrides": {
     "next": {
-      "postcss": "8.5.10"
+      "postcss": "8.5.10",
+      "sharp": "0.35.3"
     }
   },
   "type": "module"

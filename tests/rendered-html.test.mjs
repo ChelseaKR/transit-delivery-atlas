@@ -93,15 +93,21 @@ test("renders Order 5 evidence between the signed source and independent analysi
   ]);
   assert.match(html, /Reviewed public evidence/);
   assert.match(html, /Transit Executive Order N-7-26 Resource Material/);
+  assert.match(html, /2026 SB1 Program Guidelines Development Workshop/);
   assert.match(html, /Jul 15, 2026/);
   assert.match(html, /Scheduled event date/);
   assert.match(html, /Pursuant to Executive Order N-7-26 \(Order #5\)/);
   assert.match(html, /Page 1: Reference Instructions and SCCP Part IV, Section 17\.2\.2/);
   assert.match(html, /Page 2: Reference Instructions; LPP-C Part II, Section 6B/);
+  assert.match(html, /Page 12: California Executive Order N-7-26 overview/);
   assert.match(html, /Open public record:/);
   assert.match(
     html,
     /href="https:\/\/catc\.ca\.gov\/-\/media\/ctc-media\/documents\/programs\/senate-bill-1\/july-15-sccp-and-lpp-c-workshop-transit-eo-resource-material-002-a11y\.pdf"/,
+  );
+  assert.match(
+    html,
+    /href="https:\/\/catc\.ca\.gov\/-\/media\/ctc-media\/documents\/programs\/senate-bill-1\/07-15-2026-2026-eluh-workshop-v-4-5-final-a11y\.pdf"/,
   );
   assert.match(
     html,
@@ -117,6 +123,7 @@ test("renders the selective public-evidence index", async () => {
   assert.match(html, /<main[^>]*id="main-content"/i);
   assert.match(html, /Public artifacts, linked with limits\./);
   assert.match(html, /Transit Executive Order N-7-26 Resource Material/);
+  assert.match(html, /2026 SB1 Program Guidelines Development Workshop/);
   assert.match(html, /California Transportation Commission/);
   assert.match(html, /Jul 15, 2026/);
   assert.match(html, /Scheduled event date/);
@@ -129,6 +136,10 @@ test("renders the selective public-evidence index", async () => {
   assert.match(
     html,
     /href="https:\/\/catc\.ca\.gov\/-\/media\/ctc-media\/documents\/programs\/senate-bill-1\/july-15-sccp-and-lpp-c-workshop-transit-eo-resource-material-002-a11y\.pdf"/,
+  );
+  assert.match(
+    html,
+    /href="https:\/\/catc\.ca\.gov\/-\/media\/ctc-media\/documents\/programs\/senate-bill-1\/07-15-2026-2026-eluh-workshop-v-4-5-final-a11y\.pdf"/,
   );
   assert.match(
     html,

@@ -1,7 +1,7 @@
 {
   "project": "Transit Delivery Atlas",
   "schemaVersion": "0.2.0",
-  "dataReviewedThrough": "2026-07-13",
+  "dataReviewedThrough": "2026-07-22",
   "source": {
     "id": "ca-eo-n-7-26",
     "type": "executive-order",
@@ -1963,7 +1963,7 @@
   ],
   "evidenceScope": {
     "scope": "selective",
-    "lastUpdatedOn": "2026-07-13",
+    "lastUpdatedOn": "2026-07-22",
     "coverageNote": "This curated layer contains reviewed public artifacts selected for a documented relationship to a directive. It is selective, not comprehensive or live. Inclusion documents a source relationship; it does not establish implementation status, completion, compliance, or performance. Omission is not evidence that no implementation activity or public record exists."
   },
   "evidence": [
@@ -1979,7 +1979,7 @@
       "url": "https://catc.ca.gov/-/media/ctc-media/documents/programs/senate-bill-1/july-15-sccp-and-lpp-c-workshop-transit-eo-resource-material-002-a11y.pdf",
       "contextUrl": "https://catc.ca.gov/meetings-events/workshops",
       "retrievedOn": "2026-07-13",
-      "lastReviewedOn": "2026-07-13",
+      "lastReviewedOn": "2026-07-22",
       "sha256": "e67d692cc3e780e8140a5414e6448619a7d9a7db0471069ab768686c7ecd04a4",
       "mediaType": "application/pdf",
       "pageCount": 2,
@@ -2007,8 +2007,57 @@
       ],
       "limitations": [
         "This record covers only proposed SCCP and LPP-C changes associated with Section 5's state-guideline clause. It does not cover ATP, TIRCP, other programs, or Caltrans's federal-funding-identification clause, and it does not establish adoption, completion, compliance, or agency performance.",
-        "The artifact date is a scheduled-event date later than the Atlas review date. When reviewed on July 13, 2026, the Commission listed the July 15 workshop as upcoming and had not posted a recording or post-workshop outcome.",
+        "This pre-workshop reference material retains a scheduled-event date because that is how the artifact framed July 15 when retrieved. A separately reviewed presentation and a recording were available on the Commission workshop page by July 22, 2026.",
         "The artifact marks proposed additions with bold red styling, so a text-only extraction does not fully preserve that distinction."
+      ]
+    },
+    {
+      "id": "ctc-2026-07-15-order-5-workshop-presentation",
+      "title": "2026 SB1 Program Guidelines Development Workshop for Solutions for Congested Corridors Program (SCCP) and Local Partnership Competitive Program (LPP-C): Efficient Land Use and Housing Updates",
+      "titleOrigin": "publisher",
+      "publisher": "California Transportation Commission",
+      "evidenceType": "meeting-material",
+      "datedOn": "2026-07-15",
+      "dateKind": "published",
+      "dateOrigin": "artifact-header",
+      "url": "https://catc.ca.gov/-/media/ctc-media/documents/programs/senate-bill-1/07-15-2026-2026-eluh-workshop-v-4-5-final-a11y.pdf",
+      "contextUrl": "https://catc.ca.gov/meetings-events/workshops",
+      "retrievedOn": "2026-07-22",
+      "lastReviewedOn": "2026-07-22",
+      "sha256": "0ef1bc99da045d7b34feddbe0573ca2dfa3951b34bcee394da91aca69cc7dcf5",
+      "mediaType": "application/pdf",
+      "pageCount": 20,
+      "accessibility": {
+        "tagged": true,
+        "note": "PDF metadata reports a tagged document; visual and text-extraction review found readable Order 5 slides, but this record does not make an accessibility conformance claim."
+      },
+      "editorialSummary": "The Commission's workshop presentation identifies Order 5 as the basis for proposed changes to the 2026 SCCP and LPP-C guidelines, reproduces the proposed transit-priority and first- and last-mile additions, and says guideline development is not currently open for the other Commission programs named by the order.",
+      "directiveLinks": [
+        {
+          "directiveId": "n-7-26-5",
+          "relationship": "explicit-citation",
+          "excerpt": "Pursuant to Executive Order N-7-26 (Order #5)",
+          "locator": {
+            "pages": [
+              12,
+              13,
+              14,
+              15
+            ],
+            "locations": [
+              "Page 12: California Executive Order N-7-26 overview and current guideline-cycle note",
+              "Page 13: proposed SCCP Part IV, Section 17.2.2 accessibility addition",
+              "Page 14: proposed LPP-C Part II, Section 6B eligible-project addition",
+              "Page 15: proposed LPP-C Part IV, Section 14.1 accessibility addition"
+            ]
+          }
+        }
+      ],
+      "limitations": [
+        "The presentation documents proposals discussed in one workshop; it is not a final guideline, adoption record, completion finding, compliance determination, or performance measure.",
+        "It addresses only the SCCP and LPP-C state-guideline clause. The statement that other Commission guideline cycles are not currently open does not establish when or how those programs will change, and the deck does not address Caltrans's federal-funding-identification clause.",
+        "The artifact header shows the July 15 workshop date, while PDF metadata shows the file was created on July 16 and the context page had added both the presentation and a recording by the July 22 Atlas review. The exact upload time is not stated.",
+        "Red styling identifies proposed additions on pages 13 through 15, so plain-text extraction does not fully preserve the change markup."
       ]
     }
   ]
