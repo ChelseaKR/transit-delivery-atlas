@@ -7,6 +7,9 @@ recorded here.
 
 ### Added
 
+- Internationalization declaration naming the owner, first localized product
+  boundary, source-language protections, fallback behavior, and review
+  deadline without claiming catalogs or translated copy already exist
 - Shareable explorer URLs for the delivery-relationship views: the named-bodies
   and inferred-dependency filters on the handoffs page now sync to the URL
   (namespaced query parameters so the two explorers never collide), so a

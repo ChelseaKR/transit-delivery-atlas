@@ -151,7 +151,7 @@ engineering standards. Applicability and current state:
 | CI/CD | Applies | Quality gate on every push/PR; OIDC-based deploy with post-deploy smoke checks (`.github/workflows/`) |
 | Observability | Applies | Static site: build SHA published at `/version.json`; deploy workflow smoke-verifies the exact released SHA and security headers |
 | Accessibility | Applies | WCAG 2.2 AA target with Section 508 framing; rendered-HTML test assertions (see "Accessibility" above and docs/ACCESSIBILITY.md) |
-| Internationalization | Applies | Gap — English-only today, no locale catalogs yet; owner declaration pending (conservative default, tracked) |
+| Internationalization | Applies | English-only today; owner, first localization boundary, source-language rule, fallback, and review deadline are declared in [`docs/I18N.md`](docs/I18N.md) |
 | AI Evaluation | N/A — source-linked deterministic site; no LLM/model component | N/A — no generative or model-driven component anywhere in the build or site |
 | Documentation | Applies | README, methodology/evidence/relationship models, ADR log (docs/adr/), CHANGELOG, CONTRIBUTING |
 | Quality & Metrics | Applies | Data-integrity, filter, rendered-HTML, and hosting test suites run in the release gate |
