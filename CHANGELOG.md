@@ -5,6 +5,11 @@ recorded here.
 
 ## [Unreleased]
 
+- Release publication now begins from reviewed `main` through the immutable
+  portfolio authorizer, builds the exact verified site commit without a
+  dependency cache, and hands the archive to a checkout-free publisher that
+  rechecks the tag object.
+
 ### Added
 
 - Shareable explorer URLs for the delivery-relationship views: the named-bodies
