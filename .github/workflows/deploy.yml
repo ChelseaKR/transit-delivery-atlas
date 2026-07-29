@@ -107,7 +107,7 @@ jobs:
           deployed_sha=$(curl_edge "https://${site_domain}/version.json" | jq -r '.sha')
           test "$deployed_sha" = "$EXPECTED_SHA"
 
-          for route in / /handoffs/ /evidence/ /research/tda-ntd/ /corrections/ /methodology/ /data/ /accessibility/ /directives/n-7-26-5/; do
+          for route in / /handoffs/ /evidence/ /watchlist/ /research/tda-ntd/ /corrections/ /methodology/ /data/ /accessibility/ /directives/n-7-26-5/; do
             curl_edge "https://${site_domain}${route}" > /dev/null
           done
 
@@ -117,6 +117,10 @@ jobs:
           curl_edge "https://${site_domain}/evidence/" > /tmp/evidence.html
           grep -Fq 'Reviewed public evidence' /tmp/evidence.html
           grep -Fq 'https://chelseakr.com/writing/signed-transit-order-start' /tmp/evidence.html
+
+          curl_edge "https://${site_domain}/watchlist/" > /tmp/watchlist.html
+          grep -Fq 'Public developments under review' /tmp/watchlist.html
+          grep -Fq 'Context only · Not implementation evidence' /tmp/watchlist.html
 
           curl_edge "https://${site_domain}/handoffs/" > /tmp/handoffs.html
           grep -Fq 'Delivery relationships' /tmp/handoffs.html
@@ -144,6 +148,10 @@ jobs:
             | grep -Fq 'n-7-26-5'
           curl_edge "https://${site_domain}/data/evidence.csv" \
             | grep -Fq 'ctc-2026-07-15-order-5-reference-material'
+          curl_edge "https://${site_domain}/data/watchlist.json" \
+            | jq -e '.schemaVersion == "0.1.0" and (.items | length) == 5 and all(.items[]; .evidenceBoundary.explicitOrderCitation == false)' >/dev/null
+          curl_edge "https://${site_domain}/data/watchlist.csv" \
+            | grep -Fq 'ctc-2026-08-03-sccp-north-hearing'
           curl_edge "https://${site_domain}/data/directive-organizations.csv" \
             > /tmp/directive-organizations.csv
           test "$(wc -l < /tmp/directive-organizations.csv | tr -d ' ')" = "51"

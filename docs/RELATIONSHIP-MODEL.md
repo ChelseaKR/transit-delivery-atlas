@@ -45,6 +45,11 @@ The data does not define a controlled workflow direction. Therefore:
 - the absence of a related directive ID does not mean a directive is
   independent in practice.
 
+The separate context watchlist also references directive IDs, using topic
+alignment, process adjacency, or publication watch. Those editorial research
+links are not included in either handoff layer or normalized relationship CSV:
+they are neither signed-source roles nor analytical delivery dependencies.
+
 ## Normalized exports
 
 Two generated CSVs make the embedded arrays easier to inspect:

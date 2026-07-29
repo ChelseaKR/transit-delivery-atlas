@@ -61,6 +61,11 @@ export default function EvidencePage() {
                 </time>
               </p>
               <p>
+                Looking for relevant official developments that do not meet the
+                explicit-citation rule? They are kept separately in the{" "}
+                <Link href="/watchlist">context watchlist</Link>.
+              </p>
+              <p>
                 <a
                   href="https://chelseakr.com/writing/signed-transit-order-start"
                   rel="noreferrer"

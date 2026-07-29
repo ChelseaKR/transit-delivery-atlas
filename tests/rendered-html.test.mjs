@@ -49,6 +49,7 @@ test("statically renders the complete atlas home page", async () => {
   assert.match(html, /aria-label="Inspect directive 1\(a\):/i);
   assert.match(html, /Record layer key/);
   assert.match(html, /Source[\s\S]{0,100}Evidence[\s\S]{0,100}Analysis/);
+  assert.match(html, /href="\/watchlist\/?"[^>]*>Watchlist/);
   assert.match(html, /No explicit completion deadline in the signed order/);
   assert.doesNotMatch(html, /codex-preview|Your site is taking shape|react-loading-skeleton/i);
 });
@@ -116,6 +117,14 @@ test("renders Order 5 evidence between the signed source and independent analysi
     html,
     /Inclusion documents a source relationship; it does not establish implementation status, completion, compliance, or activity beyond the cited record\./,
   );
+  assertTextOrder(html, [
+    "What the signed order says",
+    "What is documented publicly",
+    "Analytical crosswalk",
+    "Related context under review",
+  ]);
+  assert.match(html, /North Hearing for the Proposed 2026 Solutions for Congested Corridors Program/);
+  assert.match(html, /Context only · Not implementation evidence/);
 });
 
 test("renders the selective public-evidence index", async () => {
@@ -147,6 +156,53 @@ test("renders the selective public-evidence index", async () => {
   assert.match(
     html,
     /href="https:\/\/github\.com\/ChelseaKR\/transit-delivery-atlas\/issues\/new\?template=01-content-correction\.yml"/,
+  );
+  assert.match(html, /href="\/watchlist\/?"[^>]*>context watchlist/);
+});
+
+test("renders a separate context watchlist with explicit evidence boundaries", async () => {
+  const response = await render("/watchlist");
+  assert.equal(response.status, 200);
+  const html = await response.text();
+
+  assert.match(html, /<main[^>]*id="main-content"/i);
+  assert.match(html, /Public developments under review/);
+  assert.match(html, /Context, not implementation evidence/);
+  assert.match(html, /Context only · Not implementation evidence/);
+  assert.match(html, /North Hearing for the Proposed 2026 Solutions for Congested Corridors Program/);
+  assert.match(html, /FY 2026 Notice of Funding Opportunity/);
+  assert.match(html, /Transit Project Database \(Coming soon!\)/);
+  assert.match(html, /No source date stated/);
+  assert.match(html, /Retrieval date is not substituted/);
+  assert.match(html, /Scheduled event date/);
+  assert.match(html, /No explicit order citation/);
+  assert.match(html, /Expected artifact not yet published/);
+  assert.match(html, /Related directives \(editorial\)/);
+  assert.match(html, /href="\/data\/watchlist\.json"/);
+  assert.match(html, /href="\/data\/watchlist\.csv"/);
+  assert.match(html, /rel="canonical"[^>]+\/watchlist/i);
+  assert.doesNotMatch(html, /percent complete|on track/i);
+});
+
+test("renders directive context after the three canonical layers", async () => {
+  const response = await render("/directives/n-7-26-1a");
+  assert.equal(response.status, 200);
+  const html = await response.text();
+
+  assertTextOrder(html, [
+    "What the signed order says",
+    "What is documented publicly",
+    "Analytical crosswalk",
+    "Related context under review",
+  ]);
+  assert.match(html, /Caltrans Bay Area Completes First-of-its-Kind District Transit Plan/);
+  assert.match(html, /Transit Project Database \(Coming soon!\)/);
+  assert.match(html, /Separate research watchlist/);
+  assert.match(html, /Topic alignment/);
+  assert.match(html, /Publication watch/);
+  assert.match(
+    html,
+    /These official sources are research leads, not implementation evidence\./,
   );
 });
 
@@ -231,7 +287,7 @@ test("renders the public correction and review funnel", async () => {
 
 test("renders methodology, data, and accessibility pages", async () => {
   const paths = [
-    ["/methodology", /Keep source, evidence, and interpretation apart\./],
+    ["/methodology", /Keep source, evidence, context, and interpretation apart\./],
     ["/data", /Inspect, reuse, and challenge the crosswalk/],
     ["/accessibility", /Accessibility is a release requirement/],
   ];
@@ -245,6 +301,9 @@ test("renders methodology, data, and accessibility pages", async () => {
     if (path === "/data") {
       assert.match(html, /href="\/data\/directive-organizations\.csv"/);
       assert.match(html, /href="\/data\/directive-relationships\.csv"/);
+      assert.match(html, /href="\/data\/watchlist\.json"/);
+      assert.match(html, /href="\/data\/watchlist\.csv"/);
+      assert.match(html, /href="\/data\/watchlist-schema\.json"/);
       assert.match(html, /record_directive_id/);
       assert.match(
         html,

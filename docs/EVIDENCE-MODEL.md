@@ -19,6 +19,12 @@ The three canonical layers remain separate:
 3. `evidence.json` stores reviewed public artifacts, provenance, explicit
    directive relationships, review dates, and limitations.
 
+`watchlist.json` is a separate context-only research contract, not a fourth
+canonical provenance layer. It stores official developments that are worth
+rechecking but do not currently meet the explicit-citation evidence rule.
+Watchlist relationships never contribute to evidence counts or substitute for
+the citation, locator, hash, and limitations review required here.
+
 An artifact never changes a source record or promotes an inference into the
 signed layer. A link to an artifact is also not an implementation-status field.
 
@@ -63,5 +69,5 @@ reviewed artifact supports an occurred, published, adopted, or effective claim.
 
 Evidence corrections must identify the evidence ID, public artifact URL,
 directive link, artifact page locator, current value, and proposed replacement.
-Source, analysis, and evidence changes are reviewed as separate concepts even
-when one pull request contains all three.
+Source, analysis, evidence, and watchlist changes are reviewed as separate
+concepts even when one pull request contains more than one collection.
