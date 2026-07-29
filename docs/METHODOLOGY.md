@@ -52,6 +52,23 @@ documents that source relationship; it does not establish implementation
 status, completion, compliance, or performance. Omission does not establish
 that no implementation activity or public record exists.
 
+The separate context watchlist contains official public items selected for
+topical relevance or as likely publication checkpoints even though the reviewed
+item does not currently meet the explicit-citation evidence rule. Watchlist
+records include:
+
+- what the official source says and why it is being watched
+- an explicit evidence-boundary reason and dated check
+- controlled editorial relevance links to directives
+- a planned next review and the conditions reviewers will look for
+- limitations that prevent causal or implementation claims
+
+Topic alignment, process adjacency, and publication watches are editorial
+research classifications—not evidence links. An undated watchlist source remains
+undated; retrieval is not substituted as a publication date. The watchlist does
+not contribute to evidence counts or alter the canonical Source → Evidence →
+Analysis sequence.
+
 An inference is never promoted to the source or evidence layer because it
 appears likely. An artifact never changes the signed source record.
 
@@ -97,8 +114,13 @@ dashboard behavior, not delivery timing.
    date kind, hash, exact citation, locator, linked directive, and limitations.
 5. If an artifact shows a future event, label the date as scheduled; do not
    imply that the event occurred or that a proposal was adopted.
-6. Run schema, reference, timing, evidence, export, and rendered-output tests.
-7. Record source, evidence, and analytical corrections separately in the changelog.
+6. For a watchlist item, verify the official URL, relevance rationale,
+   evidence-boundary reason, next review, and limitations without implying that
+   a qualifying artifact exists.
+7. Run schema, reference, timing, evidence, watchlist, export, and
+   rendered-output tests.
+8. Record source, evidence, watchlist, and analytical corrections separately in
+   the changelog.
 
 ## Limitations
 
@@ -108,6 +130,8 @@ dashboard behavior, not delivery timing.
 - The atlas does not assess implementation progress or unpublished activity.
 - The evidence layer is selective; it is not a claim about all available public
   records or activity beyond the reviewed artifacts.
+- The context watchlist is selective and editorial; inclusion does not establish
+  causation or implementation activity, and omission has no negative meaning.
 - Calculated dates are planning aids rather than legal interpretations.
 - Analytical dependencies identify questions for investigation, not official
   assignments.
@@ -118,8 +142,10 @@ dashboard behavior, not delivery timing.
 
 ## Corrections
 
-A correction should include a directive or evidence ID, public source URL,
-exact locator, current value, and proposed replacement. Evidence corrections
-also include the artifact's directive link and current review/hash information.
-Source, evidence, and analytical changes should be reviewed as separate
-concepts even when delivered in one pull request.
+A correction should include a directive, evidence, or watchlist ID; public
+source URL; exact locator or boundary statement; current value; and proposed
+replacement. Evidence corrections also include the artifact's directive link
+and current review/hash information. Watchlist corrections include the
+editorial relevance link, evidence-boundary reason, and current review date.
+Source, evidence, watchlist, and analytical changes should be reviewed as
+separate concepts even when delivered in one pull request.

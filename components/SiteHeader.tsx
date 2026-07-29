@@ -12,6 +12,7 @@ export function SiteHeader() {
           <Link href="/#directives">Atlas</Link>
           <Link href="/handoffs">Relationships</Link>
           <Link href="/evidence">Evidence</Link>
+          <Link href="/watchlist">Watchlist</Link>
           <Link href="/research/tda-ntd">Research</Link>
           <Link href="/methodology">Method</Link>
         </nav>

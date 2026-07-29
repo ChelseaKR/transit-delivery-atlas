@@ -6,7 +6,7 @@ import { CONTENT_CORRECTION_URL } from "@/lib/feedback";
 export const metadata: Metadata = {
   title: "Open data",
   description:
-    "Download the Transit Delivery Atlas directive, named-body, analytical-relationship, and public-evidence crosswalks and review the public schema.",
+    "Download the Transit Delivery Atlas directive, relationship, public-evidence, and context-watchlist datasets and review their public schemas.",
   alternates: { canonical: "/data" },
 };
 
@@ -23,6 +23,9 @@ const fields = [
   ["evidenceScope", "Selective-coverage statement for the reviewed public-artifact layer"],
   ["evidence", "Dated public artifacts with provenance, directive links, locators, review dates, and limitations"],
   ["directiveLinks", "Explicit artifact-to-directive relationships with excerpts and page locators"],
+  ["watchlist.scope", "Selective-context scope for the separate, non-evidentiary research watchlist"],
+  ["watchlist.items", "Official context sources and publication checkpoints with editorial relevance links and evidence-boundary notes"],
+  ["watchlist.nextReviewOn", "Planned date for checking whether a more informative or qualifying public artifact has appeared"],
   ["dataReviewedThrough", "Latest manual review date across the exported directive and evidence records"],
   ["lastReviewedOn", "Date a source or evidence record was last manually checked"],
 ];
@@ -40,8 +43,10 @@ export default function DataPage() {
             <p>
               The interface and downloads are generated from the same 21 source
               records, separately stored analytical records, and selective
-              public-evidence collection. Normalized relationship tables are
-              derived during the same deterministic build.
+              public-evidence collection. A separate context-watchlist contract
+              carries non-evidentiary research leads. Normalized relationship
+              tables and all public downloads are derived during the same
+              deterministic build.
             </p>
           </div>
         </header>
@@ -65,6 +70,21 @@ export default function DataPage() {
                   <span className="file-type">EVIDENCE CSV</span>
                   <strong>Flattened evidence table</strong>
                   <small>One row per reviewed public artifact</small>
+                </a>
+                <a className="download-card" href="/data/watchlist.json" download>
+                  <span className="file-type">WATCHLIST JSON</span>
+                  <strong>Context watchlist</strong>
+                  <small>Official research leads kept outside implementation evidence</small>
+                </a>
+                <a className="download-card" href="/data/watchlist.csv" download>
+                  <span className="file-type">WATCHLIST CSV</span>
+                  <strong>Flattened watchlist table</strong>
+                  <small>One row per context source or publication checkpoint</small>
+                </a>
+                <a className="download-card" href="/data/watchlist-schema.json">
+                  <span className="file-type">WATCHLIST SCHEMA</span>
+                  <strong>Watchlist JSON Schema</strong>
+                  <small>Independent contract for context-only research records</small>
                 </a>
                 <a className="download-card" href="/data/directive-organizations.csv" download>
                   <span className="file-type">SOURCE LINKS CSV</span>
@@ -104,6 +124,12 @@ export default function DataPage() {
                 silently changes the signed source or analytical record.
               </p>
               <p>
+                The context watchlist is published under its own versioned JSON
+                and schema. It is joined to directive pages through editorial
+                relevance IDs, but it is not embedded in the directive/evidence
+                contract and never contributes an evidence count.
+              </p>
+              <p>
                 The normalized relationship CSVs flatten explicit source-role
                 assignments and recorded cross-reference edges already present
                 in that JSON contract. They are not replacements for the complete
@@ -117,7 +143,8 @@ export default function DataPage() {
                 Product and data-contract versions are tracked independently.
                 Release 0.3 adds this interface and normalized CSVs without
                 changing the canonical JSON shape, so that schema remains at
-                version 0.2.0.
+                version 0.2.0. The separate watchlist contract begins at
+                version 0.1.0.
               </p>
               <div className="table-scroll" tabIndex={0} role="region" aria-label="Data dictionary table">
                 <table>
@@ -147,10 +174,10 @@ export default function DataPage() {
                 remains subject to its own terms and is not relicensed here.
               </p>
               <p>
-                Corrections should identify the directive or evidence ID, public
-                source, exact locator, and proposed replacement. Source,
-                evidence, and analytical changes are reviewed as separate
-                concepts.
+                Corrections should identify the directive, evidence, or
+                watchlist ID; public source; exact locator or boundary statement;
+                and proposed replacement. Source, evidence, watchlist, and
+                analytical changes are reviewed as separate concepts.
               </p>
               <p>
                 <a href={CONTENT_CORRECTION_URL} rel="noreferrer">

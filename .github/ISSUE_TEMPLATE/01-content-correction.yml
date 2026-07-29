@@ -13,10 +13,11 @@ body:
     id: correction-layer
     attributes:
       label: Which layer needs correction?
-      description: Source, evidence, and analysis are reviewed separately, even when one change affects another.
+      description: Source, evidence, watchlist, and analysis are reviewed separately, even when one change affects another.
       options:
         - Signed source transcription or metadata
         - Reviewed public evidence
+        - Context watchlist
         - Independent analysis
         - Named-body or directive relationship
         - TDA/NTD research
@@ -28,8 +29,8 @@ body:
     id: record-or-page
     attributes:
       label: Record ID or page
-      description: Provide a directive ID, evidence ID, research field, or Atlas page URL.
-      placeholder: "Example: n-7-26-3b or https://transit.chelseakr.com/research/tda-ntd/"
+      description: Provide a directive ID, evidence or watchlist ID, research field, or Atlas page URL.
+      placeholder: "Example: n-7-26-3b or ctc-2026-08-03-sccp-north-hearing"
     validations:
       required: true
 
@@ -84,5 +85,5 @@ body:
       options:
         - label: I confirm that this report contains no confidential, personal, credential, or security information.
           required: true
-        - label: I understand that source, evidence, and analytical changes are reviewed and recorded separately.
+        - label: I understand that source, evidence, watchlist, and analytical changes are reviewed and recorded separately.
           required: true

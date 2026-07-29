@@ -5,6 +5,7 @@ import organizationsRaw from "@/data/organizations.json";
 import sourcesRaw from "@/data/sources.json";
 import tdaNtdFeasibilityRaw from "@/data/tda-ntd-feasibility.json";
 import themesRaw from "@/data/themes.json";
+import watchlistRaw from "@/data/watchlist.json";
 
 export type Organization = (typeof organizationsRaw)[number];
 export type Theme = (typeof themesRaw)[number];
@@ -12,6 +13,7 @@ export type Source = (typeof sourcesRaw)[number];
 export type Directive = (typeof directivesRaw.directives)[number];
 export type Analysis = (typeof analysisRaw.analysis)[number];
 export type EvidenceRecord = (typeof evidenceRaw.evidence)[number];
+export type WatchlistItem = (typeof watchlistRaw.items)[number];
 export type SourceContext = (typeof directivesRaw.orderMetadata.sourceContexts)[number];
 export type SourceNotice = (typeof directivesRaw.orderMetadata.sourceNotices)[number];
 export type TdaNtdFeasibility = typeof tdaNtdFeasibilityRaw;
@@ -24,6 +26,7 @@ export type DirectiveView = Directive & {
   sourceContexts: SourceContext[];
   themes: Theme[];
   evidence: EvidenceRecord[];
+  watchlist: WatchlistItem[];
 };
 
 const analysisByDirective = new Map<string, Analysis>(
@@ -46,6 +49,14 @@ for (const record of evidenceRaw.evidence) {
     evidenceByDirective.set(link.directiveId, records);
   }
 }
+const watchlistByDirective = new Map<string, WatchlistItem[]>();
+for (const item of watchlistRaw.items) {
+  for (const link of item.directiveLinks) {
+    const items = watchlistByDirective.get(link.directiveId) ?? [];
+    items.push(item);
+    watchlistByDirective.set(link.directiveId, items);
+  }
+}
 
 function required<K, V>(map: Map<K, V>, key: K, context: string): V {
   const value = map.get(key);
@@ -62,6 +73,12 @@ export const evidenceScope = {
   scope: evidenceRaw.scope,
   lastUpdatedOn: evidenceRaw.lastUpdatedOn,
   coverageNote: evidenceRaw.coverageNote,
+};
+export const watchlistItems = watchlistRaw.items;
+export const watchlistScope = {
+  scope: watchlistRaw.scope,
+  lastUpdatedOn: watchlistRaw.lastUpdatedOn,
+  boundaryNote: watchlistRaw.boundaryNote,
 };
 export const tdaNtdFeasibility = tdaNtdFeasibilityRaw;
 
@@ -91,6 +108,7 @@ export const directives: DirectiveView[] = directivesRaw.directives.map(
         required(themeById, id, "theme"),
       ),
       evidence: evidenceByDirective.get(directive.id) ?? [],
+      watchlist: watchlistByDirective.get(directive.id) ?? [],
     };
   },
 );
