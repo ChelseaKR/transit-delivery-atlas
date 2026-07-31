@@ -53,8 +53,9 @@ export default function Home() {
                 <p>
                   A source-linked register of the order’s 21 directive units:
                   what the signed text says, which entities it names, what
-                  timing is explicit, and what public evidence has been
-                  reviewed.
+                  timing is explicit, what public evidence has been reviewed,
+                  and which related official developments remain on a separate
+                  context watchlist.
                 </p>
               </div>
               <dl className="atlas-manifest" aria-label="Atlas record totals">

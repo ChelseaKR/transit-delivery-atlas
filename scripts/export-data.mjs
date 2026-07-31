@@ -14,8 +14,10 @@ const [
   directiveData,
   analysisData,
   evidenceData,
+  watchlistData,
   feasibilityData,
   schema,
+  watchlistSchema,
 ] =
   await Promise.all([
     readJson("data/sources.json"),
@@ -24,8 +26,10 @@ const [
     readJson("data/directives.json"),
     readJson("data/analysis.json"),
     readJson("data/evidence.json"),
+    readJson("data/watchlist.json"),
     readJson("data/tda-ntd-feasibility.json"),
     readJson("data/public-schema.json"),
+    readJson("data/watchlist-schema.json"),
   ]);
 
 const sourceById = new Map(sources.map((item) => [item.id, item]));
@@ -312,6 +316,81 @@ const evidenceCsv = [
   ...evidenceCsvRows.map((row) => row.map(csvCell).join(",")),
 ].join("\n");
 
+const watchlistCsvColumns = [
+  "id",
+  "schema_version",
+  "scope",
+  "collection_last_updated_on",
+  "boundary_note",
+  "kind",
+  "title",
+  "title_origin",
+  "publisher",
+  "url",
+  "media_type",
+  "related_urls",
+  "source_date",
+  "source_date_kind",
+  "source_date_origin",
+  "retrieved_on",
+  "last_reviewed_on",
+  "editorial_summary",
+  "why_tracked",
+  "evidence_boundary_reason",
+  "evidence_boundary_checked_on",
+  "explicit_order_citation",
+  "evidence_boundary_note",
+  "directive_ids",
+  "relationships",
+  "relevance_rationales",
+  "next_review_on",
+  "watch_for",
+  "limitations",
+];
+
+const watchlistCsvRows = watchlistData.items.map((item) => [
+  item.id,
+  watchlistData.schemaVersion,
+  watchlistData.scope,
+  watchlistData.lastUpdatedOn,
+  watchlistData.boundaryNote,
+  item.kind,
+  item.title,
+  item.titleOrigin,
+  item.publisher,
+  item.url,
+  item.mediaType,
+  item.relatedUrls
+    .map(({ label, url }) => `${label}: ${url}`)
+    .join(" || "),
+  item.sourceDate?.value ?? "",
+  item.sourceDate?.kind ?? "",
+  item.sourceDate?.origin ?? "",
+  item.retrievedOn,
+  item.lastReviewedOn,
+  item.editorialSummary,
+  item.whyTracked,
+  item.evidenceBoundary.reason,
+  item.evidenceBoundary.checkedOn,
+  item.evidenceBoundary.explicitOrderCitation,
+  item.evidenceBoundary.note,
+  item.directiveLinks.map(({ directiveId }) => directiveId),
+  item.directiveLinks.map(({ relationship }) => relationship),
+  item.directiveLinks
+    .map(
+      ({ directiveId, rationale }) => `${directiveId}: ${rationale}`,
+    )
+    .join(" || "),
+  item.nextReviewOn,
+  item.watchFor.join(" || "),
+  item.limitations.join(" || "),
+]);
+
+const watchlistCsv = [
+  watchlistCsvColumns.map(csvCell).join(","),
+  ...watchlistCsvRows.map((row) => row.map(csvCell).join(",")),
+].join("\n");
+
 const directiveOrganizationsCsvColumns = [
   "schema_version",
   "directive_id",
@@ -420,6 +499,11 @@ const directiveRelationshipsCsv = [
 ].join("\n");
 
 validateAgainstSchema(publicData, schema, schema);
+validateAgainstSchema(
+  watchlistData,
+  watchlistSchema,
+  watchlistSchema,
+);
 
 const outputDir = new URL("public/data/", root);
 await mkdir(outputDir, { recursive: true });
@@ -430,6 +514,15 @@ await Promise.all([
   ),
   writeFile(new URL("directives.csv", outputDir), `${csv}\n`),
   writeFile(new URL("evidence.csv", outputDir), `${evidenceCsv}\n`),
+  writeFile(
+    new URL("watchlist.json", outputDir),
+    `${JSON.stringify(watchlistData, null, 2)}\n`,
+  ),
+  writeFile(new URL("watchlist.csv", outputDir), `${watchlistCsv}\n`),
+  writeFile(
+    new URL("watchlist-schema.json", outputDir),
+    `${JSON.stringify(watchlistSchema, null, 2)}\n`,
+  ),
   writeFile(
     new URL("directive-organizations.csv", outputDir),
     `${directiveOrganizationsCsv}\n`,
@@ -449,5 +542,5 @@ await Promise.all([
 ]);
 
 console.log(
-  `Exported ${directives.length} directives, ${evidenceData.evidence.length} evidence record(s), ${directiveOrganizationsCsvRows.length} source-role links, ${directiveRelationshipsCsvRows.length} analytical cross-references, and the four-field reporting slice.`,
+  `Exported ${directives.length} directives, ${evidenceData.evidence.length} evidence record(s), ${watchlistData.items.length} context watchlist item(s), ${directiveOrganizationsCsvRows.length} source-role links, ${directiveRelationshipsCsvRows.length} analytical cross-references, and the four-field reporting slice.`,
 );

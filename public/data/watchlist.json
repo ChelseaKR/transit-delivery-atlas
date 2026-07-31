@@ -1,0 +1,245 @@
+{
+  "schemaVersion": "0.1.0",
+  "scope": "selective-context",
+  "lastUpdatedOn": "2026-07-28",
+  "boundaryNote": "This curated research watchlist contains official public items selected for topical relevance to one or more directives even though the reviewed item does not currently meet the Atlas evidence rule. It is selective, not comprehensive or live. Editorial relevance does not establish causation, implementation activity, progress, completion, compliance, or performance. Omission has no negative meaning.",
+  "items": [
+    {
+      "id": "ctc-2026-08-03-sccp-north-hearing",
+      "kind": "publication-checkpoint",
+      "title": "North Hearing for the Proposed 2026 Solutions for Congested Corridors Program (SCCP) Guidelines",
+      "titleOrigin": "publisher",
+      "publisher": "California Transportation Commission",
+      "url": "https://catc.ca.gov/-/media/ctc-media/documents/programs/sccp/final-north-sccp-hearing-agenda-a11y.pdf",
+      "mediaType": "application/pdf",
+      "relatedUrls": [
+        {
+          "label": "California Transportation Commission meeting schedule",
+          "url": "https://catc.ca.gov/meetings-events/commission-meetings"
+        }
+      ],
+      "sourceDate": {
+        "value": "2026-08-03",
+        "kind": "scheduled-event",
+        "origin": "artifact-header"
+      },
+      "retrievedOn": "2026-07-28",
+      "lastReviewedOn": "2026-07-28",
+      "editorialSummary": "The Commission agenda schedules a northern hearing on the proposed 2026 Solutions for Congested Corridors Program guidelines and includes a presentation of those proposed guidelines.",
+      "whyTracked": "Directive 5 names the Solutions for Congested Corridors Program among the state funding programs whose guidelines are to be updated. The hearing may produce later materials that document whether the Order 5 proposals move into proposed or final guidelines.",
+      "evidenceBoundary": {
+        "reason": "no-explicit-order-citation",
+        "checkedOn": "2026-07-28",
+        "explicitOrderCitation": false,
+        "note": "The reviewed agenda does not cite N-7-26, Executive Order N-7-26, or Order 5, and it does not record an adoption or hearing outcome."
+      },
+      "directiveLinks": [
+        {
+          "directiveId": "n-7-26-5",
+          "relationship": "process-adjacency",
+          "rationale": "The scheduled hearing concerns proposed guidelines for a funding program explicitly named in directive 5."
+        }
+      ],
+      "nextReviewOn": "2026-08-04",
+      "watchFor": [
+        "A presentation, hearing book, recording, transcript, or revised guideline that explicitly cites N-7-26.",
+        "Language showing whether the July 15 transit-priority and first- and last-mile proposals were retained."
+      ],
+      "limitations": [
+        "A scheduled hearing does not establish that the event occurred, that any proposal was retained, or that guidelines were adopted."
+      ]
+    },
+    {
+      "id": "ctc-2026-08-20-21-meeting-materials-watch",
+      "kind": "publication-checkpoint",
+      "title": "California Transportation Commission meeting — August 20–21, 2026",
+      "titleOrigin": "editorial",
+      "publisher": "California Transportation Commission",
+      "url": "https://catc.ca.gov/meetings-events/commission-meetings/2026-08-20-21",
+      "mediaType": "text/html",
+      "relatedUrls": [
+        {
+          "label": "Solutions for Congested Corridors Program",
+          "url": "https://catc.ca.gov/programs/sb1/solutions-for-congested-corridors-program"
+        },
+        {
+          "label": "Local Partnership Program",
+          "url": "https://catc.ca.gov/programs/sb1/local-partnership-program"
+        }
+      ],
+      "sourceDate": {
+        "value": "2026-08-20",
+        "kind": "scheduled-event",
+        "origin": "page-header"
+      },
+      "retrievedOn": "2026-07-28",
+      "lastReviewedOn": "2026-07-28",
+      "editorialSummary": "The Commission has created a page for its August 20–21 meeting with categories for meeting materials, book-item updates, agendas, and recordings. No substantive item was available on the page at the Atlas review time.",
+      "whyTracked": "The Commission's SCCP and Local Partnership Program pages still listed June 25 draft guidelines when reviewed. The August meeting page is a high-value publication checkpoint for later proposed, final, or adopted guideline materials related to directive 5.",
+      "evidenceBoundary": {
+        "reason": "expected-artifact-not-published",
+        "checkedOn": "2026-07-28",
+        "explicitOrderCitation": false,
+        "note": "The meeting page contained headings but no reviewed agenda item, guideline, resolution, or adoption record connecting the meeting to N-7-26."
+      },
+      "directiveLinks": [
+        {
+          "directiveId": "n-7-26-5",
+          "relationship": "publication-watch",
+          "rationale": "The page may later publish final or adopted SCCP and Local Partnership Program materials for programs named in directive 5."
+        }
+      ],
+      "nextReviewOn": "2026-08-10",
+      "watchFor": [
+        "A meeting book, agenda item, staff recommendation, resolution, or final guideline that explicitly cites N-7-26.",
+        "An adoption date and exact locator for any Order 5 guideline language."
+      ],
+      "limitations": [
+        "The existence of a future meeting page does not establish that a relevant item will be published, heard, or adopted.",
+        "The displayed date is the scheduled first day of a two-day meeting."
+      ]
+    },
+    {
+      "id": "fta-2026-07-27-bus-low-no-nofo",
+      "kind": "context-source",
+      "title": "FY 2026 Notice of Funding Opportunity: Grants for Buses and Bus Facilities Infrastructure Programs",
+      "titleOrigin": "publisher",
+      "publisher": "Federal Transit Administration",
+      "url": "https://www.transit.dot.gov/notices-funding/fy-2026-notice-funding-opportunity-grants-buses-and-bus-facilities-infrastructure",
+      "mediaType": "text/html",
+      "relatedUrls": [
+        {
+          "label": "Federal Register notice",
+          "url": "https://www.govinfo.gov/content/pkg/FR-2026-07-27/pdf/2026-15090.pdf"
+        }
+      ],
+      "sourceDate": {
+        "value": "2026-07-27",
+        "kind": "published",
+        "origin": "page-header"
+      },
+      "retrievedOn": "2026-07-28",
+      "lastReviewedOn": "2026-07-28",
+      "editorialSummary": "FTA announced approximately $21 million for the FY 2026 Buses and Bus Facilities Program and approximately $589 million for the FY 2026 Low or No Emission Program. Applications are due September 21, 2026.",
+      "whyTracked": "Directive 5 directs Caltrans to identify federal funding programs for transit-priority infrastructure and first- and last-mile projects. This new federal opportunity is a plausible program for later California guidance or identification, subject to project eligibility and scope.",
+      "evidenceBoundary": {
+        "reason": "no-explicit-order-citation",
+        "checkedOn": "2026-07-28",
+        "explicitOrderCitation": false,
+        "note": "The federal notice does not cite N-7-26 and is not a Caltrans or CalSTA identification action under directive 5."
+      },
+      "directiveLinks": [
+        {
+          "directiveId": "n-7-26-5",
+          "relationship": "topic-alignment",
+          "rationale": "The opportunity funds buses and supporting facilities and may become relevant to directive 5's federal-program-identification clause."
+        }
+      ],
+      "nextReviewOn": "2026-09-21",
+      "watchFor": [
+        "Caltrans or CalSTA applicant guidance that identifies this program in connection with N-7-26.",
+        "A later California funding crosswalk or award record with an explicit directive citation."
+      ],
+      "limitations": [
+        "The opportunity is nationwide, and not every eligible project is transit-priority infrastructure or a first- or last-mile project.",
+        "Topical relevance does not show that California will apply, identify the program under the order, or receive an award."
+      ]
+    },
+    {
+      "id": "caltrans-2026-07-17-d4-transit-needs-assessment",
+      "kind": "context-source",
+      "title": "Caltrans Bay Area Completes First-of-its-Kind District Transit Plan with Release of Transit Needs Assessment Report and Map",
+      "titleOrigin": "publisher",
+      "publisher": "California Department of Transportation",
+      "url": "https://dot.ca.gov/caltrans-near-me/district-4/d4-news/2026-07-17-district-transit-plan",
+      "mediaType": "text/html",
+      "relatedUrls": [
+        {
+          "label": "Caltrans District 4 Transit Plan",
+          "url": "https://dot.ca.gov/caltrans-near-me/district-4/d4-programs/d4-transplanning-local-assistance/d4-office-of-transit-and-active-transportation/d4-caltrans-district-4-transit-plan"
+        },
+        {
+          "label": "Transit Needs Assessment report",
+          "url": "https://dot.ca.gov/-/media/dot-media/district-4/documents/d4-office-transit-active-transportation-docs/d4-transit-plan/2026/tna-report-final-6-17-a11y.pdf"
+        }
+      ],
+      "sourceDate": {
+        "value": "2026-07-17",
+        "kind": "published",
+        "origin": "page-header"
+      },
+      "retrievedOn": "2026-07-28",
+      "lastReviewedOn": "2026-07-28",
+      "editorialSummary": "Caltrans District 4 released a transit needs assessment and interactive map identifying Bay Area state-highway locations where bus-only lanes, safer crossings, and pedestrian or bicycle access improvements could support transit.",
+      "whyTracked": "The district work is relevant to the statewide project-identification, design and permitting, and transit-priority assistance subjects in directives 1(a), 1(e), and 3(e). It may inform later statewide methods or materials even though it is not itself an N-7-26 deliverable.",
+      "evidenceBoundary": {
+        "reason": "no-explicit-order-citation",
+        "checkedOn": "2026-07-28",
+        "explicitOrderCitation": false,
+        "note": "The official release frames the plan and assessment as support for Caltrans Director's Policy 40; neither the release nor the reviewed report cites N-7-26. The assessment was finalized in December 2025 and is regional, not a statewide order deliverable."
+      },
+      "directiveLinks": [
+        {
+          "directiveId": "n-7-26-1a",
+          "relationship": "topic-alignment",
+          "rationale": "The assessment prioritizes state-highway locations for transit-supportive investment, which is relevant to the statewide priority-project-list subject."
+        },
+        {
+          "directiveId": "n-7-26-1e",
+          "relationship": "topic-alignment",
+          "rationale": "The associated district plan includes a toolbox for transit-priority and access infrastructure, adjacent to the design and permitting materials requested by directive 1(e)."
+        },
+        {
+          "directiveId": "n-7-26-3e",
+          "relationship": "topic-alignment",
+          "rationale": "Bus-only lanes and transit access improvements overlap the technical-assistance subject in directive 3(e)."
+        }
+      ],
+      "nextReviewOn": "2026-10-24",
+      "watchFor": [
+        "A statewide Caltrans methodology, project list, or design package that cites N-7-26 and incorporates the district work.",
+        "A public crosswalk explaining how District 4 materials are used in the Section 1 deliverables."
+      ],
+      "limitations": [
+        "Regional topic overlap does not establish statewide adoption, post-order causation, or delivery of any directive.",
+        "The plan and assessment describe planning resources, not evidence that technical assistance or a specific transit-priority project was delivered under N-7-26."
+      ]
+    },
+    {
+      "id": "caltrans-transit-project-database-watch",
+      "kind": "publication-checkpoint",
+      "title": "Transit Project Database (Coming soon!)",
+      "titleOrigin": "publisher",
+      "publisher": "California Department of Transportation",
+      "url": "https://dot.ca.gov/programs/transportation-planning/division-of-transportation-planning/office-of-transit-planning",
+      "mediaType": "text/html",
+      "relatedUrls": [],
+      "retrievedOn": "2026-07-28",
+      "lastReviewedOn": "2026-07-28",
+      "editorialSummary": "The Caltrans Office of Transit Planning page labels both a Transit Policy Implementation Branch and a Transit Project Database as coming soon, but provides no database fields, coverage statement, launch date, or linked product.",
+      "whyTracked": "A future statewide transit-project database could become relevant to directive 1(a)'s statewide priority-project list. The current page is being watched for a launched product and enough documentation to assess that relationship.",
+      "evidenceBoundary": {
+        "reason": "expected-artifact-not-published",
+        "checkedOn": "2026-07-28",
+        "explicitOrderCitation": false,
+        "note": "The undated page does not cite N-7-26 and does not provide a database, scope, fields, update cadence, or evidence of an order deliverable."
+      },
+      "directiveLinks": [
+        {
+          "directiveId": "n-7-26-1a",
+          "relationship": "publication-watch",
+          "rationale": "A launched statewide transit-project database may provide a publication venue or input for the priority-project list requested by directive 1(a)."
+        }
+      ],
+      "nextReviewOn": "2026-10-24",
+      "watchFor": [
+        "A launched database with documented statewide coverage, fields, update cadence, and official purpose.",
+        "An explicit N-7-26 citation or a published connection to the directive 1(a) priority-project list."
+      ],
+      "limitations": [
+        "The page states only that a database is coming soon; the Atlas does not infer its scope, launch date, or connection to N-7-26.",
+        "The page is undated. The Atlas records retrieval and review dates separately rather than inventing a publication date."
+      ]
+    }
+  ]
+}

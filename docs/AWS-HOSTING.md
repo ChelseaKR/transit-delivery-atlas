@@ -113,12 +113,14 @@ additional recovery aid, not the primary release procedure.
 
 A release is complete only after all of these checks pass on the public domain:
 
-- `/`, `/evidence/`, `/methodology/`, `/data/`, and a directive detail page
-  return 200;
+- `/`, `/evidence/`, `/watchlist/`, `/methodology/`, `/data/`, and a directive
+  detail page return 200;
 - an unknown extensionless path returns the designed `404.html` with status
   404;
-- `/data/directives.json`, both CSV exports, and `/og.png` are available;
+- `/data/directives.json`, the evidence and relationship CSVs, the separate
+  watchlist JSON/CSV, and `/og.png` are available;
 - `/evidence/` links back to the published article on `chelseakr.com`;
+- `/watchlist/` preserves the context-only evidence boundary;
 - HSTS, CSP, `X-Content-Type-Options`, `X-Frame-Options`,
   `Referrer-Policy`, and `Permissions-Policy` are present; and
 - `/version.json` reports the deployed Git commit.

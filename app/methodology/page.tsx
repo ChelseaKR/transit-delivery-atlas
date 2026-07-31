@@ -6,7 +6,7 @@ import { orderMetadata, source } from "@/lib/data";
 export const metadata: Metadata = {
   title: "Methodology",
   description:
-    "How Transit Delivery Atlas separates signed source language, reviewed public evidence, date calculations, and independent analysis.",
+    "How Transit Delivery Atlas separates signed source language, reviewed public evidence, context-watchlist leads, date calculations, and independent analysis.",
   alternates: { canonical: "/methodology" },
 };
 
@@ -19,11 +19,12 @@ export default function MethodologyPage() {
           <div className="document-hero__inner">
             <p className="independence-badge">Independent analysis · Unofficial</p>
             <p className="utility-label">Methodology</p>
-            <h1>Keep source, evidence, and interpretation apart.</h1>
+            <h1>Keep source, evidence, context, and interpretation apart.</h1>
             <p>
               The atlas is useful only if a reader can tell what the signed order
-              says, what a dated public artifact documents, what was calculated,
-              and what remains analytical judgment.
+              says, what qualifies as dated public evidence, what is only a
+              research lead, what was calculated, and what remains analytical
+              judgment.
             </p>
           </div>
         </header>
@@ -34,6 +35,7 @@ export default function MethodologyPage() {
             <a href="#source">Source hierarchy</a>
             <a href="#units">Directive units</a>
             <a href="#layers">Three data layers</a>
+            <a href="#watchlist">Context watchlist</a>
             <a href="#timing">Timing calculations</a>
             <a href="#review">Review and corrections</a>
             <a href="#limits">Limitations</a>
@@ -105,7 +107,9 @@ export default function MethodologyPage() {
               <p>
                 Evidence never changes what the order says, and an inference is
                 never promoted to the source or evidence layer because it appears
-                likely. There is no mutable implementation-status field.
+                likely. The separate context watchlist is not included in this
+                provenance triplet. There is no mutable implementation-status
+                field.
               </p>
               <p>
                 The evidence collection is selective rather than comprehensive or
@@ -116,8 +120,36 @@ export default function MethodologyPage() {
               </p>
             </section>
 
-            <section id="timing">
+            <section id="watchlist">
               <p className="section-code">Method 04</p>
+              <h2>A separate context watchlist</h2>
+              <p>
+                The watchlist preserves official public developments that are
+                topically relevant or likely to produce a later qualifying
+                artifact but do not currently meet the explicit-citation rule.
+                Its relationship labels—topic alignment, process adjacency, and
+                publication watch—are editorial research classifications, not
+                evidence links.
+              </p>
+              <p>
+                Every item includes a dated evidence-boundary check, a plain
+                explanation of why it is outside the evidence register,
+                limitations, and a planned next review. An undated source remains
+                undated; the Atlas does not substitute its retrieval date.
+              </p>
+              <p>
+                If a later artifact qualifies, that artifact enters the evidence
+                collection through the full provenance, citation, locator, hash,
+                accessibility, and limitations review. Topical similarity is
+                never promoted by itself.
+              </p>
+              <p>
+                <a href="/watchlist">Review the context watchlist</a>
+              </p>
+            </section>
+
+            <section id="timing">
+              <p className="section-code">Method 05</p>
               <h2>Timing calculations</h2>
               <p>
                 Section 1 begins with “Within 120 days of this Order.” The atlas
@@ -137,7 +169,7 @@ export default function MethodologyPage() {
             </section>
 
             <section id="review">
-              <p className="section-code">Method 05</p>
+              <p className="section-code">Method 06</p>
               <h2>Review and corrections</h2>
               <ol>
                 <li>Extract and transcribe a short directive anchor.</li>
@@ -147,19 +179,24 @@ export default function MethodologyPage() {
                   Review each public artifact’s provenance, date kind, directive
                   link, locator, and limitations separately.
                 </li>
+                <li>
+                  Review each watchlist item’s official URL, editorial relevance,
+                  evidence boundary, next review, and limitations separately.
+                </li>
                 <li>Run data, reference, timing, export, and rendered-page checks.</li>
-                <li>Record source, evidence, and analytical corrections separately.</li>
+                <li>Record source, evidence, watchlist, and analytical corrections separately.</li>
               </ol>
             </section>
 
             <section id="limits">
-              <p className="section-code">Method 06</p>
+              <p className="section-code">Method 07</p>
               <h2>Known limitations</h2>
               <ul>
                 <li>The source is a scanned, untagged PDF.</li>
                 <li>Short excerpts are independent transcriptions; the signed image controls.</li>
                 <li>The atlas does not assess implementation progress or unpublished work.</li>
                 <li>The public-evidence collection is selective and date-bounded.</li>
+                <li>The watchlist is selective and records editorial relevance, not causation or implementation activity.</li>
                 <li>Calculated dates are planning aids rather than legal interpretation.</li>
                 <li>Dependencies identify research questions, not official assignments.</li>
               </ul>

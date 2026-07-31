@@ -176,6 +176,83 @@ const evidenceSchema = z
   })
   .strict();
 
+const watchlistRelatedUrlSchema = z
+  .object({
+    label: z.string().min(3),
+    url: z.string().url().startsWith("https://"),
+  })
+  .strict();
+
+const watchlistSourceDateSchema = z
+  .object({
+    value: date,
+    kind: z.enum(["scheduled-event", "published", "updated"]),
+    origin: z.enum([
+      "artifact-header",
+      "page-header",
+      "page-content",
+      "publisher-metadata",
+    ]),
+  })
+  .strict();
+
+const watchlistEvidenceBoundarySchema = z
+  .object({
+    reason: z.enum([
+      "no-explicit-order-citation",
+      "expected-artifact-not-published",
+    ]),
+    checkedOn: date,
+    explicitOrderCitation: z.literal(false),
+    note: z.string().min(40),
+  })
+  .strict();
+
+const watchlistDirectiveLinkSchema = z
+  .object({
+    directiveId: identifier,
+    relationship: z.enum([
+      "topic-alignment",
+      "process-adjacency",
+      "publication-watch",
+    ]),
+    rationale: z.string().min(30),
+  })
+  .strict();
+
+const watchlistItemSchema = z
+  .object({
+    id: identifier,
+    kind: z.enum(["context-source", "publication-checkpoint"]),
+    title: z.string().min(1),
+    titleOrigin: z.enum(["publisher", "editorial"]),
+    publisher: z.string().min(1),
+    url: z.string().url().startsWith("https://"),
+    mediaType: z.enum(["text/html", "application/pdf"]),
+    relatedUrls: z.array(watchlistRelatedUrlSchema),
+    sourceDate: watchlistSourceDateSchema.optional(),
+    retrievedOn: date,
+    lastReviewedOn: date,
+    editorialSummary: z.string().min(40),
+    whyTracked: z.string().min(40),
+    evidenceBoundary: watchlistEvidenceBoundarySchema,
+    directiveLinks: z.array(watchlistDirectiveLinkSchema).min(1),
+    nextReviewOn: date,
+    watchFor: z.array(z.string().min(30)).min(1),
+    limitations: z.array(z.string().min(30)).min(1),
+  })
+  .strict();
+
+const watchlistSchema = z
+  .object({
+    schemaVersion: z.literal("0.1.0"),
+    scope: z.literal("selective-context"),
+    lastUpdatedOn: date,
+    boundaryNote: z.string().min(100),
+    items: z.array(watchlistItemSchema).min(1),
+  })
+  .strict();
+
 const feasibilitySourceSchema = z
   .object({
     id: identifier,
@@ -266,6 +343,7 @@ const [
   directiveData,
   analysisData,
   evidenceData,
+  watchlistData,
   feasibilityData,
 ] =
   await Promise.all([
@@ -275,6 +353,7 @@ const [
     readJson("data/directives.json"),
     readJson("data/analysis.json"),
     readJson("data/evidence.json"),
+    readJson("data/watchlist.json"),
     readJson("data/tda-ntd-feasibility.json"),
   ]);
 
@@ -340,6 +419,8 @@ z.object({
   .strict()
   .parse(evidenceData);
 
+watchlistSchema.parse(watchlistData);
+
 feasibilitySchema.parse(feasibilityData);
 
 function unique(values, label) {
@@ -388,6 +469,8 @@ unique(directiveIds, "Directive IDs");
 unique(analysisData.analysis.map(({ directiveId }) => directiveId), "Analysis IDs");
 unique(evidenceData.evidence.map(({ id }) => id), "Evidence IDs");
 unique(evidenceData.evidence.map(({ url }) => url), "Evidence URLs");
+unique(watchlistData.items.map(({ id }) => id), "Watchlist IDs");
+unique(watchlistData.items.map(({ url }) => url), "Watchlist URLs");
 unique(sourceContextIds, "Source context IDs");
 unique(sourceNoticeIds, "Source notice IDs");
 unique(
@@ -711,6 +794,73 @@ if (evidenceData.lastUpdatedOn !== evidenceLastUpdatedOn) {
   throw new Error("Evidence lastUpdatedOn must equal the latest record review date.");
 }
 
+const evidenceUrls = new Set(evidenceData.evidence.map(({ url }) => url));
+for (const item of watchlistData.items) {
+  if (evidenceUrls.has(item.url)) {
+    throw new Error(
+      `${item.id} uses a primary URL that is already present in the evidence collection.`,
+    );
+  }
+  if (item.lastReviewedOn < item.retrievedOn) {
+    throw new Error(`${item.id} was reviewed before it was retrieved.`);
+  }
+  if (item.nextReviewOn < item.lastReviewedOn) {
+    throw new Error(`${item.id} has a next review date before its latest review.`);
+  }
+  if (item.evidenceBoundary.checkedOn !== item.lastReviewedOn) {
+    throw new Error(
+      `${item.id} evidence-boundary check must match its latest review date.`,
+    );
+  }
+  if (
+    item.sourceDate &&
+    item.sourceDate.kind !== "scheduled-event" &&
+    item.sourceDate.value > item.lastReviewedOn
+  ) {
+    throw new Error(`${item.id} has a future ${item.sourceDate.kind} source date.`);
+  }
+
+  unique(
+    item.relatedUrls.map(({ label }) => label),
+    `${item.id} related URL labels`,
+  );
+  unique(
+    item.relatedUrls.map(({ url }) => url),
+    `${item.id} related URLs`,
+  );
+  unique(item.watchFor, `${item.id} watch-for statements`);
+  unique(item.limitations, `${item.id} limitations`);
+
+  const linkedDirectiveIds = item.directiveLinks.map(
+    ({ directiveId }) => directiveId,
+  );
+  unique(linkedDirectiveIds, `${item.id} directive links`);
+  for (const link of item.directiveLinks) {
+    if (!directiveIds.includes(link.directiveId)) {
+      throw new Error(`${item.id} references unknown directive ${link.directiveId}.`);
+    }
+  }
+  const linkedOrders = linkedDirectiveIds.map(
+    (directiveId) => directiveById.get(directiveId).order,
+  );
+  const sortedLinkedOrders = [...linkedOrders].sort((left, right) => left - right);
+  if (JSON.stringify(linkedOrders) !== JSON.stringify(sortedLinkedOrders)) {
+    throw new Error(
+      `${item.id} directive references must remain in signed-document order.`,
+    );
+  }
+}
+
+const watchlistLastUpdatedOn = watchlistData.items
+  .map(({ lastReviewedOn }) => lastReviewedOn)
+  .sort()
+  .at(-1);
+if (watchlistData.lastUpdatedOn !== watchlistLastUpdatedOn) {
+  throw new Error(
+    "Watchlist lastUpdatedOn must equal the latest item review date.",
+  );
+}
+
 function rejectStatus(value, path = "root") {
   if (!value || typeof value !== "object") return;
   const forbiddenKeys = new Set([
@@ -733,8 +883,9 @@ function rejectStatus(value, path = "root") {
 rejectStatus(directiveData);
 rejectStatus(analysisData);
 rejectStatus(evidenceData);
+rejectStatus(watchlistData);
 rejectStatus(feasibilityData);
 
 console.log(
-  `Validated 21 directive records, 21 analysis records, ${evidenceData.evidence.length} evidence record(s), the four-field reporting slice, and all references.`,
+  `Validated 21 directive records, 21 analysis records, ${evidenceData.evidence.length} evidence record(s), ${watchlistData.items.length} context watchlist item(s), the four-field reporting slice, and all references.`,
 );

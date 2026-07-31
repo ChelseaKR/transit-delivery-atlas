@@ -344,6 +344,246 @@ test("public JSON, JSON Schema, and evidence CSV expose one consistent evidence 
   }
 });
 
+test("context watchlist is selective, non-evidentiary, and actionably reviewed", async () => {
+  const watchlist = await readJson("data/watchlist.json");
+
+  assert.equal(watchlist.schemaVersion, "0.1.0");
+  assert.equal(watchlist.scope, "selective-context");
+  assert.equal(watchlist.items.length, 5);
+  assertIsoDate(watchlist.lastUpdatedOn, "watchlist lastUpdatedOn");
+  assert.equal(
+    watchlist.lastUpdatedOn,
+    watchlist.items.map(({ lastReviewedOn }) => lastReviewedOn).sort().at(-1),
+  );
+  assert.match(watchlist.boundaryNote, /does not establish causation/i);
+  assert.match(watchlist.boundaryNote, /implementation activity/i);
+  assert.ok(
+    watchlist.items.every(
+      ({ evidenceBoundary }) =>
+        evidenceBoundary.explicitOrderCitation === false,
+    ),
+  );
+
+  const hearing = watchlist.items.find(
+    ({ id }) => id === "ctc-2026-08-03-sccp-north-hearing",
+  );
+  assert.ok(hearing);
+  assert.equal(hearing.kind, "publication-checkpoint");
+  assert.deepEqual(hearing.sourceDate, {
+    value: "2026-08-03",
+    kind: "scheduled-event",
+    origin: "artifact-header",
+  });
+  assert.equal(hearing.directiveLinks[0].relationship, "process-adjacency");
+  assert.equal(hearing.nextReviewOn, "2026-08-04");
+
+  const meeting = watchlist.items.find(
+    ({ id }) => id === "ctc-2026-08-20-21-meeting-materials-watch",
+  );
+  assert.equal(
+    meeting.evidenceBoundary.reason,
+    "expected-artifact-not-published",
+  );
+
+  const funding = watchlist.items.find(
+    ({ id }) => id === "fta-2026-07-27-bus-low-no-nofo",
+  );
+  assert.match(funding.editorialSummary, /\$21 million/);
+  assert.match(funding.editorialSummary, /\$589 million/);
+  assert.equal(funding.nextReviewOn, "2026-09-21");
+
+  const district = watchlist.items.find(
+    ({ id }) => id === "caltrans-2026-07-17-d4-transit-needs-assessment",
+  );
+  assert.deepEqual(
+    district.directiveLinks.map(({ directiveId }) => directiveId),
+    ["n-7-26-1a", "n-7-26-1e", "n-7-26-3e"],
+  );
+
+  const database = watchlist.items.find(
+    ({ id }) => id === "caltrans-transit-project-database-watch",
+  );
+  assert.equal(Object.hasOwn(database, "sourceDate"), false);
+  assert.match(database.limitations.join(" "), /undated/i);
+});
+
+test("watchlist items retain secure official sources and valid editorial links", async () => {
+  const [watchlist, evidenceData, directiveData] = await Promise.all([
+    readJson("data/watchlist.json"),
+    readJson("data/evidence.json"),
+    readJson("data/directives.json"),
+  ]);
+  const directiveIds = new Set(directiveData.directives.map(({ id }) => id));
+  const evidenceUrls = new Set(evidenceData.evidence.map(({ url }) => url));
+
+  for (const item of watchlist.items) {
+    assert.equal(new URL(item.url).protocol, "https:", item.id);
+    assert.equal(evidenceUrls.has(item.url), false, item.id);
+    assert.ok(
+      item.relatedUrls.every(({ url }) => new URL(url).protocol === "https:"),
+      item.id,
+    );
+    for (const field of [
+      "retrievedOn",
+      "lastReviewedOn",
+      "nextReviewOn",
+    ]) {
+      assertIsoDate(item[field], `${item.id}.${field}`);
+    }
+    if (item.sourceDate) {
+      assertIsoDate(item.sourceDate.value, `${item.id}.sourceDate.value`);
+      if (item.sourceDate.kind !== "scheduled-event") {
+        assert.ok(item.sourceDate.value <= item.lastReviewedOn, item.id);
+      }
+    }
+    assert.ok(item.lastReviewedOn >= item.retrievedOn, item.id);
+    assert.ok(item.nextReviewOn >= item.lastReviewedOn, item.id);
+    assert.equal(item.evidenceBoundary.checkedOn, item.lastReviewedOn);
+    assert.equal(item.evidenceBoundary.explicitOrderCitation, false);
+    assert.ok(item.watchFor.length > 0, item.id);
+    assert.ok(item.limitations.length > 0, item.id);
+    assert.ok(
+      item.directiveLinks.every(({ directiveId }) =>
+        directiveIds.has(directiveId),
+      ),
+      item.id,
+    );
+  }
+});
+
+test("canonical, public, schema, and CSV watchlist exports stay identical", async () => {
+  const [
+    canonical,
+    published,
+    sourceSchema,
+    exportedSchema,
+    mainDataset,
+    csvText,
+  ] = await Promise.all([
+    readJson("data/watchlist.json"),
+    readJson("public/data/watchlist.json"),
+    readJson("data/watchlist-schema.json"),
+    readJson("public/data/watchlist-schema.json"),
+    readJson("public/data/directives.json"),
+    readFile(new URL("public/data/watchlist.csv", root), "utf8"),
+  ]);
+
+  assert.deepEqual(published, canonical);
+  assert.deepEqual(exportedSchema, sourceSchema);
+  assert.equal(Object.hasOwn(mainDataset, "watchlist"), false);
+
+  const [header, ...rows] = parseCsv(csvText);
+  assert.deepEqual(header, [
+    "id",
+    "schema_version",
+    "scope",
+    "collection_last_updated_on",
+    "boundary_note",
+    "kind",
+    "title",
+    "title_origin",
+    "publisher",
+    "url",
+    "media_type",
+    "related_urls",
+    "source_date",
+    "source_date_kind",
+    "source_date_origin",
+    "retrieved_on",
+    "last_reviewed_on",
+    "editorial_summary",
+    "why_tracked",
+    "evidence_boundary_reason",
+    "evidence_boundary_checked_on",
+    "explicit_order_citation",
+    "evidence_boundary_note",
+    "directive_ids",
+    "relationships",
+    "relevance_rationales",
+    "next_review_on",
+    "watch_for",
+    "limitations",
+  ]);
+  assert.equal(rows.length, canonical.items.length);
+
+  const rowsById = new Map(
+    rows.map((row) => [row[header.indexOf("id")], row]),
+  );
+  for (const item of canonical.items) {
+    const row = rowsById.get(item.id);
+    assert.ok(row, item.id);
+    const value = (column) => row[header.indexOf(column)];
+    assert.equal(value("schema_version"), canonical.schemaVersion);
+    assert.equal(value("scope"), canonical.scope);
+    assert.equal(value("collection_last_updated_on"), canonical.lastUpdatedOn);
+    assert.equal(value("boundary_note"), canonical.boundaryNote);
+    assert.equal(value("kind"), item.kind);
+    assert.equal(value("title"), item.title);
+    assert.equal(value("title_origin"), item.titleOrigin);
+    assert.equal(value("publisher"), item.publisher);
+    assert.equal(value("url"), item.url);
+    assert.equal(value("media_type"), item.mediaType);
+    assert.equal(
+      value("related_urls"),
+      item.relatedUrls
+        .map(({ label, url }) => `${label}: ${url}`)
+        .join(" || "),
+    );
+    assert.equal(value("source_date"), item.sourceDate?.value ?? "");
+    assert.equal(value("source_date_kind"), item.sourceDate?.kind ?? "");
+    assert.equal(value("source_date_origin"), item.sourceDate?.origin ?? "");
+    assert.equal(value("retrieved_on"), item.retrievedOn);
+    assert.equal(value("last_reviewed_on"), item.lastReviewedOn);
+    assert.equal(value("editorial_summary"), item.editorialSummary);
+    assert.equal(value("why_tracked"), item.whyTracked);
+    assert.equal(
+      value("evidence_boundary_reason"),
+      item.evidenceBoundary.reason,
+    );
+    assert.equal(
+      value("evidence_boundary_checked_on"),
+      item.evidenceBoundary.checkedOn,
+    );
+    assert.equal(
+      value("explicit_order_citation"),
+      String(item.evidenceBoundary.explicitOrderCitation),
+    );
+    assert.equal(
+      value("evidence_boundary_note"),
+      item.evidenceBoundary.note,
+    );
+    assert.equal(
+      value("directive_ids"),
+      item.directiveLinks.map(({ directiveId }) => directiveId).join(" | "),
+    );
+    assert.equal(
+      value("relationships"),
+      item.directiveLinks.map(({ relationship }) => relationship).join(" | "),
+    );
+    assert.equal(
+      value("relevance_rationales"),
+      item.directiveLinks
+        .map(
+          ({ directiveId, rationale }) => `${directiveId}: ${rationale}`,
+        )
+        .join(" || "),
+    );
+    assert.equal(value("next_review_on"), item.nextReviewOn);
+    assert.equal(value("watch_for"), item.watchFor.join(" || "));
+    assert.equal(value("limitations"), item.limitations.join(" || "));
+  }
+});
+
+test("watchlist data recursively forbids implementation-status-like keys", async () => {
+  const [canonical, exported] = await Promise.all([
+    readJson("data/watchlist.json"),
+    readJson("public/data/watchlist.json"),
+  ]);
+
+  assert.deepEqual(statusLikeKeys(canonical), []);
+  assert.deepEqual(statusLikeKeys(exported), []);
+});
+
 test("normalized body-role export matches all 50 canonical source relationships", async () => {
   const [directiveData, organizations, sources, csvText] = await Promise.all([
     readJson("data/directives.json"),
@@ -692,7 +932,10 @@ test("the public four-field reporting slice matches its reviewed source", async 
 });
 
 test("public schema is controlled and closes every typed object", async () => {
-  const schema = await readJson("data/public-schema.json");
+  const [schema, watchlistSchema] = await Promise.all([
+    readJson("data/public-schema.json"),
+    readJson("data/watchlist-schema.json"),
+  ]);
   assert.equal(schema.$id, "urn:transit-delivery-atlas:data-schema:0.2.0");
   assert.equal(schema.$defs.date.format, "date");
   assert.ok(schema.required.includes("evidenceScope"));
@@ -700,6 +943,13 @@ test("public schema is controlled and closes every typed object", async () => {
   assert.equal(schema.properties.schemaVersion.const, "0.2.0");
   assert.ok(schema.properties.evidenceScope);
   assert.ok(schema.properties.evidence.items);
+  assert.equal(
+    watchlistSchema.$id,
+    "urn:transit-delivery-atlas:watchlist-schema:0.1.0",
+  );
+  assert.equal(watchlistSchema.properties.scope.const, "selective-context");
+  assert.equal(watchlistSchema.properties.schemaVersion.const, "0.1.0");
+  assert.ok(watchlistSchema.properties.items.items);
 
   function inspect(node, path = "$") {
     if (!node || typeof node !== "object") return;
@@ -712,4 +962,5 @@ test("public schema is controlled and closes every typed object", async () => {
   }
 
   inspect(schema);
+  inspect(watchlistSchema);
 });

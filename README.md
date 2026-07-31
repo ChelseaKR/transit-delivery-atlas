@@ -8,6 +8,7 @@
 
 - Live site: [transit.chelseakr.com](https://transit.chelseakr.com)
 - Relationship view: [transit.chelseakr.com/handoffs](https://transit.chelseakr.com/handoffs)
+- Context watchlist: [transit.chelseakr.com/watchlist](https://transit.chelseakr.com/watchlist)
 - TDA/NTD research: [transit.chelseakr.com/research/tda-ntd](https://transit.chelseakr.com/research/tda-ntd)
 - Source repository: [github.com/ChelseaKR/transit-delivery-atlas](https://github.com/ChelseaKR/transit-delivery-atlas)
 
@@ -15,7 +16,9 @@
 California Executive Order N-7-26. It turns each actionable directive into a
 navigable record of source language, explicitly named entities, timing,
 public-evidence coverage (including explicit empty states), analytical
-dependencies, expected outputs, and open implementation questions.
+dependencies, expected outputs, open implementation questions, and a separate
+context watchlist for relevant official developments that do not yet qualify as
+evidence.
 
 > [!IMPORTANT]
 > This is independent public-interest analysis, not an official State of
@@ -41,7 +44,8 @@ npm run check
 ## What this is
 
 - A structured reading of the signed executive order
-- A traceable separation among source language, reviewed public evidence, and analysis
+- A traceable separation among source language, reviewed public evidence,
+  context-only research leads, and analysis
 - A public dataset with section locators, review dates, and stable identifiers
 - A relationship index separating explicitly named bodies from inferred
   cross-directive links
@@ -77,6 +81,9 @@ and CSV under `public/data/`.
   dependencies, and open questions
 - `evidence.json` contains a selective collection of dated public artifacts,
   exact directive citations, locators, hashes, review dates, and limitations
+- `watchlist.json` contains a separate selective collection of official context
+  sources and publication checkpoints, editorial relevance links,
+  evidence-boundary notes, and planned review dates
 - `tda-ntd-feasibility.json` contains the cited four-field reporting research,
   feasibility classes, controls, and remaining evidence needs
 
@@ -94,6 +101,8 @@ exclude confidential records, personal data, credentials, and security details.
 The public JSON keeps those layers separate. `directives.csv` contains the
 source/analysis crosswalk, while `evidence.csv` contains the public-artifact
 records and their explicit directive relationships.
+The context watchlist has an independent `watchlist.json`, `watchlist.csv`, and
+JSON Schema contract; it does not contribute to evidence counts.
 `directive-organizations.csv` normalizes the 50 source-role links, and
 `directive-relationships.csv` normalizes the 27 inferred cross-references.
 The latter preserves analytical-record provenance without asserting workflow
@@ -103,15 +112,17 @@ compliance, or performance.
 
 See [the methodology](docs/METHODOLOGY.md),
 [relationship model](docs/RELATIONSHIP-MODEL.md),
-[evidence model](docs/EVIDENCE-MODEL.md), and
+[evidence model](docs/EVIDENCE-MODEL.md),
+[watchlist model](docs/WATCHLIST-MODEL.md), and
 [product specification](docs/PRD.md) for the classification model, acceptance
 criteria, and known limitations.
 
 ## Corrections and contributions
 
-Corrections should identify the directive or evidence ID, public source,
-section or page locator, and the proposed change. Source, evidence, and
-analytical changes are reviewed separately and must never be mixed silently.
+Corrections should identify the directive, evidence, or watchlist ID; public
+source; section, page locator, or evidence-boundary statement; and the proposed
+change. Source, evidence, watchlist, and analytical changes are reviewed
+separately and must never be mixed silently.
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for the review and validation workflow.
 
