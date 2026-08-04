@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { readFile } from "node:fs/promises";
+import { readdir, readFile } from "node:fs/promises";
 import test from "node:test";
 
 async function render(path = "/") {
@@ -309,6 +309,33 @@ test("renders methodology, data, and accessibility pages", async () => {
         html,
         /href="https:\/\/github\.com\/ChelseaKR\/transit-delivery-atlas\/issues\/new\?template=01-content-correction\.yml"/,
       );
+      // Code relicensed MIT -> Apache-2.0 (see CHANGELOG); this page must state
+      // the current license, not the superseded one.
+      assert.match(html, /Code is licensed under the Apache License 2\.0/);
+      assert.doesNotMatch(html, /MIT licens/i);
     }
+  }
+});
+
+test("no rendered page anywhere in the site claims the superseded MIT code license", async () => {
+  // The code license moved MIT -> Apache-2.0 (CHANGELOG [Unreleased], LICENSE,
+  // CONTENT-LICENSE.md, README "Licensing"). A single stale mention on the
+  // /data page went undetected by the earlier release checks, so this check
+  // covers every exported HTML file rather than one known route.
+  const outDir = new URL("../out/", import.meta.url);
+  const entries = await readdir(outDir, { recursive: true, withFileTypes: true });
+  const htmlFiles = entries
+    .filter((entry) => entry.isFile() && entry.name.endsWith(".html"))
+    .map((entry) => `${entry.parentPath ?? entry.path}/${entry.name}`);
+
+  assert.ok(htmlFiles.length > 10, "expected the full static export to be built");
+
+  for (const filePath of htmlFiles) {
+    const html = await readFile(filePath, "utf8");
+    assert.doesNotMatch(
+      html,
+      /MIT licens/i,
+      `${filePath.replace(outDir.pathname, "")} still claims the superseded MIT code license`,
+    );
   }
 });

@@ -170,8 +170,9 @@ export default function DataPage() {
               <h2>Reuse and corrections</h2>
               <p>
                 Original structured analysis and documentation are available
-                under CC BY 4.0. Code is MIT licensed. Government source material
-                remains subject to its own terms and is not relicensed here.
+                under CC BY 4.0. Code is licensed under the Apache License 2.0.
+                Government source material remains subject to its own terms and
+                is not relicensed here.
               </p>
               <p>
                 Corrections should identify the directive, evidence, or
