@@ -51,6 +51,15 @@ recorded here.
 - Updated Next.js to 16.2.11 and pinned its optional Sharp dependency to 0.35.3
   so release checks include the patched production dependency set
 
+### Fixed
+
+- The `/data` page's "Reuse and corrections" section still said "Code is MIT
+  licensed" after the code license moved to Apache-2.0; it now matches
+  `LICENSE`, `CONTENT-LICENSE.md`, and the README. A rendered-HTML check now
+  covers this route directly, and a second check scans every exported page so
+  a stale license mention on any route fails the release gate instead of
+  shipping silently
+
 ## [0.4.0] - 2026-07-13
 
 ### Added
