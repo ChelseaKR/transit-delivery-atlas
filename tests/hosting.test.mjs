@@ -35,6 +35,51 @@ test("the exported not-found page is generic and has one noindex directive", asy
   assert.doesNotMatch(robotsTags[0][0], /index,\s*follow/i);
 });
 
+test("sitemap lists every static route and every directive record exactly once", async () => {
+  const [sitemap, directives] = await Promise.all([
+    readProjectFile("out/sitemap.xml"),
+    readProjectFile("data/directives.json").then((raw) => JSON.parse(raw).directives),
+  ]);
+
+  const locs = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => match[1]);
+  assert.equal(new Set(locs).size, locs.length, "sitemap contains a duplicate URL");
+
+  const staticPaths = [
+    "/",
+    "/handoffs/",
+    "/evidence/",
+    "/watchlist/",
+    "/research/tda-ntd/",
+    "/methodology/",
+    "/accessibility/",
+    "/data/",
+    "/corrections/",
+  ];
+  for (const path of staticPaths) {
+    assert.ok(
+      locs.includes(`https://transit.chelseakr.com${path}`),
+      `sitemap is missing ${path}`,
+    );
+  }
+
+  for (const directive of directives) {
+    assert.ok(
+      locs.includes(`https://transit.chelseakr.com/directives/${directive.id}/`),
+      `sitemap is missing directive ${directive.id}`,
+    );
+  }
+
+  assert.equal(locs.length, staticPaths.length + directives.length);
+});
+
+test("robots.txt allows crawling and points to the sitemap", async () => {
+  const robots = await readProjectFile("out/robots.txt");
+
+  assert.match(robots, /User-Agent: \*/);
+  assert.match(robots, /Allow: \//);
+  assert.match(robots, /Sitemap: https:\/\/transit\.chelseakr\.com\/sitemap\.xml/);
+});
+
 test("CloudFront clean-route function maps pages without rewriting assets", async () => {
   const template = JSON.parse(await readProjectFile("infra/static-site.json"));
   const functionCode = template.Resources.CleanRouteFunction.Properties.FunctionCode;
@@ -64,6 +109,8 @@ test("CloudFront clean-route function maps pages without rewriting assets", asyn
     ["/data/watchlist-schema.json", "/data/watchlist-schema.json"],
     ["/data/tda-ntd-feasibility.json", "/data/tda-ntd-feasibility.json"],
     ["/og.png", "/og.png"],
+    ["/sitemap.xml", "/sitemap.xml"],
+    ["/robots.txt", "/robots.txt"],
     ["/deploy-smoke-not-found/", "/deploy-smoke-not-found/index.html"],
   ]);
 

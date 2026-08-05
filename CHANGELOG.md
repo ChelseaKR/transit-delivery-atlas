@@ -12,6 +12,10 @@ recorded here.
 
 ### Added
 
+- Generated `sitemap.xml` (all static pages plus every directive record) and
+  `robots.txt` (allows crawling, points to the sitemap) so search engines can
+  discover and index the full public site; both are covered by rendered-output
+  and CloudFront routing tests
 - Separate context watchlist with five reviewed official-source leads, explicit
   evidence-boundary reasons, editorial directive relationships, next-review
   dates, and limitations; the new `/watchlist` page and directive-level asides
