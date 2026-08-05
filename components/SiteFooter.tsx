@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { CORRECTION_CHOOSER_URL } from "@/lib/feedback";
 
@@ -34,6 +35,22 @@ export function SiteFooter() {
               rel="noreferrer"
             >
               Signed source PDF <span aria-hidden="true">↗</span>
+            </a>
+            {/* Self-hosted button image: the site's CSP is `img-src 'self' data:`,
+                so Ko-fi's CDN copy would be blocked, and serving it locally also
+                keeps a third party from seeing who reads this site. */}
+            <a
+              href="https://ko-fi.com/T6T6GMYTU"
+              target="_blank"
+              rel="noreferrer noopener"
+              className="site-footer__kofi"
+            >
+              <Image
+                src="/kofi.png"
+                alt="Support this work on Ko-fi"
+                width={116}
+                height={29}
+              />
             </a>
           </div>
         </div>
