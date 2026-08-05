@@ -59,6 +59,15 @@ recorded here.
 - Updated Next.js to 16.2.11 and pinned its optional Sharp dependency to 0.35.3
   so release checks include the patched production dependency set
 
+### Fixed
+
+- Updated Next.js to 16.3.0 and re-pinned its nested PostCSS override to
+  8.5.25, closing a moderate `postcss` advisory (GHSA-fxqj-rqcc-2cmp,
+  incomplete-fix follow-up to GHSA-6g55-p6wh-862q) that had started failing
+  `npm run audit:production` on `main` and blocking the Quality and Deploy
+  gates; `npm audit --omit=dev --audit-level=moderate` now reports zero
+  vulnerabilities
+
 ## [0.4.0] - 2026-07-13
 
 ### Added
