@@ -34,7 +34,7 @@ export const metadata: Metadata = {
     template: "%s | Transit Delivery Atlas",
   },
   description:
-    "Independent, source-linked crosswalk of California Executive Order N-7-26 directives, named entities, timing, reviewed public evidence, dependencies, and open questions.",
+    "Independent, source-linked crosswalk of California Executive Order N-7-26 directives, named entities, timing, reviewed public evidence, context-watchlist leads, dependencies, and open questions.",
   applicationName: "Transit Delivery Atlas",
   category: "public-interest research",
   openGraph: {

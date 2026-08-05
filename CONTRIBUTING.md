@@ -37,6 +37,22 @@ implying completion, compliance, performance, or comprehensive coverage.
 Scheduled-event dates must remain labeled as scheduled unless a later reviewed
 record supports different wording.
 
+A watchlist correction should include:
+
+1. Watchlist item ID
+2. Official source URL
+3. Related directive ID and editorial relevance rationale
+4. Current evidence-boundary reason and proposed replacement
+5. Current review date and next research checkpoint
+6. Limitations needed to prevent causal or implementation claims
+
+Watchlist items are official context sources or publication checkpoints that do
+not currently meet the evidence rule. They must carry
+`explicitOrderCitation: false`, remain outside evidence counts, and state why a
+later review is warranted. If a later artifact qualifies, add that artifact
+through the complete evidence workflow and remove or narrow the earlier
+watchlist lead.
+
 A relationship correction should identify whether it changes a signed-source
 role or an analytical cross-reference. Source-role changes require the signed
 section and page locator. Analytical changes require the dependency statement,
@@ -66,6 +82,8 @@ schema files must match their source records.
 - Label interpretations and dependencies as inference.
 - Preserve qualifiers and uncertainty.
 - Keep source, evidence, and analysis in their separate canonical files.
+- Keep the context watchlist in its independent contract; never mix editorial
+  relevance links into evidence relationships.
 - Keep explicit body roles and inferred directive cross-references visibly and
   structurally separate.
 - Do not turn reviewed evidence into implementation status, progress, scoring,

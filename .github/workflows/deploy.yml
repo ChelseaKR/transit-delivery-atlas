@@ -19,12 +19,12 @@ jobs:
     timeout-minutes: 12
     steps:
       - name: Check out source
-        uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
 
       - name: Set up Node.js
-        uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
           node-version: 22.19.0
 
@@ -38,7 +38,7 @@ jobs:
           NEXT_TELEMETRY_DISABLED: 1
 
       - name: Upload static release artifact
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: site
           path: out
@@ -58,7 +58,7 @@ jobs:
       id-token: write
     steps:
       - name: Download static release artifact
-        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
         with:
           name: site
           path: out
@@ -107,7 +107,7 @@ jobs:
           deployed_sha=$(curl_edge "https://${site_domain}/version.json" | jq -r '.sha')
           test "$deployed_sha" = "$EXPECTED_SHA"
 
-          for route in / /handoffs/ /evidence/ /research/tda-ntd/ /corrections/ /methodology/ /data/ /accessibility/ /directives/n-7-26-5/; do
+          for route in / /handoffs/ /evidence/ /watchlist/ /research/tda-ntd/ /corrections/ /methodology/ /data/ /accessibility/ /directives/n-7-26-5/; do
             curl_edge "https://${site_domain}${route}" > /dev/null
           done
 
@@ -117,6 +117,10 @@ jobs:
           curl_edge "https://${site_domain}/evidence/" > /tmp/evidence.html
           grep -Fq 'Reviewed public evidence' /tmp/evidence.html
           grep -Fq 'https://chelseakr.com/writing/signed-transit-order-start' /tmp/evidence.html
+
+          curl_edge "https://${site_domain}/watchlist/" > /tmp/watchlist.html
+          grep -Fq 'Public developments under review' /tmp/watchlist.html
+          grep -Fq 'Context only · Not implementation evidence' /tmp/watchlist.html
 
           curl_edge "https://${site_domain}/handoffs/" > /tmp/handoffs.html
           grep -Fq 'Delivery relationships' /tmp/handoffs.html
@@ -144,6 +148,10 @@ jobs:
             | grep -Fq 'n-7-26-5'
           curl_edge "https://${site_domain}/data/evidence.csv" \
             | grep -Fq 'ctc-2026-07-15-order-5-reference-material'
+          curl_edge "https://${site_domain}/data/watchlist.json" \
+            | jq -e '.schemaVersion == "0.1.0" and (.items | length) == 5 and all(.items[]; .evidenceBoundary.explicitOrderCitation == false)' >/dev/null
+          curl_edge "https://${site_domain}/data/watchlist.csv" \
+            | grep -Fq 'ctc-2026-08-03-sccp-north-hearing'
           curl_edge "https://${site_domain}/data/directive-organizations.csv" \
             > /tmp/directive-organizations.csv
           test "$(wc -l < /tmp/directive-organizations.csv | tr -d ' ')" = "51"

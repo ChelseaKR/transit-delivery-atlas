@@ -5,6 +5,7 @@ import { LayerLabel } from "@/components/LayerLabel";
 import { PrintRecordButton } from "@/components/PrintRecordButton";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
+import { WatchlistCard } from "@/components/WatchlistCard";
 import { directiveById, directives, source } from "@/lib/data";
 import { formatDate } from "@/lib/format";
 
@@ -22,7 +23,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   if (!directive) return {};
   return {
     title: `${directive.label} ${directive.title}`,
-    description: `Source-linked record for Executive Order N-7-26, section ${directive.locator.section}, with named entities, timing, public-evidence coverage, and separately labeled independent analysis.`,
+    description: `Source-linked record for Executive Order N-7-26, section ${directive.locator.section}, with named entities, timing, public-evidence coverage, separately labeled analysis, and context-watchlist leads when available.`,
     alternates: { canonical: `/directives/${directive.id}` },
   };
 }
@@ -345,6 +346,35 @@ export default async function DirectivePage({ params }: PageProps) {
               </ol>
             </div>
           </section>
+
+          {directive.watchlist.length > 0 ? (
+            <aside
+              className="directive-watchlist"
+              aria-labelledby="watchlist-context-title"
+            >
+              <p className="watchlist-card__boundary">
+                Separate research watchlist
+              </p>
+              <h2 id="watchlist-context-title">Related context under review</h2>
+              <p>
+                These official sources are research leads, not implementation
+                evidence. Their relationship to this directive is editorial,
+                and each card states the evidence boundary explicitly.
+              </p>
+              <ul className="watchlist-list watchlist-list--directive">
+                {directive.watchlist.map((item) => (
+                  <li key={item.id}>
+                    <WatchlistCard item={item} />
+                  </li>
+                ))}
+              </ul>
+              <p className="directive-watchlist__method">
+                <Link href="/watchlist">
+                  Read the context-watchlist scope and promotion rule
+                </Link>
+              </p>
+            </aside>
+          ) : null}
 
           <nav className="directive-pagination" aria-label="Directive pages">
             {previous ? (

@@ -7,6 +7,13 @@ recorded here.
 
 ### Added
 
+- Separate context watchlist with five reviewed official-source leads, explicit
+  evidence-boundary reasons, editorial directive relationships, next-review
+  dates, and limitations; the new `/watchlist` page and directive-level asides
+  remain visibly outside the Source/Evidence/Analysis provenance triplet
+- Independent versioned watchlist JSON, CSV, and JSON Schema exports with
+  fail-closed validation for dates, URLs, directive references, evidence URL
+  overlap, boundary checks, and status-like fields
 - Internationalization declaration naming the owner, first localized product
   boundary, source-language protections, fallback behavior, and review
   deadline without claiming catalogs or translated copy already exist

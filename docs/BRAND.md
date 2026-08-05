@@ -79,6 +79,12 @@ independent analysis. Evidence includes the number of linked records. The
 triplet acts as both a legend and a quick coverage scan; it remains legible
 without color.
 
+The context watchlist deliberately does not add a `W` to this triplet. It is
+rendered as a neutral, dashed research holding area after the three canonical
+layers and repeats “Context only · Not implementation evidence” in text. This
+prevents a topically related lead from acquiring the visual weight of reviewed
+evidence.
+
 ### Layout sketch
 
 ```text

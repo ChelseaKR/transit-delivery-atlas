@@ -44,8 +44,8 @@ export default function CorrectionsPage() {
                   <h3>Correct content or data</h3>
                   <p>
                     Use this when a source transcription, public-evidence record,
-                    analytical claim, relationship, research finding, or export
-                    should change.
+                    context-watchlist item, analytical claim, relationship,
+                    research finding, or export should change.
                   </p>
                   <ul>
                     <li>Identify the record or page.</li>
@@ -97,10 +97,10 @@ export default function CorrectionsPage() {
                 </p>
               </div>
               <p>
-                Source, evidence, and analytical changes remain separate even
-                when one correction affects more than one layer. A submitted issue
-                is a review request—not proof that the current Atlas is wrong or
-                that the proposed replacement is accepted.
+                Source, evidence, watchlist, and analytical changes remain
+                separate even when one correction affects more than one layer. A
+                submitted issue is a review request—not proof that the current
+                Atlas is wrong or that the proposed replacement is accepted.
               </p>
             </section>
 
@@ -108,7 +108,7 @@ export default function CorrectionsPage() {
               <p className="section-code">Correction 03</p>
               <h2 id="process-title">What happens next.</h2>
               <ol>
-                <li>The report is classified as source, evidence, analysis, relationship, research, or interface feedback.</li>
+                <li>The report is classified as source, evidence, watchlist, analysis, relationship, research, or interface feedback.</li>
                 <li>The cited public source and locator are checked against the current record.</li>
                 <li>Accepted changes are tested, recorded in the changelog, and released through the normal review path.</li>
               </ol>

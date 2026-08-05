@@ -225,6 +225,32 @@ body/group records, 21 dependency statements, 50 source-role links, and 27
 analytical cross-references; tests verify layer order, boundary language,
 resolved links, normalized exports, and status-free semantics.
 
+### P0.11 Context watchlist
+
+- Publish a separate, selective context-watchlist contract for official public
+  items that are topically relevant or likely publication checkpoints but do
+  not currently meet the implementation-evidence rule.
+- Keep the Source → Evidence → Analysis provenance sequence and evidence counts
+  unchanged.
+- Require an official HTTPS source, retrieval and review dates, an editorial
+  summary, why the item is watched, `explicitOrderCitation: false`, a controlled
+  evidence-boundary reason, editorial directive-relevance links, a next review
+  date, watch conditions, and limitations.
+- Support only `topic-alignment`, `process-adjacency`, and `publication-watch`
+  relevance labels. These labels must never be presented as evidence, causation,
+  workflow direction, or implementation activity.
+- Publish a dedicated `/watchlist` route plus independent JSON, CSV, and JSON
+  Schema downloads. Show matching items after the three canonical layers on a
+  directive page without adding a watchlist empty state or provenance marker.
+- Preserve a missing source date when the official page is undated; never
+  substitute retrieval as a publisher date.
+
+**Acceptance:** validation rejects duplicate or orphan records, insecure URLs,
+invalid or inconsistent dates, evidence/watchlist primary-URL overlap, status-like
+fields, and any true explicit-order-citation flag; rendered tests verify the
+context-only boundary, scheduled-date label, undated-source treatment, directive
+placement, public downloads, and static hosting route.
+
 ## P1 fast follows
 
 - Shareable filter URLs
@@ -249,8 +275,10 @@ without source timing and method, generated-export drift, or unsupported status
 language. Evidence validation also rejects orphan links, invalid hashes and
 locators, non-HTTPS URLs, and status-like fields. Relationship validation rejects
 self-links, duplicate related IDs, unresolved references, and
-out-of-document-order cross-references. No mutable implementation-status field
-exists in v0.3.
+out-of-document-order cross-references. Watchlist validation rejects orphan
+editorial links, evidence URL overlap, missing boundary checks, invalid review
+dates, and any explicit-order-citation value other than false. No mutable
+implementation-status field exists in v0.3.
 
 ## Success measures
 
@@ -261,6 +289,8 @@ exists in v0.3.
 - 100% of inferred outputs/dependencies are stored in the analytical layer
 - JSON and CSV contain identical directive IDs
 - Public evidence JSON and CSV contain identical evidence IDs and directive links
+- Context-watchlist JSON and CSV contain identical item IDs, boundary checks, and
+  editorial directive links
 - The relationship route and normalized exports contain the same 50 explicit
   source-role links and 27 analytical cross-references
 - All automated checks and production build pass

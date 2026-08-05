@@ -8,9 +8,10 @@ export function SiteFooter() {
         <div className="site-footer__statement">
           <p className="utility-label">Independent analysis · Unofficial</p>
           <p>
-            Not an official State of California publication. Public evidence is
-            selective, and analytical content is not an implementation status
-            or legal conclusion.
+            Not an official State of California publication. Public evidence
+            and the context watchlist are selective; watchlist and analytical
+            content are not implementation evidence, status, or legal
+            conclusions.
           </p>
         </div>
         <div className="site-footer__directory">
@@ -18,6 +19,7 @@ export function SiteFooter() {
             <Link href="/corrections">Corrections and review</Link>
             <Link href="/handoffs">Delivery relationships</Link>
             <Link href="/evidence">Public evidence</Link>
+            <Link href="/watchlist">Context watchlist</Link>
             <Link href="/methodology">Methodology</Link>
             <Link href="/research/tda-ntd">TDA/NTD research</Link>
             <Link href="/data">Open data</Link>
