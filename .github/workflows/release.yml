@@ -104,6 +104,7 @@ jobs:
       - name: Recheck immutable tag object and publish the site archive
         env:
           GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
           TAG: ${{ needs.authorize.outputs.release-tag }}
           TAG_OBJECT_SHA: ${{ needs.authorize.outputs.tag-object-sha }}
         run: |
