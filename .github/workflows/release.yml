@@ -112,4 +112,4 @@ jobs:
           test "${LIVE_TAG_OBJECT}" = "${TAG_OBJECT_SHA}"
           gh release create "${TAG}" release-assets/* \
             --title "transit-delivery-atlas ${TAG}" \
-            --generate-notes --verify-tag
+            --generate-notes
