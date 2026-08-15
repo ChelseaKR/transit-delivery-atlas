@@ -1,0 +1,73 @@
+# Watch the one dependency the release cannot start without.
+#
+# `release.yml` delegates its authorization job to a reusable workflow in another
+# repository. Nothing else in CI resolves that reference: `quality.yml` never
+# looks at it, CodeQL's `actions` pack does not fetch across repositories, and
+# `release.yml` itself only runs on `workflow_dispatch`. So a broken reference is
+# invisible until someone tries to cut a release, and a reference that cannot be
+# resolved is rejected at dispatch with HTTP 422 without creating a run record —
+# there is not even a red check to notice.
+#
+# That already happened. This workflow calls the copy in the public
+# `ChelseaKR/.github` repository because the original host,
+# `ChelseaKR/portfolio-standards`, is private, and a public repository cannot use
+# actions or reusable workflows from a private one (see PR #49).
+#
+# This job re-asserts the whole dependency weekly and on any change to the
+# release path, so it fails on a Monday morning instead of during a release.
+name: release-authorization
+
+on:
+  schedule:
+    - cron: "37 7 * * 1" # weekly, Monday 07:37 UTC
+  pull_request:
+    paths:
+      - ".github/workflows/release.yml"
+      - ".github/workflows/release-authorization.yml"
+      - ".github/allowed_signers"
+      - "scripts/check-release-authorization.mjs"
+      - "tests/release-authorization.test.mjs"
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/release.yml"
+      - ".github/workflows/release-authorization.yml"
+      - ".github/allowed_signers"
+      - "scripts/check-release-authorization.mjs"
+      - "tests/release-authorization.test.mjs"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: release-authorization-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  authorization-dependency:
+    name: release authorization dependency is intact
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+    steps:
+      - name: Check out source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Set up Node.js
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: 22.19.0
+
+      # No `npm ci`. The checker and its tests use only Node built-ins, so a
+      # check on the supply chain does not itself install a dependency tree.
+      - name: The workflow parsers behave as documented
+        run: node --test tests/release-authorization.test.mjs
+
+      - name: The release authorization reference still resolves
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: node scripts/check-release-authorization.mjs

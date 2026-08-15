@@ -12,6 +12,15 @@ recorded here.
 
 ### Added
 
+- Weekly `release-authorization` check over the release workflow's
+  cross-repository authorization dependency: it asserts the reference is pinned
+  to a commit SHA, that the host repository is usable from a public caller, that
+  the pinned commit and workflow file still resolve, that the `workflow_call`
+  contract still declares the outputs `release.yml` consumes, and that the
+  caller-side allowed-signers file the reusable workflow requires is present. An
+  unresolvable reference is rejected at dispatch with HTTP 422 and never creates
+  a run record, so until now the only way to discover a broken authorization
+  reference was to try to cut a release
 - Generated `sitemap.xml` (all static pages plus every directive record) and
   `robots.txt` (allows crawling, points to the sitemap) so search engines can
   discover and index the full public site; both are covered by rendered-output
