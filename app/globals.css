@@ -2960,7 +2960,7 @@ a {
   gap: 0.28rem;
 }
 
-.directive-row__provenance span {
+.directive-row__provenance span:not(.visually-hidden) {
   display: inline-grid;
   min-width: 1.7rem;
   min-height: 1.55rem;
