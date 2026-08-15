@@ -143,11 +143,19 @@ project's intended context.
 - [California Government Code §7405](https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=GOV&sectionNum=7405)
 - [Accessibility approach and current test scope](docs/ACCESSIBILITY.md)
 
-Static checks, rendered-HTML assertions, representative automated scans, and
-programmatic spot checks are complete on the current development build. Full
+The last manual accessibility review was on **2026-07-13, at commit `ef1d11b`**,
+and covered the routes that existed then. Lint, canonical-data validation and
+rendered-HTML assertions still run on every build; the representative-route
+scans and spot checks from that review were a one-off and are not reproducible.
+
+`/research/tda-ntd`, `/corrections` and `/watchlist`, the watchlist disclosure
+pattern, the print control, the URL-syncing filters, and the 2026-07-22 register
+redesign shipped after that review and are **not** covered by it. That is a
+statement about evaluation coverage, not a finding about those surfaces. Full
 cross-browser keyboard, screen-reader, zoom, forced-colors, and disabled-user
 evaluation remains pending. These checks are quality controls, not an
-accessibility certification or a conformance claim.
+accessibility certification or a conformance claim. See
+[docs/ACCESSIBILITY.md](docs/ACCESSIBILITY.md) for the dated scope.
 
 ## Standards Conformance
 
@@ -161,7 +169,7 @@ engineering standards. Applicability and current state:
 | Security & Supply-Chain | Applies | CodeQL SAST, TruffleHog full-history secret scan, Dependabot, npm production audit, SHA-pinned actions, SECURITY.md |
 | CI/CD | Applies | Quality gate on every push/PR; OIDC-based deploy with post-deploy smoke checks (`.github/workflows/`) |
 | Observability | Applies | Static site: build SHA published at `/version.json`; deploy workflow smoke-verifies the exact released SHA and security headers |
-| Accessibility | Applies | WCAG 2.2 AA target with Section 508 framing; rendered-HTML test assertions (see "Accessibility" above and docs/ACCESSIBILITY.md) |
+| Accessibility | Applies | WCAG 2.2 AA target with Section 508 framing; rendered-HTML test assertions on every build; last manual review dated 2026-07-13 at `ef1d11b`, with the routes and patterns shipped since listed as uncovered (docs/ACCESSIBILITY.md) |
 | Internationalization | Applies | English-only today; owner, first localization boundary, source-language rule, fallback, and review deadline are declared in [`docs/I18N.md`](docs/I18N.md) |
 | AI Evaluation | N/A — source-linked deterministic site; no LLM/model component | N/A — no generative or model-driven component anywhere in the build or site |
 | Documentation | Applies | README, methodology/evidence/relationship models, ADR log (docs/adr/), CHANGELOG, CONTRIBUTING |
