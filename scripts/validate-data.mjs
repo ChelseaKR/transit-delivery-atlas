@@ -1,8 +1,26 @@
 import { readFile } from "node:fs/promises";
 import { z } from "zod";
 import { ISO_DATE_PATTERN, isIsoDate } from "./iso-date.mjs";
+import {
+  REVIEW_GRACE_DAYS,
+  overdueReviewReport,
+  overdueReviews,
+} from "../lib/watchlist-review.mjs";
 
 const root = new URL("../", import.meta.url);
+
+// The date the gate judges review currency against. `ATLAS_BUILD_DATE` keeps
+// the check reproducible in tests and lets a release be re-run at a fixed date.
+const buildDate = (() => {
+  const override = process.env.ATLAS_BUILD_DATE?.trim();
+  if (!override) return new Date().toISOString().slice(0, 10);
+  if (!isIsoDate(override)) {
+    throw new Error(
+      `ATLAS_BUILD_DATE must be a real ISO calendar date (received ${JSON.stringify(override)}).`,
+    );
+  }
+  return override;
+})();
 
 async function readJson(path) {
   return JSON.parse(await readFile(new URL(path, root), "utf8"));
@@ -861,6 +879,23 @@ if (watchlistData.lastUpdatedOn !== watchlistLastUpdatedOn) {
   );
 }
 
+// A planned review date that only has to be later than the last review can
+// never expire. Compare it to the build date as well, so a lapsed review is
+// noticed by something other than a reader.
+const overdue = overdueReviews(watchlistData.items, buildDate);
+if (overdue.length > 0) {
+  const report = overdueReviewReport(overdue, buildDate);
+  const beyondGrace = overdue.filter(({ beyondGrace }) => beyondGrace);
+  if (beyondGrace.length > 0) {
+    throw new Error(
+      `${report}\n${beyondGrace.length} of them (${beyondGrace.map(({ id }) => id).join(", ")}) ${beyondGrace.length === 1 ? "is" : "are"} more than the ${REVIEW_GRACE_DAYS}-day grace window overdue, so this release is blocked until the watchlist is re-reviewed.`,
+    );
+  }
+  console.warn(
+    `\nWATCHLIST REVIEW OVERDUE\n${report}\nThe release gate fails once an item is more than ${REVIEW_GRACE_DAYS} days overdue.\n`,
+  );
+}
+
 function rejectStatus(value, path = "root") {
   if (!value || typeof value !== "object") return;
   const forbiddenKeys = new Set([
@@ -888,4 +923,7 @@ rejectStatus(feasibilityData);
 
 console.log(
   `Validated 21 directive records, 21 analysis records, ${evidenceData.evidence.length} evidence record(s), ${watchlistData.items.length} context watchlist item(s), the four-field reporting slice, and all references.`,
+);
+console.log(
+  `Watchlist review currency at ${buildDate}: ${overdue.length} of ${watchlistData.items.length} item(s) past their planned review date.`,
 );

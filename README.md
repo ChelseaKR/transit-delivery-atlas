@@ -83,7 +83,10 @@ and CSV under `public/data/`.
   exact directive citations, locators, hashes, review dates, and limitations
 - `watchlist.json` contains a separate selective collection of official context
   sources and publication checkpoints, editorial relevance links,
-  evidence-boundary notes, and planned review dates
+  evidence-boundary notes, and planned review dates. A planned review date that
+  has passed is published as overdue against the build date and fails the
+  release gate after a 14-day grace window (see
+  [watchlist model](docs/WATCHLIST-MODEL.md))
 - `tda-ntd-feasibility.json` contains the cited four-field reporting research,
   feasibility classes, controls, and remaining evidence needs
 

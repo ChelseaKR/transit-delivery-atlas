@@ -1,9 +1,11 @@
 import Link from "next/link";
+import { BUILD_DATE } from "@/lib/build-date";
 import {
   directiveById,
   type WatchlistItem,
 } from "@/lib/data";
 import { formatDate } from "@/lib/format";
+import { reviewCurrency, sourceDateCurrency } from "@/lib/watchlist-review.mjs";
 
 function kindLabel(kind: WatchlistItem["kind"]) {
   return kind === "publication-checkpoint"
@@ -41,6 +43,10 @@ export function WatchlistCard({
 }) {
   const Heading = headingLevel;
   const sourceDate = "sourceDate" in item ? item.sourceDate : undefined;
+  // Currency is stated against the build date, never a render-time clock: this
+  // page is static HTML that can sit unchanged at the edge for months.
+  const review = reviewCurrency(item, BUILD_DATE);
+  const sourceDateState = sourceDateCurrency(item, BUILD_DATE)?.state;
 
   return (
     <article
@@ -71,7 +77,9 @@ export function WatchlistCard({
                 </time>
                 <span>
                   {sourceDate.kind === "scheduled-event"
-                    ? "Scheduled event date"
+                    ? sourceDateState === "passed-unreviewed"
+                      ? "Scheduled event date. The date has passed and the outcome has not been reviewed."
+                      : "Scheduled event date"
                     : `${sourceDate.kind.replaceAll("-", " ")} date`}
                 </span>
               </>
@@ -84,19 +92,28 @@ export function WatchlistCard({
           </dd>
         </div>
         <div>
-          <dt>Atlas review</dt>
+          <dt>Last Atlas review</dt>
           <dd>
             <time dateTime={item.lastReviewedOn}>
               {formatDate(item.lastReviewedOn)}
             </time>
+            <span>
+              Latest manual check of this source. Everything below states what
+              was true on that date.
+            </span>
           </dd>
         </div>
-        <div>
-          <dt>Next planned review</dt>
+        <div className={review.overdue ? "watchlist-meta--overdue" : undefined}>
+          <dt>{review.overdue ? "Review overdue" : "Next planned review"}</dt>
           <dd>
             <time dateTime={item.nextReviewOn}>
               {formatDate(item.nextReviewOn)}
             </time>
+            <span>
+              {review.overdue
+                ? `Review due since ${formatDate(item.nextReviewOn)}, ${review.daysOverdue} day${review.daysOverdue === 1 ? "" : "s"} overdue at this build (${formatDate(review.buildDate)}).`
+                : "Planned research checkpoint, not a deadline or a prediction that new material will exist."}
+            </span>
           </dd>
         </div>
       </dl>
@@ -143,6 +160,12 @@ export function WatchlistCard({
 
       <div className="watchlist-card__section">
         <h4>What the next review will look for</h4>
+        {review.overdue ? (
+          <p className="watchlist-card__overdue-note">
+            That review has not happened yet. These statements are what the next
+            review will check, not findings.
+          </p>
+        ) : null}
         <ul>
           {item.watchFor.map((statement) => (
             <li key={statement}>{statement}</li>

@@ -3,9 +3,11 @@ import Link from "next/link";
 import { WatchlistCard } from "@/components/WatchlistCard";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
+import { BUILD_DATE } from "@/lib/build-date";
 import { watchlistItems, watchlistScope } from "@/lib/data";
 import { CONTENT_CORRECTION_URL } from "@/lib/feedback";
 import { formatDate } from "@/lib/format";
+import { overdueReviews } from "@/lib/watchlist-review.mjs";
 
 export const metadata: Metadata = {
   title: "Context watchlist",
@@ -15,6 +17,10 @@ export const metadata: Metadata = {
 };
 
 export default function WatchlistPage() {
+  // Stated against the build date rather than a render-time clock: these bytes
+  // are static and can sit at the edge long after they were written.
+  const overdue = overdueReviews(watchlistItems, BUILD_DATE);
+
   return (
     <>
       <SiteHeader />
@@ -57,7 +63,33 @@ export default function WatchlistPage() {
                 <time dateTime={watchlistScope.lastUpdatedOn}>
                   {formatDate(watchlistScope.lastUpdatedOn)}
                 </time>
+                . Every item below carries the date it was last checked and the
+                date its next review was planned for. Nothing here is asserted
+                to be current between those reviews.
               </p>
+              {overdue.length > 0 ? (
+                <p className="watchlist-overdue-summary">
+                  <strong>
+                    {overdue.length} of {watchlistItems.length} items are past
+                    their planned review date
+                  </strong>{" "}
+                  as of this build ({formatDate(BUILD_DATE)}):{" "}
+                  {overdue
+                    .map(
+                      ({ id, daysOverdue }) =>
+                        `${id} (${daysOverdue} day${daysOverdue === 1 ? "" : "s"} overdue)`,
+                    )
+                    .join(", ")}
+                  . Those cards are labelled <em>Review overdue</em>. Read them
+                  as a record of their last review date, not as a statement
+                  about today.
+                </p>
+              ) : (
+                <p>
+                  Every item was inside its planned review interval when this
+                  build was made ({formatDate(BUILD_DATE)}).
+                </p>
+              )}
               <p>
                 The reviewed evidence register remains separate.{" "}
                 <Link href="/evidence">See qualifying public evidence</Link>.
