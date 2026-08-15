@@ -54,10 +54,28 @@ No long-lived AWS access keys belong in GitHub.
 ## Deploy
 
 A push to `main` runs `.github/workflows/deploy.yml`. The workflow rebuilds and
-tests the exact commit, uploads immutable `/_next/static/` assets first,
-uploads mutable HTML/data/media with revalidation caching, invalidates
-CloudFront, waits for completion, and smoke-tests the exact distribution even
-before public DNS points to it.
+tests the exact commit, verifies the built artifact against the canonical data
+in `data/` **before uploading anything**
+(`node scripts/verify-release-artifact.mjs --artifact out --expect-sha …`),
+uploads immutable `/_next/static/` assets first, uploads mutable
+HTML/data/media with revalidation caching, invalidates CloudFront, waits for
+completion, and smoke-tests the exact distribution even before public DNS
+points to it.
+
+The split is deliberate. Anything that must be able to stop a publish - record
+counts derived from `data/`, route coverage, the release SHA, the disclaimer
+strings - runs in the pre-upload verification. The post-deploy smoke proves the
+edge is serving the bytes this run built (byte comparison against the artifact),
+plus reachability, the 404 body and the security headers. **The smoke cannot
+roll anything back**: a failure there means the release is live and suspect, and
+the way back is to re-run the workflow at the last good commit.
+
+Run the same verification locally against a build:
+
+```bash
+npm run build
+node scripts/verify-release-artifact.mjs
+```
 
 For an initial manual release, use the same two uploads and then invalidate:
 
