@@ -3660,6 +3660,16 @@ a {
   color: var(--timetable-blue);
 }
 
+/* The support link wraps an image rather than text. `.site-footer a` sets an
+   underline colour and thickness for the text links beside it, which would
+   otherwise draw a rule under the button artwork; inline-flex also drops the
+   inline-baseline gap beneath the image. */
+.site-footer__kofi {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+}
+
 @media (max-width: 980px) {
   .site-header__inner {
     align-items: flex-start;
