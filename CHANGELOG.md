@@ -5,6 +5,14 @@ recorded here.
 
 ## [Unreleased]
 
+## [0.5.0] - 2026-08-16
+
+Most of this section was already sitting under `[Unreleased]` when `v0.4.0` was
+tagged: that tag moved only its own three July 13 entries into a version
+section and left the rest behind. So this section is the accumulated backlog
+plus the thirteen commits since `v0.4.0`, not thirteen commits' worth of work.
+The `v0.4.0` site build already contained the earlier items.
+
 - Release publication now begins from reviewed `main` through the immutable
   portfolio authorizer, builds the exact verified site commit without a
   dependency cache, and hands the archive to a checkout-free publisher that
