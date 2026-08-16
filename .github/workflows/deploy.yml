@@ -57,11 +57,29 @@ jobs:
       contents: read
       id-token: write
     steps:
+      - name: Check out source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Set up Node.js
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: 22.19.0
+
       - name: Download static release artifact
         uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
         with:
           name: site
           path: out
+
+      # Runs before anything is uploaded, so a truncated, stale or partially
+      # exported artifact cannot reach production. Every count is derived from
+      # the canonical records in data/, so a legitimate editorial change - a
+      # sixth watchlist item, a new source-role link - passes instead of failing
+      # a correct publish.
+      - name: Verify the built artifact against the canonical data
+        run: node scripts/verify-release-artifact.mjs --artifact out --expect-sha "${{ github.sha }}"
 
       - name: Configure AWS credentials with GitHub OIDC
         uses: aws-actions/configure-aws-credentials@7474bc4690e29a8392af63c5b98e7449536d5c3a # v4
@@ -92,7 +110,13 @@ jobs:
             --distribution-id "${{ vars.CLOUDFRONT_DISTRIBUTION_ID }}" \
             --id "$invalidation_id"
 
+      # This runs after the release is live. It can only report, never revert:
+      # a failure here means the new content is already being served and is
+      # suspect. Roll back by re-running this workflow at the last good commit.
+      # Anything that must be able to stop a publish belongs in the artifact
+      # verification step above, not here.
       - name: Smoke the exact CloudFront release
+        id: smoke
         env:
           EXPECTED_SHA: ${{ github.sha }}
           CLOUDFRONT_DOMAIN: ${{ vars.CLOUDFRONT_DOMAIN_NAME }}
@@ -136,34 +160,24 @@ jobs:
           grep -Fq 'Challenge the record, with a source.' /tmp/corrections.html
           grep -Fq '01-content-correction.yml' /tmp/corrections.html
           grep -Fq '02-review-feedback.yml' /tmp/corrections.html
-          curl_edge "https://${site_domain}/data/tda-ntd-feasibility.json" \
-            | jq -e '.researchId == "tda-ntd-four-field-feasibility" and (.fields | length) == 4' >/dev/null
 
           curl_edge "https://${site_domain}/directives/n-7-26-5/" > /tmp/directive.html
           grep -Fq 'Transit Executive Order N-7-26 Resource Material' /tmp/directive.html
 
-          curl_edge "https://${site_domain}/data/directives.json" \
-            | jq -e '.schemaVersion == "0.2.0" and any(.evidence[]; .id == "ctc-2026-07-15-order-5-reference-material")' >/dev/null
-          curl_edge "https://${site_domain}/data/directives.csv" \
-            | grep -Fq 'n-7-26-5'
-          curl_edge "https://${site_domain}/data/evidence.csv" \
-            | grep -Fq 'ctc-2026-07-15-order-5-reference-material'
-          curl_edge "https://${site_domain}/data/watchlist.json" \
-            | jq -e '.schemaVersion == "0.1.0" and (.items | length) == 5 and all(.items[]; .evidenceBoundary.explicitOrderCitation == false)' >/dev/null
-          curl_edge "https://${site_domain}/data/watchlist.csv" \
-            | grep -Fq 'ctc-2026-08-03-sccp-north-hearing'
-          curl_edge "https://${site_domain}/data/directive-organizations.csv" \
-            > /tmp/directive-organizations.csv
-          test "$(wc -l < /tmp/directive-organizations.csv | tr -d ' ')" = "51"
-          head -n 1 /tmp/directive-organizations.csv | grep -Fq '"source_role"'
-          grep -Fq '"explicit-collaborator"' /tmp/directive-organizations.csv
-          curl_edge "https://${site_domain}/data/directive-relationships.csv" \
-            > /tmp/directive-relationships.csv
-          test "$(wc -l < /tmp/directive-relationships.csv | tr -d ' ')" = "28"
-          head -n 1 /tmp/directive-relationships.csv | grep -Fq '"reciprocal_reference"'
-          grep -Fq '"inferred"' /tmp/directive-relationships.csv
-          curl_edge "https://${site_domain}/og.png" > /tmp/og.png
-          test "$(wc -c < /tmp/og.png)" -gt 10000
+          # Every published file must be byte-identical to the artifact this run
+          # built and verified. That is the property this step is actually for -
+          # did the bytes I built land at the edge - and unlike the record counts
+          # that used to be asserted here, it survives every legitimate data
+          # change. The file list is read from the artifact, so a new export is
+          # covered without editing this workflow.
+          for built in $(find out/data -type f | sort) out/og.png out/sitemap.xml out/robots.txt; do
+            route="${built#out/}"
+            curl_edge "https://${site_domain}/${route}" > /tmp/edge-artifact
+            if ! cmp -s /tmp/edge-artifact "$built"; then
+              echo "::error::${route} at the edge does not match the artifact this run built"
+              exit 1
+            fi
+          done
 
           status=$(curl --silent --output /tmp/not-found.html --write-out '%{http_code}' \
             --connect-to "$edge" "https://${site_domain}/deploy-smoke-not-found/")
@@ -178,6 +192,22 @@ jobs:
           grep -Eiq '^x-frame-options: *deny' /tmp/headers.txt
           grep -Eiq '^referrer-policy: *strict-origin-when-cross-origin' /tmp/headers.txt
           grep -Eiq '^permissions-policy:.*camera=\(\)' /tmp/headers.txt
+
+      - name: Explain a failed post-deploy smoke
+        if: failure() && steps.smoke.outcome == 'failure'
+        run: |
+          {
+            echo "### The smoke check failed after publish"
+            echo ""
+            echo "The release is **live and suspect**. Nothing rolled back, and nothing in this"
+            echo "workflow reverts automatically."
+            echo ""
+            echo "Record counts and artifact integrity are verified before the upload, so a failure"
+            echo "here means the edge is not serving the bytes this run built: check the CloudFront"
+            echo "invalidation and the S3 sync before assuming the data is wrong."
+            echo ""
+            echo "To roll back, re-run this workflow at the last good commit."
+          } >> "$GITHUB_STEP_SUMMARY"
 
       - name: Deployment summary
         run: |
