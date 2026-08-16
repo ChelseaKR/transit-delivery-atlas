@@ -83,7 +83,10 @@ and CSV under `public/data/`.
   exact directive citations, locators, hashes, review dates, and limitations
 - `watchlist.json` contains a separate selective collection of official context
   sources and publication checkpoints, editorial relevance links,
-  evidence-boundary notes, and planned review dates
+  evidence-boundary notes, and planned review dates. A planned review date that
+  has passed is published as overdue against the build date and fails the
+  release gate after a 14-day grace window (see
+  [watchlist model](docs/WATCHLIST-MODEL.md))
 - `tda-ntd-feasibility.json` contains the cited four-field reporting research,
   feasibility classes, controls, and remaining evidence needs
 
@@ -143,30 +146,50 @@ project's intended context.
 - [California Government Code §7405](https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=GOV&sectionNum=7405)
 - [Accessibility approach and current test scope](docs/ACCESSIBILITY.md)
 
-Static checks, rendered-HTML assertions, representative automated scans, and
-programmatic spot checks are complete on the current development build. Full
+The last manual accessibility review was on **2026-07-13, at commit `ef1d11b`**,
+and covered the routes that existed then. Lint, canonical-data validation and
+rendered-HTML assertions still run on every build; the representative-route
+scans and spot checks from that review were a one-off and are not reproducible.
+
+`/research/tda-ntd`, `/corrections` and `/watchlist`, the watchlist disclosure
+pattern, the print control, the URL-syncing filters, and the 2026-07-22 register
+redesign shipped after that review and are **not** covered by it. That is a
+statement about evaluation coverage, not a finding about those surfaces. Full
 cross-browser keyboard, screen-reader, zoom, forced-colors, and disabled-user
 evaluation remains pending. These checks are quality controls, not an
-accessibility certification or a conformance claim.
+accessibility certification or a conformance claim. See
+[docs/ACCESSIBILITY.md](docs/ACCESSIBILITY.md) for the dated scope.
 
 ## Standards Conformance
 
 Transit Delivery Atlas is developed against a shared set of portfolio
-engineering standards. Applicability and current state:
+engineering standards. That set has fifteen standards, and all fifteen are
+listed below: silent omission of a standard is itself a defect, so a standard
+that does not apply carries a reason and a standard that applies but is not met
+says so.
+
+This repository does not vendor a copy of the standards and carries no pinned
+standards version, so the table is a declaration of applicability and current
+state rather than a result produced by a checker running against a pinned
+release. Reviewed 2026-08-15.
 
 | Standard | Applies? | State |
 |---|---|---|
 | Responsible-Tech Framework | Applies | Independent-analysis posture, correction workflow, and explicit non-affiliation labeling (see "What this is not") |
 | Code Quality | Applies | ESLint + strict TypeScript typecheck, fail-closed data validation; gated in CI (`npm run check`) |
 | Security & Supply-Chain | Applies | CodeQL SAST, TruffleHog full-history secret scan, Dependabot, npm production audit, SHA-pinned actions, SECURITY.md |
-| CI/CD | Applies | Quality gate on every push/PR; OIDC-based deploy with post-deploy smoke checks (`.github/workflows/`) |
+| CI/CD | Applies | Quality gate on every push/PR; OIDC-based deploy that verifies the built artifact against the canonical data before uploading, then smoke-checks the live edge against those same bytes (`.github/workflows/`) |
 | Observability | Applies | Static site: build SHA published at `/version.json`; deploy workflow smoke-verifies the exact released SHA and security headers |
-| Accessibility | Applies | WCAG 2.2 AA target with Section 508 framing; rendered-HTML test assertions (see "Accessibility" above and docs/ACCESSIBILITY.md) |
+| Performance | Applies | Not met. The release gate (`npm run check`) runs lint, typecheck, tests, and a production audit, and measures nothing about performance: there is no Lighthouse-CI run, no bundle budget, and no committed performance baseline to regress against |
+| Accessibility | Applies | WCAG 2.2 AA target with Section 508 framing; rendered-HTML test assertions on every build; last manual review dated 2026-07-13 at `ef1d11b`, with the routes and patterns shipped since listed as uncovered (docs/ACCESSIBILITY.md) |
 | Internationalization | Applies | English-only today; owner, first localization boundary, source-language rule, fallback, and review deadline are declared in [`docs/I18N.md`](docs/I18N.md) |
 | AI Evaluation | N/A — source-linked deterministic site; no LLM/model component | N/A — no generative or model-driven component anywhere in the build or site |
-| Documentation | Applies | README, methodology/evidence/relationship models, ADR log (docs/adr/), CHANGELOG, CONTRIBUTING |
+| AI Development Measurement | Applies | Not met. This repository is built with AI assistance and publishes no measurement of it: no committed metrics ledger, no delivery-outcome record, and no quality-debt counterweight |
+| Documentation | Applies | README, methodology/evidence/relationship models, ADR log (docs/adr/), CHANGELOG, CONTRIBUTING. Not met: the shared standards are neither vendored in-tree nor pinned to a released version, so the two documentation controls that require a pinned copy cannot be evaluated against this repository at all |
 | Quality & Metrics | Applies | Data-integrity, filter, rendered-HTML, and hosting test suites run in the release gate |
 | Release & Versioning | Applies | CHANGELOG (Keep-a-Changelog), semver in package.json, tag-triggered release workflow re-runs the full gate at the tagged commit |
+| Incident Response | Applies | Not met. `SECURITY.md` covers private vulnerability reporting only. There is no severity ladder, no incident label convention, no committed postmortem artifact, and no secret-leak runbook |
+| Data Governance | Applies | Partially met. Every record in `data/sources.json` carries a publisher, canonical URL, retrieval date, and SHA-256; reuse terms are stated in [`CONTENT-LICENSE.md`](CONTENT-LICENSE.md); the published exports are validated against the published `data/public-schema.json` in the release gate. Not met: no committed data card, data classification, or retention statement |
 
 ## Licensing
 

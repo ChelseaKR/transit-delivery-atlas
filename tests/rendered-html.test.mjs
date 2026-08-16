@@ -1,6 +1,11 @@
 import assert from "node:assert/strict";
-import { readFile } from "node:fs/promises";
+import { readdir, readFile } from "node:fs/promises";
 import test from "node:test";
+import { provenanceSentence, timingDetail } from "../lib/register-labels.ts";
+
+async function readJson(path) {
+  return JSON.parse(await readFile(new URL(`../${path}`, import.meta.url), "utf8"));
+}
 
 async function render(path = "/") {
   const relativePath = path === "/" ? "index.html" : `${path.replace(/^\//, "")}/index.html`;
@@ -52,6 +57,72 @@ test("statically renders the complete atlas home page", async () => {
   assert.match(html, /href="\/watchlist\/?"[^>]*>Watchlist/);
   assert.match(html, /No explicit completion deadline in the signed order/);
   assert.doesNotMatch(html, /codex-preview|Your site is taking shape|react-loading-skeleton/i);
+});
+
+test("no register row publishes a bare evidence count or an unlabelled layer", async () => {
+  const html = (await (await render()).text()).replaceAll("<!-- -->", "");
+  const [directiveData, evidenceData] = await Promise.all([
+    readJson("data/directives.json"),
+    readJson("data/evidence.json"),
+  ]);
+
+  const evidenceCounts = new Map(
+    directiveData.directives.map(({ id }) => [id, 0]),
+  );
+  for (const record of evidenceData.evidence) {
+    for (const { directiveId } of record.directiveLinks) {
+      evidenceCounts.set(directiveId, (evidenceCounts.get(directiveId) ?? 0) + 1);
+    }
+  }
+
+  // Absence is published as absence. `E 0` reads as a finding about the
+  // directive; it is a statement about Atlas coverage.
+  assert.doesNotMatch(html, />\s*E 0\s*</, "a bare zero must not render");
+  assert.match(html, /E —/);
+  assert.match(
+    html,
+    /No reviewed evidence linked in this release\. This is a statement about Atlas coverage, not evidence that no implementation activity or public record exists\./,
+  );
+
+  const labelled = [...html.matchAll(/directive-row__provenance/g)].length;
+  assert.equal(
+    labelled,
+    directiveData.directives.length,
+    "every rendered row must carry a provenance block",
+  );
+
+  for (const directive of directiveData.directives) {
+    const sentence = provenanceSentence({
+      label: directive.label,
+      evidenceCount: evidenceCounts.get(directive.id) ?? 0,
+    });
+    assert.ok(
+      html.includes(sentence),
+      `directive ${directive.label} must publish its own provenance sentence`,
+    );
+  }
+});
+
+test("the register labels its calculated dates as calculated", async () => {
+  const html = (await (await render()).text()).replaceAll("<!-- -->", "");
+  const directiveData = await readJson("data/directives.json");
+
+  assert.doesNotMatch(
+    html,
+    /aria-label="Timing in the signed order"/,
+    "a derived date must not sit under a label asserting it is source text",
+  );
+  assert.match(html, /aria-label="Planning dates calculated from the order"/);
+  assert.match(html, /Timing \(calculated\)/);
+
+  for (const directive of directiveData.directives) {
+    for (const timing of directive.timing) {
+      assert.ok(
+        html.includes(timingDetail(timing, `Directive ${directive.label}`)),
+        `directive ${directive.label} must publish the derivation of ${timing.derivedDate}`,
+      );
+    }
+  }
 });
 
 test("renders source, safe empty evidence, and analysis on an unlinked directive", async () => {
@@ -309,6 +380,33 @@ test("renders methodology, data, and accessibility pages", async () => {
         html,
         /href="https:\/\/github\.com\/ChelseaKR\/transit-delivery-atlas\/issues\/new\?template=01-content-correction\.yml"/,
       );
+      // Code relicensed MIT -> Apache-2.0 (see CHANGELOG); this page must state
+      // the current license, not the superseded one.
+      assert.match(html, /Code is licensed under the Apache License 2\.0/);
+      assert.doesNotMatch(html, /MIT licens/i);
     }
+  }
+});
+
+test("no rendered page anywhere in the site claims the superseded MIT code license", async () => {
+  // The code license moved MIT -> Apache-2.0 (CHANGELOG [Unreleased], LICENSE,
+  // CONTENT-LICENSE.md, README "Licensing"). A single stale mention on the
+  // /data page went undetected by the earlier release checks, so this check
+  // covers every exported HTML file rather than one known route.
+  const outDir = new URL("../out/", import.meta.url);
+  const entries = await readdir(outDir, { recursive: true, withFileTypes: true });
+  const htmlFiles = entries
+    .filter((entry) => entry.isFile() && entry.name.endsWith(".html"))
+    .map((entry) => `${entry.parentPath ?? entry.path}/${entry.name}`);
+
+  assert.ok(htmlFiles.length > 10, "expected the full static export to be built");
+
+  for (const filePath of htmlFiles) {
+    const html = await readFile(filePath, "utf8");
+    assert.doesNotMatch(
+      html,
+      /MIT licens/i,
+      `${filePath.replace(outDir.pathname, "")} still claims the superseded MIT code license`,
+    );
   }
 });

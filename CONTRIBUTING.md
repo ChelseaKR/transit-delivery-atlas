@@ -92,3 +92,8 @@ schema files must match their source records.
   personal acknowledgments.
 - Describe accessibility tests accurately; never call automated checks a
   certification.
+- A pull request that adds a route or an interaction pattern re-runs the manual
+  accessibility review and updates the date, commit and route lists in
+  [docs/ACCESSIBILITY.md](docs/ACCESSIBILITY.md) and on `/accessibility`. Until
+  it is reviewed, list it as not covered; never let a new surface inherit an
+  older evaluation.

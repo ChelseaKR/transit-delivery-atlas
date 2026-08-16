@@ -71,6 +71,30 @@ date.
 checkpoint, not a statutory deadline, implementation due date, or claim that a
 new artifact will appear.
 
+### When a planned review lapses
+
+`nextReviewOn` is compared to the build date, not only to `lastReviewedOn`. A
+date that can only ever be "later than the last review" cannot expire, and the
+site is a static export that can sit unchanged at the edge for months.
+
+- **The page says so.** A card whose planned review date has passed is published
+  as **Review overdue** with the date it is due since, how far overdue it is at
+  that build, and a note that its watch-for statements are what the next review
+  will check rather than findings. The watchlist page counts the lapsed items
+  and dates that count to the build. A `scheduled-event` source date that has
+  passed without a later review is labelled as such instead of rendering as a
+  plain date.
+- **The gate says so.** `scripts/validate-data.mjs` warns from `nextReviewOn`
+  and fails the release once an item is more than
+  `REVIEW_GRACE_DAYS` (14) days overdue. Fail-closed is deliberate: a lapsed
+  watchlist blocks an unrelated deploy until the item is re-reviewed. Set
+  `ATLAS_BUILD_DATE` to judge the data at a fixed date.
+
+The only correct response to the gate is to re-review the official source and
+update `lastReviewedOn`, `evidenceBoundary.checkedOn`, and `nextReviewOn`
+together. Moving `nextReviewOn` on its own republishes the same review under a
+newer date, which is the failure the check exists to prevent.
+
 ## Promotion to evidence
 
 Topical relevance is never promoted by itself. When a later artifact explicitly

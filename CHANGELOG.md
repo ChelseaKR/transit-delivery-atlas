@@ -12,6 +12,15 @@ recorded here.
 
 ### Added
 
+- Weekly `release-authorization` check over the release workflow's
+  cross-repository authorization dependency: it asserts the reference is pinned
+  to a commit SHA, that the host repository is usable from a public caller, that
+  the pinned commit and workflow file still resolve, that the `workflow_call`
+  contract still declares the outputs `release.yml` consumes, and that the
+  caller-side allowed-signers file the reusable workflow requires is present. An
+  unresolvable reference is rejected at dispatch with HTTP 422 and never creates
+  a run record, so until now the only way to discover a broken authorization
+  reference was to try to cut a release
 - Generated `sitemap.xml` (all static pages plus every directive record) and
   `robots.txt` (allows crawling, points to the sitemap) so search engines can
   discover and index the full public site; both are covered by rendered-output
@@ -43,6 +52,13 @@ recorded here.
 
 ### Changed
 
+- Completed the README Standards Conformance table. It declared eleven of the
+  fifteen portfolio standards and silently omitted Performance, AI Development
+  Measurement, Incident Response, and Data Governance; all four apply to this
+  repository. The four missing rows are added with their real current state
+  rather than a placeholder, and the section now states plainly that the
+  standards are neither vendored nor pinned here, so the table is a declaration
+  of applicability rather than a checked result
 - Replaced the promotional operations-board interface with a compact public
   research register: the home page now leads with the directive records,
   filters are horizontal, source/evidence/analysis coverage is visible in each
@@ -71,6 +87,12 @@ recorded here.
   `npm run audit:production` on `main` and blocking the Quality and Deploy
   gates; `npm audit --omit=dev --audit-level=moderate` now reports zero
   vulnerabilities
+- The `/data` page's "Reuse and corrections" section still said "Code is MIT
+  licensed" after the code license moved to Apache-2.0; it now matches
+  `LICENSE`, `CONTENT-LICENSE.md`, and the README. A rendered-HTML check now
+  covers this route directly, and a second check scans every exported page so
+  a stale license mention on any route fails the release gate instead of
+  shipping silently
 
 ## [0.4.0] - 2026-07-13
 

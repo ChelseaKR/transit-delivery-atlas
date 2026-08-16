@@ -2960,7 +2960,7 @@ a {
   gap: 0.28rem;
 }
 
-.directive-row__provenance span {
+.directive-row__provenance span:not(.visually-hidden) {
   display: inline-grid;
   min-width: 1.7rem;
   min-height: 1.55rem;
@@ -3712,6 +3712,25 @@ a {
   margin-top: 0.2rem;
   color: var(--night-soft);
   font-size: 0.88rem;
+}
+
+/* A lapsed review is named in text ("Review overdue", "Review due since …");
+   these rules only add emphasis, so the meaning survives forced colors. */
+.watchlist-meta div.watchlist-meta--overdue {
+  border-left: 0.3rem solid var(--watchlist-ink);
+  background: var(--watchlist-wash);
+}
+
+.watchlist-overdue-summary,
+.watchlist-card__overdue-note {
+  padding: 0.75rem 0.9rem;
+  border: 1px dashed var(--watchlist-ink);
+  background: var(--watchlist-wash);
+}
+
+.watchlist-card__overdue-note {
+  margin-bottom: 0.8rem;
+  font-size: 0.94rem;
 }
 
 .watchlist-card__section {

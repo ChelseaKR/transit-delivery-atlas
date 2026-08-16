@@ -26,11 +26,14 @@ export default function Home() {
     leadOrganizations: directive.leadOrganizations,
     collaboratorOrganizations: directive.collaboratorOrganizations,
     mentionedOrganizations: directive.mentionedOrganizations,
-    timing: directive.timing.map(({ sourceText, derivedDate, appliesTo }) => ({
-      sourceText,
-      derivedDate,
-      appliesTo,
-    })),
+    timing: directive.timing.map(
+      ({ sourceText, derivedDate, derivation, appliesTo }) => ({
+        sourceText,
+        derivedDate,
+        derivation,
+        appliesTo,
+      }),
+    ),
     analysis: {
       summary: directive.analysis.summary,
       themeIds: [...directive.analysis.themeIds],
@@ -93,7 +96,15 @@ export default function Home() {
                 <h2 id="directives-title">Directive register</h2>
                 <p>
                   Filter the order in document sequence. Each record preserves
-                  source, evidence, and analysis as separate layers.
+                  source, evidence, and analysis as separate layers. Dates in
+                  the timing column are planning dates the Atlas calculates from
+                  the order’s own language, not text from the order.
+                </p>
+                <p>
+                  <strong>E —</strong> means no reviewed public artifact is
+                  linked to that directive in this release. That is a statement
+                  about Atlas coverage, not evidence that no implementation
+                  activity or public record exists.
                 </p>
               </div>
               <div className="provenance-key" aria-label="Record layer key">
