@@ -16,6 +16,8 @@
     "lint": "eslint . --ignore-pattern dist --ignore-pattern .next",
     "typecheck": "tsc --noEmit --incremental false",
     "audit:production": "npm audit --omit=dev --audit-level=moderate",
+    "test:release-authorization": "node --test tests/release-authorization.test.mjs",
+    "check:release-authorization": "node scripts/check-release-authorization.mjs",
     "check": "npm run lint && npm run typecheck && npm test && npm run audit:production"
   },
   "dependencies": {
