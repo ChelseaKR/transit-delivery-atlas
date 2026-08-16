@@ -163,7 +163,15 @@ accessibility certification or a conformance claim. See
 ## Standards Conformance
 
 Transit Delivery Atlas is developed against a shared set of portfolio
-engineering standards. Applicability and current state:
+engineering standards. That set has fifteen standards, and all fifteen are
+listed below: silent omission of a standard is itself a defect, so a standard
+that does not apply carries a reason and a standard that applies but is not met
+says so.
+
+This repository does not vendor a copy of the standards and carries no pinned
+standards version, so the table is a declaration of applicability and current
+state rather than a result produced by a checker running against a pinned
+release. Reviewed 2026-08-15.
 
 | Standard | Applies? | State |
 |---|---|---|
@@ -172,12 +180,16 @@ engineering standards. Applicability and current state:
 | Security & Supply-Chain | Applies | CodeQL SAST, TruffleHog full-history secret scan, Dependabot, npm production audit, SHA-pinned actions, SECURITY.md |
 | CI/CD | Applies | Quality gate on every push/PR; OIDC-based deploy that verifies the built artifact against the canonical data before uploading, then smoke-checks the live edge against those same bytes (`.github/workflows/`) |
 | Observability | Applies | Static site: build SHA published at `/version.json`; deploy workflow smoke-verifies the exact released SHA and security headers |
+| Performance | Applies | Not met. The release gate (`npm run check`) runs lint, typecheck, tests, and a production audit, and measures nothing about performance: there is no Lighthouse-CI run, no bundle budget, and no committed performance baseline to regress against |
 | Accessibility | Applies | WCAG 2.2 AA target with Section 508 framing; rendered-HTML test assertions on every build; last manual review dated 2026-07-13 at `ef1d11b`, with the routes and patterns shipped since listed as uncovered (docs/ACCESSIBILITY.md) |
 | Internationalization | Applies | English-only today; owner, first localization boundary, source-language rule, fallback, and review deadline are declared in [`docs/I18N.md`](docs/I18N.md) |
 | AI Evaluation | N/A — source-linked deterministic site; no LLM/model component | N/A — no generative or model-driven component anywhere in the build or site |
-| Documentation | Applies | README, methodology/evidence/relationship models, ADR log (docs/adr/), CHANGELOG, CONTRIBUTING |
+| AI Development Measurement | Applies | Not met. This repository is built with AI assistance and publishes no measurement of it: no committed metrics ledger, no delivery-outcome record, and no quality-debt counterweight |
+| Documentation | Applies | README, methodology/evidence/relationship models, ADR log (docs/adr/), CHANGELOG, CONTRIBUTING. Not met: the shared standards are neither vendored in-tree nor pinned to a released version, so the two documentation controls that require a pinned copy cannot be evaluated against this repository at all |
 | Quality & Metrics | Applies | Data-integrity, filter, rendered-HTML, and hosting test suites run in the release gate |
 | Release & Versioning | Applies | CHANGELOG (Keep-a-Changelog), semver in package.json, tag-triggered release workflow re-runs the full gate at the tagged commit |
+| Incident Response | Applies | Not met. `SECURITY.md` covers private vulnerability reporting only. There is no severity ladder, no incident label convention, no committed postmortem artifact, and no secret-leak runbook |
+| Data Governance | Applies | Partially met. Every record in `data/sources.json` carries a publisher, canonical URL, retrieval date, and SHA-256; reuse terms are stated in [`CONTENT-LICENSE.md`](CONTENT-LICENSE.md); the published exports are validated against the published `data/public-schema.json` in the release gate. Not met: no committed data card, data classification, or retention statement |
 
 ## Licensing
 

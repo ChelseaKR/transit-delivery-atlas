@@ -52,6 +52,13 @@ recorded here.
 
 ### Changed
 
+- Completed the README Standards Conformance table. It declared eleven of the
+  fifteen portfolio standards and silently omitted Performance, AI Development
+  Measurement, Incident Response, and Data Governance; all four apply to this
+  repository. The four missing rows are added with their real current state
+  rather than a placeholder, and the section now states plainly that the
+  standards are neither vendored nor pinned here, so the table is a declaration
+  of applicability rather than a checked result
 - Replaced the promotional operations-board interface with a compact public
   research register: the home page now leads with the directive records,
   filters are horizontal, source/evidence/analysis coverage is visible in each
