@@ -9,6 +9,12 @@ import {
   serializeDirectiveFilters,
 } from "@/lib/directive-filters.mjs";
 import { formatDate } from "@/lib/format";
+import {
+  TIMING_LIST_LABEL,
+  evidenceCell,
+  provenanceSentence,
+  timingDetail,
+} from "@/lib/register-labels";
 
 const FILTER_CHANGE_EVENT = "directive-filters-change";
 
@@ -43,6 +49,7 @@ export interface ExplorerDirective {
   timing: Array<{
     sourceText: string;
     derivedDate: string;
+    derivation: string;
     appliesTo: string;
   }>;
   analysis: {
@@ -228,11 +235,16 @@ export function DirectiveExplorer({
               <span>Section</span>
               <span>Directive</span>
               <span>Named lead</span>
-              <span>Timing</span>
+              <span>Timing (calculated)</span>
               <span>Layers</span>
             </div>
             <ol className="directive-list directive-register">
-            {filtered.map((directive) => (
+            {filtered.map((directive) => {
+              const evidence = evidenceCell(
+                directive.evidenceCount,
+                `Directive ${directive.label}`,
+              );
+              return (
               <li key={directive.id}>
                 <article className="directive-row">
                   <div className="directive-row__section">
@@ -257,12 +269,21 @@ export function DirectiveExplorer({
                   <div className="directive-row__timing">
                     <span className="directive-row__label">Timing</span>
                     {directive.timing.length > 0 ? (
-                      <ul aria-label="Timing in the signed order">
-                        {directive.timing.map((item) => (
-                          <li key={`${item.sourceText}-${item.appliesTo}`}>
-                            <time dateTime={item.derivedDate}>{formatDate(item.derivedDate)}</time>
-                          </li>
-                        ))}
+                      <ul aria-label={TIMING_LIST_LABEL}>
+                        {directive.timing.map((item) => {
+                          const detail = timingDetail(
+                            item,
+                            `Directive ${directive.label}`,
+                          );
+                          return (
+                            <li key={`${item.sourceText}-${item.appliesTo}`}>
+                              <time dateTime={item.derivedDate} title={detail}>
+                                {formatDate(item.derivedDate)}
+                              </time>
+                              <span className="visually-hidden">{detail}</span>
+                            </li>
+                          );
+                        })}
                       </ul>
                     ) : (
                       <span title="No explicit completion deadline in the signed order">
@@ -270,19 +291,28 @@ export function DirectiveExplorer({
                       </span>
                     )}
                   </div>
-                  <div
-                    className="directive-row__provenance"
-                    aria-label={`Source reviewed; ${directive.evidenceCount} evidence records; analysis available`}
-                  >
-                    <span>S</span>
-                    <span className={directive.evidenceCount > 0 ? "has-evidence" : ""}>
-                      E {directive.evidenceCount}
+                  <div className="directive-row__provenance">
+                    <span className="visually-hidden">
+                      {provenanceSentence(directive)}
                     </span>
-                    <span>A</span>
+                    <span aria-hidden="true" title="Source language reviewed against the signed order">
+                      S
+                    </span>
+                    <span
+                      aria-hidden="true"
+                      className={evidence.hasEvidence ? "has-evidence" : ""}
+                      title={evidence.detail}
+                    >
+                      {evidence.text}
+                    </span>
+                    <span aria-hidden="true" title="Independent analysis available">
+                      A
+                    </span>
                   </div>
                 </article>
               </li>
-            ))}
+              );
+            })}
             </ol>
           </>
         ) : (

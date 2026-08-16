@@ -95,13 +95,19 @@ evidence.
 │ Transit Delivery Atlas             21 directives · 2 records │
 │ Source: signed Executive Order N-7-26                         │
 ├───────────────────────────────────────────────────────────────┤
-│ Search        Theme        Named lead        Timing           │
+│ Search        Theme        Named lead    Timing (calculated)   │
 ├──────┬──────────────────┬──────────┬────────────┬──────────────┤
-│ 1(a) │ Priority list    │ CalSTA   │ Oct 2026   │ S  E 0  A    │
-│ 1(b) │ Mobility Manager │ CalSTA   │ Oct 2026   │ S  E 0  A    │
+│ 1(a) │ Priority list    │ CalSTA   │ Oct 2026   │ S  E —  A    │
+│ 1(b) │ Mobility Manager │ CalSTA   │ Oct 2026   │ S  E —  A    │
 │ 5    │ Funding programs │ CTC      │ None stated│ S  E 2  A    │
 └──────┴──────────────────┴──────────┴────────────┴──────────────┘
 ```
+
+`E —` is an empty state, not a count: no reviewed public artifact is linked to
+that directive in this release. It never reads as a finding about the directive,
+and each row carries the same source/evidence/analysis sentence in text. Dates in
+the timing column are planning dates calculated by the Atlas; the column, the
+list label and each cell say so.
 
 ## Voice
 
