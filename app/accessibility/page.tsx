@@ -46,14 +46,62 @@ export default function AccessibilityPage() {
             </section>
 
             <section>
-              <h2>Current evaluation status</h2>
-              <h3>Completed on the current development build</h3>
+              <h2>Last manual review</h2>
+              <p>
+                <strong>
+                  Reviewed <time dateTime="2026-07-13">Jul 13, 2026</time>, at
+                  commit <code>ef1d11b</code>.
+                </strong>{" "}
+                That is the date this status was written. The Atlas dates every
+                source, retrieval, evidence record and watchlist review; this is
+                that date for its own evaluation.
+              </p>
+              <h3>What that review covered</h3>
               <ul className="test-layers">
                 <li><strong>Static:</strong> lint, canonical-data validation, and rendered HTML assertions.</li>
                 <li><strong>Structure:</strong> checks for page language, titles, skip navigation, main regions, layer labels, and the result-count live region.</li>
                 <li><strong>Relationship view:</strong> source and analysis remain consecutive semantic sections; native filters, written role labels, and complete text links duplicate decorative rails and nodes.</li>
                 <li><strong>Automated review:</strong> representative-route scans plus programmatic reflow, focus-order, and reduced-motion spot checks.</li>
               </ul>
+              <p>
+                Those scans were a one-off. The tooling, exact route list and
+                results were not recorded, and no accessibility tool runs in the
+                release gate, so they cannot be reproduced today. The
+                rendered-HTML assertions do run on every build; they are not the
+                same checks.
+              </p>
+              <h3>Routes covered by that review</h3>
+              <p>The routes that existed at that commit, plus the 404 page.</p>
+              <ul className="test-layers">
+                <li><code>/</code></li>
+                <li><code>/directives/[id]</code></li>
+                <li><code>/evidence</code></li>
+                <li><code>/handoffs</code></li>
+                <li><code>/methodology</code></li>
+                <li><code>/data</code></li>
+                <li><code>/accessibility</code></li>
+              </ul>
+              <h3>Not covered by that review</h3>
+              <ul className="test-layers">
+                <li><code>/research/tda-ntd</code> — added Jul 13, 2026</li>
+                <li><code>/corrections</code> — added Jul 14, 2026</li>
+                <li><code>/watchlist</code> — added Jul 29, 2026</li>
+                <li>
+                  <strong>The presentation of every route above:</strong> the
+                  register was redesigned on Jul 22, 2026, after the review.
+                </li>
+                <li>
+                  <strong>Patterns added since:</strong> the print control on
+                  directive records, filters that rewrite the URL, and the
+                  watchlist disclosure widget on <code>/watchlist</code> and on
+                  every directive page.
+                </li>
+              </ul>
+              <p>
+                None of that is a finding that those surfaces are inaccessible.
+                It states that they have not been evaluated, which is the only
+                claim the record supports.
+              </p>
               <h3>Pending before any conformance claim</h3>
               <ul className="test-layers">
                 <li><strong>Keyboard:</strong> complete user-flow review in current Chrome, Firefox, and Safari.</li>
