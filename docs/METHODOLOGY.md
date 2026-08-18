@@ -104,6 +104,28 @@ as an anniversary calculation and preserves the original phrase.
 Sections 2 through 6 do not receive inferred deadlines. “Real time” describes
 dashboard behavior, not delivery timing.
 
+### Currency of a calculated date
+
+A calculated planning date is a claim about a moment, and the site is static
+HTML that can sit unchanged at the edge for months. Every place a calculated
+date is shown therefore states that date's position relative to **the build
+date** — the same reference the context watchlist states its review currency
+against, and never the reader's clock. Once the date is behind the build, the
+register flags it and both the register and the record page say how far behind
+it is.
+
+Two limits are deliberate:
+
+- The flag reports **arithmetic**, not delivery. That a calculated date has
+  passed is not a finding that a directive is late, incomplete, or out of
+  compliance, and it observes nothing about work outside the reviewed public
+  record. The order's own non-enforceability clause is part of the dataset, and
+  the derived dates are the Atlas's subtraction rather than text from the order.
+- A passed calculated date **does not fail the release gate**. A lapsed
+  watchlist review does, because that is a defect in the Atlas's own upkeep that
+  a re-review can clear. A date on the calendar arriving is neither a defect nor
+  clearable, so it is reported in the gate's output and enforced nowhere.
+
 ## Review process
 
 1. Extract a directive from the signed source.

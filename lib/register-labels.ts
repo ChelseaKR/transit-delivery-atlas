@@ -96,3 +96,57 @@ export function timingDetail(timing: RegisterTiming, context: string): string {
 
 /** Named once so the list label and the column header cannot drift apart. */
 export const TIMING_LIST_LABEL = "Planning dates calculated from the order";
+
+/**
+ * What a passed calculated date is, and — just as important — what it is not.
+ *
+ * The register renders arithmetic the Atlas performed on the order's own
+ * language. Once that date is behind the build, a bare date reads as a
+ * forward-looking plan the markup cannot keep, and the obvious replacement
+ * words ("overdue", "missed", "late") would turn a subtraction into the
+ * accountability finding this project exists to refuse. This is the wording
+ * that says the date has passed without saying anything about delivery.
+ */
+export const TIMING_PASSED_LABEL = "Calculated date passed";
+
+/** The register's short marker for a date that is still ahead of the build. */
+export const TIMING_UPCOMING_LABEL = "Calculated date upcoming";
+
+export interface TimingCurrencyView {
+  referenceDate: string;
+  derivedDate: string;
+  passed: boolean;
+  daysUntil: number;
+  daysSince: number;
+}
+
+/**
+ * The sentence appended wherever a calculated planning date is shown, stating
+ * the date's currency against the build and refusing the delivery inference.
+ *
+ * Returned as a separate string rather than folded into {@link timingDetail} so
+ * the derivation label and the currency label can be asserted independently,
+ * and so a caller that has no reference date cannot accidentally publish a
+ * currency claim it did not compute.
+ */
+export function timingCurrencyNote(
+  currency: TimingCurrencyView,
+  context: string,
+): string {
+  const referenceDate = requireText(
+    currency?.referenceDate,
+    "timing reference date",
+    context,
+  );
+
+  if (!currency.passed) {
+    const days = currency.daysUntil;
+    return `This calculated date is ${days} day${days === 1 ? "" : "s"} after the build it is published from (${referenceDate}).`;
+  }
+
+  const days = currency.daysSince;
+  // The typographic apostrophe is load-bearing, not decorative: React escapes a
+  // straight quote to `&#x27;` in the static export, which would stop the
+  // rendered-HTML assertions from matching the string built here.
+  return `This calculated date passed ${days} day${days === 1 ? "" : "s"} before the build it is published from (${referenceDate}). That is arithmetic on the order’s own language, not a finding that this directive is late, incomplete, or out of compliance, and it says nothing about work outside the reviewed public record.`;
+}

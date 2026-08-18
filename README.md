@@ -76,7 +76,12 @@ and CSV under `public/data/`.
 
 - `sources.json` records the official source, dates, retrieval date, and hash
 - `organizations.json` provides stable identifiers for explicitly named bodies
-- `directives.json` contains the 21 actionable directive units in document order
+- `directives.json` contains the 21 actionable directive units in document order.
+  Where the order states timing, the Atlas publishes a calculated planning date
+  and states its position relative to the build date; a date behind the build is
+  flagged as passed, which is arithmetic on the order's language and not a
+  finding that a directive is late or out of compliance (see
+  [the methodology](docs/METHODOLOGY.md))
 - `analysis.json` contains plain-language summaries, themes, inferred outputs,
   dependencies, and open questions
 - `evidence.json` contains a selective collection of dated public artifacts,

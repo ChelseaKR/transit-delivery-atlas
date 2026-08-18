@@ -1865,12 +1865,37 @@ code {
 }
 
 .timing-list strong {
-  grid-row: span 2;
+  /* Full height rather than a fixed two-row span: the passed-date flag adds a
+     child to the second column, and a hard span would leave the date floating
+     against a taller cell. */
+  grid-row: 1 / -1;
   font-family: var(--font-utility), monospace;
 }
 
 .timing-list small {
   color: var(--night-soft);
+}
+
+/* A calculated planning date that is behind the build. The state is carried by
+   the flag's text, never by colour alone. */
+.timing-flag {
+  justify-self: start;
+  padding: 0.15rem 0.4rem;
+  border: 1px solid var(--signal-orange);
+  color: var(--signal-orange);
+  font-family: var(--font-utility), monospace;
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.timing-list__item--passed {
+  border-left-style: dashed;
+}
+
+.directive-row__timing--passed .timing-flag {
+  margin-top: 0.15rem;
 }
 
 .source-button {

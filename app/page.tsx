@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { DirectiveExplorer } from "@/components/DirectiveExplorer";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
+import { BUILD_DATE } from "@/lib/build-date";
 import {
   directives,
   evidenceRecords,
@@ -106,6 +107,13 @@ export default function Home() {
                   about Atlas coverage, not evidence that no implementation
                   activity or public record exists.
                 </p>
+                <p>
+                  <strong>Calculated date passed</strong> means only that the
+                  date the Atlas calculated is behind this build (
+                  {formatDate(BUILD_DATE)}). It is arithmetic on the order’s own
+                  language, not a finding that a directive is late, incomplete,
+                  or out of compliance.
+                </p>
               </div>
               <div className="provenance-key" aria-label="Record layer key">
                 <span><b>S</b> Source</span>
@@ -117,6 +125,7 @@ export default function Home() {
               directives={explorerDirectives}
               themes={themes}
               leadOrganizations={leadOrganizations}
+              buildDate={BUILD_DATE}
             />
           </div>
         </section>
