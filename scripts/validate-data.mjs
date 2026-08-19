@@ -1,6 +1,7 @@
 import { readFile } from "node:fs/promises";
 import { z } from "zod";
 import { ISO_DATE_PATTERN, isIsoDate } from "./iso-date.mjs";
+import { passedTimingReport, passedTimings } from "../lib/directive-timing.mjs";
 import {
   REVIEW_GRACE_DAYS,
   overdueReviewReport,
@@ -927,3 +928,15 @@ console.log(
 console.log(
   `Watchlist review currency at ${buildDate}: ${overdue.length} of ${watchlistData.items.length} item(s) past their planned review date.`,
 );
+
+// Reported, never enforced. A lapsed watchlist review is a defect in the
+// Atlas's own upkeep and blocks a release; a calculated planning date arriving
+// is a fact about the calendar, and failing on it would block every later
+// deploy for something no re-review could clear. The line exists so the date
+// moving is visible in CI output rather than only to a reader of the page.
+const passedPlanningDates = passedTimings(directiveData.directives, buildDate);
+const totalTimings = directiveData.directives.reduce(
+  (count, directive) => count + directive.timing.length,
+  0,
+);
+console.log(passedTimingReport(passedPlanningDates, totalTimings, buildDate));

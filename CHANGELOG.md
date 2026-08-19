@@ -5,6 +5,22 @@ recorded here.
 
 ## [Unreleased]
 
+### Added
+
+- Calculated planning dates now expire against the build date. The register's
+  timing column and each record page carried a bare derived date with no
+  reference point, so a build served after the date would keep presenting it as
+  something still ahead — the same defect the context watchlist's planned review
+  dates were fixed for, on the dates seven of the twenty-one directives share
+  (2026-10-24) and the one-year date on `1(e)` (2027-06-26). A passed date is
+  flagged in the register, both surfaces state how far the date sits from the
+  build that published them, and the release gate reports the count. Deliberately
+  bounded: the wording states arithmetic on the order's own language and refuses
+  "late", "missed", and "out of compliance", and a passed date never fails the
+  gate — a lapsed watchlist review is an upkeep defect a re-review clears, while
+  a date arriving is neither (see `lib/directive-timing.mjs` and
+  [the methodology](docs/METHODOLOGY.md))
+
 ## [0.5.0] - 2026-08-16
 
 Most of this section was already sitting under `[Unreleased]` when `v0.4.0` was

@@ -8,11 +8,14 @@ import {
   parseDirectiveFilters,
   serializeDirectiveFilters,
 } from "@/lib/directive-filters.mjs";
+import { timingCurrency } from "@/lib/directive-timing.mjs";
 import { formatDate } from "@/lib/format";
 import {
   TIMING_LIST_LABEL,
+  TIMING_PASSED_LABEL,
   evidenceCell,
   provenanceSentence,
+  timingCurrencyNote,
   timingDetail,
 } from "@/lib/register-labels";
 
@@ -64,12 +67,22 @@ interface Props {
   directives: ExplorerDirective[];
   themes: Theme[];
   leadOrganizations: Organization[];
+  /**
+   * The date the published bytes were built, passed down from the server page.
+   *
+   * `lib/build-date.ts` reads `node:fs` on purpose, so a client component
+   * cannot import it. That is the point: the currency of a calculated date has
+   * to be frozen into the markup at build time rather than recomputed against
+   * whatever clock the reader happens to have.
+   */
+  buildDate: string;
 }
 
 export function DirectiveExplorer({
   directives,
   themes,
   leadOrganizations,
+  buildDate,
 }: Props) {
   const searchRef = useRef<HTMLInputElement>(null);
   const urlSearch = useSyncExternalStore(
@@ -271,15 +284,26 @@ export function DirectiveExplorer({
                     {directive.timing.length > 0 ? (
                       <ul aria-label={TIMING_LIST_LABEL}>
                         {directive.timing.map((item) => {
-                          const detail = timingDetail(
-                            item,
-                            `Directive ${directive.label}`,
-                          );
+                          const context = `Directive ${directive.label}`;
+                          const currency = timingCurrency(item, buildDate);
+                          const detail = `${timingDetail(item, context)} ${timingCurrencyNote(currency, context)}`;
                           return (
-                            <li key={`${item.sourceText}-${item.appliesTo}`}>
+                            <li
+                              key={`${item.sourceText}-${item.appliesTo}`}
+                              className={
+                                currency.passed
+                                  ? "directive-row__timing--passed"
+                                  : undefined
+                              }
+                            >
                               <time dateTime={item.derivedDate} title={detail}>
                                 {formatDate(item.derivedDate)}
                               </time>
+                              {currency.passed ? (
+                                <span aria-hidden="true" className="timing-flag">
+                                  {TIMING_PASSED_LABEL}
+                                </span>
+                              ) : null}
                               <span className="visually-hidden">{detail}</span>
                             </li>
                           );

@@ -6,8 +6,11 @@ import { PrintRecordButton } from "@/components/PrintRecordButton";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
 import { WatchlistCard } from "@/components/WatchlistCard";
+import { BUILD_DATE } from "@/lib/build-date";
 import { directiveById, directives, source } from "@/lib/data";
+import { timingCurrency } from "@/lib/directive-timing.mjs";
 import { formatDate } from "@/lib/format";
+import { TIMING_PASSED_LABEL, timingCurrencyNote } from "@/lib/register-labels";
 
 interface PageProps {
   params: Promise<{ id: string }>;
@@ -134,15 +137,25 @@ export default async function DirectivePage({ params }: PageProps) {
               <h3>Timing in the signed order</h3>
               {directive.timing.length > 0 ? (
                 <ul className="timing-list">
-                  {directive.timing.map((item) => (
-                    <li key={`${item.sourceText}-${item.appliesTo}`}>
-                      <strong>{formatDate(item.derivedDate)}</strong>
-                      <span>{item.sourceText}</span>
-                      <small>
-                        Calculated planning date · applies to {item.appliesTo} · {item.derivation}
-                      </small>
-                    </li>
-                  ))}
+                  {directive.timing.map((item) => {
+                    const currency = timingCurrency(item, BUILD_DATE);
+                    return (
+                      <li
+                        key={`${item.sourceText}-${item.appliesTo}`}
+                        className={currency.passed ? "timing-list__item--passed" : undefined}
+                      >
+                        <strong>{formatDate(item.derivedDate)}</strong>
+                        {currency.passed ? (
+                          <span className="timing-flag">{TIMING_PASSED_LABEL}</span>
+                        ) : null}
+                        <span>{item.sourceText}</span>
+                        <small>
+                          Calculated planning date · applies to {item.appliesTo} · {item.derivation}.{" "}
+                          {timingCurrencyNote(currency, `Directive ${directive.label}`)}
+                        </small>
+                      </li>
+                    );
+                  })}
                 </ul>
               ) : (
                 <p>No explicit completion deadline is stated for this directive in the signed order.</p>
