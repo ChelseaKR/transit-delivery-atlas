@@ -1,0 +1,464 @@
+{
+  "suite": "structuring",
+  "ran": true,
+  "live": true,
+  "provenance": {
+    "provider": "bedrock",
+    "model": "global.anthropic.claude-sonnet-4-6",
+    "promptVersion": "2026-08-21.1",
+    "commit": "fb3005704837d9954688c3a19891c817aed40f23",
+    "date": "2026-08-22"
+  },
+  "description": "Questions are structured into the right intent and directive IDs; vague, out-of-scope, and unknown-directive questions are refused rather than guessed.",
+  "zeroTolerance": false,
+  "metrics": {
+    "cases": 22,
+    "passed": 20,
+    "failed": 2,
+    "passRate": 0.9090909090909091
+  },
+  "cases": [
+    {
+      "id": "struct-01",
+      "question": "When is it due?",
+      "directiveId": null,
+      "expect": {
+        "intent": "too-vague"
+      },
+      "pass": true,
+      "observed": {
+        "intent": "too-vague",
+        "directiveIds": [],
+        "kind": "refusal",
+        "refusedToGuess": true
+      },
+      "rawModelText": null,
+      "publishedText": "",
+      "withheld": []
+    },
+    {
+      "id": "struct-02",
+      "question": "What's the deal with this?",
+      "directiveId": null,
+      "expect": {
+        "intent": "too-vague"
+      },
+      "pass": true,
+      "observed": {
+        "intent": "too-vague",
+        "directiveIds": [],
+        "kind": "refusal",
+        "refusedToGuess": true
+      },
+      "rawModelText": null,
+      "publishedText": "",
+      "withheld": []
+    },
+    {
+      "id": "struct-03",
+      "question": "Tell me about transit.",
+      "directiveId": null,
+      "expect": {
+        "intent": "too-vague"
+      },
+      "pass": true,
+      "observed": {
+        "intent": "too-vague",
+        "directiveIds": [],
+        "kind": "refusal",
+        "refusedToGuess": true
+      },
+      "rawModelText": null,
+      "publishedText": "",
+      "withheld": []
+    },
+    {
+      "id": "struct-04",
+      "question": "Should California raise the gas tax to fund transit?",
+      "directiveId": null,
+      "expect": {
+        "intent": "out-of-scope"
+      },
+      "pass": true,
+      "observed": {
+        "intent": "out-of-scope",
+        "directiveIds": [],
+        "kind": "refusal",
+        "refusedToGuess": true
+      },
+      "rawModelText": null,
+      "publishedText": "",
+      "withheld": []
+    },
+    {
+      "id": "struct-05",
+      "question": "What did SB 125 do?",
+      "directiveId": null,
+      "expect": {
+        "intent": "out-of-scope"
+      },
+      "pass": true,
+      "observed": {
+        "intent": "out-of-scope",
+        "directiveIds": [],
+        "kind": "refusal",
+        "refusedToGuess": true
+      },
+      "rawModelText": null,
+      "publishedText": "",
+      "withheld": []
+    },
+    {
+      "id": "struct-06",
+      "question": "Who is the Secretary of CalSTA?",
+      "directiveId": null,
+      "expect": {
+        "intent": "out-of-scope"
+      },
+      "pass": true,
+      "observed": {
+        "intent": "out-of-scope",
+        "directiveIds": [],
+        "kind": "refusal",
+        "refusedToGuess": true
+      },
+      "rawModelText": null,
+      "publishedText": "",
+      "withheld": []
+    },
+    {
+      "id": "struct-07",
+      "question": "Is high-speed rail a good investment?",
+      "directiveId": null,
+      "expect": {
+        "intent": "out-of-scope"
+      },
+      "pass": true,
+      "observed": {
+        "intent": "out-of-scope",
+        "directiveIds": [],
+        "kind": "refusal",
+        "refusedToGuess": true
+      },
+      "rawModelText": null,
+      "publishedText": "",
+      "withheld": []
+    },
+    {
+      "id": "struct-08",
+      "question": "What does Executive Order N-79-20 require?",
+      "directiveId": null,
+      "expect": {
+        "intent": "out-of-scope"
+      },
+      "pass": true,
+      "observed": {
+        "intent": "out-of-scope",
+        "directiveIds": [],
+        "kind": "refusal",
+        "refusedToGuess": true
+      },
+      "rawModelText": null,
+      "publishedText": "",
+      "withheld": []
+    },
+    {
+      "id": "struct-09",
+      "question": "What's the best transit agency in California?",
+      "directiveId": null,
+      "expect": {
+        "intent": "out-of-scope"
+      },
+      "pass": true,
+      "observed": {
+        "intent": "out-of-scope",
+        "directiveIds": [],
+        "kind": "refusal",
+        "refusedToGuess": true
+      },
+      "rawModelText": null,
+      "publishedText": "",
+      "withheld": []
+    },
+    {
+      "id": "struct-10",
+      "question": "What does directive 7 say?",
+      "directiveId": null,
+      "expect": {
+        "intent": "unknown-directive"
+      },
+      "pass": true,
+      "observed": {
+        "intent": "unknown-directive",
+        "directiveIds": [],
+        "kind": "refusal",
+        "refusedToGuess": true
+      },
+      "rawModelText": null,
+      "publishedText": "",
+      "withheld": []
+    },
+    {
+      "id": "struct-11",
+      "question": "Explain 1(h).",
+      "directiveId": null,
+      "expect": {
+        "intent": "unknown-directive"
+      },
+      "pass": true,
+      "observed": {
+        "intent": "unknown-directive",
+        "directiveIds": [],
+        "kind": "refusal",
+        "refusedToGuess": true
+      },
+      "rawModelText": null,
+      "publishedText": "",
+      "withheld": []
+    },
+    {
+      "id": "struct-12",
+      "question": "What is in section 3(k)?",
+      "directiveId": null,
+      "expect": {
+        "intent": "unknown-directive"
+      },
+      "pass": true,
+      "observed": {
+        "intent": "unknown-directive",
+        "directiveIds": [],
+        "kind": "refusal",
+        "refusedToGuess": true
+      },
+      "rawModelText": null,
+      "publishedText": "",
+      "withheld": []
+    },
+    {
+      "id": "struct-13",
+      "question": "Who leads directive 4?",
+      "directiveId": null,
+      "expect": {
+        "intent": "directive-lookup",
+        "directiveIds": [
+          "n-7-26-4"
+        ]
+      },
+      "pass": true,
+      "observed": {
+        "intent": "directive-lookup",
+        "directiveIds": [
+          "n-7-26-4"
+        ],
+        "kind": "answer",
+        "refusedToGuess": true
+      },
+      "rawModelText": "Directive 4 names California State Transportation Agency (CalSTA) as the explicit lead. The directive also names Caltrans Division of Rail as a collaborator, and California High-Speed Rail Authority (CHSRA) and Federal Railroad Administration (FRA) as other parties. The directive states:",
+      "publishedText": "Directive 4 names California State Transportation Agency (CalSTA) as the explicit lead. The directive also names Caltrans Division of Rail as a collaborator, and California High-Speed Rail Authority (CHSRA) and Federal Railroad Administration (FRA) as other parties. The directive states:",
+      "withheld": []
+    },
+    {
+      "id": "struct-14",
+      "question": "When is the transit priority project list due under 1(a)?",
+      "directiveId": null,
+      "expect": {
+        "intent": "directive-lookup",
+        "directiveIds": [
+          "n-7-26-1a"
+        ]
+      },
+      "pass": true,
+      "observed": {
+        "intent": "directive-lookup",
+        "directiveIds": [
+          "n-7-26-1a"
+        ],
+        "kind": "answer",
+        "refusedToGuess": true
+      },
+      "rawModelText": "Directive 1(a) instructs California Department of Transportation (Caltrans) to: | The order states this action is to occur \"Within 120 days of this Order.\" The calculated planning date is 2026-10-24, derived by counting 120 calendar days after the order's effective date.",
+      "publishedText": "Directive 1(a) instructs California Department of Transportation (Caltrans) to: | The order states this action is to occur \"Within 120 days of this Order.\" The calculated planning date is 2026-10-24, derived by counting 120 calendar days after the order's effective date.",
+      "withheld": []
+    },
+    {
+      "id": "struct-15",
+      "question": "Which directive covers the MUTCD?",
+      "directiveId": null,
+      "expect": {
+        "intent": "directive-lookup",
+        "directiveIds": [
+          "n-7-26-3i"
+        ]
+      },
+      "pass": true,
+      "observed": {
+        "intent": "directive-lookup",
+        "directiveIds": [
+          "n-7-26-3i"
+        ],
+        "kind": "answer",
+        "refusedToGuess": true
+      },
+      "rawModelText": "Directive 3(i) covers the California MUTCD. The section 3 preamble establishes the lead body: | Within that context, directive 3(i) directs Caltrans to: | The facts note that \"including but not limited to\" applies to the transit infrastructure addressed by the update, and that \"any necessary approvals\" applies to relevant federal agencies. The order states no explicit completion deadline for this directive.",
+      "publishedText": "Directive 3(i) covers the California MUTCD. The section 3 preamble establishes the lead body: | Within that context, directive 3(i) directs Caltrans to: | The facts note that \"including but not limited to\" applies to the transit infrastructure addressed by the update, and that \"any necessary approvals\" applies to relevant federal agencies. The order states no explicit completion deadline for this directive.",
+      "withheld": []
+    },
+    {
+      "id": "struct-16",
+      "question": "What does the order say about toll revenue?",
+      "directiveId": null,
+      "expect": {
+        "intent": "directive-lookup",
+        "directiveIds": [
+          "n-7-26-3h"
+        ]
+      },
+      "pass": true,
+      "observed": {
+        "intent": "directive-lookup",
+        "directiveIds": [
+          "n-7-26-3h"
+        ],
+        "kind": "answer",
+        "refusedToGuess": true
+      },
+      "rawModelText": "Two parts of the order speak to toll revenue. First, the section 3 preamble establishes the overall direction to Caltrans: | Under that authority, directive 3(h) then directs Caltrans to: | The facts note that the phrase \"in accordance with state and federal law\" qualifies the guidance on prioritizing excess toll revenues, and \"where feasible\" qualifies Caltrans's consideration of excess revenue for transit within planned managed-lane corridors. The bodies explicitly named are California Department of Transportation (Caltrans) as lead, California Transportation Commission (CTC) as collaborator, and Toll operators as other named parties. The order states no explicit completion deadline for this directive, so no calculated planning date can be derived.",
+      "publishedText": "Two parts of the order speak to toll revenue. First, the section 3 preamble establishes the overall direction to Caltrans: | Under that authority, directive 3(h) then directs Caltrans to: | The facts note that the phrase \"in accordance with state and federal law\" qualifies the guidance on prioritizing excess toll revenues, and \"where feasible\" qualifies Caltrans's consideration of excess revenue for transit within planned managed-lane corridors. The bodies explicitly named are California Department of Transportation (Caltrans) as lead, California Transportation Commission (CTC) as collaborator, and Toll operators as other named parties. The order states no explicit completion deadline for this directive, so no calculated planning date can be derived.",
+      "withheld": []
+    },
+    {
+      "id": "struct-17",
+      "question": "What must Caltrans do about TDA and NTD reporting?",
+      "directiveId": null,
+      "expect": {
+        "intent": "directive-lookup",
+        "directiveIds": [
+          "n-7-26-3b"
+        ]
+      },
+      "pass": true,
+      "observed": {
+        "intent": "directive-lookup",
+        "directiveIds": [
+          "n-7-26-3b"
+        ],
+        "kind": "answer",
+        "refusedToGuess": true
+      },
+      "rawModelText": "Directive 3(b) addresses Transportation Development Act and National Transit Database reporting. Under the order's section 3 preamble, Caltrans is directed to: | Specifically, directive 3(b) requires Caltrans to: | No explicit completion deadline is stated in the order for this directive, and the Atlas records no calculated planning date for it. No explicit collaborators are named: the California Department of Transportation (Caltrans) is the sole identified lead body.",
+      "publishedText": "Directive 3(b) addresses Transportation Development Act and National Transit Database reporting. Under the order's section 3 preamble, Caltrans is directed to: | Specifically, directive 3(b) requires Caltrans to: | No explicit completion deadline is stated in the order for this directive, and the Atlas records no calculated planning date for it. No explicit collaborators are named: the California Department of Transportation (Caltrans) is the sole identified lead body.",
+      "withheld": []
+    },
+    {
+      "id": "struct-18",
+      "question": "Who is responsible for updating the SCCP guidelines?",
+      "directiveId": null,
+      "expect": {
+        "intent": "directive-lookup",
+        "directiveIds": [
+          "n-7-26-5"
+        ]
+      },
+      "pass": false,
+      "observed": {
+        "intent": "unknown-directive",
+        "directiveIds": [],
+        "kind": "refusal",
+        "refusedToGuess": true
+      },
+      "rawModelText": null,
+      "publishedText": "",
+      "withheld": []
+    },
+    {
+      "id": "struct-19",
+      "question": "What evidence is linked to the SCCP guideline update?",
+      "directiveId": null,
+      "expect": {
+        "intent": "evidence-lookup",
+        "directiveIds": [
+          "n-7-26-5"
+        ]
+      },
+      "pass": false,
+      "observed": {
+        "intent": "unknown-directive",
+        "directiveIds": [],
+        "kind": "refusal",
+        "refusedToGuess": true
+      },
+      "rawModelText": null,
+      "publishedText": "",
+      "withheld": []
+    },
+    {
+      "id": "struct-20",
+      "question": "Which directive is about the Customer Relationship Management system?",
+      "directiveId": null,
+      "expect": {
+        "intent": "directive-lookup",
+        "directiveIds": [
+          "n-7-26-6"
+        ]
+      },
+      "pass": true,
+      "observed": {
+        "intent": "directive-lookup",
+        "directiveIds": [
+          "n-7-26-6"
+        ],
+        "kind": "answer",
+        "refusedToGuess": true
+      },
+      "rawModelText": "Directive 6, editorially titled  | Directive 6 covers the grant Customer Relationship Management system. The order language for this directive is: | The qualifier preserved from the source regarding the CRM system is that it applies \"so that grantees receive streamlined, coordinated communications from a single source.\" California Department of Transportation (Caltrans) is the explicit lead, with Caltrans Information Technology (Caltrans IT) as an explicit collaborator. Other named parties include the California Integrated Travel Project (Cal-ITP), the California Integrated Mobility Program (CIMP), and Transit grantees and subrecipients. The order states no explicit completion deadline for this directive.",
+      "publishedText": "Directive 6, editorially titled | Directive 6 covers the grant Customer Relationship Management system. The order language for this directive is: | The qualifier preserved from the source regarding the CRM system is that it applies \"so that grantees receive streamlined, coordinated communications from a single source.\" California Department of Transportation (Caltrans) is the explicit lead, with Caltrans Information Technology (Caltrans IT) as an explicit collaborator. Other named parties include the California Integrated Travel Project (Cal-ITP), the California Integrated Mobility Program (CIMP), and Transit grantees and subrecipients. The order states no explicit completion deadline for this directive.",
+      "withheld": []
+    },
+    {
+      "id": "struct-21",
+      "question": "What does the order say about zero-emission vehicle storage?",
+      "directiveId": null,
+      "expect": {
+        "intent": "directive-lookup",
+        "directiveIds": [
+          "n-7-26-3g"
+        ]
+      },
+      "pass": true,
+      "observed": {
+        "intent": "directive-lookup",
+        "directiveIds": [
+          "n-7-26-3g"
+        ],
+        "kind": "answer",
+        "refusedToGuess": true
+      },
+      "rawModelText": "Directive 3(g) addresses Caltrans airspace policy in connection with operator-controlled land. The order's section 3 preamble establishes the overall instruction to Caltrans: | Under that direction, directive 3(g) specifically instructs Caltrans to: | The facts note that the qualifier \"where vehicles are already being stored\" applies to operator-controlled land beneath or adjacent to Caltrans facilities, and that updates are conditioned on being \"where consistent with state policy and safety and operational requirements.\" Transit and passenger rail operators are named as other parties relevant to this directive. The order states no explicit completion deadline for this directive.",
+      "publishedText": "Directive 3(g) addresses Caltrans airspace policy in connection with operator-controlled land. The order's section 3 preamble establishes the overall instruction to Caltrans: | Under that direction, directive 3(g) specifically instructs Caltrans to: | The facts note that the qualifier \"where vehicles are already being stored\" applies to operator-controlled land beneath or adjacent to Caltrans facilities, and that updates are conditioned on being \"where consistent with state policy and safety and operational requirements.\" Transit and passenger rail operators are named as other parties relevant to this directive. The order states no explicit completion deadline for this directive.",
+      "withheld": []
+    },
+    {
+      "id": "struct-22",
+      "question": "Which directive deals with the Pro-Housing Designation?",
+      "directiveId": null,
+      "expect": {
+        "intent": "directive-lookup",
+        "directiveIds": [
+          "n-7-26-3j"
+        ]
+      },
+      "pass": true,
+      "observed": {
+        "intent": "directive-lookup",
+        "directiveIds": [
+          "n-7-26-3j"
+        ],
+        "kind": "answer",
+        "refusedToGuess": true
+      },
+      "rawModelText": "Directive 3(j), titled Prohousing transit-funding priority in the Atlas, addresses the Pro-Housing Designation. The section 3 preamble establishes the overarching instruction to Caltrans: | Within that context, directive 3(j) directs Caltrans to: | The responsible bodies are California Department of Transportation (Caltrans) as lead, in consultation with California Department of Housing and Community Development (HCD) and California Transportation Commission (CTC). The order states no explicit completion deadline for this directive, so the Atlas records no calculated planning date.",
+      "publishedText": "Directive 3(j), titled Prohousing transit-funding priority in the Atlas, addresses the Pro-Housing Designation. The section 3 preamble establishes the overarching instruction to Caltrans: | Within that context, directive 3(j) directs Caltrans to: | The responsible bodies are California Department of Transportation (Caltrans) as lead, in consultation with California Department of Housing and Community Development (HCD) and California Transportation Commission (CTC). The order states no explicit completion deadline for this directive, so the Atlas records no calculated planning date.",
+      "withheld": []
+    }
+  ]
+}

@@ -165,6 +165,37 @@ test("renders source, safe empty evidence, and analysis on an unlinked directive
   assert.doesNotMatch(html, /data-coverage-state="not-yet-reviewed"/);
 });
 
+test("the AI panel is opt-in, labelled, and names no other origin", async () => {
+  const html = await (await render("/directives/n-7-26-1a")).text();
+  assert.match(html, /data-ask-directive="n-7-26-1a"/);
+  assert.match(html, /Ask about this directive/);
+  assert.match(html, /Optional · AI · off until you use it/);
+  assert.match(html, /refuses compliance and status questions/);
+  assert.match(html, /Nothing is sent anywhere until you submit a question\./);
+  // Adding the panel introduced no origin at all. Every absolute URL in the
+  // rendered page is parsed and its host compared exactly against the hosts
+  // the record already linked, so a provider endpoint cannot hide behind a
+  // lookalike name; the ask endpoint is a same-origin relative path baked in
+  // at build time.
+  const allowedHosts = new Set(["transit.chelseakr.com", "www.gov.ca.gov", "dot.ca.gov", "github.com"]);
+  const hosts = new Set();
+  for (const [absoluteUrl] of html.matchAll(/https?:\/\/[^\s"'<>)\\]+/gi)) {
+    let parsed;
+    try {
+      parsed = new URL(absoluteUrl);
+    } catch {
+      continue;
+    }
+    hosts.add(parsed.hostname.toLowerCase());
+  }
+  assert.ok(hosts.size > 0, "the record does link absolute URLs, so the check is looking at something");
+  for (const host of hosts) {
+    assert.ok(allowedHosts.has(host), `the rendered page names an unexpected host: ${host}`);
+  }
+  // The panel renders before the reader acts as a static button, not a form.
+  assert.doesNotMatch(html, /<textarea/i);
+});
+
 test("a directive whose dedicated source failed retrieval says so without a verdict", async () => {
   const html = await (await render("/directives/n-7-26-4")).text();
   assert.match(html, /data-coverage-state="checked-none-found"/);

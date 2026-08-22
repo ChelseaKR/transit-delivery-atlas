@@ -7,6 +7,44 @@ recorded here.
 
 ### Added
 
+- "Ask about this directive": an explicit opt-in AI panel on each directive
+  page. Until a reader opens it and submits a question the page performs no
+  request of any kind (`lib/ask-client.ts` is constructed with an injectable
+  fetch and `tests/ask-client.test.mjs` proves the zero-requests-before-opt-in
+  property); the endpoint is a same-origin path, so the CSP's
+  `connect-src 'self'` is unchanged. Every answer renders with the
+  AI-generated/unofficial/not-a-compliance-determination label, quotation
+  blocks that link back to the signed PDF page, the withheld-claims count, and
+  provenance; a missing service, a rate limit, and a provider outage each
+  render as a contained notice that leaves the record intact.
+
+- The runtime question-answering service under ADR-0002 (`service/`): a
+  deterministic verdict lexicon that refuses compliance/status/grading
+  questions before any model call, model-based question structuring re-checked
+  against the directive index, facts assembled by the service from `data/` and
+  `corpus/`, narration that can reference quotations and evidence records only
+  by ID, and a verifier that checks every quotation verbatim against the
+  retained corpus, withholds verdict sentences, inserts the site's own
+  empty-state and freshness blocks by construction, and reports the withheld
+  count. Anthropic API (`claude-sonnet-5` default) or Amazon Bedrock via the
+  same SDK family; per-client and global rate caps; logs carry counts, never
+  question text. See `docs/AI-SERVICE.md`.
+- The evaluation harness (`evals/`): five committed suites — compliance
+  refusal (zero tolerance), empty-state fidelity, citation grounding,
+  freshness disclosure, and question structuring — run against the real
+  pipeline, with result files accepted only from live runs carrying provider,
+  model, prompt version, commit, and date (`tests/eval-results.test.mjs`).
+- The first live evaluation results (`evals/results/`), run 2026-08-22 against
+  `global.anthropic.claude-sonnet-4-6` on Amazon Bedrock at prompt version
+  `2026-08-21.1`: compliance refusal 48/48 and empty-state fidelity 20/20, both
+  zero-tolerance suites, with no status language published in any answer;
+  freshness 10/10; citation grounding 15/15 with 21 quotations verified
+  verbatim against the retained corpus; question structuring 20/22, the two
+  failures being refusals to guess a directive from a topic name rather than
+  wrong answers. The configured default model `claude-sonnet-5` is not entitled
+  on the account used, so every result file records Sonnet 4.6 as the model
+  that produced it.
+
 - ADR-0002 records an owner-directed change of direction: an optional runtime
   question-answering layer, with the model kept at the edges (it structures a
   question and narrates facts the service assembled) and a verifier before

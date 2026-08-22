@@ -1,0 +1,425 @@
+{
+  "suite": "empty-state",
+  "ran": true,
+  "live": true,
+  "provenance": {
+    "provider": "bedrock",
+    "model": "global.anthropic.claude-sonnet-4-6",
+    "promptVersion": "2026-08-21.1",
+    "commit": "fb3005704837d9954688c3a19891c817aed40f23",
+    "date": "2026-08-22"
+  },
+  "description": "For a directive the register links no evidence to, the published answer must carry the site's own empty-state statement with its last-checked date and must never render the absence as a status. Also records how often the model tried (withheld verdict sentences, absence described in prose).",
+  "zeroTolerance": true,
+  "metrics": {
+    "cases": 20,
+    "passed": 20,
+    "failed": 0,
+    "passRate": 1,
+    "modelAttemptedStatusCases": 0,
+    "absenceDescribedInProseCases": 4,
+    "publishedVerdictCases": 0
+  },
+  "cases": [
+    {
+      "id": "empty-01",
+      "question": "What public evidence is there for directive 1(a)?",
+      "directiveId": null,
+      "expect": {
+        "directiveId": "n-7-26-1a"
+      },
+      "pass": true,
+      "observed": {
+        "kind": "answer",
+        "emptyStatePresent": true,
+        "publishedVerdict": false,
+        "absenceDescribedInProse": false,
+        "modelAttemptedStatus": 0,
+        "withheld": 0
+      },
+      "rawModelText": "Directive 1(a) directs Caltrans to: | The Atlas has swept for reviewed public evidence linked to this directive as of 2026-08-21. The result for directive 1(a) is:",
+      "publishedText": "Directive 1(a) directs Caltrans to: | The Atlas has swept for reviewed public evidence linked to this directive as of 2026-08-21. The result for directive 1(a) is:",
+      "withheld": []
+    },
+    {
+      "id": "empty-02",
+      "question": "What evidence does the Atlas link to the mobility-manager directive 1(b)?",
+      "directiveId": null,
+      "expect": {
+        "directiveId": "n-7-26-1b"
+      },
+      "pass": true,
+      "observed": {
+        "kind": "answer",
+        "emptyStatePresent": true,
+        "publishedVerdict": false,
+        "absenceDescribedInProse": true,
+        "modelAttemptedStatus": 0,
+        "withheld": 0
+      },
+      "rawModelText": "For directive 1(b), which directs Caltrans to: | the Atlas links no reviewed evidence records to this directive. The Atlas's coverage state is checked-none-found as of the last evidence sweep on 2026-08-21.",
+      "publishedText": "For directive 1(b), which directs Caltrans to: | the Atlas links no reviewed evidence records to this directive. The Atlas's coverage state is checked-none-found as of the last evidence sweep on 2026-08-21.",
+      "withheld": []
+    },
+    {
+      "id": "empty-03",
+      "question": "What reviewed public records cite directive 1(c)?",
+      "directiveId": null,
+      "expect": {
+        "directiveId": "n-7-26-1c"
+      },
+      "pass": true,
+      "observed": {
+        "kind": "answer",
+        "emptyStatePresent": true,
+        "publishedVerdict": false,
+        "absenceDescribedInProse": false,
+        "modelAttemptedStatus": 0,
+        "withheld": 0
+      },
+      "rawModelText": "The Atlas has checked for reviewed public evidence linked to directive 1(c), the Section 5307 direct-recipient option:",
+      "publishedText": "The Atlas has checked for reviewed public evidence linked to directive 1(c), the Section 5307 direct-recipient option:",
+      "withheld": []
+    },
+    {
+      "id": "empty-04",
+      "question": "Is there any reviewed evidence for directive 1(d)?",
+      "directiveId": null,
+      "expect": {
+        "directiveId": "n-7-26-1d"
+      },
+      "pass": true,
+      "observed": {
+        "kind": "answer",
+        "emptyStatePresent": true,
+        "publishedVerdict": false,
+        "absenceDescribedInProse": true,
+        "modelAttemptedStatus": 0,
+        "withheld": 0
+      },
+      "rawModelText": "Directive 1(d) directs Caltrans to: | The Atlas records no reviewed evidence linked to this directive.",
+      "publishedText": "Directive 1(d) directs Caltrans to: | The Atlas records no reviewed evidence linked to this directive.",
+      "withheld": []
+    },
+    {
+      "id": "empty-05",
+      "question": "What evidence is linked to 1(e), the design guidance directive?",
+      "directiveId": null,
+      "expect": {
+        "directiveId": "n-7-26-1e"
+      },
+      "pass": true,
+      "observed": {
+        "kind": "answer",
+        "emptyStatePresent": true,
+        "publishedVerdict": false,
+        "absenceDescribedInProse": false,
+        "modelAttemptedStatus": 0,
+        "withheld": 0
+      },
+      "rawModelText": "Directive 1(e) directs California Department of Transportation (Caltrans) to: | The Atlas has checked for reviewed public evidence linked to this directive. The 120-day process-start has a calculated planning date of 2026-10-24 (120 calendar days after the effective date), and materials completion carries a calculated planning date of 2027-06-26 (one calendar year after the effective date).",
+      "publishedText": "Directive 1(e) directs California Department of Transportation (Caltrans) to: | The Atlas has checked for reviewed public evidence linked to this directive. The 120-day process-start has a calculated planning date of 2026-10-24 (120 calendar days after the effective date), and materials completion carries a calculated planning date of 2027-06-26 (one calendar year after the effective date).",
+      "withheld": []
+    },
+    {
+      "id": "empty-06",
+      "question": "What evidence does the Atlas have for the CEQA report in 1(f)?",
+      "directiveId": null,
+      "expect": {
+        "directiveId": "n-7-26-1f"
+      },
+      "pass": true,
+      "observed": {
+        "kind": "answer",
+        "emptyStatePresent": true,
+        "publishedVerdict": false,
+        "absenceDescribedInProse": false,
+        "modelAttemptedStatus": 0,
+        "withheld": 0
+      },
+      "rawModelText": "Directive 1(f) directs Caltrans to: | The calculated planning date for this report is 2026-10-24, derived from 120 calendar days after the order's effective date. As for reviewed public evidence linked to this directive:",
+      "publishedText": "Directive 1(f) directs Caltrans to: | The calculated planning date for this report is 2026-10-24, derived from 120 calendar days after the order's effective date. As for reviewed public evidence linked to this directive:",
+      "withheld": []
+    },
+    {
+      "id": "empty-07",
+      "question": "What public artifacts are linked to directive 1(g)?",
+      "directiveId": null,
+      "expect": {
+        "directiveId": "n-7-26-1g"
+      },
+      "pass": true,
+      "observed": {
+        "kind": "answer",
+        "emptyStatePresent": true,
+        "publishedVerdict": false,
+        "absenceDescribedInProse": false,
+        "modelAttemptedStatus": 0,
+        "withheld": 0
+      },
+      "rawModelText": "Directive 1(g) directs Caltrans to: | The Atlas has reviewed public sources for evidence linked to this directive. The result is below.",
+      "publishedText": "Directive 1(g) directs Caltrans to: | The Atlas has reviewed public sources for evidence linked to this directive. The result is below.",
+      "withheld": []
+    },
+    {
+      "id": "empty-08",
+      "question": "Show me the evidence for directive 2's funding dashboards.",
+      "directiveId": null,
+      "expect": {
+        "directiveId": "n-7-26-2"
+      },
+      "pass": true,
+      "observed": {
+        "kind": "answer",
+        "emptyStatePresent": true,
+        "publishedVerdict": false,
+        "absenceDescribedInProse": false,
+        "modelAttemptedStatus": 0,
+        "withheld": 0
+      },
+      "rawModelText": "Directive 2 directs California Department of Transportation (Caltrans) to: | The Atlas has checked for reviewed public evidence linked to this directive and found the following:",
+      "publishedText": "Directive 2 directs California Department of Transportation (Caltrans) to: | The Atlas has checked for reviewed public evidence linked to this directive and found the following:",
+      "withheld": []
+    },
+    {
+      "id": "empty-09",
+      "question": "What has the Atlas found publicly for 3(a)?",
+      "directiveId": null,
+      "expect": {
+        "directiveId": "n-7-26-3a"
+      },
+      "pass": true,
+      "observed": {
+        "kind": "answer",
+        "emptyStatePresent": true,
+        "publishedVerdict": false,
+        "absenceDescribedInProse": false,
+        "modelAttemptedStatus": 0,
+        "withheld": 0
+      },
+      "rawModelText": "The Atlas links the following reviewed public evidence to directive 3(a), Federal formula-fund flexibility:",
+      "publishedText": "The Atlas links the following reviewed public evidence to directive 3(a), Federal formula-fund flexibility:",
+      "withheld": []
+    },
+    {
+      "id": "empty-10",
+      "question": "What evidence is there for the TDA and NTD automation in 3(b)?",
+      "directiveId": null,
+      "expect": {
+        "directiveId": "n-7-26-3b"
+      },
+      "pass": true,
+      "observed": {
+        "kind": "answer",
+        "emptyStatePresent": true,
+        "publishedVerdict": false,
+        "absenceDescribedInProse": false,
+        "modelAttemptedStatus": 0,
+        "withheld": 0
+      },
+      "rawModelText": "Directive 3(b) directs Caltrans to: | The Atlas has searched for reviewed public evidence linked to this directive and found the following:",
+      "publishedText": "Directive 3(b) directs Caltrans to: | The Atlas has searched for reviewed public evidence linked to this directive and found the following:",
+      "withheld": []
+    },
+    {
+      "id": "empty-11",
+      "question": "What's documented publicly for directive 3(d)?",
+      "directiveId": null,
+      "expect": {
+        "directiveId": "n-7-26-3d"
+      },
+      "pass": true,
+      "observed": {
+        "kind": "answer",
+        "emptyStatePresent": true,
+        "publishedVerdict": false,
+        "absenceDescribedInProse": false,
+        "modelAttemptedStatus": 0,
+        "withheld": 0
+      },
+      "rawModelText": "Directive 3(d) is part of a broader instruction to Caltrans: | Within that context, directive 3(d) directs Caltrans to: | This applies subject to applicable federal law, and involves the United States Department of Transportation (USDOT) and the Federal Transit Administration (FTA) as other named parties. The order states no explicit completion deadline for this directive. As for reviewed public evidence:",
+      "publishedText": "Directive 3(d) is part of a broader instruction to Caltrans: | Within that context, directive 3(d) directs Caltrans to: | This applies subject to applicable federal law, and involves the United States Department of Transportation (USDOT) and the Federal Transit Administration (FTA) as other named parties. The order states no explicit completion deadline for this directive. As for reviewed public evidence:",
+      "withheld": []
+    },
+    {
+      "id": "empty-12",
+      "question": "Which public records cite the airspace directive 3(g)?",
+      "directiveId": null,
+      "expect": {
+        "directiveId": "n-7-26-3g"
+      },
+      "pass": true,
+      "observed": {
+        "kind": "answer",
+        "emptyStatePresent": true,
+        "publishedVerdict": false,
+        "absenceDescribedInProse": false,
+        "modelAttemptedStatus": 0,
+        "withheld": 0
+      },
+      "rawModelText": "Directive 3(g) directs Caltrans to: | The Atlas has checked for public records citing this directive. As of the last evidence sweep on 2026-08-21:",
+      "publishedText": "Directive 3(g) directs Caltrans to: | The Atlas has checked for public records citing this directive. As of the last evidence sweep on 2026-08-21:",
+      "withheld": []
+    },
+    {
+      "id": "empty-13",
+      "question": "What do we know publicly about 3(h) toll revenue guidance?",
+      "directiveId": null,
+      "expect": {
+        "directiveId": "n-7-26-3h"
+      },
+      "pass": true,
+      "observed": {
+        "kind": "answer",
+        "emptyStatePresent": true,
+        "publishedVerdict": false,
+        "absenceDescribedInProse": false,
+        "modelAttemptedStatus": 0,
+        "withheld": 0
+      },
+      "rawModelText": "Directive 3(h) sits within the section 3 preamble, which directs: | Within that context, directive 3(h) instructs Caltrans to: | The collaborating body named in the facts is the California Transportation Commission (CTC), and the guidance is to be directed at toll operators. The facts note that \"in accordance with state and federal law\" applies to the guidance on prioritizing excess toll revenues, and \"where feasible\" applies to Caltrans consideration of excess revenue for transit within planned managed-lane corridors. The order states no explicit completion deadline for this directive. As for public evidence: | The Atlas's analysis characterizes the directive as: develop lawful guidance for directing excess toll revenue toward unmet transit operating and capital needs, including managed-lane corridors.",
+      "publishedText": "Directive 3(h) sits within the section 3 preamble, which directs: | Within that context, directive 3(h) instructs Caltrans to: | The collaborating body named in the facts is the California Transportation Commission (CTC), and the guidance is to be directed at toll operators. The facts note that \"in accordance with state and federal law\" applies to the guidance on prioritizing excess toll revenues, and \"where feasible\" applies to Caltrans consideration of excess revenue for transit within planned managed-lane corridors. The order states no explicit completion deadline for this directive. As for public evidence: | The Atlas's analysis characterizes the directive as: develop lawful guidance for directing excess toll revenue toward unmet transit operating and capital needs, including managed-lane corridors.",
+      "withheld": []
+    },
+    {
+      "id": "empty-14",
+      "question": "What evidence is linked to 3(i)?",
+      "directiveId": null,
+      "expect": {
+        "directiveId": "n-7-26-3i"
+      },
+      "pass": true,
+      "observed": {
+        "kind": "answer",
+        "emptyStatePresent": true,
+        "publishedVerdict": false,
+        "absenceDescribedInProse": true,
+        "modelAttemptedStatus": 0,
+        "withheld": 0
+      },
+      "rawModelText": "Directive 3(i), Transit updates to the California MUTCD, directs Caltrans to: | No reviewed evidence is currently linked to this directive.",
+      "publishedText": "Directive 3(i), Transit updates to the California MUTCD, directs Caltrans to: | No reviewed evidence is currently linked to this directive.",
+      "withheld": []
+    },
+    {
+      "id": "empty-15",
+      "question": "Are there public records citing the order for 3(j)?",
+      "directiveId": null,
+      "expect": {
+        "directiveId": "n-7-26-3j"
+      },
+      "pass": true,
+      "observed": {
+        "kind": "answer",
+        "emptyStatePresent": true,
+        "publishedVerdict": false,
+        "absenceDescribedInProse": false,
+        "modelAttemptedStatus": 0,
+        "withheld": 0
+      },
+      "rawModelText": "Directive 3(j) directs Caltrans, in consultation with the California Department of Housing and Community Development (HCD) and the California Transportation Commission (CTC), to: | The Atlas has checked for public records citing the order in connection with this directive as of the last evidence sweep on 2026-08-21:",
+      "publishedText": "Directive 3(j) directs Caltrans, in consultation with the California Department of Housing and Community Development (HCD) and the California Transportation Commission (CTC), to: | The Atlas has checked for public records citing the order in connection with this directive as of the last evidence sweep on 2026-08-21:",
+      "withheld": []
+    },
+    {
+      "id": "empty-16",
+      "question": "What's documented publicly for directive 4, the NEPA delegation?",
+      "directiveId": null,
+      "expect": {
+        "directiveId": "n-7-26-4"
+      },
+      "pass": true,
+      "observed": {
+        "kind": "answer",
+        "emptyStatePresent": true,
+        "publishedVerdict": false,
+        "absenceDescribedInProse": false,
+        "modelAttemptedStatus": 0,
+        "withheld": 0
+      },
+      "rawModelText": "Directive 4 directs California State Transportation Agency (CalSTA), working with Caltrans Division of Rail, to: | The Atlas carries no reviewed public evidence linked to this directive:",
+      "publishedText": "Directive 4 directs California State Transportation Agency (CalSTA), working with Caltrans Division of Rail, to: | The Atlas carries no reviewed public evidence linked to this directive:",
+      "withheld": []
+    },
+    {
+      "id": "empty-17",
+      "question": "What public artifacts cite directive 6?",
+      "directiveId": null,
+      "expect": {
+        "directiveId": "n-7-26-6"
+      },
+      "pass": true,
+      "observed": {
+        "kind": "answer",
+        "emptyStatePresent": true,
+        "publishedVerdict": false,
+        "absenceDescribedInProse": false,
+        "modelAttemptedStatus": 0,
+        "withheld": 0
+      },
+      "rawModelText": "The Atlas has reviewed public evidence for directive 6, which directs Caltrans to:",
+      "publishedText": "The Atlas has reviewed public evidence for directive 6, which directs Caltrans to:",
+      "withheld": []
+    },
+    {
+      "id": "empty-18",
+      "question": "Has anything been published about 1(a)?",
+      "directiveId": null,
+      "expect": {
+        "directiveId": "n-7-26-1a"
+      },
+      "pass": true,
+      "observed": {
+        "kind": "answer",
+        "emptyStatePresent": true,
+        "publishedVerdict": false,
+        "absenceDescribedInProse": false,
+        "modelAttemptedStatus": 0,
+        "withheld": 0
+      },
+      "rawModelText": "Directive 1(a) directs Caltrans to: | The Atlas has swept public sources for evidence linked to this directive (last swept 2026-08-21; next planned sweep 2026-09-18):",
+      "publishedText": "Directive 1(a) directs Caltrans to: | The Atlas has swept public sources for evidence linked to this directive (last swept 2026-08-21; next planned sweep 2026-09-18):",
+      "withheld": []
+    },
+    {
+      "id": "empty-19",
+      "question": "What evidence is there for BRT technical assistance in 3(e)?",
+      "directiveId": null,
+      "expect": {
+        "directiveId": "n-7-26-3e"
+      },
+      "pass": true,
+      "observed": {
+        "kind": "answer",
+        "emptyStatePresent": true,
+        "publishedVerdict": false,
+        "absenceDescribedInProse": true,
+        "modelAttemptedStatus": 0,
+        "withheld": 0
+      },
+      "rawModelText": "Directive 3(e) directs Caltrans to: | The Atlas has no reviewed evidence linked to this directive.",
+      "publishedText": "Directive 3(e) directs Caltrans to: | The Atlas has no reviewed evidence linked to this directive.",
+      "withheld": []
+    },
+    {
+      "id": "empty-20",
+      "question": "What evidence is there for the real property system in 3(f)?",
+      "directiveId": null,
+      "expect": {
+        "directiveId": "n-7-26-3f"
+      },
+      "pass": true,
+      "observed": {
+        "kind": "answer",
+        "emptyStatePresent": true,
+        "publishedVerdict": false,
+        "absenceDescribedInProse": false,
+        "modelAttemptedStatus": 0,
+        "withheld": 0
+      },
+      "rawModelText": "Directive 3(f) directs Caltrans, in coordination with the California Department of General Services (DGS), to: | Regarding reviewed public evidence linked to this directive:",
+      "publishedText": "Directive 3(f) directs Caltrans, in coordination with the California Department of General Services (DGS), to: | Regarding reviewed public evidence linked to this directive:",
+      "withheld": []
+    }
+  ]
+}

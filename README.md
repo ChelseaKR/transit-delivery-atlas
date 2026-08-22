@@ -64,15 +64,27 @@ npm run check
 ## AI-assisted questions (optional, unofficial)
 
 Under [ADR-0002](docs/adr/0002-runtime-grounded-question-answering.md) the
-Atlas is gaining an optional question-answering layer that a reader can turn
-on from a directive page. It is built so that it can only quote the signed
+Atlas has an optional question-answering layer that a reader can turn on from a
+directive page. It is built and evaluated; it is not deployed, and until a host
+is chosen the panel reports that the service is unavailable and the record
+below it is unchanged. It can only quote the signed
 order verbatim (verified against the retained copy in
 [`corpus/eo-n-7-26/`](corpus/eo-n-7-26/manifest.json)), cite a reviewed
 evidence record by ID, repeat the site's own empty-state wording, or decline.
 It refuses every form of "is the state complying" or "is this on track". Its
 output is AI-generated, unofficial, and never a compliance determination. The
 static site works with the service absent and makes no request beyond its own
-origin until a reader opts in.
+origin until a reader opts in. The service, its cost controls, and its
+not-applied deployment shape are documented in
+[`docs/AI-SERVICE.md`](docs/AI-SERVICE.md); the evaluation harness and its
+honesty rules are in [`evals/README.md`](evals/README.md).
+
+The two suites that carry zero tolerance both pass on the committed prompt:
+48 of 48 compliance, status, grading, and forecast phrasings refused, and 20 of
+20 empty-state answers carrying the site's own absence wording with no status
+language published. That is a measurement of one prompt version and one model
+on one date, recorded in [`evals/results/`](evals/results/) — not a guarantee
+about a later model.
 
 ## Primary sources
 
@@ -210,7 +222,7 @@ release. Reviewed 2026-08-15.
 | Performance | Applies | Not met. The release gate (`npm run check`) runs lint, typecheck, tests, and a production audit, and measures nothing about performance: there is no Lighthouse-CI run, no bundle budget, and no committed performance baseline to regress against |
 | Accessibility | Applies | WCAG 2.2 AA target with Section 508 framing; rendered-HTML test assertions on every build; last manual review dated 2026-07-13 at `ef1d11b`, with the routes and patterns shipped since listed as uncovered (docs/ACCESSIBILITY.md) |
 | Internationalization | Applies | English-only today; owner, first localization boundary, source-language rule, fallback, and review deadline are declared in [`docs/I18N.md`](docs/I18N.md) |
-| AI Evaluation | Applies | Partially met. The static site has no model component. An optional runtime question-answering service is being added under [ADR-0002](docs/adr/0002-runtime-grounded-question-answering.md) with a committed evaluation harness (empty-state fidelity, compliance refusal, citation grounding, freshness disclosure, question structuring); results are committed only from recorded live runs and otherwise published as not run |
+| AI Evaluation | Applies | The static site has no model component; the optional runtime question-answering service added under [ADR-0002](docs/adr/0002-runtime-grounded-question-answering.md) has five committed suites run live against the real pipeline on `global.anthropic.claude-sonnet-4-6` (Amazon Bedrock), prompt `2026-08-21.1`, 2026-08-22: compliance refusal 48/48 and empty-state fidelity 20/20 at zero tolerance, freshness 10/10, citation grounding 15/15, question structuring 20/22. Results are committed only from recorded live runs with provider, model, prompt version, commit, and date, enforced by `tests/eval-results.test.mjs`; a suite not run live is published as not run, never as a number |
 | AI Development Measurement | Applies | Not met. This repository is built with AI assistance and publishes no measurement of it: no committed metrics ledger, no delivery-outcome record, and no quality-debt counterweight |
 | Documentation | Applies | README, methodology/evidence/relationship models, ADR log (docs/adr/), CHANGELOG, CONTRIBUTING. Not met: the shared standards are neither vendored in-tree nor pinned to a released version, so the two documentation controls that require a pinned copy cannot be evaluated against this repository at all |
 | Quality & Metrics | Applies | Data-integrity, filter, rendered-HTML, and hosting test suites run in the release gate |
