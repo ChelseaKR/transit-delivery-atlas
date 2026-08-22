@@ -65,6 +65,40 @@ A future date may be stored as `scheduled-event` when the artifact itself shows
 that date. The interface must continue to say “scheduled” unless a later
 reviewed artifact supports an occurred, published, adopted, or effective claim.
 
+## Review commitment, source list, and sweep log
+
+Schema 0.3.0 gives the evidence collection the forward commitment the context
+watchlist already had, so an empty evidence list can say which of two things it
+means. The collection carries:
+
+- `nextReviewOn` — the date by which the listed sources are checked again. It
+  expires against the build date under exactly the watchlist rule: a lapsed
+  date is published as lapsed, and the release gate fails once it is more than
+  the shared grace window overdue (`lib/watchlist-review.mjs`).
+- `reviewCommitment` — the standing commitment in prose, including the sweep
+  planned for the week after the 2026-10-24 calculated planning date shared by
+  directives 1(a) through 1(g).
+- `reviewSources[]` — the committed list of public sources that are checked,
+  each with the directives it covers, `lastCheckedOn`, and `lastCheckOutcome`
+  (`checked` or `retrieval-failed`). A source that could not be retrieved is
+  recorded as not reviewed, never as checked.
+- `sweeps[]` — one entry per sweep, dated, listing the sources checked and the
+  evidence IDs added. A sweep that adds nothing is still recorded, and the
+  latest sweep's date is the collection's `lastUpdatedOn`.
+
+From those fields `lib/evidence-coverage.mjs` derives one of three states for
+each directive, and every surface that shows an empty evidence list uses it:
+
+| State | Meaning |
+|---|---|
+| `linked` | At least one reviewed artifact is linked to the directive. |
+| `checked-none-found` | No artifact is linked, and at least one listed source covering the directive was successfully checked on a stated date without finding an artifact that cites the order. |
+| `not-yet-reviewed` | No artifact is linked, and no listed source covering the directive has been successfully checked. |
+
+None of the three is an implementation status. "Checked, nothing found" is a
+fact about the Atlas's own search, stated with its date and its source list so
+a reader can repeat it; it says nothing about work outside those sources.
+
 ## Corrections
 
 Evidence corrections must identify the evidence ID, public artifact URL,

@@ -1,12 +1,12 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "urn:transit-delivery-atlas:data-schema:0.2.0",
+  "$id": "urn:transit-delivery-atlas:data-schema:0.3.0",
   "title": "Transit Delivery Atlas public dataset",
   "type": "object",
   "required": ["project", "schemaVersion", "dataReviewedThrough", "source", "orderMetadata", "organizations", "themes", "directives", "evidenceScope", "evidence"],
   "properties": {
     "project": { "const": "Transit Delivery Atlas" },
-    "schemaVersion": { "const": "0.2.0" },
+    "schemaVersion": { "const": "0.3.0" },
     "dataReviewedThrough": { "$ref": "#/$defs/date" },
     "source": { "$ref": "#/$defs/source" },
     "orderMetadata": { "$ref": "#/$defs/orderMetadata" },
@@ -253,11 +253,60 @@
     },
     "evidenceScope": {
       "type": "object",
-      "required": ["scope", "lastUpdatedOn", "coverageNote"],
+      "required": ["scope", "lastUpdatedOn", "nextReviewOn", "reviewCommitment", "coverageNote", "reviewSources", "sweeps"],
       "properties": {
         "scope": { "const": "selective" },
         "lastUpdatedOn": { "$ref": "#/$defs/date" },
-        "coverageNote": { "type": "string", "minLength": 50 }
+        "nextReviewOn": { "$ref": "#/$defs/date" },
+        "reviewCommitment": { "type": "string", "minLength": 100 },
+        "coverageNote": { "type": "string", "minLength": 50 },
+        "reviewSources": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/evidenceReviewSource" }
+        },
+        "sweeps": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/evidenceSweep" }
+        }
+      },
+      "additionalProperties": false
+    },
+    "evidenceReviewSource": {
+      "type": "object",
+      "required": ["id", "name", "publisher", "url", "coversDirectiveIds", "lastCheckedOn", "lastCheckOutcome", "note"],
+      "properties": {
+        "id": { "$ref": "#/$defs/identifier" },
+        "name": { "type": "string", "minLength": 5 },
+        "publisher": { "type": "string", "minLength": 1 },
+        "url": { "$ref": "#/$defs/httpsUri" },
+        "coversDirectiveIds": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/identifier" }
+        },
+        "lastCheckedOn": { "$ref": "#/$defs/date" },
+        "lastCheckOutcome": { "enum": ["checked", "retrieval-failed"] },
+        "note": { "type": "string", "minLength": 30 }
+      },
+      "additionalProperties": false
+    },
+    "evidenceSweep": {
+      "type": "object",
+      "required": ["sweptOn", "sourceIds", "addedEvidenceIds", "note"],
+      "properties": {
+        "sweptOn": { "$ref": "#/$defs/date" },
+        "sourceIds": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/identifier" }
+        },
+        "addedEvidenceIds": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/identifier" }
+        },
+        "note": { "type": "string", "minLength": 40 }
       },
       "additionalProperties": false
     },

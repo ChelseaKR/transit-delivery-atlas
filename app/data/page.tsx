@@ -99,7 +99,7 @@ export default function DataPage() {
                 <a className="download-card" href="/data/schema.json">
                   <span className="file-type">SCHEMA</span>
                   <strong>JSON Schema</strong>
-                  <small>Public export contract for version 0.2.0</small>
+                  <small>Public export contract for version 0.3.0</small>
                 </a>
                 <a
                   className="download-card"
@@ -141,10 +141,12 @@ export default function DataPage() {
               </p>
               <p>
                 Product and data-contract versions are tracked independently.
-                Release 0.3 adds this interface and normalized CSVs without
-                changing the canonical JSON shape, so that schema remains at
-                version 0.2.0. The separate watchlist contract begins at
-                version 0.1.0.
+                Release 0.3 added this interface and normalized CSVs without
+                changing the canonical JSON shape. Data-contract version 0.3.0
+                adds the evidence layer&apos;s review commitment: a next review
+                date, a committed list of public sources with last-checked dates,
+                and a sweep log inside <code>evidenceScope</code>. The separate
+                watchlist contract begins at version 0.1.0.
               </p>
               <div className="table-scroll" tabIndex={0} role="region" aria-label="Data dictionary table">
                 <table>

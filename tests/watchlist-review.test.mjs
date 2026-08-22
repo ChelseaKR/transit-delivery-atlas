@@ -126,9 +126,15 @@ test("a scheduled event that has passed is separated from one still ahead", () =
 });
 
 test("the release gate fails on a review date that has lapsed past the grace window", async () => {
-  const watchlist = await readJson("data/watchlist.json");
+  const [watchlist, evidence] = await Promise.all([
+    readJson("data/watchlist.json"),
+    readJson("data/evidence.json"),
+  ]);
+  // One rule, two layers: the evidence collection's planned review is gated
+  // alongside the watchlist items, so "everything current" must include it.
   const earliest = watchlist.items
     .map(({ nextReviewOn }) => nextReviewOn)
+    .concat(evidence.nextReviewOn)
     .sort()
     .at(0);
   const lapsed = new Date(
@@ -155,8 +161,42 @@ test("the release gate fails on a review date that has lapsed past the grace win
     cwd: new URL(".", root),
     env: { ...process.env, ATLAS_BUILD_DATE: earliest },
   });
-  assert.match(current.stdout, /Watchlist review currency at .*: 0 of \d+ item\(s\)/);
+  assert.match(current.stdout, /Review currency at .*: 0 of \d+ reviewed item\(s\)/);
   assert.doesNotMatch(current.stderr, /WATCHLIST REVIEW OVERDUE/);
+});
+
+test("a lapsed evidence-collection review blocks a release exactly like a lapsed watchlist item", async () => {
+  const evidence = await readJson("data/evidence.json");
+  const lapsed = new Date(
+    new Date(`${evidence.nextReviewOn}T00:00:00Z`).getTime() + (REVIEW_GRACE_DAYS + 1) * 86_400_000,
+  )
+    .toISOString()
+    .slice(0, 10);
+
+  await assert.rejects(
+    run(process.execPath, ["scripts/validate-data.mjs"], {
+      cwd: new URL(".", root),
+      env: { ...process.env, ATLAS_BUILD_DATE: lapsed },
+    }),
+    (error) => {
+      assert.match(error.stderr, /evidence-collection: planned review/);
+      assert.match(error.stderr, /grace window overdue/);
+      assert.notEqual(error.code, 0);
+      return true;
+    },
+  );
+
+  const withinGrace = new Date(
+    new Date(`${evidence.nextReviewOn}T00:00:00Z`).getTime() + 86_400_000,
+  )
+    .toISOString()
+    .slice(0, 10);
+  const warned = await run(process.execPath, ["scripts/validate-data.mjs"], {
+    cwd: new URL(".", root),
+    env: { ...process.env, ATLAS_BUILD_DATE: withinGrace },
+  });
+  assert.match(warned.stderr, /evidence-collection: planned review/);
+  assert.match(warned.stdout, /Review currency at .*: [1-9]\d* of \d+ reviewed item\(s\)/);
 });
 
 test("no published watchlist card presents a lapsed review as a forward-looking plan", async () => {

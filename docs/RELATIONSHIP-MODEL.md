@@ -62,9 +62,11 @@ Both files carry the canonical JSON schema version. In the analytical export,
 `record_directive_id` identifies the record containing the dependency
 statement. It is provenance, not a claim about delivery direction.
 
-Product and data-contract versions are independent. Product release 0.3 adds
+Product and data-contract versions are independent. Product release 0.3 added
 the relationship interface and normalized derivatives without changing the
-canonical JSON shape, so the public JSON schema remains at version 0.2.0.
+canonical JSON shape. The public JSON schema moved to 0.3.0 when the evidence
+layer gained its review commitment (see the evidence model); the relationship
+exports were unchanged by that bump.
 
 The normalized tables are deterministic derivatives. Canonical edits still
 belong in `data/directives.json`, `data/analysis.json`, or the referenced

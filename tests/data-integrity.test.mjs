@@ -108,7 +108,7 @@ test("public JSON and CSV contain the same 21 directive IDs", async () => {
 test("implementation evidence is selectively scoped with exact Order 5 provenance", async () => {
   const evidenceData = await readJson("data/evidence.json");
 
-  assert.equal(evidenceData.schemaVersion, "0.2.0");
+  assert.equal(evidenceData.schemaVersion, "0.3.0");
   assert.equal(evidenceData.scope, "selective");
   assertIsoDate(evidenceData.lastUpdatedOn, "evidence collection lastUpdatedOn");
   assert.equal(
@@ -179,6 +179,84 @@ test("implementation evidence is selectively scoped with exact Order 5 provenanc
   assert.deepEqual(presentation.directiveLinks[0].locator.pages, [12, 13, 14, 15]);
   assert.match(presentation.editorialSummary, /not currently open/i);
   assert.match(presentation.limitations.join(" "), /not a final guideline/i);
+});
+
+test("the evidence layer commits to a source list, a sweep log, and a next review (#59)", async () => {
+  const [evidenceData, directiveData] = await Promise.all([
+    readJson("data/evidence.json"),
+    readJson("data/directives.json"),
+  ]);
+  const directiveIds = new Set(directiveData.directives.map(({ id }) => id));
+
+  assertIsoDate(evidenceData.nextReviewOn, "evidence nextReviewOn");
+  assert.ok(evidenceData.nextReviewOn > evidenceData.lastUpdatedOn);
+  assert.match(evidenceData.reviewCommitment, /2026-10-24/);
+  assert.match(evidenceData.reviewCommitment, /grace window/);
+
+  assert.ok(evidenceData.reviewSources.length >= 5);
+  const sourceIds = new Set();
+  for (const reviewSource of evidenceData.reviewSources) {
+    assert.equal(new URL(reviewSource.url).protocol, "https:", reviewSource.id);
+    assert.ok(!sourceIds.has(reviewSource.id), `duplicate review source ${reviewSource.id}`);
+    sourceIds.add(reviewSource.id);
+    assertIsoDate(reviewSource.lastCheckedOn, `${reviewSource.id}.lastCheckedOn`);
+    assert.ok(["checked", "retrieval-failed"].includes(reviewSource.lastCheckOutcome));
+    assert.ok(reviewSource.coversDirectiveIds.every((id) => directiveIds.has(id)), reviewSource.id);
+  }
+
+  // Every directive is covered by at least one listed source, so "nobody has
+  // looked" can only ever be a retrieval failure, never an unlisted directive.
+  for (const directiveId of directiveIds) {
+    assert.ok(
+      evidenceData.reviewSources.some(({ coversDirectiveIds }) =>
+        coversDirectiveIds.includes(directiveId),
+      ),
+      `${directiveId} has no listed review source`,
+    );
+  }
+
+  const latestSweep = evidenceData.sweeps.at(-1);
+  assert.equal(latestSweep.sweptOn, evidenceData.lastUpdatedOn);
+  assert.ok(latestSweep.sourceIds.every((id) => sourceIds.has(id)));
+  const evidenceIds = new Set(evidenceData.evidence.map(({ id }) => id));
+  assert.ok(latestSweep.addedEvidenceIds.every((id) => evidenceIds.has(id)));
+
+  // A source the latest sweep says it checked must carry that sweep's date;
+  // a failed retrieval is recorded as failed, not as checked.
+  for (const reviewSource of evidenceData.reviewSources) {
+    if (latestSweep.sourceIds.includes(reviewSource.id)) {
+      assert.equal(reviewSource.lastCheckedOn, latestSweep.sweptOn, reviewSource.id);
+    }
+  }
+  const failed = evidenceData.reviewSources.find(({ id }) => id === "chsra-newsroom");
+  assert.equal(failed.lastCheckOutcome, "retrieval-failed");
+  assert.match(failed.note, /not reviewed/);
+});
+
+test("the 2026-08-21 sweep added the two Commission adoption items that cite Order 5", async () => {
+  const evidenceData = await readJson("data/evidence.json");
+  const sccp = evidenceData.evidence.find(
+    ({ id }) => id === "ctc-2026-08-20-sccp-guidelines-adoption-item",
+  );
+  const lpp = evidenceData.evidence.find(
+    ({ id }) => id === "ctc-2026-08-20-lpp-c-guidelines-adoption-item",
+  );
+  for (const record of [sccp, lpp]) {
+    assert.ok(record);
+    assert.equal(record.datedOn, "2026-08-07");
+    assert.equal(record.dateKind, "published");
+    assert.equal(record.evidenceType, "meeting-material");
+    assert.equal(record.directiveLinks.length, 1);
+    assert.equal(record.directiveLinks[0].directiveId, "n-7-26-5");
+    assert.match(record.directiveLinks[0].excerpt, /^Pursuant to Executive Order N-7-26 \(Order #5\)/);
+    assert.deepEqual(record.directiveLinks[0].locator.pages, [2]);
+    assert.ok(
+      record.limitations.some((limitation) => /does not establish that Resolution/.test(limitation)),
+      `${record.id} must say a staff recommendation is not an adoption record`,
+    );
+  }
+  assert.equal(sccp.pageCount, 78);
+  assert.equal(lpp.pageCount, 88);
 });
 
 test("evidence records retain secure URLs, hashes, dates, and bounded locators", async () => {
@@ -254,7 +332,11 @@ test("public JSON, JSON Schema, and evidence CSV expose one consistent evidence 
   assert.deepEqual(exported.evidenceScope, {
     scope: canonical.scope,
     lastUpdatedOn: canonical.lastUpdatedOn,
+    nextReviewOn: canonical.nextReviewOn,
+    reviewCommitment: canonical.reviewCommitment,
     coverageNote: canonical.coverageNote,
+    reviewSources: canonical.reviewSources,
+    sweeps: canonical.sweeps,
   });
   assert.deepEqual(exported.evidence, canonical.evidence);
   assert.ok(exported.directives.every((directive) => !Object.hasOwn(directive, "evidence")));
@@ -375,15 +457,15 @@ test("context watchlist is selective, non-evidentiary, and actionably reviewed",
     origin: "artifact-header",
   });
   assert.equal(hearing.directiveLinks[0].relationship, "process-adjacency");
-  assert.equal(hearing.nextReviewOn, "2026-08-04");
+  assert.equal(hearing.nextReviewOn, "2026-10-16");
+  assert.ok(hearing.lastReviewedOn >= "2026-08-21", "the lapsed hearing lead was re-reviewed");
 
   const meeting = watchlist.items.find(
     ({ id }) => id === "ctc-2026-08-20-21-meeting-materials-watch",
   );
-  assert.equal(
-    meeting.evidenceBoundary.reason,
-    "expected-artifact-not-published",
-  );
+  assert.equal(meeting.evidenceBoundary.reason, "no-explicit-order-citation");
+  assert.match(meeting.editorialSummary, /evidence register/);
+  assert.equal(meeting.nextReviewOn, "2026-10-16");
 
   const funding = watchlist.items.find(
     ({ id }) => id === "fta-2026-07-27-bus-low-no-nofo",
@@ -936,11 +1018,11 @@ test("public schema is controlled and closes every typed object", async () => {
     readJson("data/public-schema.json"),
     readJson("data/watchlist-schema.json"),
   ]);
-  assert.equal(schema.$id, "urn:transit-delivery-atlas:data-schema:0.2.0");
+  assert.equal(schema.$id, "urn:transit-delivery-atlas:data-schema:0.3.0");
   assert.equal(schema.$defs.date.format, "date");
   assert.ok(schema.required.includes("evidenceScope"));
   assert.ok(schema.required.includes("evidence"));
-  assert.equal(schema.properties.schemaVersion.const, "0.2.0");
+  assert.equal(schema.properties.schemaVersion.const, "0.3.0");
   assert.ok(schema.properties.evidenceScope);
   assert.ok(schema.properties.evidence.items);
   assert.equal(

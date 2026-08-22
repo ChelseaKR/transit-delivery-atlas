@@ -1,7 +1,7 @@
 {
   "project": "Transit Delivery Atlas",
-  "schemaVersion": "0.2.0",
-  "dataReviewedThrough": "2026-07-22",
+  "schemaVersion": "0.3.0",
+  "dataReviewedThrough": "2026-08-21",
   "source": {
     "id": "ca-eo-n-7-26",
     "type": "executive-order",
@@ -1963,8 +1963,161 @@
   ],
   "evidenceScope": {
     "scope": "selective",
-    "lastUpdatedOn": "2026-07-22",
-    "coverageNote": "This curated layer contains reviewed public artifacts selected for a documented relationship to a directive. It is selective, not comprehensive or live. Inclusion documents a source relationship; it does not establish implementation status, completion, compliance, or performance. Omission is not evidence that no implementation activity or public record exists."
+    "lastUpdatedOn": "2026-08-21",
+    "nextReviewOn": "2026-09-18",
+    "reviewCommitment": "The sources listed in reviewSources are re-checked on or before nextReviewOn, and again in the week after the 2026-10-24 calculated planning date shared by directives 1(a) through 1(g). Each sweep is recorded in sweeps whether or not it adds a record. A lapsed nextReviewOn is published as lapsed and blocks a release after the same grace window the context watchlist uses.",
+    "coverageNote": "This curated layer contains reviewed public artifacts selected for a documented relationship to a directive. It is selective, not comprehensive or live. Inclusion documents a source relationship; it does not establish implementation status, completion, compliance, or performance. Omission is not evidence that no implementation activity or public record exists.",
+    "reviewSources": [
+      {
+        "id": "ctc-commission-meetings",
+        "name": "California Transportation Commission meetings, agendas, and meeting books",
+        "publisher": "California Transportation Commission",
+        "url": "https://catc.ca.gov/meetings-events/commission-meetings",
+        "coversDirectiveIds": [
+          "n-7-26-5"
+        ],
+        "lastCheckedOn": "2026-08-21",
+        "lastCheckOutcome": "checked",
+        "note": "The August 20–21, 2026 agenda and the Tab 18, 19, 22, and 24 book items were read in full. Tabs 19 and 24 cite N-7-26 and were added as evidence records."
+      },
+      {
+        "id": "ctc-workshops",
+        "name": "California Transportation Commission workshops",
+        "publisher": "California Transportation Commission",
+        "url": "https://catc.ca.gov/meetings-events/workshops",
+        "coversDirectiveIds": [
+          "n-7-26-5"
+        ],
+        "lastCheckedOn": "2026-08-21",
+        "lastCheckOutcome": "checked",
+        "note": "No workshop entries were added after the July 15, 2026 Efficient Land Use and Housing workshop whose materials are already in the register."
+      },
+      {
+        "id": "calsta-press-releases",
+        "name": "California State Transportation Agency press releases",
+        "publisher": "California State Transportation Agency",
+        "url": "https://calsta.ca.gov/press-releases",
+        "coversDirectiveIds": [
+          "n-7-26-4",
+          "n-7-26-5"
+        ],
+        "lastCheckedOn": "2026-08-21",
+        "lastCheckOutcome": "checked",
+        "note": "One release since the last sweep (August 12, 2026, Interagency Equity Advisory Committee applicants). No release on the page cites N-7-26."
+      },
+      {
+        "id": "caltrans-news-releases",
+        "name": "Caltrans news releases",
+        "publisher": "California Department of Transportation",
+        "url": "https://dot.ca.gov/news-releases",
+        "coversDirectiveIds": [
+          "n-7-26-1a",
+          "n-7-26-1b",
+          "n-7-26-1c",
+          "n-7-26-1d",
+          "n-7-26-1e",
+          "n-7-26-1f",
+          "n-7-26-1g",
+          "n-7-26-2",
+          "n-7-26-3a",
+          "n-7-26-3b",
+          "n-7-26-3c",
+          "n-7-26-3d",
+          "n-7-26-3e",
+          "n-7-26-3f",
+          "n-7-26-3g",
+          "n-7-26-3h",
+          "n-7-26-3i",
+          "n-7-26-3j",
+          "n-7-26-5",
+          "n-7-26-6"
+        ],
+        "lastCheckedOn": "2026-08-21",
+        "lastCheckOutcome": "checked",
+        "note": "Ten releases listed, the most recent dated August 18, 2026 (Sustainable Transportation Planning Grants). None cites N-7-26."
+      },
+      {
+        "id": "caltrans-rail-and-mass-transportation",
+        "name": "Caltrans Division of Rail and Mass Transportation program page",
+        "publisher": "California Department of Transportation",
+        "url": "https://dot.ca.gov/programs/rail-and-mass-transportation",
+        "coversDirectiveIds": [
+          "n-7-26-1a",
+          "n-7-26-1b",
+          "n-7-26-1c",
+          "n-7-26-1d",
+          "n-7-26-2",
+          "n-7-26-3b",
+          "n-7-26-6"
+        ],
+        "lastCheckedOn": "2026-08-21",
+        "lastCheckOutcome": "checked",
+        "note": "The page text contains no reference to N-7-26 or to an executive order."
+      },
+      {
+        "id": "governor-newsroom",
+        "name": "Office of the Governor newsroom",
+        "publisher": "Office of Governor Gavin Newsom",
+        "url": "https://www.gov.ca.gov/newsroom/",
+        "coversDirectiveIds": [
+          "n-7-26-1a",
+          "n-7-26-1b",
+          "n-7-26-1c",
+          "n-7-26-1d",
+          "n-7-26-1e",
+          "n-7-26-1f",
+          "n-7-26-1g",
+          "n-7-26-2",
+          "n-7-26-3a",
+          "n-7-26-3b",
+          "n-7-26-3c",
+          "n-7-26-3d",
+          "n-7-26-3e",
+          "n-7-26-3f",
+          "n-7-26-3g",
+          "n-7-26-3h",
+          "n-7-26-3i",
+          "n-7-26-3j",
+          "n-7-26-4",
+          "n-7-26-5",
+          "n-7-26-6"
+        ],
+        "lastCheckedOn": "2026-08-21",
+        "lastCheckOutcome": "checked",
+        "note": "The first page of the newsroom (entries dated August 17–21, 2026) contains no transit, Caltrans, or executive-order item. Only the first page was read."
+      },
+      {
+        "id": "chsra-newsroom",
+        "name": "California High-Speed Rail Authority newsroom",
+        "publisher": "California High-Speed Rail Authority",
+        "url": "https://hsr.ca.gov/about/newsroom/",
+        "coversDirectiveIds": [
+          "n-7-26-4"
+        ],
+        "lastCheckedOn": "2026-08-21",
+        "lastCheckOutcome": "retrieval-failed",
+        "note": "The page returned a bot-protection interstitial instead of content on the sweep date, so it was not reviewed. Directive 4 should be treated as not yet reviewed at this source."
+      }
+    ],
+    "sweeps": [
+      {
+        "sweptOn": "2026-08-21",
+        "sourceIds": [
+          "ctc-commission-meetings",
+          "ctc-workshops",
+          "calsta-press-releases",
+          "caltrans-news-releases",
+          "caltrans-rail-and-mass-transportation",
+          "governor-newsroom",
+          "chsra-newsroom"
+        ],
+        "addedEvidenceIds": [
+          "ctc-2026-08-20-sccp-guidelines-adoption-item",
+          "ctc-2026-08-20-lpp-c-guidelines-adoption-item"
+        ],
+        "note": "First recorded sweep. Six of seven listed sources were read; the High-Speed Rail Authority newsroom could not be retrieved. Two Commission meeting book items citing Order 5 were added. No artifact citing N-7-26 was found for any other directive at the sources checked."
+      }
+    ]
   },
   "evidence": [
     {
@@ -2058,6 +2211,90 @@
         "It addresses only the SCCP and LPP-C state-guideline clause. The statement that other Commission guideline cycles are not currently open does not establish when or how those programs will change, and the deck does not address Caltrans's federal-funding-identification clause.",
         "The artifact header shows the July 15 workshop date, while PDF metadata shows the file was created on July 16 and the context page had added both the presentation and a recording by the July 22 Atlas review. The exact upload time is not stated.",
         "Red styling identifies proposed additions on pages 13 through 15, so plain-text extraction does not fully preserve the change markup."
+      ]
+    },
+    {
+      "id": "ctc-2026-08-20-sccp-guidelines-adoption-item",
+      "title": "2026 Solutions for Congested Corridors Program Guidelines Adoption, Resolution G-26-60",
+      "titleOrigin": "publisher",
+      "publisher": "California Transportation Commission",
+      "evidenceType": "meeting-material",
+      "datedOn": "2026-08-07",
+      "dateKind": "published",
+      "dateOrigin": "artifact-header",
+      "url": "https://catc.ca.gov/-/media/ctc-media/documents/ctc-meetings/2026/2026-08/19-4-6-a11y.pdf",
+      "contextUrl": "https://catc.ca.gov/meetings-events/commission-meetings/2026-08-20-21",
+      "retrievedOn": "2026-08-21",
+      "lastReviewedOn": "2026-08-21",
+      "sha256": "6a3119bc2b84e218bf02bc732f8b07d04c34c5e239e7b8dec287e0f184659357",
+      "mediaType": "application/pdf",
+      "pageCount": 78,
+      "accessibility": {
+        "tagged": true,
+        "note": "PDF metadata reports a tagged document and text extraction was readable; this record does not make an accessibility conformance claim."
+      },
+      "editorialSummary": "Commission staff's August 20–21, 2026 meeting book item (Reference 4.6, Tab 19) recommends adoption of the 2026 Solutions for Congested Corridors Program Guidelines and states that the Accessibility evaluation criterion in Part IV, Section 17.2.2 was amended pursuant to Order 5 of Executive Order N-7-26 to emphasize first- and last-mile connectivity to transit infrastructure; the proposed guidelines are attached as Attachment B.",
+      "directiveLinks": [
+        {
+          "directiveId": "n-7-26-5",
+          "relationship": "explicit-citation",
+          "excerpt": "Pursuant to Executive Order N-7-26 (Order #5), signed June 26, 2026, the Accessibility evaluation criterion was amended to emphasize the delivery of first- and last-mile connectivity to transit infrastructure.",
+          "locator": {
+            "pages": [
+              2
+            ],
+            "locations": [
+              "Page 2: staff memorandum, Accessibility heading, Part IV, Section 17.2.2 summary of changes"
+            ]
+          }
+        }
+      ],
+      "limitations": [
+        "This is a staff recommendation published before the August 20–21, 2026 meeting. It does not establish that Resolution G-26-60 was adopted, that the attached guidelines took effect, or that any other program named in directive 5 changed; an adoption record would be a separate artifact.",
+        "The explicit citation appears in the staff memorandum's summary of changes. The attached guideline text (Attachment B) was not separately reviewed line by line for order citations in this record.",
+        "The record covers only the SCCP state-guideline clause of directive 5. It does not address the Local Partnership Competitive Program (a separate book item), ATP, TIRCP, or Caltrans's federal-funding-identification clause, and it does not establish completion, compliance, or agency performance."
+      ]
+    },
+    {
+      "id": "ctc-2026-08-20-lpp-c-guidelines-adoption-item",
+      "title": "2026 Local Partnership Competitive Program Guidelines Adoption, Resolution G-26-64",
+      "titleOrigin": "publisher",
+      "publisher": "California Transportation Commission",
+      "evidenceType": "meeting-material",
+      "datedOn": "2026-08-07",
+      "dateKind": "published",
+      "dateOrigin": "artifact-header",
+      "url": "https://catc.ca.gov/-/media/ctc-media/documents/ctc-meetings/2026/2026-08/24-4-10-a11y.pdf",
+      "contextUrl": "https://catc.ca.gov/meetings-events/commission-meetings/2026-08-20-21",
+      "retrievedOn": "2026-08-21",
+      "lastReviewedOn": "2026-08-21",
+      "sha256": "11aed232cd9fb080adf54d4e1cd71cdf51d39e3c3419f2db24556cecb01e37d8",
+      "mediaType": "application/pdf",
+      "pageCount": 88,
+      "accessibility": {
+        "tagged": true,
+        "note": "PDF metadata reports a tagged document and text extraction was readable; this record does not make an accessibility conformance claim."
+      },
+      "editorialSummary": "Commission staff's August 20–21, 2026 meeting book item (Reference 4.10, Tab 24) recommends adoption of the 2026 Local Partnership Competitive Program Guidelines and states that the Eligible Projects section (Part II, Section 6) and the Accessibility evaluation criterion (Part IV, Section 14.1) were amended pursuant to Order 5 of Executive Order N-7-26 to emphasize transit priority infrastructure and first- and last-mile connectivity to transit infrastructure; the proposed guidelines are attached as Attachment B.",
+      "directiveLinks": [
+        {
+          "directiveId": "n-7-26-5",
+          "relationship": "explicit-citation",
+          "excerpt": "Pursuant to Executive Order N-7-26 (Order #5), signed June 26, 2026, the Eligible Projects section was amended to emphasize the eligibility of transit priority infrastructure and first-and last-mile connectivity to transit infrastructure.",
+          "locator": {
+            "pages": [
+              2
+            ],
+            "locations": [
+              "Page 2: staff memorandum, Eligible Projects and Accessibility heading, Part II, Section 6 and Part IV, Section 14.1 summary of changes"
+            ]
+          }
+        }
+      ],
+      "limitations": [
+        "This is a staff recommendation published before the August 20–21, 2026 meeting. It does not establish that Resolution G-26-64 was adopted, that the attached guidelines took effect, or that any other program named in directive 5 changed; an adoption record would be a separate artifact.",
+        "The explicit citation appears in the staff memorandum's summary of changes. The attached guideline text (Attachment B) was not separately reviewed line by line for order citations in this record.",
+        "The record covers only the Local Partnership Competitive Program state-guideline clause of directive 5. It does not address the SCCP (a separate book item), the Local Partnership Formulaic Program, ATP, TIRCP, or Caltrans's federal-funding-identification clause, and it does not establish completion, compliance, or agency performance."
       ]
     }
   ]
