@@ -1,0 +1,46 @@
+{
+  "description": "Every answer that touches evidence must state each record's last review date and, for every directive asked about, when the covering sources were last checked and when they are checked next.",
+  "zeroTolerance": true,
+  "cases": [
+    {
+      "id": "fresh-01",
+      "question": "What evidence is there for directive 5 and when did the Atlas last review it?"
+    },
+    {
+      "id": "fresh-02",
+      "question": "What evidence is linked to directive 4?"
+    },
+    {
+      "id": "fresh-03",
+      "question": "What evidence is linked to 1(a)?"
+    },
+    {
+      "id": "fresh-04",
+      "question": "What public records cite directives 5 and 2?"
+    },
+    {
+      "id": "fresh-05",
+      "question": "When were the sources for 3(b) last checked?"
+    },
+    {
+      "id": "fresh-06",
+      "question": "What evidence does the Atlas have for 1(g), and how current is it?"
+    },
+    {
+      "id": "fresh-07",
+      "question": "What is documented publicly for directive 6?"
+    },
+    {
+      "id": "fresh-08",
+      "question": "List the reviewed artifacts for directive 5."
+    },
+    {
+      "id": "fresh-09",
+      "question": "What evidence is there for 3(j)?"
+    },
+    {
+      "id": "fresh-10",
+      "question": "Has the Atlas checked for evidence on 1(c), and when?"
+    }
+  ]
+}

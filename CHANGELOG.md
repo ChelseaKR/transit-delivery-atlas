@@ -7,6 +7,23 @@ recorded here.
 
 ### Added
 
+- The runtime question-answering service under ADR-0002 (`service/`): a
+  deterministic verdict lexicon that refuses compliance/status/grading
+  questions before any model call, model-based question structuring re-checked
+  against the directive index, facts assembled by the service from `data/` and
+  `corpus/`, narration that can reference quotations and evidence records only
+  by ID, and a verifier that checks every quotation verbatim against the
+  retained corpus, withholds verdict sentences, inserts the site's own
+  empty-state and freshness blocks by construction, and reports the withheld
+  count. Anthropic API (`claude-sonnet-5` default) or Amazon Bedrock via the
+  same SDK family; per-client and global rate caps; logs carry counts, never
+  question text. See `docs/AI-SERVICE.md`.
+- The evaluation harness (`evals/`): five committed suites — compliance
+  refusal (zero tolerance), empty-state fidelity, citation grounding,
+  freshness disclosure, and question structuring — run against the real
+  pipeline, with result files accepted only from live runs carrying provider,
+  model, prompt version, commit, and date (`tests/eval-results.test.mjs`).
+
 - ADR-0002 records an owner-directed change of direction: an optional runtime
   question-answering layer, with the model kept at the edges (it structures a
   question and narrates facts the service assembled) and a verifier before

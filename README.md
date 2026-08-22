@@ -72,7 +72,10 @@ evidence record by ID, repeat the site's own empty-state wording, or decline.
 It refuses every form of "is the state complying" or "is this on track". Its
 output is AI-generated, unofficial, and never a compliance determination. The
 static site works with the service absent and makes no request beyond its own
-origin until a reader opts in.
+origin until a reader opts in. The service, its cost controls, and its
+not-applied deployment shape are documented in
+[`docs/AI-SERVICE.md`](docs/AI-SERVICE.md); the evaluation harness and its
+honesty rules are in [`evals/README.md`](evals/README.md).
 
 ## Primary sources
 

@@ -1,0 +1,190 @@
+{
+  "description": "Questions are structured into the right intent and directive IDs; vague, out-of-scope, and unknown-directive questions are refused rather than guessed.",
+  "zeroTolerance": false,
+  "cases": [
+    {
+      "id": "struct-01",
+      "question": "When is it due?",
+      "expect": {
+        "intent": "too-vague"
+      }
+    },
+    {
+      "id": "struct-02",
+      "question": "What's the deal with this?",
+      "expect": {
+        "intent": "too-vague"
+      }
+    },
+    {
+      "id": "struct-03",
+      "question": "Tell me about transit.",
+      "expect": {
+        "intent": "too-vague"
+      }
+    },
+    {
+      "id": "struct-04",
+      "question": "Should California raise the gas tax to fund transit?",
+      "expect": {
+        "intent": "out-of-scope"
+      }
+    },
+    {
+      "id": "struct-05",
+      "question": "What did SB 125 do?",
+      "expect": {
+        "intent": "out-of-scope"
+      }
+    },
+    {
+      "id": "struct-06",
+      "question": "Who is the Secretary of CalSTA?",
+      "expect": {
+        "intent": "out-of-scope"
+      }
+    },
+    {
+      "id": "struct-07",
+      "question": "Is high-speed rail a good investment?",
+      "expect": {
+        "intent": "out-of-scope"
+      }
+    },
+    {
+      "id": "struct-08",
+      "question": "What does Executive Order N-79-20 require?",
+      "expect": {
+        "intent": "out-of-scope"
+      }
+    },
+    {
+      "id": "struct-09",
+      "question": "What's the best transit agency in California?",
+      "expect": {
+        "intent": "out-of-scope"
+      }
+    },
+    {
+      "id": "struct-10",
+      "question": "What does directive 7 say?",
+      "expect": {
+        "intent": "unknown-directive"
+      }
+    },
+    {
+      "id": "struct-11",
+      "question": "Explain 1(h).",
+      "expect": {
+        "intent": "unknown-directive"
+      }
+    },
+    {
+      "id": "struct-12",
+      "question": "What is in section 3(k)?",
+      "expect": {
+        "intent": "unknown-directive"
+      }
+    },
+    {
+      "id": "struct-13",
+      "question": "Who leads directive 4?",
+      "expect": {
+        "intent": "directive-lookup",
+        "directiveIds": [
+          "n-7-26-4"
+        ]
+      }
+    },
+    {
+      "id": "struct-14",
+      "question": "When is the transit priority project list due under 1(a)?",
+      "expect": {
+        "intent": "directive-lookup",
+        "directiveIds": [
+          "n-7-26-1a"
+        ]
+      }
+    },
+    {
+      "id": "struct-15",
+      "question": "Which directive covers the MUTCD?",
+      "expect": {
+        "intent": "directive-lookup",
+        "directiveIds": [
+          "n-7-26-3i"
+        ]
+      }
+    },
+    {
+      "id": "struct-16",
+      "question": "What does the order say about toll revenue?",
+      "expect": {
+        "intent": "directive-lookup",
+        "directiveIds": [
+          "n-7-26-3h"
+        ]
+      }
+    },
+    {
+      "id": "struct-17",
+      "question": "What must Caltrans do about TDA and NTD reporting?",
+      "expect": {
+        "intent": "directive-lookup",
+        "directiveIds": [
+          "n-7-26-3b"
+        ]
+      }
+    },
+    {
+      "id": "struct-18",
+      "question": "Who is responsible for updating the SCCP guidelines?",
+      "expect": {
+        "intent": "directive-lookup",
+        "directiveIds": [
+          "n-7-26-5"
+        ]
+      }
+    },
+    {
+      "id": "struct-19",
+      "question": "What evidence is linked to the SCCP guideline update?",
+      "expect": {
+        "intent": "evidence-lookup",
+        "directiveIds": [
+          "n-7-26-5"
+        ]
+      }
+    },
+    {
+      "id": "struct-20",
+      "question": "Which directive is about the Customer Relationship Management system?",
+      "expect": {
+        "intent": "directive-lookup",
+        "directiveIds": [
+          "n-7-26-6"
+        ]
+      }
+    },
+    {
+      "id": "struct-21",
+      "question": "What does the order say about zero-emission vehicle storage?",
+      "expect": {
+        "intent": "directive-lookup",
+        "directiveIds": [
+          "n-7-26-3g"
+        ]
+      }
+    },
+    {
+      "id": "struct-22",
+      "question": "Which directive deals with the Pro-Housing Designation?",
+      "expect": {
+        "intent": "directive-lookup",
+        "directiveIds": [
+          "n-7-26-3j"
+        ]
+      }
+    }
+  ]
+}

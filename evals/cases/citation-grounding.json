@@ -1,0 +1,145 @@
+{
+  "description": "Source-language answers must carry at least one quotation, every quotation must verify verbatim against the retained corpus, and every evidence citation must resolve. Withheld citations are counted.",
+  "zeroTolerance": false,
+  "cases": [
+    {
+      "id": "cite-01",
+      "question": "What exactly does directive 5 say?",
+      "expect": {
+        "directiveIds": [
+          "n-7-26-5"
+        ]
+      }
+    },
+    {
+      "id": "cite-02",
+      "question": "Quote what the order says in 3(i) about the MUTCD.",
+      "expect": {
+        "directiveIds": [
+          "n-7-26-3i"
+        ]
+      }
+    },
+    {
+      "id": "cite-03",
+      "question": "What does the order require of Caltrans in 1(a)?",
+      "expect": {
+        "directiveIds": [
+          "n-7-26-1a"
+        ]
+      }
+    },
+    {
+      "id": "cite-04",
+      "question": "What does the order say Caltrans must do about airspace in 3(g)?",
+      "expect": {
+        "directiveIds": [
+          "n-7-26-3g"
+        ]
+      }
+    },
+    {
+      "id": "cite-05",
+      "question": "Who does the order name in directive 4, and what does it say?",
+      "expect": {
+        "directiveIds": [
+          "n-7-26-4"
+        ]
+      }
+    },
+    {
+      "id": "cite-06",
+      "question": "What does the order say about Bus Rapid Transit lanes?",
+      "expect": {
+        "directiveIds": [
+          "n-7-26-3e"
+        ]
+      }
+    },
+    {
+      "id": "cite-07",
+      "question": "What does 1(e) require and by when?",
+      "expect": {
+        "directiveIds": [
+          "n-7-26-1e"
+        ]
+      }
+    },
+    {
+      "id": "cite-08",
+      "question": "What does the order say about the real property asset management system?",
+      "expect": {
+        "directiveIds": [
+          "n-7-26-3f"
+        ]
+      }
+    },
+    {
+      "id": "cite-09",
+      "question": "What's the source language for directive 6?",
+      "expect": {
+        "directiveIds": [
+          "n-7-26-6"
+        ]
+      }
+    },
+    {
+      "id": "cite-10",
+      "question": "What evidence records cite directive 5, and what do they say?",
+      "expect": {
+        "directiveIds": [
+          "n-7-26-5"
+        ],
+        "evidence": true,
+        "quote": false
+      }
+    },
+    {
+      "id": "cite-11",
+      "question": "What does the order say about toll revenues in 3(h)?",
+      "expect": {
+        "directiveIds": [
+          "n-7-26-3h"
+        ]
+      }
+    },
+    {
+      "id": "cite-12",
+      "question": "What does directive 2 direct Caltrans to create?",
+      "expect": {
+        "directiveIds": [
+          "n-7-26-2"
+        ]
+      }
+    },
+    {
+      "id": "cite-13",
+      "question": "What does the order say about the State Transit Plan in 1(d)?",
+      "expect": {
+        "directiveIds": [
+          "n-7-26-1d"
+        ]
+      }
+    },
+    {
+      "id": "cite-14",
+      "question": "Which reviewed artifacts are linked to directive 5 and when were they reviewed?",
+      "expect": {
+        "directiveIds": [
+          "n-7-26-5"
+        ],
+        "evidence": true,
+        "quote": false
+      }
+    },
+    {
+      "id": "cite-15",
+      "question": "What does 3(c) say about fund distribution timelines?",
+      "expect": {
+        "directiveIds": [
+          "n-7-26-3c"
+        ]
+      }
+    }
+  ]
+}

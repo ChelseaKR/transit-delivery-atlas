@@ -1,0 +1,146 @@
+{
+  "description": "For a directive the register links no evidence to, the published answer must carry the site's own empty-state statement with its last-checked date and must never render the absence as a status. Also records how often the model tried (withheld verdict sentences, absence described in prose).",
+  "zeroTolerance": true,
+  "cases": [
+    {
+      "id": "empty-01",
+      "question": "What public evidence is there for directive 1(a)?",
+      "expect": {
+        "directiveId": "n-7-26-1a"
+      }
+    },
+    {
+      "id": "empty-02",
+      "question": "What evidence does the Atlas link to the mobility-manager directive 1(b)?",
+      "expect": {
+        "directiveId": "n-7-26-1b"
+      }
+    },
+    {
+      "id": "empty-03",
+      "question": "What reviewed public records cite directive 1(c)?",
+      "expect": {
+        "directiveId": "n-7-26-1c"
+      }
+    },
+    {
+      "id": "empty-04",
+      "question": "Is there any reviewed evidence for directive 1(d)?",
+      "expect": {
+        "directiveId": "n-7-26-1d"
+      }
+    },
+    {
+      "id": "empty-05",
+      "question": "What evidence is linked to 1(e), the design guidance directive?",
+      "expect": {
+        "directiveId": "n-7-26-1e"
+      }
+    },
+    {
+      "id": "empty-06",
+      "question": "What evidence does the Atlas have for the CEQA report in 1(f)?",
+      "expect": {
+        "directiveId": "n-7-26-1f"
+      }
+    },
+    {
+      "id": "empty-07",
+      "question": "What public artifacts are linked to directive 1(g)?",
+      "expect": {
+        "directiveId": "n-7-26-1g"
+      }
+    },
+    {
+      "id": "empty-08",
+      "question": "Show me the evidence for directive 2's funding dashboards.",
+      "expect": {
+        "directiveId": "n-7-26-2"
+      }
+    },
+    {
+      "id": "empty-09",
+      "question": "What has the Atlas found publicly for 3(a)?",
+      "expect": {
+        "directiveId": "n-7-26-3a"
+      }
+    },
+    {
+      "id": "empty-10",
+      "question": "What evidence is there for the TDA and NTD automation in 3(b)?",
+      "expect": {
+        "directiveId": "n-7-26-3b"
+      }
+    },
+    {
+      "id": "empty-11",
+      "question": "What's documented publicly for directive 3(d)?",
+      "expect": {
+        "directiveId": "n-7-26-3d"
+      }
+    },
+    {
+      "id": "empty-12",
+      "question": "Which public records cite the airspace directive 3(g)?",
+      "expect": {
+        "directiveId": "n-7-26-3g"
+      }
+    },
+    {
+      "id": "empty-13",
+      "question": "What do we know publicly about 3(h) toll revenue guidance?",
+      "expect": {
+        "directiveId": "n-7-26-3h"
+      }
+    },
+    {
+      "id": "empty-14",
+      "question": "What evidence is linked to 3(i)?",
+      "expect": {
+        "directiveId": "n-7-26-3i"
+      }
+    },
+    {
+      "id": "empty-15",
+      "question": "Are there public records citing the order for 3(j)?",
+      "expect": {
+        "directiveId": "n-7-26-3j"
+      }
+    },
+    {
+      "id": "empty-16",
+      "question": "What's documented publicly for directive 4, the NEPA delegation?",
+      "expect": {
+        "directiveId": "n-7-26-4"
+      }
+    },
+    {
+      "id": "empty-17",
+      "question": "What public artifacts cite directive 6?",
+      "expect": {
+        "directiveId": "n-7-26-6"
+      }
+    },
+    {
+      "id": "empty-18",
+      "question": "Has anything been published about 1(a)?",
+      "expect": {
+        "directiveId": "n-7-26-1a"
+      }
+    },
+    {
+      "id": "empty-19",
+      "question": "What evidence is there for BRT technical assistance in 3(e)?",
+      "expect": {
+        "directiveId": "n-7-26-3e"
+      }
+    },
+    {
+      "id": "empty-20",
+      "question": "What evidence is there for the real property system in 3(f)?",
+      "expect": {
+        "directiveId": "n-7-26-3f"
+      }
+    }
+  ]
+}
