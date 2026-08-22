@@ -1,0 +1,161 @@
+{
+  "note": "Each entry is a reviewed edit applied to the raw machine OCR to produce eo-n-7-26.text.txt. The signed scan controls; these edits restore what the image shows and never change wording.",
+  "corrections": [
+    {
+      "page": 1,
+      "ocr": "includes significant.\n",
+      "corrected": "includes significant\n",
+      "basis": "trailing period is a scan artifact; the line continues onto the next"
+    },
+    {
+      "page": 1,
+      "ocr": "tunding cuts",
+      "corrected": "funding cuts",
+      "basis": "f misread as t"
+    },
+    {
+      "page": 1,
+      "ocr": "rise damages intrastructure",
+      "corrected": "rise damages infrastructure",
+      "basis": "f misread as t"
+    },
+    {
+      "page": 1,
+      "ocr": "Statutes.of 2023",
+      "corrected": "Statutes of 2023",
+      "basis": "stray period"
+    },
+    {
+      "page": 2,
+      "ocr": "Through each employee's",
+      "corrected": "through each employee's",
+      "basis": "capital T is a scan artifact mid-sentence"
+    },
+    {
+      "page": 2,
+      "ocr": "with a focus. on underserved",
+      "corrected": "with a focus on underserved",
+      "basis": "stray period"
+    },
+    {
+      "page": 2,
+      "ocr": "ana shall be consistent",
+      "corrected": "and shall be consistent",
+      "basis": "d misread as a"
+    },
+    {
+      "page": 2,
+      "ocr": "c. Notity jurisdictions",
+      "corrected": "c. Notify jurisdictions",
+      "basis": "f misread as t; matches the reviewed excerpt for 1(c)"
+    },
+    {
+      "page": 3,
+      "ocr": "(CEQA) , including",
+      "corrected": "(CEQA), including",
+      "basis": "stray space before the comma"
+    },
+    {
+      "page": 3,
+      "ocr": "g: Establish a Statewide",
+      "corrected": "g. Establish a Statewide",
+      "basis": "list label punctuation"
+    },
+    {
+      "page": 3,
+      "ocr": "support local ana regional",
+      "corrected": "support local and regional",
+      "basis": "d misread as a"
+    },
+    {
+      "page": 3,
+      "ocr": "deliyery support",
+      "corrected": "delivery support",
+      "basis": "v misread as y"
+    },
+    {
+      "page": 3,
+      "ocr": "related projeçts",
+      "corrected": "related projects",
+      "basis": "c with cedilla is a scan artifact"
+    },
+    {
+      "page": 3,
+      "ocr": "2. in order to provide",
+      "corrected": "2. In order to provide",
+      "basis": "sentence-initial capital"
+    },
+    {
+      "page": 3,
+      "ocr": "invoices for.\nreimbursement",
+      "corrected": "invoices for\nreimbursement",
+      "basis": "stray period at a line break"
+    },
+    {
+      "page": 3,
+      "ocr": "D. Take steps to automate",
+      "corrected": "b. Take steps to automate",
+      "basis": "list label b misread as D; matches the reviewed 3(b) locator"
+    },
+    {
+      "page": 4,
+      "ocr": "In coordination with the Department of General Services, create",
+      "corrected": "f. In coordination with the Department of General Services, create",
+      "basis": "list label f was not recognised; matches the reviewed 3(f) locator"
+    },
+    {
+      "page": 4,
+      "ocr": "transit signai priority",
+      "corrected": "transit signal priority",
+      "basis": "l misread as i"
+    },
+    {
+      "page": 4,
+      "ocr": "CalSTA shali identify",
+      "corrected": "CalSTA shall identify",
+      "basis": "l misread as i"
+    },
+    {
+      "page": 4,
+      "ocr": "where possibie, undertake",
+      "corrected": "where possible, undertake",
+      "basis": "l misread as i"
+    },
+    {
+      "page": 4,
+      "ocr": "state\ntunding program guidelines",
+      "corrected": "state\nfunding program guidelines",
+      "basis": "f misread as t; matches the reviewed excerpt for 5"
+    },
+    {
+      "page": 4,
+      "ocr": "transit priority\nintrastructure and first-and",
+      "corrected": "transit priority\ninfrastructure and first-and",
+      "basis": "f misread as t; matches the reviewed excerpt for 5"
+    },
+    {
+      "page": 4,
+      "ocr": "Caltrans shall aiso identify",
+      "corrected": "Caltrans shall also identify",
+      "basis": "l misread as i"
+    },
+    {
+      "page": 5,
+      "ocr": "standards that aliow for",
+      "corrected": "standards that allow for",
+      "basis": "l misread as i"
+    },
+    {
+      "page": 5,
+      "ocr": "integration\noetween systems",
+      "corrected": "integration\nbetween systems",
+      "basis": "b misread as o"
+    },
+    {
+      "page": 5,
+      "ocr": "he Great Seal of the State o\nCalitormia to be attixed this 26tn day\nof Juhe 2026.",
+      "corrected": "the Great Seal of the State of\nCalifornia to be affixed this 26th day\nof June 2026.",
+      "basis": "attestation block partly obscured by the seal in the scan"
+    }
+  ]
+}

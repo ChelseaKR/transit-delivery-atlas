@@ -1,0 +1,28 @@
+{
+  "id": "ca-eo-n-7-26",
+  "title": "Executive Order N-7-26",
+  "publisher": "State of California, Executive Department",
+  "url": "https://www.gov.ca.gov/wp-content/uploads/2026/06/ATTESTED_6.26-Transit-EO_FINAL_SIGNED.pdf",
+  "contextUrl": "https://www.gov.ca.gov/2026/06/26/governor-newsom-signs-executive-order-to-accelerate-new-technologies-and-services-for-californias-local-transit-and-passenger-rail-networks-throughout-the-state/",
+  "retrievedOn": "2026-08-21",
+  "files": {
+    "pdf": {
+      "path": "ATTESTED_6.26-Transit-EO_FINAL_SIGNED.pdf",
+      "sha256": "5378690f2e805c60ac28fdf8417786aebad04fec1f4bcc2ccd1009cd4e680759",
+      "pages": 5,
+      "textLayer": false,
+      "note": "Byte-identical to the file hashed in data/sources.json (retrieved 2026-07-12); the same bytes were served on 2026-08-21."
+    },
+    "ocr": {
+      "path": "eo-n-7-26.ocr.txt",
+      "sha256": "56fe849b8b63c8434512c810b758eb3e8472433521e1d15f9a9d59acf9d23732",
+      "method": "Pages rendered at 300 dpi with pdftoppm (poppler) and recognised with macOS Vision VNRecognizeTextRequest (accurate level, language correction off). Unedited machine output, ordered top to bottom per page."
+    },
+    "text": {
+      "path": "eo-n-7-26.text.txt",
+      "sha256": "faa063bdaf3b0c78634fb62f10da36b2ae466b5f759056bb47e778c4ef020749",
+      "method": "The OCR file with the reviewed corrections in corrections.json applied, in order. scripts/verify-corpus.mjs reproduces this file from the other two and fails if the hashes drift."
+    }
+  },
+  "authority": "The signed scan is the source. The text files exist so that a quotation can be checked mechanically; where they and the image differ, the image controls, and a reader should verify against the PDF page."
+}

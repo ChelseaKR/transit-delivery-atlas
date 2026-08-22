@@ -61,6 +61,19 @@ npm run check
 - An official workflow, responsibility matrix, critical path, or interagency
   handoff record
 
+## AI-assisted questions (optional, unofficial)
+
+Under [ADR-0002](docs/adr/0002-runtime-grounded-question-answering.md) the
+Atlas is gaining an optional question-answering layer that a reader can turn
+on from a directive page. It is built so that it can only quote the signed
+order verbatim (verified against the retained copy in
+[`corpus/eo-n-7-26/`](corpus/eo-n-7-26/manifest.json)), cite a reviewed
+evidence record by ID, repeat the site's own empty-state wording, or decline.
+It refuses every form of "is the state complying" or "is this on track". Its
+output is AI-generated, unofficial, and never a compliance determination. The
+static site works with the service absent and makes no request beyond its own
+origin until a reader opts in.
+
 ## Primary sources
 
 - [Executive Order N-7-26 — signed PDF](https://www.gov.ca.gov/wp-content/uploads/2026/06/ATTESTED_6.26-Transit-EO_FINAL_SIGNED.pdf)
@@ -74,7 +87,10 @@ stored separately from the source extraction and labeled as interpretation.
 The canonical data lives in `data/`. Build-time exports are published as JSON
 and CSV under `public/data/`.
 
-- `sources.json` records the official source, dates, retrieval date, and hash
+- `sources.json` records the official source, dates, retrieval date, and hash;
+  the signed PDF itself, a machine OCR of it, the reviewed OCR corrections, and
+  the resulting text are retained under `corpus/eo-n-7-26/` with their hashes
+  so a quotation can be checked mechanically (the signed image controls)
 - `organizations.json` provides stable identifiers for explicitly named bodies
 - `directives.json` contains the 21 actionable directive units in document order.
   Where the order states timing, the Atlas publishes a calculated planning date
@@ -194,7 +210,7 @@ release. Reviewed 2026-08-15.
 | Performance | Applies | Not met. The release gate (`npm run check`) runs lint, typecheck, tests, and a production audit, and measures nothing about performance: there is no Lighthouse-CI run, no bundle budget, and no committed performance baseline to regress against |
 | Accessibility | Applies | WCAG 2.2 AA target with Section 508 framing; rendered-HTML test assertions on every build; last manual review dated 2026-07-13 at `ef1d11b`, with the routes and patterns shipped since listed as uncovered (docs/ACCESSIBILITY.md) |
 | Internationalization | Applies | English-only today; owner, first localization boundary, source-language rule, fallback, and review deadline are declared in [`docs/I18N.md`](docs/I18N.md) |
-| AI Evaluation | N/A — source-linked deterministic site; no LLM/model component | N/A — no generative or model-driven component anywhere in the build or site |
+| AI Evaluation | Applies | Partially met. The static site has no model component. An optional runtime question-answering service is being added under [ADR-0002](docs/adr/0002-runtime-grounded-question-answering.md) with a committed evaluation harness (empty-state fidelity, compliance refusal, citation grounding, freshness disclosure, question structuring); results are committed only from recorded live runs and otherwise published as not run |
 | AI Development Measurement | Applies | Not met. This repository is built with AI assistance and publishes no measurement of it: no committed metrics ledger, no delivery-outcome record, and no quality-debt counterweight |
 | Documentation | Applies | README, methodology/evidence/relationship models, ADR log (docs/adr/), CHANGELOG, CONTRIBUTING. Not met: the shared standards are neither vendored in-tree nor pinned to a released version, so the two documentation controls that require a pinned copy cannot be evaluated against this repository at all |
 | Quality & Metrics | Applies | Data-integrity, filter, rendered-HTML, and hosting test suites run in the release gate |
