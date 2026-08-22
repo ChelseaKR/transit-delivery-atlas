@@ -2147,6 +2147,134 @@ code {
   font-size: 0.92rem;
 }
 
+/* The optional AI question panel: visually separate from the three canonical
+   layers, labelled before it does anything, inert until used. */
+.ask-directive {
+  margin-top: 2.5rem;
+  padding: 1.5rem;
+  border: 2px dashed var(--rail-steel-dark);
+  background: var(--route-paper);
+}
+
+.ask-directive__badge {
+  margin-bottom: 0.5rem;
+  font-family: var(--font-utility), monospace;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--night-soft);
+}
+
+.ask-directive h2 {
+  margin-top: 0;
+}
+
+.ask-directive__open,
+.ask-directive__actions button {
+  padding: 0.55rem 1.1rem;
+  border: 1px solid var(--night-platform);
+  background: white;
+  font: inherit;
+  cursor: pointer;
+}
+
+.ask-directive__open:hover,
+.ask-directive__actions button:hover {
+  background: var(--night-platform);
+  color: white;
+}
+
+.ask-directive__form {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.ask-directive__form textarea {
+  width: 100%;
+  padding: 0.6rem;
+  border: 1px solid var(--rail-steel-dark);
+  font: inherit;
+}
+
+.ask-directive__actions {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.ask-directive__actions button[disabled] {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.ask-directive__notice {
+  margin-top: 1rem;
+  padding: 0.75rem 1rem;
+  border-left: 3px solid var(--rail-steel-dark);
+  background: white;
+}
+
+.ask-answer {
+  margin-top: 1.25rem;
+  padding: 1.25rem;
+  border: 1px solid var(--rail-steel-dark);
+  background: white;
+}
+
+.ask-answer__label {
+  margin-bottom: 0.75rem;
+  font-family: var(--font-utility), monospace;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--night-soft);
+}
+
+.ask-answer__quote blockquote {
+  margin: 0.5rem 0;
+}
+
+.ask-answer__quote figcaption,
+.ask-answer__withheld,
+.ask-answer__provenance {
+  font-size: 0.85rem;
+  color: var(--night-soft);
+}
+
+.ask-answer__withheld {
+  margin-top: 1rem;
+  padding: 0.5rem 0.75rem;
+  border: 1px dashed var(--rail-steel-dark);
+}
+
+.ask-answer__evidence,
+.ask-answer__empty,
+.ask-answer__freshness {
+  margin-top: 1rem;
+  padding: 0.75rem 1rem;
+  border-left: 3px solid var(--rail-steel-dark);
+  background: var(--route-paper);
+}
+
+.ask-answer__evidence ul {
+  margin: 0.5rem 0 0;
+  font-size: 0.9rem;
+}
+
+.ask-answer__pointers {
+  margin-top: 0.75rem;
+}
+
+.ask-answer__provenance {
+  margin-top: 1rem;
+  margin-bottom: 0;
+}
+
+@media print {
+  .ask-directive {
+    display: none;
+  }
+}
+
 .evidence-method-link {
   margin-top: 1.25rem;
 }

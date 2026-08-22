@@ -165,6 +165,21 @@ test("renders source, safe empty evidence, and analysis on an unlinked directive
   assert.doesNotMatch(html, /data-coverage-state="not-yet-reviewed"/);
 });
 
+test("the AI panel is opt-in, labelled, and names no other origin", async () => {
+  const html = await (await render("/directives/n-7-26-1a")).text();
+  assert.match(html, /data-ask-directive="n-7-26-1a"/);
+  assert.match(html, /Ask about this directive/);
+  assert.match(html, /Optional · AI · off until you use it/);
+  assert.match(html, /refuses compliance and status questions/);
+  assert.match(html, /Nothing is sent anywhere until you submit a question\./);
+  // The rendered page references no origin other than its own and the two
+  // official source hosts the record already links; the ask endpoint is a
+  // same-origin path baked in at build time.
+  assert.doesNotMatch(html, /https?:\/\/(?:api\.anthropic\.com|[a-z0-9.-]*amazonaws\.com)/i);
+  // The panel renders before the reader acts as a static button, not a form.
+  assert.doesNotMatch(html, /<textarea/i);
+});
+
 test("a directive whose dedicated source failed retrieval says so without a verdict", async () => {
   const html = await (await render("/directives/n-7-26-4")).text();
   assert.match(html, /data-coverage-state="checked-none-found"/);

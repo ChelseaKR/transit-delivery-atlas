@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { AskDirective } from "@/components/AskDirective";
 import { LayerLabel } from "@/components/LayerLabel";
 import { PrintRecordButton } from "@/components/PrintRecordButton";
 import { SiteFooter } from "@/components/SiteFooter";
@@ -426,6 +427,8 @@ export default async function DirectivePage({ params }: PageProps) {
               </p>
             </aside>
           ) : null}
+
+          <AskDirective directiveId={directive.id} directiveLabel={directive.label} />
 
           <nav className="directive-pagination" aria-label="Directive pages">
             {previous ? (

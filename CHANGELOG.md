@@ -7,6 +7,17 @@ recorded here.
 
 ### Added
 
+- "Ask about this directive": an explicit opt-in AI panel on each directive
+  page. Until a reader opens it and submits a question the page performs no
+  request of any kind (`lib/ask-client.ts` is constructed with an injectable
+  fetch and `tests/ask-client.test.mjs` proves the zero-requests-before-opt-in
+  property); the endpoint is a same-origin path, so the CSP's
+  `connect-src 'self'` is unchanged. Every answer renders with the
+  AI-generated/unofficial/not-a-compliance-determination label, quotation
+  blocks that link back to the signed PDF page, the withheld-claims count, and
+  provenance; a missing service, a rate limit, and a provider outage each
+  render as a contained notice that leaves the record intact.
+
 - The runtime question-answering service under ADR-0002 (`service/`): a
   deterministic verdict lexicon that refuses compliance/status/grading
   questions before any model call, model-based question structuring re-checked
