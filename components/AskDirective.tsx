@@ -12,15 +12,21 @@ import { formatDate } from "@/lib/format";
 /**
  * The explicit opt-in for the question service (ADR-0002).
  *
+ * Rendered only when a question service is configured for the build: the page
+ * gates on `resolveAskEndpoint`, so a site with no service shows no panel
+ * rather than a control that can only report its own absence.
+ *
  * Until the reader opens the panel and submits a question, this component
  * renders static markup and performs no request of any kind. Every response
- * state — answer, refusal, rate limit, service absent — renders inside the
- * panel and leaves the rest of the page untouched.
+ * state — answer, refusal, rate limit, service unreachable — renders inside
+ * the panel and leaves the rest of the page untouched.
  */
 
 interface AskDirectiveProps {
   directiveId: string;
   directiveLabel: string;
+  /** The configured question endpoint. The page renders no panel without one. */
+  endpoint: string;
 }
 
 function AnswerBlockView({ block }: { block: AskBlock }) {
@@ -121,7 +127,7 @@ function AnswerView({ answer }: { answer: AskAnswer }) {
   );
 }
 
-export function AskDirective({ directiveId, directiveLabel }: AskDirectiveProps) {
+export function AskDirective({ directiveId, directiveLabel, endpoint }: AskDirectiveProps) {
   const [open, setOpen] = useState(false);
   const [question, setQuestion] = useState("");
   const [busy, setBusy] = useState(false);
@@ -134,9 +140,7 @@ export function AskDirective({ directiveId, directiveLabel }: AskDirectiveProps)
     if (busy || question.trim() === "") return;
     // The client is created on first submit: before that, this component has
     // performed no request and holds no connection.
-    clientRef.current ??= createAskClient({
-      endpoint: process.env.NEXT_PUBLIC_ASK_ENDPOINT || undefined,
-    });
+    clientRef.current ??= createAskClient({ endpoint });
     setBusy(true);
     try {
       setState(await clientRef.current.ask(question.trim(), directiveId));

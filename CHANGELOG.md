@@ -5,6 +5,20 @@ recorded here.
 
 ## [Unreleased]
 
+### Changed
+
+- The "Ask about this directive" panel is now gated at build time on
+  `NEXT_PUBLIC_ASK_ENDPOINT`. A build with no question service configured —
+  which is every build today, since the service is not deployed — renders no
+  panel, no button, and no input on any directive page, rather than an
+  affordance whose only possible reply is that no service exists. A reader
+  invited to ask a question has already been told something untrue by the time
+  an error string explains the invitation was empty. `tests/ask-gate.test.mjs`
+  pins both directions: absent across all twenty-one directive pages in the
+  ordinary build, present and labelled in a second isolated build with the
+  variable set. Turning the panel on is now explicitly part of deploying the
+  service (`docs/AI-SERVICE.md`).
+
 ### Added
 
 - "Ask about this directive": an explicit opt-in AI panel on each directive

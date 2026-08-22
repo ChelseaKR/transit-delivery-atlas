@@ -2,9 +2,33 @@
 
 The optional runtime layer decided in
 [ADR-0002](adr/0002-runtime-grounded-question-answering.md). The static site is
-complete without it; when it is absent, the "Ask about this directive" control
-reports that the service is not available and everything else on the page is
-unchanged.
+complete without it.
+
+## The site-side gate
+
+The panel is rendered only where a service is configured to answer. The site
+build reads `NEXT_PUBLIC_ASK_ENDPOINT`; unset, empty, or whitespace-only means
+no service, and the directive pages render no panel, no button, and no input.
+
+This is deliberate and it is the reason the control is not simply left in place
+to report its own absence. An affordance a reader can see is a promise, and a
+reader who has been invited to ask a question has already been told something
+untrue by the time an error string explains that nothing is listening. A site
+whose entire argument is that absence is published as absence does not get to
+make an exception for its own feature.
+
+Both directions are pinned by `tests/ask-gate.test.mjs`: the ordinary build is
+asserted to render no panel on any of the twenty-one directive pages, and a
+second, isolated build with `NEXT_PUBLIC_ASK_ENDPOINT` set is asserted to
+render it, labelled and inert until used. (`NEXT_EXPORT_DIR` in
+`next.config.ts` exists only so that second build cannot overwrite the `out/`
+artifact the rest of the suite reads.)
+
+Known residue: the panel's client chunk is still emitted and referenced by the
+directive pages even in an ungated build, because the page's import of the
+component survives the statically false branch. Nothing renders it and nothing
+can reach it, but roughly 16 KB of inert code is served. Tracked as an issue
+rather than fixed with a bundler alias.
 
 ## What it does
 
@@ -61,6 +85,12 @@ credential itself — the SDKs resolve `ANTHROPIC_API_KEY` or the AWS chain):
 | `ASK_DEBUG` | off | Include raw, unverified narration in responses (evals only) |
 | `BUILD_SHA` | `unknown` | Commit recorded in answer provenance |
 
+One further variable belongs to the **site build**, not the service:
+
+| Variable | Default | Meaning |
+|---|---|---|
+| `NEXT_PUBLIC_ASK_ENDPOINT` | *(unset)* | The path the panel posts to. Unset means no service is configured and no panel is rendered at all. A deployment sets it to the same-origin path (`/api/ask`) |
+
 Cost control: the stable prompt prefix (instructions + directive index) carries
 a cache breakpoint; the live smoke on 2026-08-21 measured the full prefix
 written once (1,815 tokens) and read from cache on the next request. Rate and
@@ -86,6 +116,12 @@ decision is concrete:
   CORS or CSP edit is needed.
 - **Cache behavior:** `POST` allowed, caching disabled, no cookies forwarded,
   a short origin-response timeout (~30 s).
+- **Turning the panel on is part of deploying.** The site build must set
+  `NEXT_PUBLIC_ASK_ENDPOINT=/api/ask` in the same change that provisions the
+  service; until then the published site renders no panel. Deploying the
+  service without rebuilding the site leaves the feature invisible, and
+  rebuilding the site with the variable set before the service answers puts a
+  broken promise back on the page. They go together.
 - **Environment:** `ASK_PROVIDER`/`ASK_MODEL`, the credential (an Anthropic
   API key in a secret manager, or an IAM role with `bedrock:InvokeModel` on
   the chosen inference profile), `BUILD_SHA`, and the caps sized to a monthly
