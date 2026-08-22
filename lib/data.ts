@@ -6,6 +6,7 @@ import sourcesRaw from "@/data/sources.json";
 import tdaNtdFeasibilityRaw from "@/data/tda-ntd-feasibility.json";
 import themesRaw from "@/data/themes.json";
 import watchlistRaw from "@/data/watchlist.json";
+import { directiveEvidenceCoverage } from "@/lib/evidence-coverage.mjs";
 
 export type Organization = (typeof organizationsRaw)[number];
 export type Theme = (typeof themesRaw)[number];
@@ -72,8 +73,22 @@ export const evidenceRecords = evidenceRaw.evidence;
 export const evidenceScope = {
   scope: evidenceRaw.scope,
   lastUpdatedOn: evidenceRaw.lastUpdatedOn,
+  nextReviewOn: evidenceRaw.nextReviewOn,
+  reviewCommitment: evidenceRaw.reviewCommitment,
   coverageNote: evidenceRaw.coverageNote,
+  reviewSources: evidenceRaw.reviewSources,
+  sweeps: evidenceRaw.sweeps,
 };
+export type EvidenceReviewSource = (typeof evidenceRaw.reviewSources)[number];
+export type EvidenceSweep = (typeof evidenceRaw.sweeps)[number];
+
+/**
+ * Which of the three empty/linked states a directive's evidence list is in,
+ * derived from the committed source list rather than asserted per page.
+ */
+export function evidenceCoverageFor(directiveId: string) {
+  return directiveEvidenceCoverage(directiveId, evidenceRaw);
+}
 export const watchlistItems = watchlistRaw.items;
 export const watchlistScope = {
   scope: watchlistRaw.scope,

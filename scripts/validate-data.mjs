@@ -381,7 +381,7 @@ z.array(organizationSchema).min(1).parse(organizations);
 z.array(themeSchema).min(1).parse(themes);
 
 z.object({
-  schemaVersion: z.literal("0.2.0"),
+  schemaVersion: z.literal("0.3.0"),
   orderMetadata: z
     .object({
       directiveCount: z.literal(21),
@@ -422,17 +422,43 @@ z.object({
   .parse(directiveData);
 
 z.object({
-  schemaVersion: z.literal("0.2.0"),
+  schemaVersion: z.literal("0.3.0"),
   analysis: z.array(analysisSchema).length(21),
 })
   .strict()
   .parse(analysisData);
 
+const reviewSourceSchema = z
+  .object({
+    id: identifier,
+    name: z.string().min(5),
+    publisher: z.string().min(1),
+    url: z.string().url().startsWith("https://"),
+    coversDirectiveIds: z.array(identifier).min(1),
+    lastCheckedOn: date,
+    lastCheckOutcome: z.enum(["checked", "retrieval-failed"]),
+    note: z.string().min(30),
+  })
+  .strict();
+
+const sweepSchema = z
+  .object({
+    sweptOn: date,
+    sourceIds: z.array(identifier).min(1),
+    addedEvidenceIds: z.array(identifier),
+    note: z.string().min(40),
+  })
+  .strict();
+
 z.object({
-  schemaVersion: z.literal("0.2.0"),
+  schemaVersion: z.literal("0.3.0"),
   scope: z.literal("selective"),
   lastUpdatedOn: date,
+  nextReviewOn: date,
+  reviewCommitment: z.string().min(100),
   coverageNote: z.string().min(50),
+  reviewSources: z.array(reviewSourceSchema).min(1),
+  sweeps: z.array(sweepSchema).min(1),
   evidence: z.array(evidenceSchema).min(1),
 })
   .strict()
@@ -813,6 +839,65 @@ if (evidenceData.lastUpdatedOn !== evidenceLastUpdatedOn) {
   throw new Error("Evidence lastUpdatedOn must equal the latest record review date.");
 }
 
+// The evidence layer's forward commitment (issue #59). Without a source list
+// and a dated sweep, "no evidence yet" is indistinguishable from "nobody has
+// looked", which is the inference the coverage note exists to refuse.
+unique(evidenceData.reviewSources.map(({ id }) => id), "Evidence review source IDs");
+unique(evidenceData.reviewSources.map(({ url }) => url), "Evidence review source URLs");
+const reviewSourceIds = new Set(evidenceData.reviewSources.map(({ id }) => id));
+const evidenceIds = new Set(evidenceData.evidence.map(({ id }) => id));
+for (const reviewSource of evidenceData.reviewSources) {
+  unique(reviewSource.coversDirectiveIds, `${reviewSource.id} directive coverage`);
+  for (const directiveId of reviewSource.coversDirectiveIds) {
+    if (!directiveIds.includes(directiveId)) {
+      throw new Error(`Review source ${reviewSource.id} covers unknown directive ${directiveId}.`);
+    }
+  }
+  if (reviewSource.lastCheckedOn > evidenceData.lastUpdatedOn) {
+    throw new Error(
+      `Review source ${reviewSource.id} was checked after the collection's lastUpdatedOn.`,
+    );
+  }
+}
+const sweepDates = evidenceData.sweeps.map(({ sweptOn }) => sweptOn);
+unique(sweepDates, "Evidence sweep dates");
+if (JSON.stringify(sweepDates) !== JSON.stringify([...sweepDates].sort())) {
+  throw new Error("Evidence sweeps must be recorded in date order.");
+}
+for (const sweep of evidenceData.sweeps) {
+  unique(sweep.sourceIds, `Evidence sweep ${sweep.sweptOn} source IDs`);
+  unique(sweep.addedEvidenceIds, `Evidence sweep ${sweep.sweptOn} added evidence IDs`);
+  for (const sourceId of sweep.sourceIds) {
+    if (!reviewSourceIds.has(sourceId)) {
+      throw new Error(`Evidence sweep ${sweep.sweptOn} references unknown review source ${sourceId}.`);
+    }
+  }
+  for (const evidenceId of sweep.addedEvidenceIds) {
+    if (!evidenceIds.has(evidenceId)) {
+      throw new Error(`Evidence sweep ${sweep.sweptOn} references unknown evidence record ${evidenceId}.`);
+    }
+  }
+}
+const latestSweep = evidenceData.sweeps.at(-1);
+for (const reviewSource of evidenceData.reviewSources) {
+  if (
+    latestSweep.sourceIds.includes(reviewSource.id) &&
+    reviewSource.lastCheckedOn !== latestSweep.sweptOn
+  ) {
+    throw new Error(
+      `Review source ${reviewSource.id} is listed in the ${latestSweep.sweptOn} sweep but its lastCheckedOn is ${reviewSource.lastCheckedOn}.`,
+    );
+  }
+}
+if (latestSweep.sweptOn !== evidenceData.lastUpdatedOn) {
+  throw new Error(
+    "The latest evidence sweep must be dated the collection's lastUpdatedOn; a sweep that adds nothing still updates the collection.",
+  );
+}
+if (evidenceData.nextReviewOn <= evidenceData.lastUpdatedOn) {
+  throw new Error("Evidence nextReviewOn must be after the collection's lastUpdatedOn.");
+}
+
 const evidenceUrls = new Set(evidenceData.evidence.map(({ url }) => url));
 for (const item of watchlistData.items) {
   if (evidenceUrls.has(item.url)) {
@@ -883,7 +968,17 @@ if (watchlistData.lastUpdatedOn !== watchlistLastUpdatedOn) {
 // A planned review date that only has to be later than the last review can
 // never expire. Compare it to the build date as well, so a lapsed review is
 // noticed by something other than a reader.
-const overdue = overdueReviews(watchlistData.items, buildDate);
+// The evidence collection carries one planned review for the whole layer and
+// is gated by exactly the rule the watchlist items are: one rule, two layers.
+const reviewedCollections = [
+  ...watchlistData.items,
+  {
+    id: "evidence-collection",
+    lastReviewedOn: evidenceData.lastUpdatedOn,
+    nextReviewOn: evidenceData.nextReviewOn,
+  },
+];
+const overdue = overdueReviews(reviewedCollections, buildDate);
 if (overdue.length > 0) {
   const report = overdueReviewReport(overdue, buildDate);
   const beyondGrace = overdue.filter(({ beyondGrace }) => beyondGrace);
@@ -926,7 +1021,7 @@ console.log(
   `Validated 21 directive records, 21 analysis records, ${evidenceData.evidence.length} evidence record(s), ${watchlistData.items.length} context watchlist item(s), the four-field reporting slice, and all references.`,
 );
 console.log(
-  `Watchlist review currency at ${buildDate}: ${overdue.length} of ${watchlistData.items.length} item(s) past their planned review date.`,
+  `Review currency at ${buildDate}: ${overdue.length} of ${reviewedCollections.length} reviewed item(s) (${watchlistData.items.length} watchlist items plus the evidence collection) past their planned review date.`,
 );
 
 // Reported, never enforced. A lapsed watchlist review is a defect in the

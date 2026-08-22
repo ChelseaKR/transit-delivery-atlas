@@ -1,7 +1,7 @@
 {
   "schemaVersion": "0.1.0",
   "scope": "selective-context",
-  "lastUpdatedOn": "2026-07-28",
+  "lastUpdatedOn": "2026-08-21",
   "boundaryNote": "This curated research watchlist contains official public items selected for topical relevance to one or more directives even though the reviewed item does not currently meet the Atlas evidence rule. It is selective, not comprehensive or live. Editorial relevance does not establish causation, implementation activity, progress, completion, compliance, or performance. Omission has no negative meaning.",
   "items": [
     {
@@ -24,14 +24,14 @@
         "origin": "artifact-header"
       },
       "retrievedOn": "2026-07-28",
-      "lastReviewedOn": "2026-07-28",
-      "editorialSummary": "The Commission agenda schedules a northern hearing on the proposed 2026 Solutions for Congested Corridors Program guidelines and includes a presentation of those proposed guidelines.",
-      "whyTracked": "Directive 5 names the Solutions for Congested Corridors Program among the state funding programs whose guidelines are to be updated. The hearing may produce later materials that document whether the Order 5 proposals move into proposed or final guidelines.",
+      "lastReviewedOn": "2026-08-21",
+      "editorialSummary": "The Commission agenda scheduled a northern hearing on the proposed 2026 Solutions for Congested Corridors Program guidelines for August 3, 2026. The Commission's August 20–21, 2026 meeting book items state that the North Hearing was held on that date; no hearing record, transcript, or recording was found on the Commission pages reviewed.",
+      "whyTracked": "Directive 5 names the Solutions for Congested Corridors Program among the state funding programs whose guidelines are to be updated. The adoption book item that followed the hearing is in the evidence register; this lead now watches for a hearing record, minutes, or an adopted resolution that documents the outcome.",
       "evidenceBoundary": {
         "reason": "no-explicit-order-citation",
-        "checkedOn": "2026-07-28",
+        "checkedOn": "2026-08-21",
         "explicitOrderCitation": false,
-        "note": "The reviewed agenda does not cite N-7-26, Executive Order N-7-26, or Order 5, and it does not record an adoption or hearing outcome."
+        "note": "The reviewed agenda does not cite N-7-26, Executive Order N-7-26, or Order 5, and it does not record an adoption or hearing outcome. The August 20–21 book items that say the hearing occurred are separate artifacts and are recorded in the evidence register on their own citation."
       },
       "directiveLinks": [
         {
@@ -40,13 +40,13 @@
           "rationale": "The scheduled hearing concerns proposed guidelines for a funding program explicitly named in directive 5."
         }
       ],
-      "nextReviewOn": "2026-08-04",
+      "nextReviewOn": "2026-10-16",
       "watchFor": [
-        "A presentation, hearing book, recording, transcript, or revised guideline that explicitly cites N-7-26.",
-        "Language showing whether the July 15 transit-priority and first- and last-mile proposals were retained."
+        "Minutes, a hearing record, a recording, or an adopted resolution for the 2026 SCCP guidelines that explicitly cites N-7-26.",
+        "Language showing whether the July 15 transit-priority and first- and last-mile proposals were retained in the adopted guidelines."
       ],
       "limitations": [
-        "A scheduled hearing does not establish that the event occurred, that any proposal was retained, or that guidelines were adopted."
+        "A scheduled hearing does not establish that any proposal was retained or that guidelines were adopted; the statement that the hearing occurred comes from a later staff memorandum, not from this agenda."
       ]
     },
     {
@@ -73,14 +73,14 @@
         "origin": "page-header"
       },
       "retrievedOn": "2026-07-28",
-      "lastReviewedOn": "2026-07-28",
-      "editorialSummary": "The Commission has created a page for its August 20–21 meeting with categories for meeting materials, book-item updates, agendas, and recordings. No substantive item was available on the page at the Atlas review time.",
-      "whyTracked": "The Commission's SCCP and Local Partnership Program pages still listed June 25 draft guidelines when reviewed. The August meeting page is a high-value publication checkpoint for later proposed, final, or adopted guideline materials related to directive 5.",
+      "lastReviewedOn": "2026-08-21",
+      "editorialSummary": "The Commission's page for its August 20–21, 2026 meeting now lists the agenda, the complete meeting book, individual book items, supplemental letters, presentations, and a draft change list. The book items for the 2026 SCCP and Local Partnership Competitive Program guidelines adoptions cite Order 5 and are recorded in the evidence register; the page itself, the agenda, and the change list do not cite the order, and no minutes, adopted resolution, or recording for this meeting had been published at review time.",
+      "whyTracked": "The two guideline-adoption book items for programs named in directive 5 are now evidence records. This page remains the publication checkpoint for the meeting's minutes, adopted resolutions G-26-60 and G-26-64, and any recording, which would document whether the guidelines were adopted as proposed.",
       "evidenceBoundary": {
-        "reason": "expected-artifact-not-published",
-        "checkedOn": "2026-07-28",
+        "reason": "no-explicit-order-citation",
+        "checkedOn": "2026-08-21",
         "explicitOrderCitation": false,
-        "note": "The meeting page contained headings but no reviewed agenda item, guideline, resolution, or adoption record connecting the meeting to N-7-26."
+        "note": "The meeting page, agenda, and draft change list reviewed on this date do not cite N-7-26, Executive Order N-7-26, or Order 5. The individual book items that do cite the order are separate artifacts with their own evidence records; this lead stays context-only because the page does not yet carry an adoption record."
       },
       "directiveLinks": [
         {
@@ -89,13 +89,13 @@
           "rationale": "The page may later publish final or adopted SCCP and Local Partnership Program materials for programs named in directive 5."
         }
       ],
-      "nextReviewOn": "2026-08-10",
+      "nextReviewOn": "2026-10-16",
       "watchFor": [
-        "A meeting book, agenda item, staff recommendation, resolution, or final guideline that explicitly cites N-7-26.",
-        "An adoption date and exact locator for any Order 5 guideline language."
+        "Minutes or adopted resolutions G-26-60 and G-26-64 that explicitly cite N-7-26.",
+        "An adoption date and exact locator for any Order 5 guideline language in the final guidelines."
       ],
       "limitations": [
-        "The existence of a future meeting page does not establish that a relevant item will be published, heard, or adopted.",
+        "The existence of a meeting page with staff recommendations does not establish that any item was heard or adopted as proposed.",
         "The displayed date is the scheduled first day of a two-day meeting."
       ]
     },

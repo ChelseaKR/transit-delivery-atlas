@@ -85,7 +85,13 @@ and CSV under `public/data/`.
 - `analysis.json` contains plain-language summaries, themes, inferred outputs,
   dependencies, and open questions
 - `evidence.json` contains a selective collection of dated public artifacts,
-  exact directive citations, locators, hashes, review dates, and limitations
+  exact directive citations, locators, hashes, review dates, and limitations,
+  plus the layer's review commitment: a planned next review date (gated like
+  the watchlist's), the committed list of public sources checked with each
+  source's last-checked date and outcome, and a dated sweep log. Each directive
+  page states whether its listed sources were checked and found nothing or have
+  not yet been successfully checked (see
+  [evidence model](docs/EVIDENCE-MODEL.md))
 - `watchlist.json` contains a separate selective collection of official context
   sources and publication checkpoints, editorial relevance links,
   evidence-boundary notes, and planned review dates. A planned review date that

@@ -154,6 +154,23 @@ test("renders source, safe empty evidence, and analysis on an unlinked directive
     "What is documented publicly",
     "Analytical crosswalk",
   ]);
+
+  // The empty state says which of its two meanings applies: the listed sources
+  // were checked and found nothing, or nobody has successfully looked yet.
+  assert.match(html, /data-coverage-state="checked-none-found"/);
+  assert.match(html, /Where the Atlas has looked/);
+  assert.match(html, /no artifact citing the order was found there/);
+  assert.match(html, /next planned check of the listed sources is \d{4}-\d{2}-\d{2}/);
+  assert.match(html, /href="https:\/\/dot\.ca\.gov\/news-releases"/);
+  assert.doesNotMatch(html, /data-coverage-state="not-yet-reviewed"/);
+});
+
+test("a directive whose dedicated source failed retrieval says so without a verdict", async () => {
+  const html = await (await render("/directives/n-7-26-4")).text();
+  assert.match(html, /data-coverage-state="checked-none-found"/);
+  assert.match(html, /could not be retrieved at the last attempt, so that source is not yet reviewed/);
+  assert.match(html, /Retrieval failed/);
+  assert.doesNotMatch(html, /has not complied|not on track|behind schedule/i);
 });
 
 test("renders Order 5 evidence between the signed source and independent analysis", async () => {
@@ -229,6 +246,19 @@ test("renders the selective public-evidence index", async () => {
     /href="https:\/\/github\.com\/ChelseaKR\/transit-delivery-atlas\/issues\/new\?template=01-content-correction\.yml"/,
   );
   assert.match(html, /href="\/watchlist\/?"[^>]*>context watchlist/);
+
+  // The forward commitment (#59): source list, last-checked dates, next sweep.
+  assert.match(html, /Sources checked, and when they are checked next/);
+  assert.match(html, /Next planned sweep/);
+  assert.match(html, /Review commitment:/);
+  assert.match(html, /Public sources checked/);
+  assert.match(html, /Sweep log/);
+  assert.match(html, /Retrieval failed, not reviewed/);
+  assert.match(html, /2026 Solutions for Congested Corridors Program Guidelines Adoption, Resolution G-26-60/);
+  assert.match(
+    html,
+    /href="https:\/\/catc\.ca\.gov\/-\/media\/ctc-media\/documents\/ctc-meetings\/2026\/2026-08\/24-4-10-a11y\.pdf"/,
+  );
 });
 
 test("renders a separate context watchlist with explicit evidence boundaries", async () => {

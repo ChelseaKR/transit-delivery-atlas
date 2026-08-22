@@ -18,6 +18,7 @@ export const metadata: Metadata = {
 };
 
 export default function EvidencePage() {
+  const latestSweep = evidenceScope.sweeps[evidenceScope.sweeps.length - 1];
   return (
     <>
       <SiteHeader />
@@ -39,6 +40,7 @@ export default function EvidencePage() {
           <nav className="page-index" aria-label="On this page">
             <p className="utility-label">On this page</p>
             <a href="#scope">Evidence scope</a>
+            <a href="#review">Sources checked and next review</a>
             <a href="#records">Reviewed artifacts</a>
             <a href="#meaning">What a link means</a>
             <a href="#corrections">Corrections</a>
@@ -76,8 +78,102 @@ export default function EvidencePage() {
               </p>
             </section>
 
-            <section id="records">
+            <section id="review">
               <p className="section-code">Evidence 02</p>
+              <h2>Sources checked, and when they are checked next</h2>
+              <p>
+                An empty evidence list can mean two different things: the listed
+                public sources were checked and nothing citing the order was
+                found, or nobody has successfully looked yet. The table below is
+                the committed list of sources this register checks, the date each
+                was last checked, and what that check found. A directive page
+                says which of the two states it is in.
+              </p>
+              <dl className="evidence-meta evidence-meta--review">
+                <div>
+                  <dt>Sources last swept</dt>
+                  <dd>
+                    <time dateTime={latestSweep.sweptOn}>{formatDate(latestSweep.sweptOn)}</time>
+                  </dd>
+                </div>
+                <div>
+                  <dt>Next planned sweep</dt>
+                  <dd>
+                    <time dateTime={evidenceScope.nextReviewOn}>
+                      {formatDate(evidenceScope.nextReviewOn)}
+                    </time>
+                  </dd>
+                </div>
+                <div>
+                  <dt>Records added in the last sweep</dt>
+                  <dd>{latestSweep.addedEvidenceIds.length}</dd>
+                </div>
+              </dl>
+              <p>
+                <strong>Review commitment:</strong> {evidenceScope.reviewCommitment}
+              </p>
+
+              <h3>Public sources checked</h3>
+              <div className="table-scroll">
+                <table className="evidence-sources">
+                  <thead>
+                    <tr>
+                      <th scope="col">Source</th>
+                      <th scope="col">Covers</th>
+                      <th scope="col">Last checked</th>
+                      <th scope="col">Outcome</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {evidenceScope.reviewSources.map((reviewSource) => (
+                      <tr key={reviewSource.id}>
+                        <th scope="row">
+                          <a href={reviewSource.url} rel="noreferrer">
+                            {reviewSource.name} <span aria-hidden="true">↗</span>
+                          </a>
+                          <span className="evidence-sources__publisher">{reviewSource.publisher}</span>
+                        </th>
+                        <td>
+                          {reviewSource.coversDirectiveIds
+                            .map((directiveId) => directiveById(directiveId)?.label ?? directiveId)
+                            .join(", ")}
+                        </td>
+                        <td>
+                          <time dateTime={reviewSource.lastCheckedOn}>
+                            {formatDate(reviewSource.lastCheckedOn)}
+                          </time>
+                        </td>
+                        <td>
+                          <span className={`evidence-sources__outcome evidence-sources__outcome--${reviewSource.lastCheckOutcome}`}>
+                            {reviewSource.lastCheckOutcome === "checked"
+                              ? "Checked"
+                              : "Retrieval failed, not reviewed"}
+                          </span>
+                          <span className="evidence-sources__note">{reviewSource.note}</span>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+
+              <h3>Sweep log</h3>
+              <ul className="evidence-sweeps">
+                {evidenceScope.sweeps.map((sweep) => (
+                  <li key={sweep.sweptOn}>
+                    <strong>
+                      <time dateTime={sweep.sweptOn}>{formatDate(sweep.sweptOn)}</time>
+                    </strong>{" "}
+                    · {sweep.sourceIds.length} {sweep.sourceIds.length === 1 ? "source" : "sources"} listed ·{" "}
+                    {sweep.addedEvidenceIds.length} {sweep.addedEvidenceIds.length === 1 ? "record" : "records"} added
+                    <span>{sweep.note}</span>
+                  </li>
+                ))}
+              </ul>
+            </section>
+
+            <section id="records">
+              <p className="section-code">Evidence 03</p>
               <h2>Reviewed public artifacts</h2>
               <p>
                 Each card states what the public record documents and why the
@@ -190,7 +286,7 @@ export default function EvidencePage() {
             </section>
 
             <section id="meaning">
-              <p className="section-code">Evidence 03</p>
+              <p className="section-code">Evidence 04</p>
               <h2>What a link does—and does not—mean</h2>
               <p>
                 A link records a reviewed relationship between a public artifact
@@ -203,7 +299,9 @@ export default function EvidencePage() {
                 When no reviewed public artifacts are included for a directive,
                 it means only that the current Atlas release contains no reviewed
                 link for that directive. It is not evidence that no implementation
-                activity or public record exists.
+                activity or public record exists. The directive page says whether
+                the listed sources covering it were checked and found nothing, or
+                have not yet been successfully checked.
               </p>
               <p>
                 <Link href="/methodology">Read the full methodology</Link>
@@ -211,7 +309,7 @@ export default function EvidencePage() {
             </section>
 
             <section id="corrections">
-              <p className="section-code">Evidence 04</p>
+              <p className="section-code">Evidence 05</p>
               <h2>Corrections</h2>
               <p>
                 An evidence correction should identify the artifact, public URL,

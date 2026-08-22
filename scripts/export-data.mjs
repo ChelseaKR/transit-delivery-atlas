@@ -183,7 +183,11 @@ const publicData = {
   evidenceScope: {
     scope: evidenceData.scope,
     lastUpdatedOn: evidenceData.lastUpdatedOn,
+    nextReviewOn: evidenceData.nextReviewOn,
+    reviewCommitment: evidenceData.reviewCommitment,
     coverageNote: evidenceData.coverageNote,
+    reviewSources: evidenceData.reviewSources,
+    sweeps: evidenceData.sweeps,
   },
   evidence: evidenceData.evidence,
 };

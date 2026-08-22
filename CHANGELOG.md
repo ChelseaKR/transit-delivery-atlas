@@ -7,6 +7,33 @@ recorded here.
 
 ### Added
 
+- The evidence layer now carries a forward review commitment (#59). Data
+  contract 0.3.0 adds `nextReviewOn`, a `reviewCommitment`, a committed
+  `reviewSources` list (each with the directives it covers, a last-checked date,
+  and whether the check succeeded), and a dated `sweeps` log to
+  `evidenceScope`. The next review date expires against the build date under
+  the same grace-window rule as the watchlist, so an evidence sweep that lapses
+  blocks a release the same way a lapsed watchlist review does. Each directive
+  page now says which of two things its empty evidence list means — the listed
+  sources were checked on a stated date and found nothing, or no listed source
+  has been successfully checked yet — and `/evidence` publishes the source
+  table and sweep log (`lib/evidence-coverage.mjs`).
+- Two evidence records from the first recorded sweep (2026-08-21): the
+  California Transportation Commission's August 20–21, 2026 book items
+  recommending adoption of the 2026 Solutions for Congested Corridors Program
+  guidelines (Resolution G-26-60) and the 2026 Local Partnership Competitive
+  Program guidelines (Resolution G-26-64), both of which state that criteria were
+  amended "Pursuant to Executive Order N-7-26 (Order #5)". Both are staff
+  recommendations published 2026-08-07; neither is an adoption record.
+
+### Changed
+
+- The two Commission watchlist leads whose planned reviews had lapsed were
+  re-reviewed on 2026-08-21. The August 3 North Hearing lead records that the
+  Commission's later book items say the hearing occurred, and the August 20–21
+  meeting-page lead now watches for minutes and adopted resolutions, since the
+  book items that cite the order moved to the evidence register.
+
 - Calculated planning dates now expire against the build date. The register's
   timing column and each record page carried a bare derived date with no
   reference point, so a build served after the date would keep presenting it as

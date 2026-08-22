@@ -7,7 +7,8 @@ import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
 import { WatchlistCard } from "@/components/WatchlistCard";
 import { BUILD_DATE } from "@/lib/build-date";
-import { directiveById, directives, source } from "@/lib/data";
+import { directiveById, directives, evidenceCoverageFor, evidenceScope, source } from "@/lib/data";
+import { coverageStatement } from "@/lib/evidence-coverage.mjs";
 import { timingCurrency } from "@/lib/directive-timing.mjs";
 import { formatDate } from "@/lib/format";
 import { TIMING_PASSED_LABEL, timingCurrencyNote } from "@/lib/register-labels";
@@ -40,6 +41,8 @@ export default async function DirectivePage({ params }: PageProps) {
   const previous = directives[index - 1];
   const next = directives[index + 1];
   const pageFragment = directive.locator.pages[0];
+  const coverage = evidenceCoverageFor(directive.id);
+  const coveringSources = [...coverage.checkedSources, ...coverage.failedSources];
 
   return (
     <>
@@ -286,6 +289,41 @@ export default async function DirectivePage({ params }: PageProps) {
                 </p>
               </div>
             )}
+
+            <div
+              className="evidence-coverage"
+              data-coverage-state={coverage.state}
+              aria-labelledby="evidence-coverage-title"
+            >
+              <h3 id="evidence-coverage-title">Where the Atlas has looked</h3>
+              <p>{coverageStatement(coverage)}</p>
+              {coveringSources.length > 0 ? (
+                <ul className="evidence-coverage__sources">
+                  {coveringSources.map((reviewSource) => (
+                    <li key={reviewSource.id}>
+                      <a href={reviewSource.url} rel="noreferrer">
+                        {reviewSource.name} <span aria-hidden="true">↗</span>
+                      </a>
+                      <span>
+                        {reviewSource.lastCheckOutcome === "checked"
+                          ? `Checked ${formatDate(reviewSource.lastCheckedOn)}`
+                          : `Retrieval failed ${formatDate(reviewSource.lastCheckedOn)}`}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <p>No listed public source covers this directive yet.</p>
+              )}
+              <p className="evidence-coverage__commitment">
+                Next planned check of the listed sources:{" "}
+                <time dateTime={evidenceScope.nextReviewOn}>
+                  {formatDate(evidenceScope.nextReviewOn)}
+                </time>
+                . The full source list and sweep log are on the{" "}
+                <Link href="/evidence#review">evidence register</Link>.
+              </p>
+            </div>
 
             <p className="evidence-method-link">
               <Link href="/evidence">Read the evidence scope and review method</Link>
