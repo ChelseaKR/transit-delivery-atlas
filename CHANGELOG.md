@@ -7,6 +7,20 @@ recorded here.
 
 ### Added
 
+- ADR-0002 records an owner-directed change of direction: an optional runtime
+  question-answering layer, with the model kept at the edges (it structures a
+  question and narrates facts the service assembled) and a verifier before
+  display that checks every quotation of the order against the retained corpus,
+  resolves every evidence citation, withholds verdict language, and inserts the
+  site's own empty-state wording. `AGENTS.md` states the working rules.
+- The retained corpus `corpus/eo-n-7-26/`: the official signed PDF
+  (byte-identical to the hash in `data/sources.json`), a raw macOS Vision OCR
+  of the scan, a reviewed corrections log (26 entries, each with its basis), the
+  corrected text, and a manifest with hashes and retrieval date.
+  `lib/corpus.mjs` verifies a quotation verbatim (with elision support) and
+  `tests/corpus.test.mjs` proves all 24 reviewed source excerpts appear in the
+  corrected text on the pages their locators name.
+
 - The evidence layer now carries a forward review commitment (#59). Data
   contract 0.3.0 adds `nextReviewOn`, a `reviewCommitment`, a committed
   `reviewSources` list (each with the directives it covers, a last-checked date,
