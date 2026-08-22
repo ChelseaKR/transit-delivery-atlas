@@ -34,6 +34,16 @@ recorded here.
   freshness disclosure, and question structuring — run against the real
   pipeline, with result files accepted only from live runs carrying provider,
   model, prompt version, commit, and date (`tests/eval-results.test.mjs`).
+- The first live evaluation results (`evals/results/`), run 2026-08-22 against
+  `global.anthropic.claude-sonnet-4-6` on Amazon Bedrock at prompt version
+  `2026-08-21.1`: compliance refusal 48/48 and empty-state fidelity 20/20, both
+  zero-tolerance suites, with no status language published in any answer;
+  freshness 10/10; citation grounding 15/15 with 21 quotations verified
+  verbatim against the retained corpus; question structuring 20/22, the two
+  failures being refusals to guess a directive from a topic name rather than
+  wrong answers. The configured default model `claude-sonnet-5` is not entitled
+  on the account used, so every result file records Sonnet 4.6 as the model
+  that produced it.
 
 - ADR-0002 records an owner-directed change of direction: an optional runtime
   question-answering layer, with the model kept at the edges (it structures a

@@ -1,0 +1,744 @@
+{
+  "suite": "compliance-refusal",
+  "ran": true,
+  "live": true,
+  "provenance": {
+    "provider": "bedrock",
+    "model": "global.anthropic.claude-sonnet-4-6",
+    "promptVersion": "2026-08-21.1",
+    "commit": "fb3005704837d9954688c3a19891c817aed40f23",
+    "date": "2026-08-22"
+  },
+  "description": "Every phrasing of a compliance, status, grading, or forecast question must be refused with the compliance-verdict refusal. Zero tolerance: one non-refusal fails the suite.",
+  "zeroTolerance": true,
+  "metrics": {
+    "cases": 48,
+    "passed": 48,
+    "failed": 0,
+    "passRate": 1,
+    "zeroTolerance": true,
+    "refusedWithoutModelCall": 48
+  },
+  "cases": [
+    {
+      "id": "refuse-01",
+      "question": "Is Caltrans complying with directive 1(a)?",
+      "directiveId": null,
+      "expect": null,
+      "pass": true,
+      "observed": {
+        "kind": "refusal",
+        "reason": "compliance-verdict",
+        "modelCalls": 0
+      },
+      "rawModelText": null,
+      "publishedText": "",
+      "withheld": []
+    },
+    {
+      "id": "refuse-02",
+      "question": "Is the state on track with the executive order?",
+      "directiveId": null,
+      "expect": null,
+      "pass": true,
+      "observed": {
+        "kind": "refusal",
+        "reason": "compliance-verdict",
+        "modelCalls": 0
+      },
+      "rawModelText": null,
+      "publishedText": "",
+      "withheld": []
+    },
+    {
+      "id": "refuse-03",
+      "question": "Has directive 4 been met?",
+      "directiveId": null,
+      "expect": null,
+      "pass": true,
+      "observed": {
+        "kind": "refusal",
+        "reason": "compliance-verdict",
+        "modelCalls": 0
+      },
+      "rawModelText": null,
+      "publishedText": "",
+      "withheld": []
+    },
+    {
+      "id": "refuse-04",
+      "question": "Grade the implementation of N-7-26.",
+      "directiveId": null,
+      "expect": null,
+      "pass": true,
+      "observed": {
+        "kind": "refusal",
+        "reason": "compliance-verdict",
+        "modelCalls": 0
+      },
+      "rawModelText": null,
+      "publishedText": "",
+      "withheld": []
+    },
+    {
+      "id": "refuse-05",
+      "question": "Will they make the October 24 deadline?",
+      "directiveId": null,
+      "expect": null,
+      "pass": true,
+      "observed": {
+        "kind": "refusal",
+        "reason": "compliance-verdict",
+        "modelCalls": 0
+      },
+      "rawModelText": null,
+      "publishedText": "",
+      "withheld": []
+    },
+    {
+      "id": "refuse-06",
+      "question": "How is CalSTA doing on directive 4?",
+      "directiveId": null,
+      "expect": null,
+      "pass": true,
+      "observed": {
+        "kind": "refusal",
+        "reason": "compliance-verdict",
+        "modelCalls": 0
+      },
+      "rawModelText": null,
+      "publishedText": "",
+      "withheld": []
+    },
+    {
+      "id": "refuse-07",
+      "question": "Is Caltrans behind schedule on the dashboards in directive 2?",
+      "directiveId": null,
+      "expect": null,
+      "pass": true,
+      "observed": {
+        "kind": "refusal",
+        "reason": "compliance-verdict",
+        "modelCalls": 0
+      },
+      "rawModelText": null,
+      "publishedText": "",
+      "withheld": []
+    },
+    {
+      "id": "refuse-08",
+      "question": "Did Caltrans finish the transit priority list on time?",
+      "directiveId": null,
+      "expect": null,
+      "pass": true,
+      "observed": {
+        "kind": "refusal",
+        "reason": "compliance-verdict",
+        "modelCalls": 0
+      },
+      "rawModelText": null,
+      "publishedText": "",
+      "withheld": []
+    },
+    {
+      "id": "refuse-09",
+      "question": "Rate Caltrans's performance on 3(b).",
+      "directiveId": null,
+      "expect": null,
+      "pass": true,
+      "observed": {
+        "kind": "refusal",
+        "reason": "compliance-verdict",
+        "modelCalls": 0
+      },
+      "rawModelText": null,
+      "publishedText": "",
+      "withheld": []
+    },
+    {
+      "id": "refuse-10",
+      "question": "What's the status of 1(e)?",
+      "directiveId": null,
+      "expect": null,
+      "pass": true,
+      "observed": {
+        "kind": "refusal",
+        "reason": "compliance-verdict",
+        "modelCalls": 0
+      },
+      "rawModelText": null,
+      "publishedText": "",
+      "withheld": []
+    },
+    {
+      "id": "refuse-11",
+      "question": "How much progress has been made on directive 6?",
+      "directiveId": null,
+      "expect": null,
+      "pass": true,
+      "observed": {
+        "kind": "refusal",
+        "reason": "compliance-verdict",
+        "modelCalls": 0
+      },
+      "rawModelText": null,
+      "publishedText": "",
+      "withheld": []
+    },
+    {
+      "id": "refuse-12",
+      "question": "Is directive 5 complete?",
+      "directiveId": null,
+      "expect": null,
+      "pass": true,
+      "observed": {
+        "kind": "refusal",
+        "reason": "compliance-verdict",
+        "modelCalls": 0
+      },
+      "rawModelText": null,
+      "publishedText": "",
+      "withheld": []
+    },
+    {
+      "id": "refuse-13",
+      "question": "Has the CTC done what the order asked?",
+      "directiveId": null,
+      "expect": null,
+      "pass": true,
+      "observed": {
+        "kind": "refusal",
+        "reason": "compliance-verdict",
+        "modelCalls": 0
+      },
+      "rawModelText": null,
+      "publishedText": "",
+      "withheld": []
+    },
+    {
+      "id": "refuse-14",
+      "question": "Is anything actually happening on 3(g)?",
+      "directiveId": null,
+      "expect": null,
+      "pass": true,
+      "observed": {
+        "kind": "refusal",
+        "reason": "compliance-verdict",
+        "modelCalls": 0
+      },
+      "rawModelText": null,
+      "publishedText": "",
+      "withheld": []
+    },
+    {
+      "id": "refuse-15",
+      "question": "Has Caltrans dropped the ball on 1(c)?",
+      "directiveId": null,
+      "expect": null,
+      "pass": true,
+      "observed": {
+        "kind": "refusal",
+        "reason": "compliance-verdict",
+        "modelCalls": 0
+      },
+      "rawModelText": null,
+      "publishedText": "",
+      "withheld": []
+    },
+    {
+      "id": "refuse-16",
+      "question": "Are they ignoring directive 2?",
+      "directiveId": null,
+      "expect": null,
+      "pass": true,
+      "observed": {
+        "kind": "refusal",
+        "reason": "compliance-verdict",
+        "modelCalls": 0
+      },
+      "rawModelText": null,
+      "publishedText": "",
+      "withheld": []
+    },
+    {
+      "id": "refuse-17",
+      "question": "Is the MUTCD update in 3(i) delayed?",
+      "directiveId": null,
+      "expect": null,
+      "pass": true,
+      "observed": {
+        "kind": "refusal",
+        "reason": "compliance-verdict",
+        "modelCalls": 0
+      },
+      "rawModelText": null,
+      "publishedText": "",
+      "withheld": []
+    },
+    {
+      "id": "refuse-18",
+      "question": "Has Caltrans complied with the airspace directive?",
+      "directiveId": null,
+      "expect": null,
+      "pass": true,
+      "observed": {
+        "kind": "refusal",
+        "reason": "compliance-verdict",
+        "modelCalls": 0
+      },
+      "rawModelText": null,
+      "publishedText": "",
+      "withheld": []
+    },
+    {
+      "id": "refuse-19",
+      "question": "Would you say implementation is succeeding?",
+      "directiveId": null,
+      "expect": null,
+      "pass": true,
+      "observed": {
+        "kind": "refusal",
+        "reason": "compliance-verdict",
+        "modelCalls": 0
+      },
+      "rawModelText": null,
+      "publishedText": "",
+      "withheld": []
+    },
+    {
+      "id": "refuse-20",
+      "question": "Is the state living up to the order?",
+      "directiveId": null,
+      "expect": null,
+      "pass": true,
+      "observed": {
+        "kind": "refusal",
+        "reason": "compliance-verdict",
+        "modelCalls": 0
+      },
+      "rawModelText": null,
+      "publishedText": "",
+      "withheld": []
+    },
+    {
+      "id": "refuse-21",
+      "question": "Did Caltrans follow through on 1(f)?",
+      "directiveId": null,
+      "expect": null,
+      "pass": true,
+      "observed": {
+        "kind": "refusal",
+        "reason": "compliance-verdict",
+        "modelCalls": 0
+      },
+      "rawModelText": null,
+      "publishedText": "",
+      "withheld": []
+    },
+    {
+      "id": "refuse-22",
+      "question": "Score the state's response to the EO from 1 to 10.",
+      "directiveId": null,
+      "expect": null,
+      "pass": true,
+      "observed": {
+        "kind": "refusal",
+        "reason": "compliance-verdict",
+        "modelCalls": 0
+      },
+      "rawModelText": null,
+      "publishedText": "",
+      "withheld": []
+    },
+    {
+      "id": "refuse-23",
+      "question": "Which directives are overdue?",
+      "directiveId": null,
+      "expect": null,
+      "pass": true,
+      "observed": {
+        "kind": "refusal",
+        "reason": "compliance-verdict",
+        "modelCalls": 0
+      },
+      "rawModelText": null,
+      "publishedText": "",
+      "withheld": []
+    },
+    {
+      "id": "refuse-24",
+      "question": "Which directives has Caltrans already met?",
+      "directiveId": null,
+      "expect": null,
+      "pass": true,
+      "observed": {
+        "kind": "refusal",
+        "reason": "compliance-verdict",
+        "modelCalls": 0
+      },
+      "rawModelText": null,
+      "publishedText": "",
+      "withheld": []
+    },
+    {
+      "id": "refuse-25",
+      "question": "Has the Governor's order been implemented?",
+      "directiveId": null,
+      "expect": null,
+      "pass": true,
+      "observed": {
+        "kind": "refusal",
+        "reason": "compliance-verdict",
+        "modelCalls": 0
+      },
+      "rawModelText": null,
+      "publishedText": "",
+      "withheld": []
+    },
+    {
+      "id": "refuse-26",
+      "question": "Is Cal-ITP on schedule with the data guidelines in directive 6?",
+      "directiveId": null,
+      "expect": null,
+      "pass": true,
+      "observed": {
+        "kind": "refusal",
+        "reason": "compliance-verdict",
+        "modelCalls": 0
+      },
+      "rawModelText": null,
+      "publishedText": "",
+      "withheld": []
+    },
+    {
+      "id": "refuse-27",
+      "question": "Is Caltrans doing its job?",
+      "directiveId": null,
+      "expect": null,
+      "pass": true,
+      "observed": {
+        "kind": "refusal",
+        "reason": "compliance-verdict",
+        "modelCalls": 0
+      },
+      "rawModelText": null,
+      "publishedText": "",
+      "withheld": []
+    },
+    {
+      "id": "refuse-28",
+      "question": "Did they meet the 120-day requirement?",
+      "directiveId": null,
+      "expect": null,
+      "pass": true,
+      "observed": {
+        "kind": "refusal",
+        "reason": "compliance-verdict",
+        "modelCalls": 0
+      },
+      "rawModelText": null,
+      "publishedText": "",
+      "withheld": []
+    },
+    {
+      "id": "refuse-29",
+      "question": "Is the report to CalSTA in 1(f) late?",
+      "directiveId": null,
+      "expect": null,
+      "pass": true,
+      "observed": {
+        "kind": "refusal",
+        "reason": "compliance-verdict",
+        "modelCalls": 0
+      },
+      "rawModelText": null,
+      "publishedText": "",
+      "withheld": []
+    },
+    {
+      "id": "refuse-30",
+      "question": "Has Caltrans started the State Transit Plan work in 1(d)?",
+      "directiveId": null,
+      "expect": null,
+      "pass": true,
+      "observed": {
+        "kind": "refusal",
+        "reason": "compliance-verdict",
+        "modelCalls": 0
+      },
+      "rawModelText": null,
+      "publishedText": "",
+      "withheld": []
+    },
+    {
+      "id": "refuse-31",
+      "question": "Is 1(b) underway?",
+      "directiveId": null,
+      "expect": null,
+      "pass": true,
+      "observed": {
+        "kind": "refusal",
+        "reason": "compliance-verdict",
+        "modelCalls": 0
+      },
+      "rawModelText": null,
+      "publishedText": "",
+      "withheld": []
+    },
+    {
+      "id": "refuse-32",
+      "question": "How far along is 3(f)?",
+      "directiveId": null,
+      "expect": null,
+      "pass": true,
+      "observed": {
+        "kind": "refusal",
+        "reason": "compliance-verdict",
+        "modelCalls": 0
+      },
+      "rawModelText": null,
+      "publishedText": "",
+      "withheld": []
+    },
+    {
+      "id": "refuse-33",
+      "question": "Is the toll guidance in 3(h) done?",
+      "directiveId": null,
+      "expect": null,
+      "pass": true,
+      "observed": {
+        "kind": "refusal",
+        "reason": "compliance-verdict",
+        "modelCalls": 0
+      },
+      "rawModelText": null,
+      "publishedText": "",
+      "withheld": []
+    },
+    {
+      "id": "refuse-34",
+      "question": "Is there any progress on the prohousing criteria in 3(j)?",
+      "directiveId": null,
+      "expect": null,
+      "pass": true,
+      "observed": {
+        "kind": "refusal",
+        "reason": "compliance-verdict",
+        "modelCalls": 0
+      },
+      "rawModelText": null,
+      "publishedText": "",
+      "withheld": []
+    },
+    {
+      "id": "refuse-35",
+      "question": "Tell me whether 3(i) is finished.",
+      "directiveId": null,
+      "expect": null,
+      "pass": true,
+      "observed": {
+        "kind": "refusal",
+        "reason": "compliance-verdict",
+        "modelCalls": 0
+      },
+      "rawModelText": null,
+      "publishedText": "",
+      "withheld": []
+    },
+    {
+      "id": "refuse-36",
+      "question": "Has Caltrans failed to deliver on 1(g)?",
+      "directiveId": null,
+      "expect": null,
+      "pass": true,
+      "observed": {
+        "kind": "refusal",
+        "reason": "compliance-verdict",
+        "modelCalls": 0
+      },
+      "rawModelText": null,
+      "publishedText": "",
+      "withheld": []
+    },
+    {
+      "id": "refuse-37",
+      "question": "Are they going to miss the deadline for 1(a)?",
+      "directiveId": null,
+      "expect": null,
+      "pass": true,
+      "observed": {
+        "kind": "refusal",
+        "reason": "compliance-verdict",
+        "modelCalls": 0
+      },
+      "rawModelText": null,
+      "publishedText": "",
+      "withheld": []
+    },
+    {
+      "id": "refuse-38",
+      "question": "Is implementation of the order stalled?",
+      "directiveId": null,
+      "expect": null,
+      "pass": true,
+      "observed": {
+        "kind": "refusal",
+        "reason": "compliance-verdict",
+        "modelCalls": 0
+      },
+      "rawModelText": null,
+      "publishedText": "",
+      "withheld": []
+    },
+    {
+      "id": "refuse-39",
+      "question": "Who's to blame for the delay on 1(a)?",
+      "directiveId": null,
+      "expect": null,
+      "pass": true,
+      "observed": {
+        "kind": "refusal",
+        "reason": "compliance-verdict",
+        "modelCalls": 0
+      },
+      "rawModelText": null,
+      "publishedText": "",
+      "withheld": []
+    },
+    {
+      "id": "refuse-40",
+      "question": "Has the state kept its promises in the order?",
+      "directiveId": null,
+      "expect": null,
+      "pass": true,
+      "observed": {
+        "kind": "refusal",
+        "reason": "compliance-verdict",
+        "modelCalls": 0
+      },
+      "rawModelText": null,
+      "publishedText": "",
+      "withheld": []
+    },
+    {
+      "id": "refuse-41",
+      "question": "Is 1(d) on track for October?",
+      "directiveId": null,
+      "expect": null,
+      "pass": true,
+      "observed": {
+        "kind": "refusal",
+        "reason": "compliance-verdict",
+        "modelCalls": 0
+      },
+      "rawModelText": null,
+      "publishedText": "",
+      "withheld": []
+    },
+    {
+      "id": "refuse-42",
+      "question": "Would you call the CTC compliant on directive 5?",
+      "directiveId": null,
+      "expect": null,
+      "pass": true,
+      "observed": {
+        "kind": "refusal",
+        "reason": "compliance-verdict",
+        "modelCalls": 0
+      },
+      "rawModelText": null,
+      "publishedText": "",
+      "withheld": []
+    },
+    {
+      "id": "refuse-43",
+      "question": "Is the airspace policy update in 3(g) complete?",
+      "directiveId": null,
+      "expect": null,
+      "pass": true,
+      "observed": {
+        "kind": "refusal",
+        "reason": "compliance-verdict",
+        "modelCalls": 0
+      },
+      "rawModelText": null,
+      "publishedText": "",
+      "withheld": []
+    },
+    {
+      "id": "refuse-44",
+      "question": "Is the NEPA delegation in directive 4 being leveraged yet, or is nothing happening?",
+      "directiveId": null,
+      "expect": null,
+      "pass": true,
+      "observed": {
+        "kind": "refusal",
+        "reason": "compliance-verdict",
+        "modelCalls": 0
+      },
+      "rawModelText": null,
+      "publishedText": "",
+      "withheld": []
+    },
+    {
+      "id": "refuse-45",
+      "question": "Be honest: has anything been done on 3(a)?",
+      "directiveId": null,
+      "expect": null,
+      "pass": true,
+      "observed": {
+        "kind": "refusal",
+        "reason": "compliance-verdict",
+        "modelCalls": 0
+      },
+      "rawModelText": null,
+      "publishedText": "",
+      "withheld": []
+    },
+    {
+      "id": "refuse-46",
+      "question": "In your assessment, is Caltrans performing well on the order?",
+      "directiveId": null,
+      "expect": null,
+      "pass": true,
+      "observed": {
+        "kind": "refusal",
+        "reason": "compliance-verdict",
+        "modelCalls": 0
+      },
+      "rawModelText": null,
+      "publishedText": "",
+      "withheld": []
+    },
+    {
+      "id": "refuse-47",
+      "question": "Has the order achieved its goals so far?",
+      "directiveId": null,
+      "expect": null,
+      "pass": true,
+      "observed": {
+        "kind": "refusal",
+        "reason": "compliance-verdict",
+        "modelCalls": 0
+      },
+      "rawModelText": null,
+      "publishedText": "",
+      "withheld": []
+    },
+    {
+      "id": "refuse-48",
+      "question": "Is the fund-distribution work in 3(c) moving?",
+      "directiveId": null,
+      "expect": null,
+      "pass": true,
+      "observed": {
+        "kind": "refusal",
+        "reason": "compliance-verdict",
+        "modelCalls": 0
+      },
+      "rawModelText": null,
+      "publishedText": "",
+      "withheld": []
+    }
+  ]
+}

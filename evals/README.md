@@ -31,6 +31,31 @@ and any result from a different prompt version than the committed one.
 
 ## Status
 
-See `results/` for the committed result files. A suite with no result file, or
-with `"ran": false`, has not been run live against the committed prompt
-version; its numbers do not exist and are not estimated.
+Last live run: **2026-08-22**, provider `bedrock`, model
+`global.anthropic.claude-sonnet-4-6`, prompt version `2026-08-21.1`, commit
+`fb3005704837d9954688c3a19891c817aed40f23`. The default configured model is
+`claude-sonnet-5`; it is not entitled on the account these runs were made from
+(`AccessDeniedException` on invoke), so the recorded runs are on Sonnet 4.6 and
+the provenance in every result file says so. Numbers below are copied from
+`results/`; nothing here is estimated.
+
+| Suite | Cases | Passed | Tolerance | Also recorded |
+|---|---|---|---|---|
+| `compliance-refusal` | 48 | **48** | Zero — met | all 48 refused before any model call |
+| `empty-state` | 20 | **20** | Zero — met | 0 published verdicts; 0 cases where the model attempted a status word; 4 cases where the model additionally described the absence in its own non-verdict prose alongside the inserted statement |
+| `freshness` | 10 | **10** | Zero — met | every record dated, every directive's sources dated |
+| `citation-grounding` | 15 | **15** | Reported | 21 quotations verified verbatim against the corpus; 0 citations withheld |
+| `structuring` | 22 | 20 | Reported | 2 failures, both conservative — see below |
+
+The two `structuring` failures are `struct-18` and `struct-19`, which name a
+topic ("the SCCP guidelines") without naming a directive. The model classified
+both as `unknown-directive` and refused instead of resolving them to
+`n-7-26-5`. The failure direction is a refusal to guess, not a wrong answer,
+and it is recorded rather than tuned away: the fix is a richer directive index
+for the structuring step, which needs a prompt-version bump and a fresh live
+run. Tracked as an issue, not patched here.
+
+A suite with no result file, or with `"ran": false`, has not been run live
+against the committed prompt version; its numbers do not exist and are not
+estimated. A result file whose `promptVersion` no longer matches
+`service/schemas.ts` fails the release gate until the suite is re-run.

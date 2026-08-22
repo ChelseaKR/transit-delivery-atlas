@@ -1,0 +1,197 @@
+{
+  "suite": "freshness",
+  "ran": true,
+  "live": true,
+  "provenance": {
+    "provider": "bedrock",
+    "model": "global.anthropic.claude-sonnet-4-6",
+    "promptVersion": "2026-08-21.1",
+    "commit": "fb3005704837d9954688c3a19891c817aed40f23",
+    "date": "2026-08-22"
+  },
+  "description": "Every answer that touches evidence must state each record's last review date and, for every directive asked about, when the covering sources were last checked and when they are checked next.",
+  "zeroTolerance": true,
+  "metrics": {
+    "cases": 10,
+    "passed": 10,
+    "failed": 0,
+    "passRate": 1
+  },
+  "cases": [
+    {
+      "id": "fresh-01",
+      "question": "What evidence is there for directive 5 and when did the Atlas last review it?",
+      "directiveId": null,
+      "expect": null,
+      "pass": true,
+      "observed": {
+        "kind": "answer",
+        "freshnessPresent": true,
+        "evidenceBlocks": 4,
+        "everyRecordDated": true,
+        "everyItemDated": true
+      },
+      "rawModelText": "Directive 5 directs CalSTA, in coordination with Caltrans and the CTC, to update state funding program guidelines, and directs Caltrans to identify federal funding programs. The Atlas links four reviewed evidence records to this directive. The evidence collection was last swept 2026-08-21; the next planned sweep is 2026-09-18. | First, a July 15, 2026 reference material item from the California Transportation Commission, Atlas last reviewed 2026-07-22: | Second, a workshop presentation from the same date, also Atlas last reviewed 2026-07-22: | Third, a staff recommendation item for the 2026 Solutions for Congested Corridors Program Guidelines, Atlas last reviewed 2026-08-21: | Fourth, a staff recommendation item for the 2026 Local Partnership Competitive Program Guidelines, also Atlas last reviewed 2026-08-21: | The Atlas's analysis flags two open implementation questions for this directive: which guideline cycles and owners apply, and how transit priority, connectivity, and incentive magnitude are defined. All four records address only portions of the state-guideline clause; none address Caltrans's federal-funding-identification clause.",
+      "publishedText": "Directive 5 directs CalSTA, in coordination with Caltrans and the CTC, to update state funding program guidelines, and directs Caltrans to identify federal funding programs. The Atlas links four reviewed evidence records to this directive. The evidence collection was last swept 2026-08-21; the next planned sweep is 2026-09-18. | First, a July 15, 2026 reference material item from the California Transportation Commission, Atlas last reviewed 2026-07-22: | Second, a workshop presentation from the same date, also Atlas last reviewed 2026-07-22: | Third, a staff recommendation item for the 2026 Solutions for Congested Corridors Program Guidelines, Atlas last reviewed 2026-08-21: | Fourth, a staff recommendation item for the 2026 Local Partnership Competitive Program Guidelines, also Atlas last reviewed 2026-08-21: | The Atlas's analysis flags two open implementation questions for this directive: which guideline cycles and owners apply, and how transit priority, connectivity, and incentive magnitude are defined. All four records address only portions of the state-guideline clause; none address Caltrans's federal-funding-identification clause.",
+      "withheld": []
+    },
+    {
+      "id": "fresh-02",
+      "question": "What evidence is linked to directive 4?",
+      "directiveId": null,
+      "expect": null,
+      "pass": true,
+      "observed": {
+        "kind": "answer",
+        "freshnessPresent": true,
+        "evidenceBlocks": 0,
+        "everyRecordDated": true,
+        "everyItemDated": true
+      },
+      "rawModelText": "Directive 4 directs CalSTA to: | The Atlas has checked for reviewed public evidence linked to this directive and found none.",
+      "publishedText": "Directive 4 directs CalSTA to: | The Atlas has checked for reviewed public evidence linked to this directive and found none.",
+      "withheld": []
+    },
+    {
+      "id": "fresh-03",
+      "question": "What evidence is linked to 1(a)?",
+      "directiveId": null,
+      "expect": null,
+      "pass": true,
+      "observed": {
+        "kind": "answer",
+        "freshnessPresent": true,
+        "evidenceBlocks": 0,
+        "everyRecordDated": true,
+        "everyItemDated": true
+      },
+      "rawModelText": "Directive 1(a) directs California Department of Transportation (Caltrans) to: | The Atlas has reviewed public sources for evidence linked to this directive. The calculated planning date is 2026-10-24 (120 calendar days after the effective date).",
+      "publishedText": "Directive 1(a) directs California Department of Transportation (Caltrans) to: | The Atlas has reviewed public sources for evidence linked to this directive. The calculated planning date is 2026-10-24 (120 calendar days after the effective date).",
+      "withheld": []
+    },
+    {
+      "id": "fresh-04",
+      "question": "What public records cite directives 5 and 2?",
+      "directiveId": null,
+      "expect": null,
+      "pass": true,
+      "observed": {
+        "kind": "answer",
+        "freshnessPresent": true,
+        "evidenceBlocks": 4,
+        "everyRecordDated": true,
+        "everyItemDated": true
+      },
+      "rawModelText": "Directive 5 directs CalSTA, in coordination with Caltrans and the CTC, to update state funding program guidelines, and Caltrans to identify federal funding programs. Four reviewed evidence records cite it: | For directive 2, which directs Caltrans to: | the Atlas has no reviewed evidence records linked to it.",
+      "publishedText": "Directive 5 directs CalSTA, in coordination with Caltrans and the CTC, to update state funding program guidelines, and Caltrans to identify federal funding programs. Four reviewed evidence records cite it: | For directive 2, which directs Caltrans to: | the Atlas has no reviewed evidence records linked to it.",
+      "withheld": []
+    },
+    {
+      "id": "fresh-05",
+      "question": "When were the sources for 3(b) last checked?",
+      "directiveId": null,
+      "expect": null,
+      "pass": true,
+      "observed": {
+        "kind": "answer",
+        "freshnessPresent": true,
+        "evidenceBlocks": 0,
+        "everyRecordDated": true,
+        "everyItemDated": true
+      },
+      "rawModelText": "For directive 3(b), no reviewed evidence is currently linked. The Atlas's record of source coverage is shown here:",
+      "publishedText": "For directive 3(b), no reviewed evidence is currently linked. The Atlas's record of source coverage is shown here:",
+      "withheld": []
+    },
+    {
+      "id": "fresh-06",
+      "question": "What evidence does the Atlas have for 1(g), and how current is it?",
+      "directiveId": null,
+      "expect": null,
+      "pass": true,
+      "observed": {
+        "kind": "answer",
+        "freshnessPresent": true,
+        "evidenceBlocks": 0,
+        "everyRecordDated": true,
+        "everyItemDated": true
+      },
+      "rawModelText": "Directive 1(g) directs Caltrans to: | The order sets a timing of \"Within 120 days of this Order\" for the team's establishment, giving a calculated planning date of 2026-10-24 (120 calendar days after the effective date). As for reviewed public evidence linked to this directive:",
+      "publishedText": "Directive 1(g) directs Caltrans to: | The order sets a timing of \"Within 120 days of this Order\" for the team's establishment, giving a calculated planning date of 2026-10-24 (120 calendar days after the effective date). As for reviewed public evidence linked to this directive:",
+      "withheld": []
+    },
+    {
+      "id": "fresh-07",
+      "question": "What is documented publicly for directive 6?",
+      "directiveId": null,
+      "expect": null,
+      "pass": true,
+      "observed": {
+        "kind": "answer",
+        "freshnessPresent": true,
+        "evidenceBlocks": 0,
+        "everyRecordDated": true,
+        "everyItemDated": true
+      },
+      "rawModelText": "Directive 6 directs Caltrans to: | The Atlas has checked public sources for reviewed evidence linked to this directive. As of the last sweep on 2026-08-21, the result is:",
+      "publishedText": "Directive 6 directs Caltrans to: | The Atlas has checked public sources for reviewed evidence linked to this directive. As of the last sweep on 2026-08-21, the result is:",
+      "withheld": []
+    },
+    {
+      "id": "fresh-08",
+      "question": "List the reviewed artifacts for directive 5.",
+      "directiveId": null,
+      "expect": null,
+      "pass": true,
+      "observed": {
+        "kind": "answer",
+        "freshnessPresent": true,
+        "evidenceBlocks": 4,
+        "everyRecordDated": true,
+        "everyItemDated": true
+      },
+      "rawModelText": "Directive 5 has four reviewed evidence records linked in the Atlas:",
+      "publishedText": "Directive 5 has four reviewed evidence records linked in the Atlas:",
+      "withheld": []
+    },
+    {
+      "id": "fresh-09",
+      "question": "What evidence is there for 3(j)?",
+      "directiveId": null,
+      "expect": null,
+      "pass": true,
+      "observed": {
+        "kind": "answer",
+        "freshnessPresent": true,
+        "evidenceBlocks": 0,
+        "everyRecordDated": true,
+        "everyItemDated": true
+      },
+      "rawModelText": "Directive 3(j) directs Caltrans, in consultation with the California Department of Housing and Community Development (HCD) and the California Transportation Commission (CTC), to:",
+      "publishedText": "Directive 3(j) directs Caltrans, in consultation with the California Department of Housing and Community Development (HCD) and the California Transportation Commission (CTC), to:",
+      "withheld": []
+    },
+    {
+      "id": "fresh-10",
+      "question": "Has the Atlas checked for evidence on 1(c), and when?",
+      "directiveId": null,
+      "expect": null,
+      "pass": true,
+      "observed": {
+        "kind": "answer",
+        "freshnessPresent": true,
+        "evidenceBlocks": 0,
+        "everyRecordDated": true,
+        "everyItemDated": true
+      },
+      "rawModelText": "The Atlas has checked for evidence linked to directive 1(c), the Section 5307 direct-recipient option. The result of that check is: | The Atlas also notes two open implementation questions under its analysis of directive 1(c). | The Atlas's analysis raises: How is \"more rapid\" disbursement measured? And how do compliance duties and reversibility work after an election?",
+      "publishedText": "The Atlas has checked for evidence linked to directive 1(c), the Section 5307 direct-recipient option. The result of that check is: | The Atlas also notes two open implementation questions under its analysis of directive 1(c). | The Atlas's analysis raises: How is \"more rapid\" disbursement measured?",
+      "withheld": [
+        {
+          "kind": "verdict",
+          "detail": "And how do compliance duties and reversibility work after an election?"
+        }
+      ]
+    }
+  ]
+}

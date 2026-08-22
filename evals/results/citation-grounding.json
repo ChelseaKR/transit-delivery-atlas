@@ -1,0 +1,388 @@
+{
+  "suite": "citation-grounding",
+  "ran": true,
+  "live": true,
+  "provenance": {
+    "provider": "bedrock",
+    "model": "global.anthropic.claude-sonnet-4-6",
+    "promptVersion": "2026-08-21.1",
+    "commit": "fb3005704837d9954688c3a19891c817aed40f23",
+    "date": "2026-08-22"
+  },
+  "description": "Source-language answers must carry at least one quotation, every quotation must verify verbatim against the retained corpus, and every evidence citation must resolve. Withheld citations are counted.",
+  "zeroTolerance": false,
+  "metrics": {
+    "cases": 15,
+    "passed": 15,
+    "failed": 0,
+    "passRate": 1,
+    "withheldCitations": 0,
+    "verifiedQuotes": 21
+  },
+  "cases": [
+    {
+      "id": "cite-01",
+      "question": "What exactly does directive 5 say?",
+      "directiveId": null,
+      "expect": {
+        "directiveIds": [
+          "n-7-26-5"
+        ]
+      },
+      "pass": true,
+      "observed": {
+        "kind": "answer",
+        "directiveIds": [
+          "n-7-26-5"
+        ],
+        "quotes": 1,
+        "evidence": 0,
+        "withheldCitations": 0,
+        "withheld": 0
+      },
+      "rawModelText": "Directive 5 covers state and federal funding support for transit priority and complete trips. The order states: | The explicit leads named are the California State Transportation Agency (CalSTA) and the California Department of Transportation (Caltrans), with the California Transportation Commission (CTC) named as a collaborator. The order states no explicit completion deadline for this directive, so the Atlas records no calculated planning date.",
+      "publishedText": "Directive 5 covers state and federal funding support for transit priority and complete trips. The order states: | The explicit leads named are the California State Transportation Agency (CalSTA) and the California Department of Transportation (Caltrans), with the California Transportation Commission (CTC) named as a collaborator. The order states no explicit completion deadline for this directive, so the Atlas records no calculated planning date.",
+      "withheld": []
+    },
+    {
+      "id": "cite-02",
+      "question": "Quote what the order says in 3(i) about the MUTCD.",
+      "directiveId": null,
+      "expect": {
+        "directiveIds": [
+          "n-7-26-3i"
+        ]
+      },
+      "pass": true,
+      "observed": {
+        "kind": "answer",
+        "directiveIds": [
+          "n-7-26-3i"
+        ],
+        "quotes": 2,
+        "evidence": 0,
+        "withheldCitations": 0,
+        "withheld": 0
+      },
+      "rawModelText": "The order section 3 preamble provides context for directive 3(i): | Directive 3(i) then states:",
+      "publishedText": "The order section 3 preamble provides context for directive 3(i): | Directive 3(i) then states:",
+      "withheld": []
+    },
+    {
+      "id": "cite-03",
+      "question": "What does the order require of Caltrans in 1(a)?",
+      "directiveId": null,
+      "expect": {
+        "directiveIds": [
+          "n-7-26-1a"
+        ]
+      },
+      "pass": true,
+      "observed": {
+        "kind": "answer",
+        "directiveIds": [
+          "n-7-26-1a"
+        ],
+        "quotes": 1,
+        "evidence": 0,
+        "withheldCitations": 0,
+        "withheld": 0
+      },
+      "rawModelText": "Directive 1(a) requires California Department of Transportation (Caltrans), in collaboration with relevant local partners, to: | The order states this must occur \"Within 120 days of this Order\", yielding a calculated planning date of 2026-10-24 (120 calendar days after the effective date). The Atlas notes that \"where applicable\" qualifies consistency with relevant local or regional transportation plans.",
+      "publishedText": "Directive 1(a) requires California Department of Transportation (Caltrans), in collaboration with relevant local partners, to: | The order states this must occur \"Within 120 days of this Order\", yielding a calculated planning date of 2026-10-24 (120 calendar days after the effective date). The Atlas notes that \"where applicable\" qualifies consistency with relevant local or regional transportation plans.",
+      "withheld": []
+    },
+    {
+      "id": "cite-04",
+      "question": "What does the order say Caltrans must do about airspace in 3(g)?",
+      "directiveId": null,
+      "expect": {
+        "directiveIds": [
+          "n-7-26-3g"
+        ]
+      },
+      "pass": true,
+      "observed": {
+        "kind": "answer",
+        "directiveIds": [
+          "n-7-26-3g"
+        ],
+        "quotes": 2,
+        "evidence": 0,
+        "withheldCitations": 0,
+        "withheld": 0
+      },
+      "rawModelText": "The order's section 3 preamble establishes the context for directive 3(g): | Within that context, directive 3(g) directs Caltrans to: | The facts preserve two qualifiers from the source: \"where vehicles are already being stored\" applies to operator-controlled land beneath or adjacent to Caltrans facilities, and \"where consistent with state policy and safety and operational requirements\" applies to the airspace exception-policy updates. The order names California Department of Transportation (Caltrans) as the explicit lead, with Transit and passenger rail operators also named. The order states no explicit completion deadline for this directive, so the Atlas records no calculated planning date.",
+      "publishedText": "The order's section 3 preamble establishes the context for directive 3(g): | Within that context, directive 3(g) directs Caltrans to: | The facts preserve two qualifiers from the source: \"where vehicles are already being stored\" applies to operator-controlled land beneath or adjacent to Caltrans facilities, and \"where consistent with state policy and safety and operational requirements\" applies to the airspace exception-policy updates. The order names California Department of Transportation (Caltrans) as the explicit lead, with Transit and passenger rail operators also named. The order states no explicit completion deadline for this directive, so the Atlas records no calculated planning date.",
+      "withheld": []
+    },
+    {
+      "id": "cite-05",
+      "question": "Who does the order name in directive 4, and what does it say?",
+      "directiveId": null,
+      "expect": {
+        "directiveIds": [
+          "n-7-26-4"
+        ]
+      },
+      "pass": true,
+      "observed": {
+        "kind": "answer",
+        "directiveIds": [
+          "n-7-26-4"
+        ],
+        "quotes": 1,
+        "evidence": 0,
+        "withheldCitations": 0,
+        "withheld": 0
+      },
+      "rawModelText": "Directive 4 names four bodies. California State Transportation Agency (CalSTA) is the explicit lead. Caltrans Division of Rail (Division of Rail) is named as a collaborator. California High-Speed Rail Authority (CHSRA) and Federal Railroad Administration (FRA) are also named. The order directs CalSTA to: | The facts note that the qualifier \"where possible\" applies to undertaking programmatic environmental review within this directive, and that the order states no explicit completion deadline for directive 4.",
+      "publishedText": "Directive 4 names four bodies. California State Transportation Agency (CalSTA) is the explicit lead. Caltrans Division of Rail (Division of Rail) is named as a collaborator. California High-Speed Rail Authority (CHSRA) and Federal Railroad Administration (FRA) are also named. The order directs CalSTA to: | The facts note that the qualifier \"where possible\" applies to undertaking programmatic environmental review within this directive, and that the order states no explicit completion deadline for directive 4.",
+      "withheld": []
+    },
+    {
+      "id": "cite-06",
+      "question": "What does the order say about Bus Rapid Transit lanes?",
+      "directiveId": null,
+      "expect": {
+        "directiveIds": [
+          "n-7-26-3e"
+        ]
+      },
+      "pass": true,
+      "observed": {
+        "kind": "answer",
+        "directiveIds": [
+          "n-7-26-3e"
+        ],
+        "quotes": 2,
+        "evidence": 0,
+        "withheldCitations": 0,
+        "withheld": 0
+      },
+      "rawModelText": "The order's section 3 preamble establishes the context for this directive: | Under that authority, directive 3(e) directs Caltrans to: | The qualifier \"where feasible\" applies to the technical assistance to local agencies for Bus Rapid Transit, bus-only lanes, and associated infrastructure. California Department of Transportation (Caltrans) is the explicit lead; local agencies are the other named parties. The order states no explicit completion deadline for this directive.",
+      "publishedText": "The order's section 3 preamble establishes the context for this directive: | Under that authority, directive 3(e) directs Caltrans to: | The qualifier \"where feasible\" applies to the technical assistance to local agencies for Bus Rapid Transit, bus-only lanes, and associated infrastructure. California Department of Transportation (Caltrans) is the explicit lead; local agencies are the other named parties. The order states no explicit completion deadline for this directive.",
+      "withheld": []
+    },
+    {
+      "id": "cite-07",
+      "question": "What does 1(e) require and by when?",
+      "directiveId": null,
+      "expect": {
+        "directiveIds": [
+          "n-7-26-1e"
+        ]
+      },
+      "pass": true,
+      "observed": {
+        "kind": "answer",
+        "directiveIds": [
+          "n-7-26-1e"
+        ],
+        "quotes": 1,
+        "evidence": 0,
+        "withheldCitations": 0,
+        "withheld": 0
+      },
+      "rawModelText": "Directive 1(e) directs California Department of Transportation (Caltrans) to: | The order sets two timing requirements for this directive. First, the process of developing design guidance, standard plans and specifications, policy, and permitting procedures must begin within the order's own words of \"Within 120 days of this Order\" — a calculated planning date of 2026-10-24, derived as 120 calendar days after the effective date. Second, the materials must be completed and included \"within one year\" of the order — a calculated planning date of 2027-06-26, derived as one calendar-year anniversary of the effective date.",
+      "publishedText": "Directive 1(e) directs California Department of Transportation (Caltrans) to: | The order sets two timing requirements for this directive. First, the process of developing design guidance, standard plans and specifications, policy, and permitting procedures must begin within the order's own words of \"Within 120 days of this Order\" — a calculated planning date of 2026-10-24, derived as 120 calendar days after the effective date. Second, the materials must be completed and included \"within one year\" of the order — a calculated planning date of 2027-06-26, derived as one calendar-year anniversary of the effective date.",
+      "withheld": []
+    },
+    {
+      "id": "cite-08",
+      "question": "What does the order say about the real property asset management system?",
+      "directiveId": null,
+      "expect": {
+        "directiveIds": [
+          "n-7-26-3f"
+        ]
+      },
+      "pass": true,
+      "observed": {
+        "kind": "answer",
+        "directiveIds": [
+          "n-7-26-3f"
+        ],
+        "quotes": 2,
+        "evidence": 0,
+        "withheldCitations": 0,
+        "withheld": 0
+      },
+      "rawModelText": "The section 3 preamble establishes the overall direction for Caltrans: | Directive 3(f) then specifies, for the digital real-property system, holdings digitization, and condition inventory: | The explicit lead is the California Department of Transportation (Caltrans), acting in coordination with the California Department of General Services (DGS). The order states no explicit completion deadline for this directive; the Atlas records no calculated planning date for it.",
+      "publishedText": "The section 3 preamble establishes the overall direction for Caltrans: | Directive 3(f) then specifies, for the digital real-property system, holdings digitization, and condition inventory: | The explicit lead is the California Department of Transportation (Caltrans), acting in coordination with the California Department of General Services (DGS). The order states no explicit completion deadline for this directive; the Atlas records no calculated planning date for it.",
+      "withheld": []
+    },
+    {
+      "id": "cite-09",
+      "question": "What's the source language for directive 6?",
+      "directiveId": null,
+      "expect": {
+        "directiveIds": [
+          "n-7-26-6"
+        ]
+      },
+      "pass": true,
+      "observed": {
+        "kind": "answer",
+        "directiveIds": [
+          "n-7-26-6"
+        ],
+        "quotes": 1,
+        "evidence": 0,
+        "withheldCitations": 0,
+        "withheld": 0
+      },
+      "rawModelText": "Directive 6 directs California Department of Transportation (Caltrans) to:",
+      "publishedText": "Directive 6 directs California Department of Transportation (Caltrans) to:",
+      "withheld": []
+    },
+    {
+      "id": "cite-10",
+      "question": "What evidence records cite directive 5, and what do they say?",
+      "directiveId": null,
+      "expect": {
+        "directiveIds": [
+          "n-7-26-5"
+        ],
+        "evidence": true,
+        "quote": false
+      },
+      "pass": true,
+      "observed": {
+        "kind": "answer",
+        "directiveIds": [
+          "n-7-26-5"
+        ],
+        "quotes": 1,
+        "evidence": 4,
+        "withheldCitations": 0,
+        "withheld": 0
+      },
+      "rawModelText": "Four reviewed evidence records are linked to directive 5. Directive 5 directs: | The four records are described below. | The first is a July 15, 2026 reference-material item from the California Transportation Commission: | The second is a workshop presentation from the California Transportation Commission, also dated July 15, 2026: | The third is a staff meeting-book item from the California Transportation Commission recommending adoption of the 2026 Solutions for Congested Corridors Program Guidelines, published August 7, 2026 and reviewed by the Atlas on August 21, 2026: | The fourth is a staff meeting-book item from the California Transportation Commission recommending adoption of the 2026 Local Partnership Competitive Program Guidelines, also published August 7, 2026 and reviewed by the Atlas on August 21, 2026: | Across all four records, coverage is limited to the SCCP and LPP-C state-guideline clause of directive 5. None of the records addresses the Active Transportation Program, the Transit and Intercity Rail Capital Program, or Caltrans's federal-funding-identification clause, and the Atlas does not record information on those aspects beyond what is stated in the limitations above.",
+      "publishedText": "Four reviewed evidence records are linked to directive 5. Directive 5 directs: | The four records are described below. | The first is a July 15, 2026 reference-material item from the California Transportation Commission: | The second is a workshop presentation from the California Transportation Commission, also dated July 15, 2026: | The third is a staff meeting-book item from the California Transportation Commission recommending adoption of the 2026 Solutions for Congested Corridors Program Guidelines, published August 7, 2026 and reviewed by the Atlas on August 21, 2026: | The fourth is a staff meeting-book item from the California Transportation Commission recommending adoption of the 2026 Local Partnership Competitive Program Guidelines, also published August 7, 2026 and reviewed by the Atlas on August 21, 2026: | Across all four records, coverage is limited to the SCCP and LPP-C state-guideline clause of directive 5. None of the records addresses the Active Transportation Program, the Transit and Intercity Rail Capital Program, or Caltrans's federal-funding-identification clause, and the Atlas does not record information on those aspects beyond what is stated in the limitations above.",
+      "withheld": []
+    },
+    {
+      "id": "cite-11",
+      "question": "What does the order say about toll revenues in 3(h)?",
+      "directiveId": null,
+      "expect": {
+        "directiveIds": [
+          "n-7-26-3h"
+        ]
+      },
+      "pass": true,
+      "observed": {
+        "kind": "answer",
+        "directiveIds": [
+          "n-7-26-3h"
+        ],
+        "quotes": 2,
+        "evidence": 0,
+        "withheldCitations": 0,
+        "withheld": 0
+      },
+      "rawModelText": "Directive 3(h) is one of ten actions assigned to the California Department of Transportation (Caltrans) under the section 3 preamble, which states: | Under that authority, directive 3(h) directs Caltrans to: | The facts note two qualifiers preserved from the source: \"in accordance with state and federal law\" applies to the guidance on prioritizing excess toll revenues, and \"where feasible\" applies to Caltrans's consideration of excess revenue for transit within planned managed-lane corridors. The California Transportation Commission (CTC) is listed as an explicit collaborator, and toll operators are named as other parties. The order states no explicit completion deadline for this directive.",
+      "publishedText": "Directive 3(h) is one of ten actions assigned to the California Department of Transportation (Caltrans) under the section 3 preamble, which states: | Under that authority, directive 3(h) directs Caltrans to: | The facts note two qualifiers preserved from the source: \"in accordance with state and federal law\" applies to the guidance on prioritizing excess toll revenues, and \"where feasible\" applies to Caltrans's consideration of excess revenue for transit within planned managed-lane corridors. The California Transportation Commission (CTC) is listed as an explicit collaborator, and toll operators are named as other parties. The order states no explicit completion deadline for this directive.",
+      "withheld": []
+    },
+    {
+      "id": "cite-12",
+      "question": "What does directive 2 direct Caltrans to create?",
+      "directiveId": null,
+      "expect": {
+        "directiveIds": [
+          "n-7-26-2"
+        ]
+      },
+      "pass": true,
+      "observed": {
+        "kind": "answer",
+        "directiveIds": [
+          "n-7-26-2"
+        ],
+        "quotes": 1,
+        "evidence": 0,
+        "withheldCitations": 0,
+        "withheld": 0
+      },
+      "rawModelText": "Directive 2 directs Caltrans to:",
+      "publishedText": "Directive 2 directs Caltrans to:",
+      "withheld": []
+    },
+    {
+      "id": "cite-13",
+      "question": "What does the order say about the State Transit Plan in 1(d)?",
+      "directiveId": null,
+      "expect": {
+        "directiveIds": [
+          "n-7-26-1d"
+        ]
+      },
+      "pass": true,
+      "observed": {
+        "kind": "answer",
+        "directiveIds": [
+          "n-7-26-1d"
+        ],
+        "quotes": 1,
+        "evidence": 0,
+        "withheldCitations": 0,
+        "withheld": 0
+      },
+      "rawModelText": "Directive 1(d), Service-led State Transit Plan, directs Caltrans to take the necessary steps within 120 days so that: | The order's timing language is \"Within 120 days of this Order,\" which yields a calculated planning date of 2026-10-24 (120 calendar days after the effective date). Caltrans is the explicit lead body; the order names no collaborators for this directive.",
+      "publishedText": "Directive 1(d), Service-led State Transit Plan, directs Caltrans to take the necessary steps within 120 days so that: | The order's timing language is \"Within 120 days of this Order,\" which yields a calculated planning date of 2026-10-24 (120 calendar days after the effective date). Caltrans is the explicit lead body; the order names no collaborators for this directive.",
+      "withheld": []
+    },
+    {
+      "id": "cite-14",
+      "question": "Which reviewed artifacts are linked to directive 5 and when were they reviewed?",
+      "directiveId": null,
+      "expect": {
+        "directiveIds": [
+          "n-7-26-5"
+        ],
+        "evidence": true,
+        "quote": false
+      },
+      "pass": true,
+      "observed": {
+        "kind": "answer",
+        "directiveIds": [
+          "n-7-26-5"
+        ],
+        "quotes": 1,
+        "evidence": 4,
+        "withheldCitations": 0,
+        "withheld": 0
+      },
+      "rawModelText": "Four reviewed evidence records are linked to directive 5. Directive 5 directs: | The four linked records, with their review dates, are:",
+      "publishedText": "Four reviewed evidence records are linked to directive 5. Directive 5 directs: | The four linked records, with their review dates, are:",
+      "withheld": []
+    },
+    {
+      "id": "cite-15",
+      "question": "What does 3(c) say about fund distribution timelines?",
+      "directiveId": null,
+      "expect": {
+        "directiveIds": [
+          "n-7-26-3c"
+        ]
+      },
+      "pass": true,
+      "observed": {
+        "kind": "answer",
+        "directiveIds": [
+          "n-7-26-3c"
+        ],
+        "quotes": 2,
+        "evidence": 0,
+        "withheldCitations": 0,
+        "withheld": 0
+      },
+      "rawModelText": "Directive 3(c) sits within the section 3 preamble, which directs: | Within that context, directive 3(c) states: | The qualifier \"wherever feasible\" applies to reducing those timelines. The order states no explicit completion deadline for this directive, and the Atlas records no calculated planning date.",
+      "publishedText": "Directive 3(c) sits within the section 3 preamble, which directs: | Within that context, directive 3(c) states: | The qualifier \"wherever feasible\" applies to reducing those timelines. The order states no explicit completion deadline for this directive, and the Atlas records no calculated planning date.",
+      "withheld": []
+    }
+  ]
+}
