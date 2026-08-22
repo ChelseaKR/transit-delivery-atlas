@@ -65,9 +65,10 @@ npm run check
 
 Under [ADR-0002](docs/adr/0002-runtime-grounded-question-answering.md) the
 Atlas has an optional question-answering layer that a reader can turn on from a
-directive page. It is built and evaluated; it is not deployed, and until a host
-is chosen the panel reports that the service is unavailable and the record
-below it is unchanged. It can only quote the signed
+directive page **where one is configured**. It is built and evaluated; it is
+not deployed, and the panel is gated on that: a build with no question service
+configured renders no panel at all, so the published site offers nothing it
+cannot answer. It can only quote the signed
 order verbatim (verified against the retained copy in
 [`corpus/eo-n-7-26/`](corpus/eo-n-7-26/manifest.json)), cite a reviewed
 evidence record by ID, repeat the site's own empty-state wording, or decline.

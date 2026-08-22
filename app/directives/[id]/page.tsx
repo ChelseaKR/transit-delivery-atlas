@@ -7,12 +7,19 @@ import { PrintRecordButton } from "@/components/PrintRecordButton";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
 import { WatchlistCard } from "@/components/WatchlistCard";
+import { resolveAskEndpoint } from "@/lib/ask-client";
 import { BUILD_DATE } from "@/lib/build-date";
 import { directiveById, directives, evidenceCoverageFor, evidenceScope, source } from "@/lib/data";
 import { coverageStatement } from "@/lib/evidence-coverage.mjs";
 import { timingCurrency } from "@/lib/directive-timing.mjs";
 import { formatDate } from "@/lib/format";
 import { TIMING_PASSED_LABEL, timingCurrencyNote } from "@/lib/register-labels";
+
+// Build-time gate for the optional question service (ADR-0002). The panel is
+// rendered only where a service is actually configured to answer; with no
+// endpoint the record renders with no AI affordance at all, rather than a
+// control whose only possible reply is that it does not exist.
+const askEndpoint = resolveAskEndpoint(process.env.NEXT_PUBLIC_ASK_ENDPOINT);
 
 interface PageProps {
   params: Promise<{ id: string }>;
@@ -428,7 +435,13 @@ export default async function DirectivePage({ params }: PageProps) {
             </aside>
           ) : null}
 
-          <AskDirective directiveId={directive.id} directiveLabel={directive.label} />
+          {askEndpoint ? (
+            <AskDirective
+              directiveId={directive.id}
+              directiveLabel={directive.label}
+              endpoint={askEndpoint}
+            />
+          ) : null}
 
           <nav className="directive-pagination" aria-label="Directive pages">
             {previous ? (

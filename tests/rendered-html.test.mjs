@@ -165,14 +165,19 @@ test("renders source, safe empty evidence, and analysis on an unlinked directive
   assert.doesNotMatch(html, /data-coverage-state="not-yet-reviewed"/);
 });
 
-test("the AI panel is opt-in, labelled, and names no other origin", async () => {
+test("this build configures no question service, so it offers no AI affordance", async () => {
+  // The deployed build sets no NEXT_PUBLIC_ASK_ENDPOINT, so the panel must be
+  // absent entirely rather than present and unable to answer. The other
+  // direction — configured, therefore rendered — is built and asserted in
+  // tests/ask-gate.test.mjs.
   const html = await (await render("/directives/n-7-26-1a")).text();
-  assert.match(html, /data-ask-directive="n-7-26-1a"/);
-  assert.match(html, /Ask about this directive/);
-  assert.match(html, /Optional · AI · off until you use it/);
-  assert.match(html, /refuses compliance and status questions/);
-  assert.match(html, /Nothing is sent anywhere until you submit a question\./);
-  // Adding the panel introduced no origin at all. Every absolute URL in the
+  assert.doesNotMatch(html, /data-ask-directive/);
+  assert.doesNotMatch(html, /Ask about this directive/);
+  assert.doesNotMatch(html, /Optional · AI · off until you use it/);
+  assert.doesNotMatch(html, /Ask a question \(AI, unofficial\)/);
+  // The record itself is untouched by the gate.
+  assert.match(html, /Source record/);
+  // The page names no origin at all beyond the ones the record links. Every absolute URL in the
   // rendered page is parsed and its host compared exactly against the hosts
   // the record already linked, so a provider endpoint cannot hide behind a
   // lookalike name; the ask endpoint is a same-origin relative path baked in
@@ -192,7 +197,7 @@ test("the AI panel is opt-in, labelled, and names no other origin", async () => 
   for (const host of hosts) {
     assert.ok(allowedHosts.has(host), `the rendered page names an unexpected host: ${host}`);
   }
-  // The panel renders before the reader acts as a static button, not a form.
+  // Nothing on the page invites input of any kind.
   assert.doesNotMatch(html, /<textarea/i);
 });
 

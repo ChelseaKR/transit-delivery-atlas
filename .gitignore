@@ -41,3 +41,6 @@ next-env.d.ts
 /.wrangler/
 /outputs/
 /work/
+
+# Isolated static exports written by tests (see next.config.ts NEXT_EXPORT_DIR)
+/out-*/

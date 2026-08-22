@@ -12,7 +12,7 @@
     "build": "npm run data:export && node scripts/write-version.mjs && next build",
     "data:validate": "node scripts/validate-data.mjs",
     "data:export": "npm run data:validate && node scripts/export-data.mjs",
-    "test": "npm run build && node --experimental-strip-types --test tests/data-integrity.test.mjs tests/directive-filters.test.mjs tests/directive-timing.test.mjs tests/relationship-filters.test.mjs tests/rendered-html.test.mjs tests/accessibility-scope.test.mjs tests/watchlist-review.test.mjs tests/evidence-coverage.test.mjs tests/corpus.test.mjs tests/verdict-language.test.mjs tests/service-pipeline.test.mjs tests/service-server.test.mjs tests/eval-results.test.mjs tests/ask-client.test.mjs tests/release-artifact.test.mjs tests/register-labels.test.mjs tests/hosting.test.mjs",
+    "test": "npm run build && node --experimental-strip-types --test tests/data-integrity.test.mjs tests/directive-filters.test.mjs tests/directive-timing.test.mjs tests/relationship-filters.test.mjs tests/rendered-html.test.mjs tests/accessibility-scope.test.mjs tests/watchlist-review.test.mjs tests/evidence-coverage.test.mjs tests/corpus.test.mjs tests/verdict-language.test.mjs tests/service-pipeline.test.mjs tests/service-server.test.mjs tests/eval-results.test.mjs tests/ask-client.test.mjs tests/ask-gate.test.mjs tests/release-artifact.test.mjs tests/register-labels.test.mjs tests/hosting.test.mjs",
     "lint": "eslint . --ignore-pattern dist --ignore-pattern .next",
     "typecheck": "tsc --noEmit --incremental false",
     "audit:production": "npm audit --omit=dev --audit-level=moderate",

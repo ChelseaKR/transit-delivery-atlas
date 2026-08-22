@@ -9,6 +9,20 @@
 
 export const DEFAULT_ASK_ENDPOINT = "/api/ask";
 
+/**
+ * Whether a question service is configured for this build.
+ *
+ * The panel is an opt-in affordance, and an affordance that cannot be
+ * fulfilled is a broken promise: if no endpoint is configured the page renders
+ * no panel at all rather than a button that can only report its own absence.
+ * An unset, empty, or whitespace-only value all mean "no service".
+ */
+export function resolveAskEndpoint(raw: string | undefined | null): string | null {
+  if (typeof raw !== "string") return null;
+  const trimmed = raw.trim();
+  return trimmed === "" ? null : trimmed;
+}
+
 export interface AskBlockText {
   type: "text";
   text: string;
