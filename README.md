@@ -207,10 +207,20 @@ listed below: silent omission of a standard is itself a defect, so a standard
 that does not apply carries a reason and a standard that applies but is not met
 says so.
 
-This repository does not vendor a copy of the standards and carries no pinned
-standards version, so the table is a declaration of applicability and current
-state rather than a result produced by a checker running against a pinned
-release. Reviewed 2026-08-15.
+The set is `ChelseaKR/portfolio-standards`, and this declaration is made
+against **v2.0.0** (tagged 2026-08-09, commit `e9cddff`). Two things follow
+from that pin rather than being fixed by it. The standards repository is
+private and this one is public, so a public repository cannot fetch it: no
+workflow here can resolve the pin, and this is the same access boundary that
+broke the release authorization job until it was re-pointed at a public copy
+(see `scripts/check-release-authorization.mjs`). The standards are also not
+vendored in-tree. The table below is therefore a **declaration** of
+applicability and current state against a named version — not a result
+produced by a checker running against it, and not something CI can verify.
+A row is only as current as its review date.
+
+Rows reviewed 2026-08-15 against v2.0.0. The AI Evaluation row was
+re-reviewed 2026-08-22 when the runtime service landed.
 
 | Standard | Applies? | State |
 |---|---|---|
@@ -224,7 +234,7 @@ release. Reviewed 2026-08-15.
 | Internationalization | Applies | English-only today; owner, first localization boundary, source-language rule, fallback, and review deadline are declared in [`docs/I18N.md`](docs/I18N.md) |
 | AI Evaluation | Applies | The static site has no model component; the optional runtime question-answering service added under [ADR-0002](docs/adr/0002-runtime-grounded-question-answering.md) has five committed suites run live against the real pipeline on `global.anthropic.claude-sonnet-4-6` (Amazon Bedrock), prompt `2026-08-21.1`, 2026-08-22: compliance refusal 48/48 and empty-state fidelity 20/20 at zero tolerance, freshness 10/10, citation grounding 15/15, question structuring 20/22. Results are committed only from recorded live runs with provider, model, prompt version, commit, and date, enforced by `tests/eval-results.test.mjs`; a suite not run live is published as not run, never as a number |
 | AI Development Measurement | Applies | Not met. This repository is built with AI assistance and publishes no measurement of it: no committed metrics ledger, no delivery-outcome record, and no quality-debt counterweight |
-| Documentation | Applies | README, methodology/evidence/relationship models, ADR log (docs/adr/), CHANGELOG, CONTRIBUTING. Not met: the shared standards are neither vendored in-tree nor pinned to a released version, so the two documentation controls that require a pinned copy cannot be evaluated against this repository at all |
+| Documentation | Applies | Partially met. README, methodology/evidence/relationship models, ADR log (docs/adr/), CHANGELOG, CONTRIBUTING. The standards set is now pinned for this declaration at v2.0.0 (see above). Still not met: the standards are not vendored in-tree, and being private they cannot be fetched by this public repository's CI, so the documentation controls that require an in-tree or fetchable copy remain unevaluated here rather than evaluated and passed |
 | Quality & Metrics | Applies | Data-integrity, filter, rendered-HTML, and hosting test suites run in the release gate |
 | Release & Versioning | Applies | CHANGELOG (Keep-a-Changelog), semver in package.json, tag-triggered release workflow re-runs the full gate at the tagged commit |
 | Incident Response | Applies | Not met. `SECURITY.md` covers private vulnerability reporting only. There is no severity ladder, no incident label convention, no committed postmortem artifact, and no secret-leak runbook |
