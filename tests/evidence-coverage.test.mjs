@@ -149,3 +149,67 @@ test("the committed data yields one explicit state for every directive", async (
   assert.equal(four.failedSources.length, 1);
   assert.match(coverageStatement(four), /could not be retrieved/);
 });
+
+test("linked evidence with no covering source states no date rather than 'null'", () => {
+  // Issue #74. `state` is "linked" from `evidenceCount > 0` alone, so
+  // `checkedSources` can be empty while the statement reaches for a date that
+  // does not exist. The statement is published prose on the directive page and
+  // is reused by the answer verifier, so a literal "null" ships silently.
+  const coverage = directiveEvidenceCoverage(
+    "n-7-26-9",
+    collection({
+      reviewSources: [],
+      evidence: [{ directiveLinks: [{ directiveId: "n-7-26-9" }] }],
+    }),
+  );
+
+  assert.equal(coverage.state, "linked");
+  assert.equal(coverage.lastCheckedOn, null);
+
+  const statement = coverageStatement(coverage);
+  assert.doesNotMatch(statement, /\bnull\b|\bundefined\b/, statement);
+  assert.match(statement, /No listed public source covering it has been successfully checked/);
+});
+
+test("no coverage statement the site can publish interpolates a missing value", async () => {
+  const [evidenceData, directiveData] = await Promise.all([
+    readJson("data/evidence.json"),
+    readJson("data/directives.json"),
+  ]);
+  const coverage = coverageForDirectives(
+    directiveData.directives.map(({ id }) => id),
+    evidenceData,
+  );
+
+  assert.equal(coverage.length, 21, "every directive's statement is screened");
+  for (const item of coverage) {
+    assert.doesNotMatch(
+      coverageStatement(item),
+      /\bnull\b|\bundefined\b|\bNaN\b/,
+      `${item.directiveId} publishes a missing value`,
+    );
+  }
+});
+
+test("every directive carrying linked evidence is listed by a covering review source", async () => {
+  // The invariant `scripts/validate-data.mjs` now enforces, asserted here too:
+  // it is what keeps the "linked" statement assemblable at all.
+  const evidenceData = await readJson("data/evidence.json");
+  const covered = new Set(
+    evidenceData.reviewSources.flatMap(({ coversDirectiveIds }) => coversDirectiveIds),
+  );
+
+  const linked = new Set(
+    evidenceData.evidence.flatMap((record) =>
+      record.directiveLinks.map(({ directiveId }) => directiveId),
+    ),
+  );
+  assert.ok(linked.size > 0, "no directive carries linked evidence, so this checks nothing");
+
+  for (const directiveId of linked) {
+    assert.ok(
+      covered.has(directiveId),
+      `${directiveId} has linked evidence but no review source lists it in coversDirectiveIds`,
+    );
+  }
+});
