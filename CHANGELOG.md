@@ -32,6 +32,21 @@ recorded here.
   other nineteen analysis summaries able to hand the model a verdict to
   narrate. The set is now derived from the loaded knowledge and pinned at
   twenty-one.
+- Every string the site publishes as the order's own words is now verified
+  against the retained corpus. `tests/corpus.test.mjs` is titled "every
+  reviewed excerpt in the source layer is verbatim in the corrected text" and
+  checked twenty-four `excerpt` fields. The directive page also publishes 35
+  `qualifiers[].text` under the heading "Qualifiers preserved from the source"
+  and 8 `timing[].sourceText` phrases as what the order states, and nothing
+  verified any of the 43: `qualifierSchema` accepts any non-empty string, the
+  data-integrity suite checks only that it is a string, one of the 35 is spot
+  checked against a literal in `scripts/validate-data.mjs`, and
+  `service/knowledge.ts` never registers them, so the runtime quotation
+  verifier never sees them either. A fabricated qualifier passed the entire
+  release gate and shipped under a heading promising it came from the source.
+  The quotation set is now derived from the data, so a new qualifier is covered
+  the day it lands, and asserted non-empty, because a check that verifies
+  nothing passes forever.
 
 ### Changed
 
