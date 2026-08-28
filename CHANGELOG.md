@@ -32,6 +32,18 @@ recorded here.
   other nineteen analysis summaries able to hand the model a verdict to
   narrate. The set is now derived from the loaded knowledge and pinned at
   twenty-one.
+- The status-key screen now reads the whole published dataset. It ran over
+  `{ evidenceScope, evidence }` — a two-key slice of a ten-key document —
+  leaving `directives`, `organizations`, `themes`, `orderMetadata` and `source`
+  unscreened in the exports readers actually download. The canonical files are
+  covered by `rejectStatus` and by strict schemas, so the gap only opens where
+  `scripts/export-data.mjs` assembles derived fields; `data/public-schema.json`
+  catches an unexpected key by shape, but a schema widened to admit one is a
+  normal act and nothing then re-checked the policy. With the schema permitting
+  it, all twenty-one published directives carried a `status` field and the
+  release gate stayed green. The published `directives.json`, `watchlist.json`
+  and `tda-ntd-feasibility.json` are now screened whole, with the document's key
+  count asserted so the screen cannot quietly narrow again.
 
 ### Changed
 

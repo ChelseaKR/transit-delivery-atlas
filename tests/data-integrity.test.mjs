@@ -308,6 +308,33 @@ test("evidence data recursively forbids implementation-status-like keys", async 
   );
 });
 
+test("the whole published dataset forbids implementation-status-like keys", async () => {
+  // The screen above reads a two-key slice of a ten-key document. The canonical
+  // files are covered by `rejectStatus` in the validator and by strict schemas,
+  // so a status key cannot enter `data/` — but `scripts/export-data.mjs`
+  // assembles the published document and adds derived fields, and a derived key
+  // named `status` would reach the dataset readers actually download without
+  // ever existing in `data/`.
+  const exported = await readJson("public/data/directives.json");
+
+  const keys = Object.keys(exported);
+  assert.ok(
+    keys.length >= 10,
+    `expected the whole published document, found ${keys.length} key(s): ${keys.join(", ")}`,
+  );
+  for (const key of ["directives", "organizations", "themes", "orderMetadata", "evidence"]) {
+    assert.ok(keys.includes(key), `${key} must be part of the screened document`);
+  }
+
+  assert.deepEqual(statusLikeKeys(exported), []);
+
+  const watchlist = await readJson("public/data/watchlist.json");
+  assert.deepEqual(statusLikeKeys(watchlist), []);
+
+  const feasibility = await readJson("public/data/tda-ntd-feasibility.json");
+  assert.deepEqual(statusLikeKeys(feasibility), []);
+});
+
 test("public JSON, JSON Schema, and evidence CSV expose one consistent evidence collection", async () => {
   const [canonical, exported, sourceSchema, exportedSchema, evidenceCsv] =
     await Promise.all([
