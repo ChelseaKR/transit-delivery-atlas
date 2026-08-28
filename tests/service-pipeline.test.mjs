@@ -265,7 +265,13 @@ test("a directive-only answer carries no freshness block and no empty state", as
 });
 
 test("the facts document never contains status words and marks interpretation as such", () => {
-  const facts = ["n-7-26-1a", "n-7-26-5"].map((id) => knowledge.factsFor(id));
+  // Every directive, not a sample: the facts document is assembled from the same
+  // `data/` prose for all of them, so screening two of twenty-one leaves
+  // nineteen summaries able to feed the model a verdict it would then narrate.
+  const directiveIds = knowledge.directives.map(({ id }) => id);
+  assert.equal(directiveIds.length, 21, "every directive must be screened, not a selected few");
+
+  const facts = directiveIds.map((id) => knowledge.factsFor(id));
   const document = factsDocument(facts, ["source-language", "timing", "evidence", "analysis-summary", "open-questions"], knowledge);
   assert.doesNotMatch(document, /\b(?:on track|behind schedule|overdue|complied|compliant|no progress)\b/i);
   assert.match(document, /NO LINKED EVIDENCE: emit an empty-state segment with ref "n-7-26-1a"/);
