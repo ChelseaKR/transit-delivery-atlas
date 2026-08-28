@@ -32,6 +32,16 @@ recorded here.
   other nineteen analysis summaries able to hand the model a verdict to
   narrate. The set is now derived from the loaded knowledge and pinned at
   twenty-one.
+- The sitemap check now derives the site's routes instead of copying them.
+  `tests/hosting.test.mjs` is named "sitemap lists every static route and every
+  directive record exactly once", and its directive half was properly derived
+  from `data/directives.json` while its static half was a nine-element literal
+  identical to the one in `app/sitemap.ts` — a constant compared against a copy
+  of itself, able to fail only if someone edited one copy and not the other.
+  Adding a route and not updating `app/sitemap.ts` published the page unindexed
+  with the whole gate green, including the accessibility scope checks a new
+  route does correctly trip. Routes now come from `app/**/page.tsx`, the same
+  derivation `tests/accessibility-scope.test.mjs` already uses.
 
 ### Changed
 
