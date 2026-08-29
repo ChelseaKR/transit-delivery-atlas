@@ -33,6 +33,11 @@ inference, or a watchlist lead become a source excerpt or an evidence record.
   until it is genuinely re-reviewed. Moving the date without re-reviewing the
   source is the one thing this repository treats as dishonest.
 - Generated exports under `public/data/` are committed; CI diffs them.
+- The verdict lexicon in `lib/verdict-language.mjs` is screened against every
+  exported page, not only against model output. A sentence that trips it must
+  be reworded or registered in `PERMITTED_VERDICT_SENTENCES`
+  (`lib/published-language.mjs`) with the reason it is not a finding. An
+  exemption the site no longer publishes fails the gate too.
 - A source that could not be retrieved during a sweep is recorded as
   `retrieval-failed`, never as checked.
 

@@ -5,6 +5,34 @@ recorded here.
 
 ## [Unreleased]
 
+### Fixed
+
+- The verdict lexicon now screens the published site, not only the optional AI
+  service. `lib/verdict-language.mjs` describes itself as "the single list
+  shared by the verifier that screens model output, the pre-classifier that
+  refuses verdict questions, the evaluation harness, and the tests, so no
+  surface can carry a different idea of 'verdict'" — and every one of those
+  consumers screened the question-answering layer. None screened the static
+  pages, which is the surface nearly every reader gets and the one built from
+  hand-written prose in `data/`. AGENTS.md states the rule as applying
+  "anywhere a reader can see them, including AI output"; the site was the half
+  that was never checked, so "Caltrans is behind schedule" could have shipped
+  in an analysis summary with a green gate. `tests/published-verdict-language.test.mjs`
+  now reads every exported page — all thirty-three, including all twenty-one
+  directive pages — plus the `aria-label`, `alt` and `title` text assistive
+  technology announces, and fails on any verdict sentence without a registered
+  reason. The sixteen sentences the site legitimately publishes while
+  disclaiming them ("it does not establish completion, compliance, or agency
+  performance") are registered in `lib/published-language.mjs` with the reason
+  each is not a finding; a registered sentence the site stops publishing fails
+  the gate too, so an exemption cannot outlive the prose that earned it.
+- The service's facts-document screen now covers all twenty-one directives.
+  `tests/service-pipeline.test.mjs` asserted that the assembled prompt carries
+  no status words, over two directive IDs written as literals, leaving the
+  other nineteen analysis summaries able to hand the model a verdict to
+  narrate. The set is now derived from the loaded knowledge and pinned at
+  twenty-one.
+
 ### Changed
 
 - The "Ask about this directive" panel is now gated at build time on
