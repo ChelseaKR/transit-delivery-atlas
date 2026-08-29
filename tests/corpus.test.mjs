@@ -49,20 +49,78 @@ test("a drifted corpus file fails loudly", async () => {
   );
 });
 
+/**
+ * Every string `data/directives.json` publishes as the order's own words.
+ *
+ * The four `excerpt` fields carry a page locator, so their page can be checked
+ * too. `qualifiers[].text` and `timing[].sourceText` do not: they are short
+ * phrases lifted from inside a section, and the schema gives them no locator.
+ * They are still quotations — the directive page renders qualifiers under
+ * "Qualifiers preserved from the source" and timing as what the order says —
+ * so they are verified verbatim even though their page cannot be.
+ */
+function publishedQuotations(directiveData) {
+  const located = [
+    ...directiveData.directives.map(({ id, excerpt, locator }) => ({ id, quote: excerpt, pages: locator.pages })),
+    ...directiveData.orderMetadata.sourceContexts.map(({ id, excerpt, locator }) => ({ id, quote: excerpt, pages: locator.pages })),
+    ...directiveData.orderMetadata.sourceNotices.map(({ id, excerpt, locator }) => ({ id, quote: excerpt, pages: locator.pages })),
+    ...directiveData.orderMetadata.administrativeDirectives.map(({ excerpt, locator }, index) => ({ id: `administrative-${index}`, quote: excerpt, pages: locator.pages })),
+  ];
+
+  const unlocated = [];
+  for (const directive of directiveData.directives) {
+    for (const [index, qualifier] of (directive.qualifiers ?? []).entries()) {
+      unlocated.push({ id: `${directive.id} qualifier ${index}`, quote: qualifier.text });
+    }
+    for (const [index, timing] of (directive.timing ?? []).entries()) {
+      if (timing.sourceText) unlocated.push({ id: `${directive.id} timing ${index}`, quote: timing.sourceText });
+    }
+  }
+
+  return { located, unlocated };
+}
+
 test("every reviewed excerpt in the source layer is verbatim in the corrected text", async () => {
   const [{ text }, directiveData] = await Promise.all([loadCorpus(), readJson("data/directives.json")]);
-  const quotes = [
-    ...directiveData.directives.map(({ id, excerpt, locator }) => ({ id, excerpt, pages: locator.pages })),
-    ...directiveData.orderMetadata.sourceContexts.map(({ id, excerpt, locator }) => ({ id, excerpt, pages: locator.pages })),
-    ...directiveData.orderMetadata.sourceNotices.map(({ id, excerpt, locator }) => ({ id, excerpt, pages: locator.pages })),
-    ...directiveData.orderMetadata.administrativeDirectives.map(({ excerpt, locator }, index) => ({ id: `administrative-${index}`, excerpt, pages: locator.pages })),
-  ];
-  assert.equal(quotes.length, 24);
-  for (const quote of quotes) {
-    const result = quoteIsVerbatim(quote.excerpt, text);
+  const { located } = publishedQuotations(directiveData);
+
+  assert.equal(located.length, 24);
+  for (const quote of located) {
+    const result = quoteIsVerbatim(quote.quote, text);
     assert.ok(result.verbatim, `${quote.id}: ${result.reason}`);
-    const page = pageOfQuote(quote.excerpt, text);
+    const page = pageOfQuote(quote.quote, text);
     assert.ok(quote.pages.includes(page), `${quote.id} is on page ${page}, locator says ${quote.pages}`);
+  }
+});
+
+test("every other string published as the order's own words is verbatim too", async () => {
+  // The excerpt check above covered 24 strings. The directive page also
+  // publishes 35 qualifiers under "Qualifiers preserved from the source" and 8
+  // timing phrases as what the order states, and nothing verified any of them:
+  // a fabricated qualifier passed validation, the corpus check, the data
+  // integrity suite, and the runtime verifier, and shipped under a heading
+  // promising it came from the source.
+  const [{ text }, directiveData] = await Promise.all([loadCorpus(), readJson("data/directives.json")]);
+  const { unlocated } = publishedQuotations(directiveData);
+
+  const qualifierCount = directiveData.directives.reduce(
+    (total, directive) => total + (directive.qualifiers ?? []).length,
+    0,
+  );
+  const timingCount = directiveData.directives.reduce(
+    (total, directive) => total + (directive.timing ?? []).filter(({ sourceText }) => sourceText).length,
+    0,
+  );
+
+  // Derived from the data, so a new qualifier is covered the day it lands, and
+  // asserted non-empty, because a check that verifies nothing passes forever.
+  assert.equal(unlocated.length, qualifierCount + timingCount);
+  assert.ok(qualifierCount >= 35, `expected every qualifier, found ${qualifierCount}`);
+  assert.ok(timingCount >= 8, `expected every timing phrase, found ${timingCount}`);
+
+  for (const { id, quote } of unlocated) {
+    const result = quoteIsVerbatim(quote, text);
+    assert.ok(result.verbatim, `${id} is published as the order's words but is not in the corrected text: ${result.reason} (${JSON.stringify(quote)})`);
   }
 });
 
