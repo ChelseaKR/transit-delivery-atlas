@@ -73,13 +73,24 @@ const EXIT_CANNOT_RUN = 4;
 class CannotRun extends Error {}
 
 function parseArguments(argv) {
-  const options = { origin: DEFAULT_ORIGIN, skipExport: false, minimum: MINIMUM_FILES };
+  const options = {
+    origin: DEFAULT_ORIGIN,
+    skipExport: false,
+    minimum: MINIMUM_FILES,
+    attempts: 3,
+    retrySeconds: 30,
+  };
   for (let index = 0; index < argv.length; index += 1) {
     const flag = argv[index];
     if (flag === "--origin") options.origin = argv[++index];
     else if (flag === "--skip-export") options.skipExport = true;
     else if (flag === "--minimum") options.minimum = Number(argv[++index]);
+    else if (flag === "--attempts") options.attempts = Number(argv[++index]);
+    else if (flag === "--retry-seconds") options.retrySeconds = Number(argv[++index]);
     else throw new CannotRun(`Unknown argument: ${flag}`);
+  }
+  if (!Number.isInteger(options.attempts) || options.attempts < 1 || options.attempts > 10) {
+    throw new CannotRun("--attempts must be an integer between 1 and 10");
   }
   const parsed = new URL(options.origin);
   if (parsed.protocol !== "https:") throw new CannotRun(`${options.origin} is not HTTPS`);
@@ -179,16 +190,19 @@ function publishedInventory() {
   return tracked.sort();
 }
 
-async function main() {
-  const options = parseArguments(process.argv.slice(2));
-  const token = randomBytes(16).toString("hex");
+/**
+ * One complete look at the live site: version, exported data, published bytes.
+ *
+ * A deploy takes several minutes between pushing bytes and finishing its
+ * CloudFront invalidation, so a run that starts mid-deploy reads the previous
+ * release and would report drift that resolves itself. That is not drift, and a
+ * check that cries wolf is one people learn to ignore. Hence the bounded retry
+ * in main: a real difference is still a difference on the last attempt.
+ */
+async function onePass(options, token) {
   const differences = [];
-  let inventory;
-  let version;
-  let total = 0;
-
   await proveTheOriginDiscriminates(options.origin, token);
-  version = await deployedCommit(options.origin, token);
+  const version = await deployedCommit(options.origin, token);
   const head = git("rev-parse", "HEAD");
   if (version.sha !== head) {
     differences.push(
@@ -198,7 +212,7 @@ async function main() {
   }
   if (!options.skipExport) regenerateTheDataSurface();
 
-  inventory = publishedInventory();
+  const inventory = publishedInventory();
   if (inventory.length < options.minimum) {
     throw new CannotRun(
       `the comparison set holds ${inventory.length} file(s), below the floor of ` +
@@ -206,6 +220,7 @@ async function main() {
     );
   }
 
+  let total = 0;
   for (const relative of inventory) {
     const expected = await readFile(new URL(`${PUBLISHED_DIR}/${relative}`, root));
     total += expected.length;
@@ -224,17 +239,35 @@ async function main() {
       );
     }
   }
+  return { differences, version, count: inventory.length, total };
+}
 
-  if (differences.length > 0) {
+async function main() {
+  const options = parseArguments(process.argv.slice(2));
+  let last;
+  for (let attempt = 1; attempt <= options.attempts; attempt += 1) {
+    last = await onePass(options, randomBytes(16).toString("hex"));
+    if (last.differences.length === 0) break;
+    if (attempt < options.attempts) {
+      console.error(
+        `attempt ${attempt}/${options.attempts}: ${last.differences.length} difference(s); ` +
+          `waiting ${options.retrySeconds}s in case a deploy is still settling`,
+      );
+      await new Promise((resolve) => setTimeout(resolve, options.retrySeconds * 1000));
+    }
+  }
+
+  if (last.differences.length > 0) {
     console.error(`The live site at ${options.origin} is not what this checkout publishes.`);
-    for (const difference of differences) console.error(`  ${difference}`);
+    for (const difference of last.differences) console.error(`  ${difference}`);
     console.error("\nRe-run Deploy, or find out why the deployment is behind main.");
     return EXIT_DIFFERS;
   }
 
   console.log(
     `${options.origin} serves exactly what this checkout publishes: ` +
-      `${inventory.length} file(s), ${total} bytes, built from ${version.sha} at ${version.builtAt}.`,
+      `${last.count} file(s), ${last.total} bytes, built from ${last.version.sha} ` +
+      `at ${last.version.builtAt}.`,
   );
   return 0;
 }
