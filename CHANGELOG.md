@@ -7,6 +7,36 @@ recorded here.
 
 ### Fixed
 
+- The release gate regenerated the committed exports instead of checking them.
+  `npm run check` calls `npm test`, which calls `npm run build`, which calls
+  `npm run data:export`, so every local run of the documented gate rewrote the
+  ten tracked files under `public/data/` and then reported success. A stale
+  export could not fail: the only thing in the gate that touched those files was
+  the thing that would have repaired them first. Only
+  `.github/workflows/quality.yml` compared anything, and that workflow skips
+  itself on a docs-only change and is not the workflow that deploys or releases,
+  so `deploy.yml` and `release.yml` could both ship a commit whose committed
+  exports were not what the data produced. `scripts/export-data.mjs --check`
+  now writes nothing: it builds the same ten bodies and compares them to what is
+  on disk, naming every file that differs or is missing. `npm run check` runs it
+  first, before the build can rewrite anything, which is the same reason a
+  lockfile check runs before the steps that would resolve it. It also reports a
+  file that was never committed, which `git diff --exit-code` cannot see. The
+  exports had not drifted.
+
+- `docs/BRAND.md` sketched a home page that no longer exists. Its layout sketch
+  read "21 directives · 2 records" and drew "E 2" against directive 5, both
+  hand-copied from figures `app/page.tsx` renders live from `data/evidence.json`.
+  The evidence collection has held four records, all four linked to directive 5,
+  since before this entry. Nothing read either number back, and
+  `.github/workflows/quality.yml` ignores `docs/**`, so a change to that file
+  ran no job at all. `tests/published-figures.test.mjs` now re-derives them, and
+  the six counts in `docs/RELATIONSHIP-MODEL.md` alongside them. Two of those
+  six, "15 unique directive pairs" and "12 of which are reciprocal", appeared
+  nowhere else in the repository: no other test, no other document, no code
+  path. They were correct and they were the only published figures here with
+  nothing whatever behind them.
+
 - The verdict lexicon now screens the published site, not only the optional AI
   service. `lib/verdict-language.mjs` describes itself as "the single list
   shared by the verifier that screens model output, the pre-classifier that

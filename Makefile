@@ -52,11 +52,26 @@ test:
 audit:
 	npm run audit:production
 
-# The exact release gate CI runs: lint + typecheck + build/tests + production audit.
+# The exact release gate CI runs: the committed-export check, then lint, typecheck,
+# build/tests and the production audit.
+#
+# The export check runs FIRST, and the order is the whole point. `npm test` calls
+# `npm run build`, which calls `npm run data:export`, which writes ten tracked files
+# under public/data. Until 2026-08-29 that was the only thing in the gate that
+# touched them: every local `make verify` regenerated the committed exports into the
+# working tree and reported success, so a stale export could not fail here. The
+# thing that would have noticed had already repaired it. Checking before the build
+# is what makes the answer about the committed bytes rather than about the bytes
+# this run just wrote.
 verify:
 	npm run check
 
-# CI additionally asserts the generated exports under public/data are committed.
+# Kept as a named entry point for regenerating and reviewing the diff by hand.
+# `npm run check` now carries the check itself, on every path that runs it, which
+# includes deploy.yml and release.yml -- neither of which ran an export check
+# before. Prefer `npm run data:export:check`, which writes nothing and also
+# catches an export that was never committed at all; `git diff --exit-code` cannot
+# see an untracked file.
 exports-committed:
 	npm run data:export
 	git diff --exit-code -- public/data

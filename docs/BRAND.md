@@ -92,14 +92,14 @@ evidence.
 │ N-7-26  Transit Delivery Atlas     Atlas Evidence Research   │
 ├───────────────────────────────────────────────────────────────┤
 │ Independent analysis · Unofficial                            │
-│ Transit Delivery Atlas             21 directives · 2 records │
+│ Transit Delivery Atlas             21 directives · 4 records │
 │ Source: signed Executive Order N-7-26                         │
 ├───────────────────────────────────────────────────────────────┤
 │ Search        Theme        Named lead    Timing (calculated)   │
 ├──────┬──────────────────┬──────────┬────────────┬──────────────┤
 │ 1(a) │ Priority list    │ CalSTA   │ Oct 2026   │ S  E —  A    │
 │ 1(b) │ Mobility Manager │ CalSTA   │ Oct 2026   │ S  E —  A    │
-│ 5    │ Funding programs │ CTC      │ None stated│ S  E 2  A    │
+│ 5    │ Funding programs │ CTC      │ None stated│ S  E 4  A    │
 └──────┴──────────────────┴──────────┴────────────┴──────────────┘
 ```
 
