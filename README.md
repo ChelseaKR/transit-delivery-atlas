@@ -227,7 +227,7 @@ re-reviewed 2026-08-22 when the runtime service landed.
 | Standard | Applies? | State |
 |---|---|---|
 | Responsible-Tech Framework | Applies | Independent-analysis posture, correction workflow, and explicit non-affiliation labeling (see "What this is not") |
-| Code Quality | Applies | ESLint + strict TypeScript typecheck, fail-closed data validation; gated in CI (`npm run check`) |
+| Code Quality | Applies | ESLint + strict TypeScript typecheck, fail-closed data validation; node:test suite under a coverage floor (90% lines, 78% branches, 90% functions over the `lib/`, `scripts/` and `service/` files the tests load; see the `test` target in the Makefile for what that denominator does and does not include); gated in CI (`npm run check`) |
 | Security & Supply-Chain | Applies | CodeQL SAST, TruffleHog full-history secret scan, Dependabot, npm production audit, SHA-pinned actions, SECURITY.md |
 | CI/CD | Applies | Quality gate on every push/PR; OIDC-based deploy that verifies the built artifact against the canonical data before uploading, then smoke-checks the live edge against those same bytes (`.github/workflows/`) |
 | Observability | Applies | Static site: build SHA published at `/version.json`; deploy workflow smoke-verifies the exact released SHA and security headers |
