@@ -1,0 +1,75 @@
+# Does the register a reader downloads say what this repository says?
+#
+# Every gate here grades the checkout or the runner's own out/. `npm run check`
+# grades the source, verify-release-artifact.mjs grades the bytes while they are
+# still sitting in the runner, and the deploy job smoke-tests the edge once, in the
+# same run that produced it. After that run ends, nothing has ever looked at the
+# live site again. A deploy that failed halfway through its three S3 syncs, an
+# invalidation that did not take, or a main whose deploy never fired would leave
+# every gate green while transit.chelseakr.com served a different register, and
+# nothing in this repository could tell.
+#
+# So this is the check for the deployment, on a schedule rather than once at
+# publish time. It asserts the live /version.json names this commit, that the
+# committed data surface is what scripts/export-data.mjs produces right now, and
+# that every published file under public/ is byte-for-byte what the origin serves.
+#
+# The rendered HTML and the _next/ chunks are deliberately out of scope: Next.js
+# mints a random buildId per build and stamps it into nearly every exported file,
+# so byte equality there would fail for a reason that is not drift. public/ is the
+# whole machine-readable surface, which is what a consumer of this site downloads,
+# and /version.json pins the commit the HTML was built from. The reasoning, and
+# what would have to change to widen it, is at the top of the script.
+#
+# It reads the network, deliberately, which is why it holds only `contents: read`,
+# lives in its own workflow, and is not a required check: it grades the deployment,
+# and a deployment that has not happened yet is not a reason to block a merge.
+#
+# Runs daily and on demand (Actions > live integrity sentinel > Run workflow).
+name: live integrity sentinel
+
+on:
+  schedule:
+    - cron: "9 15 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  # Deduplicate reads without ever cancelling or queueing behind a deploy.
+  group: live-integrity
+  cancel-in-progress: false
+
+jobs:
+  verify-live:
+    name: the live site is what this repository publishes
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out main
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: main
+          persist-credentials: false
+
+      - name: Set up Node.js
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: 22.19.0
+
+      - name: Compare the live site with what this checkout publishes
+        run: |
+          set -uo pipefail
+          expected_sha="$(git rev-parse HEAD)"
+          node scripts/verify-live-site.mjs
+          verify_rc="$?"
+          # A deploy for a newer commit may have landed while this ran, in which case
+          # the live site naming a different commit is the deploy working. Only that
+          # exact case is excused, and only by re-reading the remote afterwards.
+          remote_sha="$(git ls-remote --exit-code origin refs/heads/main | cut -f1)"
+          if [ "$remote_sha" != "$expected_sha" ]; then
+            echo "::warning::main moved to ${remote_sha} while this ran; re-run once its deploy finishes"
+            exit 0
+          fi
+          exit "$verify_rc"
