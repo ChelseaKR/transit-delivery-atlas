@@ -49,6 +49,9 @@ recorded here.
 
 ### Added
 
+- Ko-fi support link in the site footer, using a self-hosted copy of the button
+  image so the page makes no third-party request and stays within the site's
+  `img-src 'self' data:` content-security policy
 - "Ask about this directive": an explicit opt-in AI panel on each directive
   page. Until a reader opens it and submits a question the page performs no
   request of any kind (`lib/ask-client.ts` is constructed with an injectable
@@ -189,9 +192,6 @@ The `v0.4.0` site build already contained the earlier items.
   detail page triggers the browser print dialog, using the existing print
   styles to produce a clean, chrome-free brief of the source excerpt, evidence,
   and analysis. The button is hidden in the printout.
-- Ko-fi support link in the site footer, using a self-hosted copy of the button
-  image so the page makes no third-party request and stays within the site's
-  `img-src 'self' data:` content-security policy
 - Public correction and review chooser with structured GitHub issue forms for
   source-backed changes and observed usability or research findings
 - Post-workshop California Transportation Commission presentation documenting
