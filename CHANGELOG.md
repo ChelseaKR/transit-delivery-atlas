@@ -77,6 +77,18 @@ recorded here.
   The quotation set is now derived from the data, so a new qualifier is covered
   the day it lands, and asserted non-empty, because a check that verifies
   nothing passes forever.
+- The zero-tolerance eval gate no longer takes the audited file's word for it.
+  `tests/eval-results.test.mjs` read `zeroTolerance` from the result file it
+  was auditing, while the committed case file is what actually declares it.
+  A result could drop the flag, record eight refusal failures in the suite
+  AGENTS.md calls "zero tolerance", and pass. The committed case file is now
+  the authority, and a result contradicting it is rejected.
+- The same test derived its work set from `evals/results/`, so an empty
+  directory validated nothing and passed — and deleting the five files was an
+  easier way to satisfy the prompt-version freshness gate than re-running the
+  suites. The work set is now the five committed case suites: a suite with no
+  result file fails, a result with no case file fails, and a suite that was not
+  run live must still say so rather than going missing.
 
 ### Changed
 
