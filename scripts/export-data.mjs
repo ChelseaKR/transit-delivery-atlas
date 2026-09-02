@@ -509,41 +509,71 @@ validateAgainstSchema(
   watchlistSchema,
 );
 
-const outputDir = new URL("public/data/", root);
-await mkdir(outputDir, { recursive: true });
-await Promise.all([
-  writeFile(
-    new URL("directives.json", outputDir),
-    `${JSON.stringify(publicData, null, 2)}\n`,
-  ),
-  writeFile(new URL("directives.csv", outputDir), `${csv}\n`),
-  writeFile(new URL("evidence.csv", outputDir), `${evidenceCsv}\n`),
-  writeFile(
-    new URL("watchlist.json", outputDir),
-    `${JSON.stringify(watchlistData, null, 2)}\n`,
-  ),
-  writeFile(new URL("watchlist.csv", outputDir), `${watchlistCsv}\n`),
-  writeFile(
-    new URL("watchlist-schema.json", outputDir),
-    `${JSON.stringify(watchlistSchema, null, 2)}\n`,
-  ),
-  writeFile(
-    new URL("directive-organizations.csv", outputDir),
-    `${directiveOrganizationsCsv}\n`,
-  ),
-  writeFile(
-    new URL("directive-relationships.csv", outputDir),
-    `${directiveRelationshipsCsv}\n`,
-  ),
-  writeFile(
-    new URL("schema.json", outputDir),
-    `${JSON.stringify(schema, null, 2)}\n`,
-  ),
-  writeFile(
-    new URL("tda-ntd-feasibility.json", outputDir),
-    `${JSON.stringify(feasibilityData, null, 2)}\n`,
-  ),
+// Every export, as the exact bytes it should hold. Building the whole set before
+// touching the disk is what makes `--check` possible: the comparison and the write
+// are two things done with one answer, so they can never be computed differently.
+const exports = new Map([
+  ["directives.json", `${JSON.stringify(publicData, null, 2)}\n`],
+  ["directives.csv", `${csv}\n`],
+  ["evidence.csv", `${evidenceCsv}\n`],
+  ["watchlist.json", `${JSON.stringify(watchlistData, null, 2)}\n`],
+  ["watchlist.csv", `${watchlistCsv}\n`],
+  ["watchlist-schema.json", `${JSON.stringify(watchlistSchema, null, 2)}\n`],
+  ["directive-organizations.csv", `${directiveOrganizationsCsv}\n`],
+  ["directive-relationships.csv", `${directiveRelationshipsCsv}\n`],
+  ["schema.json", `${JSON.stringify(schema, null, 2)}\n`],
+  ["tda-ntd-feasibility.json", `${JSON.stringify(feasibilityData, null, 2)}\n`],
 ]);
+
+const outputDir = new URL("public/data/", root);
+
+// `--check` writes nothing. It exists because the release gate used to run the
+// writing path: `npm run check` calls `npm test`, which calls `npm run build`,
+// which calls this script, so every local run of the documented gate regenerated
+// ten tracked files into the working tree and then reported success. A stale
+// committed export could not fail, because the thing that would have noticed had
+// already overwritten it. Only `.github/workflows/quality.yml` caught it, and that
+// workflow skips itself on a docs-only change and is not the workflow that
+// deploys or releases.
+//
+// A missing file is reported here as well as a differing one. `git diff
+// --exit-code` cannot see a file that is not tracked, so a new export added to
+// the set above without being committed would have passed that check silently.
+if (process.argv.includes("--check")) {
+  const stale = [];
+  for (const [name, expected] of exports) {
+    const path = new URL(name, outputDir);
+    let actual;
+    try {
+      actual = await readFile(path, "utf8");
+    } catch {
+      stale.push(`public/data/${name}: not committed`);
+      continue;
+    }
+    if (actual !== expected) {
+      stale.push(`public/data/${name}: differs from a fresh export`);
+    }
+  }
+  if (stale.length > 0) {
+    console.error("committed exports are not what the data produces:");
+    for (const line of stale) {
+      console.error(`  ${line}`);
+    }
+    console.error("run `npm run data:export` and commit the result");
+    process.exit(1);
+  }
+  console.log(
+    `Committed exports match a fresh export (${exports.size} files).`,
+  );
+  process.exit(0);
+}
+
+await mkdir(outputDir, { recursive: true });
+await Promise.all(
+  [...exports].map(([name, content]) =>
+    writeFile(new URL(name, outputDir), content),
+  ),
+);
 
 console.log(
   `Exported ${directives.length} directives, ${evidenceData.evidence.length} evidence record(s), ${watchlistData.items.length} context watchlist item(s), ${directiveOrganizationsCsvRows.length} source-role links, ${directiveRelationshipsCsvRows.length} analytical cross-references, and the four-field reporting slice.`,

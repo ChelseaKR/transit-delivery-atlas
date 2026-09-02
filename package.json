@@ -12,7 +12,8 @@
     "build": "npm run data:export && node scripts/write-version.mjs && next build",
     "data:validate": "node scripts/validate-data.mjs",
     "data:export": "npm run data:validate && node scripts/export-data.mjs",
-    "test": "npm run build && node --experimental-strip-types --test tests/data-integrity.test.mjs tests/directive-filters.test.mjs tests/directive-timing.test.mjs tests/relationship-filters.test.mjs tests/rendered-html.test.mjs tests/accessibility-scope.test.mjs tests/watchlist-review.test.mjs tests/evidence-coverage.test.mjs tests/corpus.test.mjs tests/verdict-language.test.mjs tests/published-verdict-language.test.mjs tests/service-pipeline.test.mjs tests/service-server.test.mjs tests/eval-results.test.mjs tests/ask-client.test.mjs tests/ask-gate.test.mjs tests/release-artifact.test.mjs tests/register-labels.test.mjs tests/hosting.test.mjs",
+    "data:export:check": "npm run data:validate && node scripts/export-data.mjs --check",
+    "test": "npm run build && node --experimental-strip-types --experimental-test-coverage --test-coverage-include='lib/**' --test-coverage-include='scripts/**' --test-coverage-include='service/**' --test-coverage-lines=90 --test-coverage-branches=78 --test-coverage-functions=90 --test tests/data-integrity.test.mjs tests/published-figures.test.mjs tests/directive-filters.test.mjs tests/directive-timing.test.mjs tests/relationship-filters.test.mjs tests/rendered-html.test.mjs tests/accessibility-scope.test.mjs tests/watchlist-review.test.mjs tests/evidence-coverage.test.mjs tests/corpus.test.mjs tests/verdict-language.test.mjs tests/published-verdict-language.test.mjs tests/service-pipeline.test.mjs tests/service-server.test.mjs tests/eval-results.test.mjs tests/ask-client.test.mjs tests/ask-gate.test.mjs tests/release-artifact.test.mjs tests/register-labels.test.mjs tests/hosting.test.mjs",
     "lint": "eslint . --ignore-pattern dist --ignore-pattern .next",
     "typecheck": "tsc --noEmit --incremental false",
     "audit:production": "npm audit --omit=dev --audit-level=moderate",
@@ -21,25 +22,25 @@
     "ask:serve": "node --experimental-strip-types service/server.ts",
     "eval": "node --experimental-strip-types evals/run.mjs",
     "eval:dry": "node --experimental-strip-types evals/run.mjs --suite all --dry-run",
-    "check": "npm run lint && npm run typecheck && npm test && npm run audit:production"
+    "check": "npm run data:export:check && npm run lint && npm run typecheck && npm test && npm run audit:production"
   },
   "dependencies": {
     "@anthropic-ai/bedrock-sdk": "^0.33.1",
     "@anthropic-ai/sdk": "^0.120.0",
-    "next": "^16.3.0",
+    "next": "^16.3.2",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
     "zod": "^4.4.3"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.3.3",
-    "@types/node": "26.2.0",
+    "@types/node": "26.4.0",
     "@types/react": "^19.2.17",
     "@types/react-dom": "19.2.4",
     "eslint": "10.8.1",
-    "eslint-config-next": "^16.2.12",
+    "eslint-config-next": "^16.3.1",
     "tailwindcss": "^4.3.3",
-    "typescript": "5.9.3"
+    "typescript": "6.0.3"
   },
   "overrides": {
     "next": {
