@@ -99,6 +99,19 @@ recorded here.
   with the whole gate green, including the accessibility scope checks a new
   route does correctly trip. Routes now come from `app/**/page.tsx`, the same
   derivation `tests/accessibility-scope.test.mjs` already uses.
+- `coverageStatement` no longer publishes the literal word "null" (#74). The
+  `"linked"` coverage state is derived from `evidenceCount > 0` alone, so a
+  directive can carry linked evidence while `checkedSources` is empty — most
+  reachably when the only review source listed as covering it had its retrieval
+  fail. `lastCheckedOn` is then `null` and was interpolated straight into
+  published prose: "The 0 listed public sources covering it were last checked
+  on null." Nothing threw, so a bad build shipped silently, and the same value
+  feeds the answer verifier's freshness block. The statement now says no check
+  date is available, and `scripts/validate-data.mjs` separately refuses the
+  data-modelling error behind it: an evidence record linking a directive that
+  no review source lists in `coversDirectiveIds`. A retrieval failure is left
+  to the renderer, because failing the release on it would block a deploy for
+  something no re-review can clear.
 
 ### Changed
 
