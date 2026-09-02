@@ -70,7 +70,9 @@ make verify
 ```
 
 `make verify` runs the same release gate as CI (`npm run check`: lint,
-typecheck, build + tests, and a production dependency audit).
+typecheck, build + tests under a coverage floor, and a production dependency
+audit). The coverage floor and the set it is measured over are described in
+the `test` target in the Makefile.
 
 Pull requests should explain what changed, why it changed, user impact, and the
 checks performed. Generated JSON, CSV, normalized relationship tables, and

@@ -80,12 +80,13 @@ not-applied deployment shape are documented in
 [`docs/AI-SERVICE.md`](docs/AI-SERVICE.md); the evaluation harness and its
 honesty rules are in [`evals/README.md`](evals/README.md).
 
-The two suites that carry zero tolerance both pass on the committed prompt:
-48 of 48 compliance, status, grading, and forecast phrasings refused, and 20 of
-20 empty-state answers carrying the site's own absence wording with no status
-language published. That is a measurement of one prompt version and one model
-on one date, recorded in [`evals/results/`](evals/results/) — not a guarantee
-about a later model.
+The three suites that carry zero tolerance all pass on the committed prompt:
+48 of 48 compliance, status, grading, and forecast phrasings refused, 20 of 20
+empty-state answers carrying the site's own absence wording with no status
+language published, and 10 of 10 evidence answers stating each record's review
+date, the covering sources' last-checked date, and the next planned sweep. That
+is a measurement of one prompt version and one model on one date, recorded in
+[`evals/results/`](evals/results/) — not a guarantee about a later model.
 
 ## Primary sources
 
@@ -226,14 +227,14 @@ re-reviewed 2026-08-22 when the runtime service landed.
 | Standard | Applies? | State |
 |---|---|---|
 | Responsible-Tech Framework | Applies | Independent-analysis posture, correction workflow, and explicit non-affiliation labeling (see "What this is not") |
-| Code Quality | Applies | ESLint + strict TypeScript typecheck, fail-closed data validation; gated in CI (`npm run check`) |
+| Code Quality | Applies | ESLint + strict TypeScript typecheck, fail-closed data validation; node:test suite under a coverage floor (90% lines, 78% branches, 90% functions over the `lib/`, `scripts/` and `service/` files the tests load; see the `test` target in the Makefile for what that denominator does and does not include); gated in CI (`npm run check`) |
 | Security & Supply-Chain | Applies | CodeQL SAST, TruffleHog full-history secret scan, Dependabot, npm production audit, SHA-pinned actions, SECURITY.md |
 | CI/CD | Applies | Quality gate on every push/PR; OIDC-based deploy that verifies the built artifact against the canonical data before uploading, then smoke-checks the live edge against those same bytes (`.github/workflows/`) |
 | Observability | Applies | Static site: build SHA published at `/version.json`; deploy workflow smoke-verifies the exact released SHA and security headers |
 | Performance | Applies | Not met. The release gate (`npm run check`) runs lint, typecheck, tests, and a production audit, and measures nothing about performance: there is no Lighthouse-CI run, no bundle budget, and no committed performance baseline to regress against |
 | Accessibility | Applies | WCAG 2.2 AA target with Section 508 framing; rendered-HTML test assertions on every build; last manual review dated 2026-07-13 at `ef1d11b`, with the routes and patterns shipped since listed as uncovered (docs/ACCESSIBILITY.md) |
 | Internationalization | Applies | English-only today; owner, first localization boundary, source-language rule, fallback, and review deadline are declared in [`docs/I18N.md`](docs/I18N.md) |
-| AI Evaluation | Applies | The static site has no model component; the optional runtime question-answering service added under [ADR-0002](docs/adr/0002-runtime-grounded-question-answering.md) has five committed suites run live against the real pipeline on `global.anthropic.claude-sonnet-4-6` (Amazon Bedrock), prompt `2026-08-21.1`, 2026-08-22: compliance refusal 48/48 and empty-state fidelity 20/20 at zero tolerance, freshness 10/10, citation grounding 15/15, question structuring 20/22. Results are committed only from recorded live runs with provider, model, prompt version, commit, and date, enforced by `tests/eval-results.test.mjs`; a suite not run live is published as not run, never as a number |
+| AI Evaluation | Applies | The static site has no model component; the optional runtime question-answering service added under [ADR-0002](docs/adr/0002-runtime-grounded-question-answering.md) has five committed suites run live against the real pipeline on `global.anthropic.claude-sonnet-4-6` (Amazon Bedrock), prompt `2026-08-21.1`, 2026-08-22: compliance refusal 48/48, empty-state fidelity 20/20, and freshness disclosure 10/10, all three at zero tolerance, citation grounding 15/15, question structuring 20/22. Results are committed only from recorded live runs with provider, model, prompt version, commit, and date, enforced by `tests/eval-results.test.mjs`; a suite not run live is published as not run, never as a number |
 | AI Development Measurement | Applies | Not met. This repository is built with AI assistance and publishes no measurement of it: no committed metrics ledger, no delivery-outcome record, and no quality-debt counterweight |
 | Documentation | Applies | Partially met. README, methodology/evidence/relationship models, ADR log (docs/adr/), CHANGELOG, CONTRIBUTING. The standards set is now pinned for this declaration at v2.0.0 (see above). Still not met: the standards are not vendored in-tree, and being private they cannot be fetched by this public repository's CI, so the documentation controls that require an in-tree or fetchable copy remain unevaluated here rather than evaluated and passed |
 | Quality & Metrics | Applies | Data-integrity, filter, rendered-HTML, and hosting test suites run in the release gate |
