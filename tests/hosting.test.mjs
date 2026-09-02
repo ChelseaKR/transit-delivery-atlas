@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { execFileSync } from "node:child_process";
-import { readFile } from "node:fs/promises";
+import { readdir, readFile } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
 import { runInNewContext } from "node:vm";
 import test from "node:test";
@@ -9,6 +9,29 @@ const projectRoot = new URL("../", import.meta.url);
 
 async function readProjectFile(path) {
   return readFile(new URL(path, projectRoot), "utf8");
+}
+
+/**
+ * Every route the app exports, derived from `app/**\/page.tsx`.
+ *
+ * The same derivation `tests/accessibility-scope.test.mjs` uses. The sitemap
+ * test used to compare a nine-element literal against the identical literal in
+ * `app/sitemap.ts`, so it could only fail if someone edited one copy and not
+ * the other, never for the property its name asserts.
+ */
+async function appRoutes(directory = "app", prefix = "") {
+  const entries = await readdir(new URL(`${directory}/`, projectRoot), { withFileTypes: true });
+  const routes = [];
+
+  for (const entry of entries) {
+    if (entry.isDirectory()) {
+      routes.push(...(await appRoutes(`${directory}/${entry.name}`, `${prefix}/${entry.name}`)));
+    } else if (entry.name === "page.tsx") {
+      routes.push(prefix === "" ? "/" : prefix);
+    }
+  }
+
+  return routes.sort();
 }
 
 test("static release metadata identifies the exact build", async () => {
@@ -36,29 +59,27 @@ test("the exported not-found page is generic and has one noindex directive", asy
 });
 
 test("sitemap lists every static route and every directive record exactly once", async () => {
-  const [sitemap, directives] = await Promise.all([
+  const [sitemap, directives, routes] = await Promise.all([
     readProjectFile("out/sitemap.xml"),
     readProjectFile("data/directives.json").then((raw) => JSON.parse(raw).directives),
+    appRoutes(),
   ]);
 
   const locs = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => match[1]);
   assert.equal(new Set(locs).size, locs.length, "sitemap contains a duplicate URL");
 
-  const staticPaths = [
-    "/",
-    "/handoffs/",
-    "/evidence/",
-    "/watchlist/",
-    "/research/tda-ntd/",
-    "/methodology/",
-    "/accessibility/",
-    "/data/",
-    "/corrections/",
-  ];
+  // Derived from what the app exports, not copied from what the sitemap
+  // declares. The dynamic directive segment is covered by the loop below.
+  const staticPaths = routes
+    .filter((route) => !route.includes("["))
+    .map((route) => (route === "/" ? "/" : `${route}/`));
+
+  assert.ok(staticPaths.length >= 9, `expected the app's routes, found ${staticPaths.length}`);
+
   for (const path of staticPaths) {
     assert.ok(
       locs.includes(`https://transit.chelseakr.com${path}`),
-      `sitemap is missing ${path}`,
+      `sitemap is missing ${path}: the app exports it, so a crawler should find it`,
     );
   }
 
@@ -69,7 +90,11 @@ test("sitemap lists every static route and every directive record exactly once",
     );
   }
 
-  assert.equal(locs.length, staticPaths.length + directives.length);
+  assert.equal(
+    locs.length,
+    staticPaths.length + directives.length,
+    "the sitemap lists a URL the app does not export",
+  );
 });
 
 test("robots.txt allows crawling and points to the sitemap", async () => {
