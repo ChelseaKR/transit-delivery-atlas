@@ -859,6 +859,24 @@ for (const reviewSource of evidenceData.reviewSources) {
     );
   }
 }
+
+// The reverse of the check above (issue #74). A directive can carry linked
+// evidence while no review source lists it, and the coverage statement then
+// publishes "the 0 listed public sources covering it were last checked on
+// null". The prose is assembled from the source list, so a directive with
+// evidence and no covering source has nothing to assemble it from.
+const coveredDirectiveIds = new Set(
+  evidenceData.reviewSources.flatMap(({ coversDirectiveIds }) => coversDirectiveIds),
+);
+for (const record of evidenceData.evidence) {
+  for (const { directiveId } of record.directiveLinks) {
+    if (!coveredDirectiveIds.has(directiveId)) {
+      throw new Error(
+        `Evidence record ${record.id} links directive ${directiveId}, which no review source lists in coversDirectiveIds. The directive page states when the sources covering a directive were last checked, and there is no source to state it from.`,
+      );
+    }
+  }
+}
 const sweepDates = evidenceData.sweeps.map(({ sweptOn }) => sweptOn);
 unique(sweepDates, "Evidence sweep dates");
 if (JSON.stringify(sweepDates) !== JSON.stringify([...sweepDates].sort())) {

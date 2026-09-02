@@ -7,6 +7,36 @@ recorded here.
 
 ### Fixed
 
+- The release gate regenerated the committed exports instead of checking them.
+  `npm run check` calls `npm test`, which calls `npm run build`, which calls
+  `npm run data:export`, so every local run of the documented gate rewrote the
+  ten tracked files under `public/data/` and then reported success. A stale
+  export could not fail: the only thing in the gate that touched those files was
+  the thing that would have repaired them first. Only
+  `.github/workflows/quality.yml` compared anything, and that workflow skips
+  itself on a docs-only change and is not the workflow that deploys or releases,
+  so `deploy.yml` and `release.yml` could both ship a commit whose committed
+  exports were not what the data produced. `scripts/export-data.mjs --check`
+  now writes nothing: it builds the same ten bodies and compares them to what is
+  on disk, naming every file that differs or is missing. `npm run check` runs it
+  first, before the build can rewrite anything, which is the same reason a
+  lockfile check runs before the steps that would resolve it. It also reports a
+  file that was never committed, which `git diff --exit-code` cannot see. The
+  exports had not drifted.
+
+- `docs/BRAND.md` sketched a home page that no longer exists. Its layout sketch
+  read "21 directives · 2 records" and drew "E 2" against directive 5, both
+  hand-copied from figures `app/page.tsx` renders live from `data/evidence.json`.
+  The evidence collection has held four records, all four linked to directive 5,
+  since before this entry. Nothing read either number back, and
+  `.github/workflows/quality.yml` ignores `docs/**`, so a change to that file
+  ran no job at all. `tests/published-figures.test.mjs` now re-derives them, and
+  the six counts in `docs/RELATIONSHIP-MODEL.md` alongside them. Two of those
+  six, "15 unique directive pairs" and "12 of which are reciprocal", appeared
+  nowhere else in the repository: no other test, no other document, no code
+  path. They were correct and they were the only published figures here with
+  nothing whatever behind them.
+
 - The verdict lexicon now screens the published site, not only the optional AI
   service. `lib/verdict-language.mjs` describes itself as "the single list
   shared by the verifier that screens model output, the pre-classifier that
@@ -32,6 +62,56 @@ recorded here.
   other nineteen analysis summaries able to hand the model a verdict to
   narrate. The set is now derived from the loaded knowledge and pinned at
   twenty-one.
+- Every string the site publishes as the order's own words is now verified
+  against the retained corpus. `tests/corpus.test.mjs` is titled "every
+  reviewed excerpt in the source layer is verbatim in the corrected text" and
+  checked twenty-four `excerpt` fields. The directive page also publishes 35
+  `qualifiers[].text` under the heading "Qualifiers preserved from the source"
+  and 8 `timing[].sourceText` phrases as what the order states, and nothing
+  verified any of the 43: `qualifierSchema` accepts any non-empty string, the
+  data-integrity suite checks only that it is a string, one of the 35 is spot
+  checked against a literal in `scripts/validate-data.mjs`, and
+  `service/knowledge.ts` never registers them, so the runtime quotation
+  verifier never sees them either. A fabricated qualifier passed the entire
+  release gate and shipped under a heading promising it came from the source.
+  The quotation set is now derived from the data, so a new qualifier is covered
+  the day it lands, and asserted non-empty, because a check that verifies
+  nothing passes forever.
+- The zero-tolerance eval gate no longer takes the audited file's word for it.
+  `tests/eval-results.test.mjs` read `zeroTolerance` from the result file it
+  was auditing, while the committed case file is what actually declares it.
+  A result could drop the flag, record eight refusal failures in the suite
+  AGENTS.md calls "zero tolerance", and pass. The committed case file is now
+  the authority, and a result contradicting it is rejected.
+- The same test derived its work set from `evals/results/`, so an empty
+  directory validated nothing and passed — and deleting the five files was an
+  easier way to satisfy the prompt-version freshness gate than re-running the
+  suites. The work set is now the five committed case suites: a suite with no
+  result file fails, a result with no case file fails, and a suite that was not
+  run live must still say so rather than going missing.
+- The sitemap check now derives the site's routes instead of copying them.
+  `tests/hosting.test.mjs` is named "sitemap lists every static route and every
+  directive record exactly once", and its directive half was properly derived
+  from `data/directives.json` while its static half was a nine-element literal
+  identical to the one in `app/sitemap.ts` — a constant compared against a copy
+  of itself, able to fail only if someone edited one copy and not the other.
+  Adding a route and not updating `app/sitemap.ts` published the page unindexed
+  with the whole gate green, including the accessibility scope checks a new
+  route does correctly trip. Routes now come from `app/**/page.tsx`, the same
+  derivation `tests/accessibility-scope.test.mjs` already uses.
+- `coverageStatement` no longer publishes the literal word "null" (#74). The
+  `"linked"` coverage state is derived from `evidenceCount > 0` alone, so a
+  directive can carry linked evidence while `checkedSources` is empty — most
+  reachably when the only review source listed as covering it had its retrieval
+  fail. `lastCheckedOn` is then `null` and was interpolated straight into
+  published prose: "The 0 listed public sources covering it were last checked
+  on null." Nothing threw, so a bad build shipped silently, and the same value
+  feeds the answer verifier's freshness block. The statement now says no check
+  date is available, and `scripts/validate-data.mjs` separately refuses the
+  data-modelling error behind it: an evidence record linking a directive that
+  no review source lists in `coversDirectiveIds`. A retrieval failure is left
+  to the renderer, because failing the release on it would block a deploy for
+  something no re-review can clear.
 - The status-key screen now reads the whole published dataset. It ran over
   `{ evidenceScope, evidence }` — a two-key slice of a ten-key document —
   leaving `directives`, `organizations`, `themes`, `orderMetadata` and `source`

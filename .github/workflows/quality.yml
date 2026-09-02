@@ -34,7 +34,10 @@ jobs:
       - name: Run release checks
         run: npm run check
 
+      # `npm run check` above now runs this first, before the build can rewrite
+      # anything. Kept as its own step so a stale export is named in the job log
+      # rather than found inside a long gate, and written as the check rather than
+      # a regenerate-and-diff: `git diff --exit-code` cannot see an export that was
+      # never committed at all.
       - name: Verify generated exports are committed
-        run: |
-          npm run data:export
-          git diff --exit-code -- public/data
+        run: npm run data:export:check
