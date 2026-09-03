@@ -141,6 +141,9 @@ recorded here.
 
 ### Added
 
+- Ko-fi support link in the site footer, using a self-hosted copy of the button
+  image so the page makes no third-party request and stays within the site's
+  `img-src 'self' data:` content-security policy
 - "Ask about this directive": an explicit opt-in AI panel on each directive
   page. Until a reader opens it and submits a question the page performs no
   request of any kind (`lib/ask-client.ts` is constructed with an injectable
