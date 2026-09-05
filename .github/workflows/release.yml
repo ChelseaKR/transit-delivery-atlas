@@ -94,6 +94,7 @@ jobs:
   publish-release:
     needs: [authorize, build]
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     permissions:
       contents: write
     steps:
