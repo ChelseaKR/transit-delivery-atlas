@@ -41,7 +41,13 @@ permissions:
   contents: read
 
 concurrency:
-  group: release-authorization-${{ github.ref }}
+  # Same reasoning as quality.yml: keyed on the ref alone, every push to `main` shares
+  # one group and `cancel-in-progress: true` makes each merge cancel the run still
+  # executing for the merge before it. The `paths:` filter above makes that rare here
+  # rather than impossible — two merges that both touch the release surface would do
+  # it, and the one that would lose its run is a change to the release authorization
+  # gate itself. Appending the SHA gives each push its own group.
+  group: release-authorization-${{ github.ref }}-${{ github.event_name == 'pull_request' && 'pr' || github.sha }}
   cancel-in-progress: true
 
 jobs:

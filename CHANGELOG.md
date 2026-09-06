@@ -7,6 +7,16 @@ recorded here.
 
 ### Fixed
 
+- Two commits reached `main` with no CI verdict at all. `quality.yml` keyed its
+  concurrency group on `github.ref` alone, so every push to `main` shared one group;
+  with `cancel-in-progress: true`, each merge cancelled the run still executing for
+  the merge before it. On 2026-09-06 that left `afb757e2` (#116) and `0b9b1ada` (#119)
+  on `main` with `validate` recorded as `cancelled` and no other check — and a
+  cancelled run is not a pass, it is no verdict. `main` read as green only because the
+  tip's run happened to be the one that survived. The key now appends the commit SHA on
+  push, so each commit gets its own run; pull requests still collapse onto the branch
+  ref, which is the cancellation that was wanted.
+
 - The release gate regenerated the committed exports instead of checking them.
   `npm run check` calls `npm test`, which calls `npm run build`, which calls
   `npm run data:export`, so every local run of the documented gate rewrote the

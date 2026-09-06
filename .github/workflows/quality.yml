@@ -19,7 +19,15 @@ permissions:
   contents: read
 
 concurrency:
-  group: quality-${{ github.ref }}
+  # The group key must distinguish one push to main from the next. Keyed on the ref
+  # alone, every push to `main` shares one group, so with `cancel-in-progress: true`
+  # each merge cancels the run its predecessor was still executing. Measured on
+  # 2026-09-06: `afb757e2` (#116) and `0b9b1ada` (#119) sit on `main` with `validate`
+  # recorded as `cancelled` and nothing else — no gate returned a verdict on either,
+  # and the branch read as green because the tip's run was the survivor. Appending the
+  # SHA gives each push its own group; pull requests keep collapsing onto the branch
+  # ref, which is the cancellation that is actually wanted.
+  group: quality-${{ github.ref }}-${{ github.event_name == 'pull_request' && 'pr' || github.sha }}
   cancel-in-progress: true
 
 jobs:
