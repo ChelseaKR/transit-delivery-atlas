@@ -24,11 +24,28 @@ render it, labelled and inert until used. (`NEXT_EXPORT_DIR` in
 `next.config.ts` exists only so that second build cannot overwrite the `out/`
 artifact the rest of the suite reads.)
 
-Known residue: the panel's client chunk is still emitted and referenced by the
-directive pages even in an ungated build, because the page's import of the
-component survives the statically false branch. Nothing renders it and nothing
-can reach it, but roughly 16 KB of inert code is served. Tracked as an issue
-rather than fixed with a bundler alias.
+Known residue: the panel's client code is still emitted and still referenced by
+all twenty-one directive pages even in an ungated build, because the page's
+import of the component survives the statically false branch. Nothing renders it
+and nothing can reach it, but it is downloaded on every directive view.
+
+It does not have a chunk of its own. Turbopack places the panel in a *shared*
+client chunk that also carries the print-record button and Next's client router,
+so that chunk is served whether or not the panel is in it, and removing the panel
+shrinks the chunk rather than eliminating it. Measured against the committed
+build, the panel's own share is roughly 6.7 KB, not the whole chunk.
+
+`tests/ask-residue.test.mjs` re-derives this from `out/` rather than restating it:
+it asserts that the panel's code sits in exactly one chunk referenced by every
+directive page, that the same chunk also carries live code, and that the panel's
+share stays within a ceiling. It prints the measured share as a diagnostic, so
+the number above can be re-read from a test run instead of trusted.
+
+Tracked as an issue rather than fixed. Two approaches have been measured and
+recorded there: a conditional `await import()` in the server component changes
+nothing (the build is byte-identical), and a bundler alias does work — but via
+`turbopack.resolveAlias`, since this repository builds with Turbopack and a
+`webpack()` hook would be ignored.
 
 ## What it does
 
