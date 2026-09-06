@@ -8,6 +8,12 @@ import {
   directiveEvidenceCoverage,
 } from "../lib/evidence-coverage.mjs";
 
+// Every statement below is made as of a build date on which the collection's
+// planned review has NOT yet lapsed, so these tests keep asserting the
+// forward-looking wording they were written for. The lapsed wording is
+// asserted separately, at the bottom of this file.
+const BEFORE_REVIEW = "2026-09-01";
+
 const root = new URL("../", import.meta.url);
 
 async function readJson(path) {
@@ -45,7 +51,7 @@ test("a directive with no evidence and a checked source is 'checked, nothing fou
   assert.equal(coverage.checkedSources.length, 2);
   assert.equal(coverage.failedSources.length, 0);
 
-  const statement = coverageStatement(coverage);
+  const statement = coverageStatement(coverage, BEFORE_REVIEW);
   assert.match(statement, /No reviewed public artifact is linked to this directive\./);
   assert.match(statement, /2 listed public sources covering it were last checked on 2026-08-21/);
   assert.match(statement, /no artifact citing the order was found there/);
@@ -64,7 +70,7 @@ test("a directive whose only covering sources failed retrieval is 'not yet revie
   );
   assert.equal(coverage.state, "not-yet-reviewed");
   assert.equal(coverage.lastCheckedOn, null);
-  const statement = coverageStatement(coverage);
+  const statement = coverageStatement(coverage, BEFORE_REVIEW);
   assert.match(statement, /no listed public source covering it has been successfully checked yet/);
   assert.match(statement, /1 listed source covering this directive \(CHSRA newsroom\) could not be retrieved/);
   assert.ok(statement.endsWith(COVERAGE_NOT_A_FINDING));
@@ -74,7 +80,7 @@ test("a directive with no covering source at all is also 'not yet reviewed'", ()
   const coverage = directiveEvidenceCoverage("n-7-26-2", collection({ reviewSources: [source()] }));
   assert.equal(coverage.state, "not-yet-reviewed");
   assert.equal(coverage.checkedSources.length, 0);
-  assert.doesNotMatch(coverageStatement(coverage), /could not be retrieved/);
+  assert.doesNotMatch(coverageStatement(coverage, BEFORE_REVIEW), /could not be retrieved/);
 });
 
 test("a linked directive reports its count and the date its sources were checked", () => {
@@ -91,7 +97,7 @@ test("a linked directive reports its count and the date its sources were checked
   );
   assert.equal(coverage.state, "linked");
   assert.equal(coverage.evidenceCount, 2);
-  const statement = coverageStatement(coverage);
+  const statement = coverageStatement(coverage, BEFORE_REVIEW);
   assert.match(statement, /^2 reviewed public artifacts are linked to this directive\./);
   assert.match(statement, /1 listed public source covering it was last checked on 2026-08-21/);
   assert.doesNotMatch(statement, /not evidence that no implementation/);
@@ -104,7 +110,7 @@ test("no coverage statement ever renders a status verdict", () => {
     directiveEvidenceCoverage("n-7-26-1a", collection({ reviewSources: [source()], evidence: [{ directiveLinks: [{ directiveId: "n-7-26-1a" }] }] })),
   ];
   for (const coverage of states) {
-    const statement = coverageStatement(coverage);
+    const statement = coverageStatement(coverage, BEFORE_REVIEW);
     assert.doesNotMatch(statement, /compl(y|ied|iance|ete)|on track|behind|late|overdue|met |missed|nothing has happened/i, statement);
   }
 });
@@ -147,7 +153,7 @@ test("the committed data yields one explicit state for every directive", async (
   const four = coverage.find(({ directiveId }) => directiveId === "n-7-26-4");
   assert.equal(four.state, "checked-none-found");
   assert.equal(four.failedSources.length, 1);
-  assert.match(coverageStatement(four), /could not be retrieved/);
+  assert.match(coverageStatement(four, BEFORE_REVIEW), /could not be retrieved/);
 });
 
 test("linked evidence with no covering source states no date rather than 'null'", () => {
@@ -166,7 +172,7 @@ test("linked evidence with no covering source states no date rather than 'null'"
   assert.equal(coverage.state, "linked");
   assert.equal(coverage.lastCheckedOn, null);
 
-  const statement = coverageStatement(coverage);
+  const statement = coverageStatement(coverage, BEFORE_REVIEW);
   assert.doesNotMatch(statement, /\bnull\b|\bundefined\b/, statement);
   assert.match(statement, /No listed public source covering it has been successfully checked/);
 });
@@ -184,7 +190,7 @@ test("no coverage statement the site can publish interpolates a missing value", 
   assert.equal(coverage.length, 21, "every directive's statement is screened");
   for (const item of coverage) {
     assert.doesNotMatch(
-      coverageStatement(item),
+      coverageStatement(item, BEFORE_REVIEW),
       /\bnull\b|\bundefined\b|\bNaN\b/,
       `${item.directiveId} publishes a missing value`,
     );
@@ -210,6 +216,56 @@ test("every directive carrying linked evidence is listed by a covering review so
     assert.ok(
       covered.has(directiveId),
       `${directiveId} has linked evidence but no review source lists it in coversDirectiveIds`,
+    );
+  }
+});
+
+test("a lapsed planned check is published as lapsed, not as a forward-looking plan", () => {
+  // `lib/watchlist-review.mjs` states the rule for the watchlist layer: "A
+  // planned review date that cannot expire is decoration: the published card
+  // would keep reading as a forward-looking commitment months after the date
+  // passed." The evidence layer is a reviewed item under the same rule --- the
+  // release gate already treats it as one --- but its statement was built
+  // unconditionally, so all 21 directives kept publishing a date that had
+  // passed as though it were still ahead.
+  const coverage = directiveEvidenceCoverage("n-7-26-1a", collection());
+  assert.equal(coverage.nextReviewOn, "2026-09-18");
+
+  const current = coverageStatement(coverage, "2026-09-17");
+  assert.match(current, /The next planned check of the listed sources is 2026-09-18\./);
+  assert.doesNotMatch(current, /overdue/);
+
+  const lapsed = coverageStatement(coverage, "2026-09-25");
+  assert.doesNotMatch(
+    lapsed,
+    /The next planned check of the listed sources is/,
+    "a passed date must not still read as a plan",
+  );
+  assert.match(lapsed, /was due 2026-09-18 and is 7 days overdue at this build \(2026-09-25\)/);
+  assert.match(lapsed, /has not been re-checked since/);
+});
+
+test("the day the check falls due is not yet overdue", () => {
+  const coverage = directiveEvidenceCoverage("n-7-26-1a", collection());
+  const onTheDay = coverageStatement(coverage, "2026-09-18");
+  assert.match(onTheDay, /The next planned check of the listed sources is 2026-09-18\./);
+  assert.doesNotMatch(onTheDay, /overdue/);
+
+  const dayAfter = coverageStatement(coverage, "2026-09-19");
+  assert.match(dayAfter, /is 1 day overdue/, "singular, not '1 days'");
+});
+
+test("the statement refuses to be made without a reference date", () => {
+  // An optional build date would silently restore the non-expiring behaviour
+  // this test exists to prevent, so the parameter is required and fails loudly.
+  // Making it required also surfaced a third caller nobody had found: the
+  // question-answering service in service/knowledge.ts.
+  const coverage = directiveEvidenceCoverage("n-7-26-1a", collection());
+  for (const bad of [undefined, null, "", "not-a-date", "2026-13-01", 20260918]) {
+    assert.throws(
+      () => coverageStatement(coverage, bad),
+      /planned review date that cannot expire is decoration/,
+      `expected a refusal for ${JSON.stringify(bad)}`,
     );
   }
 });

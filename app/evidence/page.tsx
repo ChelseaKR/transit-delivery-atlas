@@ -9,6 +9,8 @@ import {
 } from "@/lib/data";
 import { CONTENT_CORRECTION_URL } from "@/lib/feedback";
 import { formatDate } from "@/lib/format";
+import { BUILD_DATE } from "@/lib/build-date";
+import { reviewCurrency } from "@/lib/watchlist-review.mjs";
 
 export const metadata: Metadata = {
   title: "Public evidence",
@@ -19,6 +21,12 @@ export const metadata: Metadata = {
 
 export default function EvidencePage() {
   const latestSweep = evidenceScope.sweeps[evidenceScope.sweeps.length - 1];
+  // Same rule as a watchlist item and as the directive page: a planned date
+  // that cannot expire is decoration.
+  const evidenceReview = reviewCurrency(
+    { lastReviewedOn: evidenceScope.lastUpdatedOn, nextReviewOn: evidenceScope.nextReviewOn },
+    BUILD_DATE,
+  );
   return (
     <>
       <SiteHeader />
@@ -96,12 +104,17 @@ export default function EvidencePage() {
                     <time dateTime={latestSweep.sweptOn}>{formatDate(latestSweep.sweptOn)}</time>
                   </dd>
                 </div>
-                <div>
-                  <dt>Next planned sweep</dt>
+                <div className={evidenceReview.overdue ? "evidence-meta--overdue" : undefined}>
+                  <dt>{evidenceReview.overdue ? "Sweep overdue" : "Next planned sweep"}</dt>
                   <dd>
                     <time dateTime={evidenceScope.nextReviewOn}>
                       {formatDate(evidenceScope.nextReviewOn)}
                     </time>
+                    {evidenceReview.overdue ? (
+                      <span>
+                        {`Sweep due since ${formatDate(evidenceScope.nextReviewOn)}, ${evidenceReview.daysOverdue} day${evidenceReview.daysOverdue === 1 ? "" : "s"} overdue at this build (${formatDate(evidenceReview.buildDate)}).`}
+                      </span>
+                    ) : null}
                   </dd>
                 </div>
                 <div>

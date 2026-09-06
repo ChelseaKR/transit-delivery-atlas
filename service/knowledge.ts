@@ -112,6 +112,23 @@ export function quoteRef(id: string): string {
   return `quote:${id}`;
 }
 
+/**
+ * The reference date a coverage claim is made on, in this service.
+ *
+ * The static site expires its planned review dates against the BUILD date,
+ * because a claim frozen into exported HTML cannot be re-dated later
+ * (`lib/build-date.ts` explains why at length). This service is the opposite
+ * case: it composes an answer per request, so the honest reference is the date
+ * the answer is given. Both surfaces apply the same rule --- a planned review
+ * date expires against the moment the claim is made --- they simply differ on
+ * when that moment is.
+ *
+ * @returns {string} today's UTC date as an ISO calendar date
+ */
+function answeringDate(): string {
+  return new Date().toISOString().slice(0, 10);
+}
+
 export async function loadKnowledge(): Promise<Knowledge> {
   const [directiveData, analysisData, evidenceData, organizations, sources, corpus] = await Promise.all([
     readJson<{ directives: RawDirective[]; orderMetadata: { sourceContexts: Array<{ id: string; locator: { section: string; pages: number[] }; excerpt: string; appliesToDirectiveIds: string[] }>; sourceNotices: Array<{ id: string; locator: { section: string; pages: number[] }; excerpt: string }> } }>("data/directives.json"),
@@ -217,7 +234,7 @@ export async function loadKnowledge(): Promise<Knowledge> {
         evidence: evidenceData.evidence.filter((record) =>
           record.directiveLinks.some((link) => link.directiveId === directiveId),
         ),
-        coverage: { ...coverage, statement: coverageStatement(coverage) },
+        coverage: { ...coverage, statement: coverageStatement(coverage, answeringDate()) },
         analysisSummary: analysis.summary,
         openQuestions: analysis.openQuestions,
       };
