@@ -5,6 +5,40 @@ recorded here.
 
 ## [Unreleased]
 
+### Added
+
+- **The exports now carry their own contract.** `public/data/datapackage.json` is a
+  Frictionless Data Package describing every published file: a Table Schema per CSV
+  giving each column its name, type and whether it is ever empty, the separator a
+  multi-valued cell uses, the licence split, and the signed source's retrieval date and
+  SHA-256. `public/data/dcat.jsonld` is the same dataset as a DCAT-AP record for catalog
+  harvesters. Both are generated at build by `scripts/export-data.mjs` and byte-compared
+  against the committed copies by `npm run data:export:check`, like every other export.
+
+  Every field in every Table Schema is **derived from the rows actually written**, never
+  authored beside them. A hand-maintained schema is a second copy of the truth and a
+  second copy drifts — this repository has already published one figure that described
+  an older build than the one printed next to it. `tests/data-package.test.mjs` re-reads
+  the published CSV bytes the way a consumer would and asserts that every declared column
+  name, order, type and `required` constraint holds for every row, so a column that
+  changes shape fails in the same commit.
+
+  Two things are deliberately absent. The **build commit** is not embedded: the package
+  is byte-compared, so a value that moved with every commit would fail the gate on every
+  pull request and teach everyone to regenerate without reading. It is published per
+  build at `/version.json` and the package points there; the dataset is dated by
+  `dataReviewedThrough`, a real review date read off the records. And a **single SPDX
+  identifier** is not used, because the licence genuinely is split: CC BY 4.0 covers the
+  analytical content, and the signed order's excerpts, agency names and government
+  publications are not relicensed by this project. Naming only CC BY 4.0 at the top would
+  be a claim about the source layer this project is not entitled to make.
+
+- `docs/DATA-CARD.md`, stating the dataset's classification (public information only, no
+  personal data), provenance, update cadence, licence split and known limitations, linked
+  from the `/data` page. It copies no number out of the data: counts and review dates
+  live in the exports, and the card names the field that holds each one. With it, the
+  Data Governance row of the standards conformance table moves from partially met to met.
+
 ### Fixed
 
 - Two commits reached `main` with no CI verdict at all. `quality.yml` keyed its

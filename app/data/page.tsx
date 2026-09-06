@@ -110,7 +110,54 @@ export default function DataPage() {
                   <strong>TDA/NTD four-field slice</strong>
                   <small>Definitions, feasibility classes, controls, and evidence gaps</small>
                 </a>
+                <a className="download-card" href="/data/datapackage.json">
+                  <span className="file-type">DATA PACKAGE</span>
+                  <strong>Frictionless Data Package</strong>
+                  <small>Typed Table Schemas, licence split, and source provenance for every file here</small>
+                </a>
+                <a className="download-card" href="/data/dcat.jsonld">
+                  <span className="file-type">DCAT</span>
+                  <strong>DCAT-AP catalog record</strong>
+                  <small>JSON-LD dataset description for catalog harvesters</small>
+                </a>
               </div>
+            </section>
+
+            <section>
+              <h2>Loading these files without reading this page</h2>
+              <p>
+                <a href="/data/datapackage.json">
+                  <code>datapackage.json</code>
+                </a>{" "}
+                is a{" "}
+                <a href="https://datapackage.org/">Frictionless Data Package</a>{" "}
+                describing every file above: a Table Schema per CSV giving each
+                column its name, type and whether it is ever empty, the
+                separator a multi-valued cell uses, the licence split, and the
+                signed source&rsquo;s retrieval date and SHA-256. It is
+                generated at build from the same values the CSVs are written
+                from and compared byte for byte against the committed copy, so a
+                column that changes shape changes its schema in the same commit.
+                Tools such as <code>frictionless</code> and{" "}
+                <code>pandas</code> can read it directly.
+              </p>
+              <p>
+                <a href="/data/dcat.jsonld">
+                  <code>dcat.jsonld</code>
+                </a>{" "}
+                is the same dataset as a DCAT-AP record for catalog harvesters.
+                Both files date the data by its review dates, never by the
+                moment of the build; the commit a build came from is published
+                separately at <code>/version.json</code>.
+              </p>
+              <p>
+                The{" "}
+                <a href="https://github.com/ChelseaKR/transit-delivery-atlas/blob/main/docs/DATA-CARD.md">
+                  data card
+                </a>{" "}
+                states the classification, provenance, update cadence, licence
+                split and known limitations of the dataset as a whole.
+              </p>
             </section>
 
             <section>

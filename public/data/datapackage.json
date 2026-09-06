@@ -1,0 +1,929 @@
+{
+  "$schema": "https://datapackage.org/profiles/1.0/datapackage.json",
+  "profile": "tabular-data-package",
+  "name": "transit-delivery-atlas",
+  "title": "Transit Delivery Atlas",
+  "description": "An independent, unofficial crosswalk of a signed California transit executive order: its directive units, the organizations it names, the public artifacts reviewed against them, and a separately labelled analytical layer. Source, evidence, analysis and context are separate layers and never blur; every column name says which layer it belongs to.",
+  "homepage": "https://transit.chelseakr.com/data",
+  "version": "0.3.0",
+  "created": "2026-08-21",
+  "keywords": [
+    "california",
+    "transit",
+    "executive order",
+    "public transportation",
+    "government accountability"
+  ],
+  "licenses": [
+    {
+      "name": "CC-BY-4.0",
+      "path": "https://creativecommons.org/licenses/by/4.0/legalcode",
+      "title": "Creative Commons Attribution 4.0 International"
+    }
+  ],
+  "licenseNotes": "CC BY 4.0 covers this project's original analytical content and the analytical columns derived from it. Source excerpts, government publications, agency names and other third-party material are NOT relicensed by this notice and remain under their own terms. See CONTENT-LICENSE.md.",
+  "buildCommit": "https://transit.chelseakr.com/version.json",
+  "dataReviewedThrough": "2026-08-21",
+  "sources": [
+    {
+      "title": "Executive Order N-7-26",
+      "path": "https://www.gov.ca.gov/wp-content/uploads/2026/06/ATTESTED_6.26-Transit-EO_FINAL_SIGNED.pdf",
+      "publisher": "State of California",
+      "sourceId": "ca-eo-n-7-26",
+      "issuedOn": "2026-06-26",
+      "retrievedOn": "2026-07-12",
+      "sha256": "5378690f2e805c60ac28fdf8417786aebad04fec1f4bcc2ccd1009cd4e680759"
+    }
+  ],
+  "resources": [
+    {
+      "name": "directives",
+      "path": "directives.csv",
+      "title": "Signed directive units",
+      "description": "One row per signed directive unit in the source instrument, with its section locator, the organizations it names by source role, its timing phrases and the planning dates calculated from them, and the separately stored analytical summary and themes. Source and analysis columns are distinguished by name; they are not interchangeable.",
+      "profile": "tabular-data-resource",
+      "format": "csv",
+      "mediatype": "text/csv",
+      "encoding": "utf-8",
+      "dialect": {
+        "delimiter": ",",
+        "lineTerminator": "\n",
+        "quoteChar": "\"",
+        "doubleQuote": true,
+        "header": true,
+        "caseSensitiveHeader": true
+      },
+      "schema": {
+        "fields": [
+          {
+            "name": "id",
+            "type": "string",
+            "constraints": {
+              "required": true
+            }
+          },
+          {
+            "name": "schema_version",
+            "type": "string",
+            "constraints": {
+              "required": true
+            }
+          },
+          {
+            "name": "source_id",
+            "type": "string",
+            "constraints": {
+              "required": true
+            }
+          },
+          {
+            "name": "section",
+            "type": "string",
+            "constraints": {
+              "required": true
+            }
+          },
+          {
+            "name": "title",
+            "type": "string",
+            "constraints": {
+              "required": true
+            }
+          },
+          {
+            "name": "title_origin",
+            "type": "string",
+            "constraints": {
+              "required": true
+            }
+          },
+          {
+            "name": "analysis_summary",
+            "type": "string",
+            "constraints": {
+              "required": true
+            }
+          },
+          {
+            "name": "lead_organizations",
+            "type": "string",
+            "description": "Multiple values are separated by \" | \".",
+            "constraints": {
+              "required": true
+            }
+          },
+          {
+            "name": "collaborator_organizations",
+            "type": "string",
+            "description": "Multiple values are separated by \" | \".",
+            "constraints": {
+              "required": false
+            }
+          },
+          {
+            "name": "mentioned_organizations",
+            "type": "string",
+            "description": "Multiple values are separated by \" | \".",
+            "constraints": {
+              "required": false
+            }
+          },
+          {
+            "name": "analysis_themes",
+            "type": "string",
+            "description": "Multiple values are separated by \" | \".",
+            "constraints": {
+              "required": true
+            }
+          },
+          {
+            "name": "source_context_ids",
+            "type": "string",
+            "description": "Multiple values are separated by \" | \".",
+            "constraints": {
+              "required": false
+            }
+          },
+          {
+            "name": "qualifiers",
+            "type": "string",
+            "description": "Multiple values are separated by \" | \".",
+            "constraints": {
+              "required": true
+            }
+          },
+          {
+            "name": "source_notes",
+            "type": "string",
+            "description": "Multiple values are separated by \" | \".",
+            "constraints": {
+              "required": false
+            }
+          },
+          {
+            "name": "timing_source_text",
+            "type": "string",
+            "description": "Multiple values are separated by \" | \".",
+            "constraints": {
+              "required": false
+            }
+          },
+          {
+            "name": "calculated_planning_dates",
+            "type": "string",
+            "description": "Multiple values are separated by \" | \".",
+            "constraints": {
+              "required": false
+            }
+          },
+          {
+            "name": "source_pages",
+            "type": "string",
+            "description": "Multiple values are separated by \" | \".",
+            "constraints": {
+              "required": true
+            }
+          },
+          {
+            "name": "source_url",
+            "type": "string",
+            "constraints": {
+              "required": true
+            }
+          },
+          {
+            "name": "last_reviewed_on",
+            "type": "date",
+            "format": "%Y-%m-%d",
+            "constraints": {
+              "required": true
+            }
+          }
+        ],
+        "missingValues": [
+          ""
+        ]
+      }
+    },
+    {
+      "name": "evidence",
+      "path": "evidence.csv",
+      "title": "Reviewed public artifacts",
+      "description": "One row per reviewed public artifact in the selective evidence collection, with its publisher, dates and date kinds, retrieval date, content hash, the directives it is linked to, and the stated limitations of that link. Coverage is selective by design; the scope and coverage-note columns carry that statement on every row.",
+      "profile": "tabular-data-resource",
+      "format": "csv",
+      "mediatype": "text/csv",
+      "encoding": "utf-8",
+      "dialect": {
+        "delimiter": ",",
+        "lineTerminator": "\n",
+        "quoteChar": "\"",
+        "doubleQuote": true,
+        "header": true,
+        "caseSensitiveHeader": true
+      },
+      "schema": {
+        "fields": [
+          {
+            "name": "id",
+            "type": "string",
+            "constraints": {
+              "required": true
+            }
+          },
+          {
+            "name": "schema_version",
+            "type": "string",
+            "constraints": {
+              "required": true
+            }
+          },
+          {
+            "name": "scope",
+            "type": "string",
+            "constraints": {
+              "required": true
+            }
+          },
+          {
+            "name": "collection_last_updated_on",
+            "type": "date",
+            "format": "%Y-%m-%d",
+            "constraints": {
+              "required": true
+            }
+          },
+          {
+            "name": "coverage_note",
+            "type": "string",
+            "constraints": {
+              "required": true
+            }
+          },
+          {
+            "name": "title",
+            "type": "string",
+            "constraints": {
+              "required": true
+            }
+          },
+          {
+            "name": "title_origin",
+            "type": "string",
+            "constraints": {
+              "required": true
+            }
+          },
+          {
+            "name": "publisher",
+            "type": "string",
+            "constraints": {
+              "required": true
+            }
+          },
+          {
+            "name": "evidence_type",
+            "type": "string",
+            "constraints": {
+              "required": true
+            }
+          },
+          {
+            "name": "dated_on",
+            "type": "date",
+            "format": "%Y-%m-%d",
+            "constraints": {
+              "required": true
+            }
+          },
+          {
+            "name": "date_kind",
+            "type": "string",
+            "constraints": {
+              "required": true
+            }
+          },
+          {
+            "name": "date_origin",
+            "type": "string",
+            "constraints": {
+              "required": true
+            }
+          },
+          {
+            "name": "url",
+            "type": "string",
+            "constraints": {
+              "required": true
+            }
+          },
+          {
+            "name": "context_url",
+            "type": "string",
+            "constraints": {
+              "required": true
+            }
+          },
+          {
+            "name": "retrieved_on",
+            "type": "date",
+            "format": "%Y-%m-%d",
+            "constraints": {
+              "required": true
+            }
+          },
+          {
+            "name": "last_reviewed_on",
+            "type": "date",
+            "format": "%Y-%m-%d",
+            "constraints": {
+              "required": true
+            }
+          },
+          {
+            "name": "sha256",
+            "type": "string",
+            "constraints": {
+              "required": true
+            }
+          },
+          {
+            "name": "media_type",
+            "type": "string",
+            "constraints": {
+              "required": true
+            }
+          },
+          {
+            "name": "page_count",
+            "type": "integer",
+            "constraints": {
+              "required": true
+            }
+          },
+          {
+            "name": "tagged",
+            "type": "boolean",
+            "constraints": {
+              "required": true
+            }
+          },
+          {
+            "name": "accessibility_note",
+            "type": "string",
+            "constraints": {
+              "required": true
+            }
+          },
+          {
+            "name": "editorial_summary",
+            "type": "string",
+            "constraints": {
+              "required": true
+            }
+          },
+          {
+            "name": "directive_ids",
+            "type": "string",
+            "description": "Multiple values are separated by \" | \".",
+            "constraints": {
+              "required": true
+            }
+          },
+          {
+            "name": "relationships",
+            "type": "string",
+            "description": "Multiple values are separated by \" | \".",
+            "constraints": {
+              "required": true
+            }
+          },
+          {
+            "name": "relationship_excerpts",
+            "type": "string",
+            "constraints": {
+              "required": true
+            }
+          },
+          {
+            "name": "relationship_locators",
+            "type": "string",
+            "constraints": {
+              "required": true
+            }
+          },
+          {
+            "name": "limitations",
+            "type": "string",
+            "constraints": {
+              "required": true
+            }
+          }
+        ],
+        "missingValues": [
+          ""
+        ]
+      }
+    },
+    {
+      "name": "watchlist",
+      "path": "watchlist.csv",
+      "title": "Context watchlist",
+      "description": "One row per non-evidentiary research lead. These records are deliberately outside the evidence layer: the evidence-boundary columns record why each one is not evidence and when that judgement was last checked.",
+      "profile": "tabular-data-resource",
+      "format": "csv",
+      "mediatype": "text/csv",
+      "encoding": "utf-8",
+      "dialect": {
+        "delimiter": ",",
+        "lineTerminator": "\n",
+        "quoteChar": "\"",
+        "doubleQuote": true,
+        "header": true,
+        "caseSensitiveHeader": true
+      },
+      "schema": {
+        "fields": [
+          {
+            "name": "id",
+            "type": "string",
+            "constraints": {
+              "required": true
+            }
+          },
+          {
+            "name": "schema_version",
+            "type": "string",
+            "constraints": {
+              "required": true
+            }
+          },
+          {
+            "name": "scope",
+            "type": "string",
+            "constraints": {
+              "required": true
+            }
+          },
+          {
+            "name": "collection_last_updated_on",
+            "type": "date",
+            "format": "%Y-%m-%d",
+            "constraints": {
+              "required": true
+            }
+          },
+          {
+            "name": "boundary_note",
+            "type": "string",
+            "constraints": {
+              "required": true
+            }
+          },
+          {
+            "name": "kind",
+            "type": "string",
+            "constraints": {
+              "required": true
+            }
+          },
+          {
+            "name": "title",
+            "type": "string",
+            "constraints": {
+              "required": true
+            }
+          },
+          {
+            "name": "title_origin",
+            "type": "string",
+            "constraints": {
+              "required": true
+            }
+          },
+          {
+            "name": "publisher",
+            "type": "string",
+            "constraints": {
+              "required": true
+            }
+          },
+          {
+            "name": "url",
+            "type": "string",
+            "constraints": {
+              "required": true
+            }
+          },
+          {
+            "name": "media_type",
+            "type": "string",
+            "constraints": {
+              "required": true
+            }
+          },
+          {
+            "name": "related_urls",
+            "type": "string",
+            "constraints": {
+              "required": false
+            }
+          },
+          {
+            "name": "source_date",
+            "type": "date",
+            "format": "%Y-%m-%d",
+            "constraints": {
+              "required": false
+            }
+          },
+          {
+            "name": "source_date_kind",
+            "type": "string",
+            "constraints": {
+              "required": false
+            }
+          },
+          {
+            "name": "source_date_origin",
+            "type": "string",
+            "constraints": {
+              "required": false
+            }
+          },
+          {
+            "name": "retrieved_on",
+            "type": "date",
+            "format": "%Y-%m-%d",
+            "constraints": {
+              "required": true
+            }
+          },
+          {
+            "name": "last_reviewed_on",
+            "type": "date",
+            "format": "%Y-%m-%d",
+            "constraints": {
+              "required": true
+            }
+          },
+          {
+            "name": "editorial_summary",
+            "type": "string",
+            "constraints": {
+              "required": true
+            }
+          },
+          {
+            "name": "why_tracked",
+            "type": "string",
+            "constraints": {
+              "required": true
+            }
+          },
+          {
+            "name": "evidence_boundary_reason",
+            "type": "string",
+            "constraints": {
+              "required": true
+            }
+          },
+          {
+            "name": "evidence_boundary_checked_on",
+            "type": "date",
+            "format": "%Y-%m-%d",
+            "constraints": {
+              "required": true
+            }
+          },
+          {
+            "name": "explicit_order_citation",
+            "type": "boolean",
+            "constraints": {
+              "required": true
+            }
+          },
+          {
+            "name": "evidence_boundary_note",
+            "type": "string",
+            "constraints": {
+              "required": true
+            }
+          },
+          {
+            "name": "directive_ids",
+            "type": "string",
+            "description": "Multiple values are separated by \" | \".",
+            "constraints": {
+              "required": true
+            }
+          },
+          {
+            "name": "relationships",
+            "type": "string",
+            "description": "Multiple values are separated by \" | \".",
+            "constraints": {
+              "required": true
+            }
+          },
+          {
+            "name": "relevance_rationales",
+            "type": "string",
+            "constraints": {
+              "required": true
+            }
+          },
+          {
+            "name": "next_review_on",
+            "type": "date",
+            "format": "%Y-%m-%d",
+            "constraints": {
+              "required": true
+            }
+          },
+          {
+            "name": "watch_for",
+            "type": "string",
+            "constraints": {
+              "required": true
+            }
+          },
+          {
+            "name": "limitations",
+            "type": "string",
+            "constraints": {
+              "required": true
+            }
+          }
+        ],
+        "missingValues": [
+          ""
+        ]
+      }
+    },
+    {
+      "name": "directive-organizations",
+      "path": "directive-organizations.csv",
+      "title": "Directive-to-organization links, by source role",
+      "description": "One row per (directive, organization) pair, labelled with the source role the signed text gives it: explicit lead, explicit collaborator, or other named party. These are roles the instrument states, not an assignment of responsibility by this project.",
+      "profile": "tabular-data-resource",
+      "format": "csv",
+      "mediatype": "text/csv",
+      "encoding": "utf-8",
+      "dialect": {
+        "delimiter": ",",
+        "lineTerminator": "\n",
+        "quoteChar": "\"",
+        "doubleQuote": true,
+        "header": true,
+        "caseSensitiveHeader": true
+      },
+      "schema": {
+        "fields": [
+          {
+            "name": "schema_version",
+            "type": "string",
+            "constraints": {
+              "required": true
+            }
+          },
+          {
+            "name": "directive_id",
+            "type": "string",
+            "constraints": {
+              "required": true
+            }
+          },
+          {
+            "name": "section",
+            "type": "string",
+            "constraints": {
+              "required": true
+            }
+          },
+          {
+            "name": "directive_title",
+            "type": "string",
+            "constraints": {
+              "required": true
+            }
+          },
+          {
+            "name": "organization_id",
+            "type": "string",
+            "constraints": {
+              "required": true
+            }
+          },
+          {
+            "name": "organization_name",
+            "type": "string",
+            "constraints": {
+              "required": true
+            }
+          },
+          {
+            "name": "organization_short_name",
+            "type": "string",
+            "constraints": {
+              "required": true
+            }
+          },
+          {
+            "name": "organization_kind",
+            "type": "string",
+            "constraints": {
+              "required": true
+            }
+          },
+          {
+            "name": "source_role",
+            "type": "string",
+            "constraints": {
+              "required": true
+            }
+          },
+          {
+            "name": "source_id",
+            "type": "string",
+            "constraints": {
+              "required": true
+            }
+          },
+          {
+            "name": "source_url",
+            "type": "string",
+            "constraints": {
+              "required": true
+            }
+          },
+          {
+            "name": "last_reviewed_on",
+            "type": "date",
+            "format": "%Y-%m-%d",
+            "constraints": {
+              "required": true
+            }
+          }
+        ],
+        "missingValues": [
+          ""
+        ]
+      }
+    },
+    {
+      "name": "directive-relationships",
+      "path": "directive-relationships.csv",
+      "title": "Analytical cross-references between directives",
+      "description": "One row per analytical cross-reference. These are analysis, not source: the origin and confidence columns say so on every row, and a cross-reference identifies a question rather than a directional handoff.",
+      "profile": "tabular-data-resource",
+      "format": "csv",
+      "mediatype": "text/csv",
+      "encoding": "utf-8",
+      "dialect": {
+        "delimiter": ",",
+        "lineTerminator": "\n",
+        "quoteChar": "\"",
+        "doubleQuote": true,
+        "header": true,
+        "caseSensitiveHeader": true
+      },
+      "schema": {
+        "fields": [
+          {
+            "name": "schema_version",
+            "type": "string",
+            "constraints": {
+              "required": true
+            }
+          },
+          {
+            "name": "record_directive_id",
+            "type": "string",
+            "constraints": {
+              "required": true
+            }
+          },
+          {
+            "name": "record_section",
+            "type": "string",
+            "constraints": {
+              "required": true
+            }
+          },
+          {
+            "name": "record_title",
+            "type": "string",
+            "constraints": {
+              "required": true
+            }
+          },
+          {
+            "name": "related_directive_id",
+            "type": "string",
+            "constraints": {
+              "required": true
+            }
+          },
+          {
+            "name": "related_section",
+            "type": "string",
+            "constraints": {
+              "required": true
+            }
+          },
+          {
+            "name": "related_title",
+            "type": "string",
+            "constraints": {
+              "required": true
+            }
+          },
+          {
+            "name": "dependency_text",
+            "type": "string",
+            "constraints": {
+              "required": true
+            }
+          },
+          {
+            "name": "origin",
+            "type": "string",
+            "constraints": {
+              "required": true
+            }
+          },
+          {
+            "name": "confidence",
+            "type": "string",
+            "constraints": {
+              "required": true
+            }
+          },
+          {
+            "name": "reciprocal_reference",
+            "type": "boolean",
+            "constraints": {
+              "required": true
+            }
+          }
+        ],
+        "missingValues": [
+          ""
+        ]
+      }
+    },
+    {
+      "name": "directives-json",
+      "path": "directives.json",
+      "title": "Structured public dataset",
+      "description": "The nested dataset the site is built from: source record, organizations, themes, directive units with their analysis, the evidence scope, and the evidence records.",
+      "profile": "data-resource",
+      "format": "json",
+      "mediatype": "application/json",
+      "encoding": "utf-8",
+      "schemaPath": "schema.json"
+    },
+    {
+      "name": "watchlist-json",
+      "path": "watchlist.json",
+      "title": "Context watchlist",
+      "description": "The nested context-watchlist dataset, with its scope and review dates.",
+      "profile": "data-resource",
+      "format": "json",
+      "mediatype": "application/json",
+      "encoding": "utf-8",
+      "schemaPath": "watchlist-schema.json"
+    },
+    {
+      "name": "public-schema",
+      "path": "schema.json",
+      "title": "JSON Schema for the structured public dataset",
+      "description": "The committed JSON Schema `directives.json` is validated against at build.",
+      "profile": "data-resource",
+      "format": "json",
+      "mediatype": "application/json",
+      "encoding": "utf-8"
+    },
+    {
+      "name": "watchlist-schema",
+      "path": "watchlist-schema.json",
+      "title": "JSON Schema for the context watchlist",
+      "description": "The committed JSON Schema `watchlist.json` is validated against at build.",
+      "profile": "data-resource",
+      "format": "json",
+      "mediatype": "application/json",
+      "encoding": "utf-8"
+    },
+    {
+      "name": "tda-ntd-feasibility",
+      "path": "tda-ntd-feasibility.json",
+      "title": "TDA/NTD reporting-slice feasibility record",
+      "description": "The four-field reporting slice and the recorded feasibility assessment behind it.",
+      "profile": "data-resource",
+      "format": "json",
+      "mediatype": "application/json",
+      "encoding": "utf-8"
+    }
+  ]
+}

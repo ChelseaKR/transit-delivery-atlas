@@ -240,7 +240,7 @@ re-reviewed 2026-08-22 when the runtime service landed.
 | Quality & Metrics | Applies | Data-integrity, filter, rendered-HTML, and hosting test suites run in the release gate |
 | Release & Versioning | Applies | CHANGELOG (Keep-a-Changelog), semver in package.json, tag-triggered release workflow re-runs the full gate at the tagged commit |
 | Incident Response | Applies | Not met. `SECURITY.md` covers private vulnerability reporting only. There is no severity ladder, no incident label convention, no committed postmortem artifact, and no secret-leak runbook |
-| Data Governance | Applies | Partially met. Every record in `data/sources.json` carries a publisher, canonical URL, retrieval date, and SHA-256; reuse terms are stated in [`CONTENT-LICENSE.md`](CONTENT-LICENSE.md); the published exports are validated against the published `data/public-schema.json` in the release gate. Not met: no committed data card, data classification, or retention statement |
+| Data Governance | Applies | Met. Every record in `data/sources.json` carries a publisher, canonical URL, retrieval date, and SHA-256; reuse terms are stated in [`CONTENT-LICENSE.md`](CONTENT-LICENSE.md); the published exports are validated against the published `data/public-schema.json` in the release gate. [`docs/DATA-CARD.md`](docs/DATA-CARD.md) states the classification (public information only, no personal data), provenance, update cadence, licence split and known limitations, and `public/data/datapackage.json` carries the same contract per file as typed Table Schemas beside a DCAT-AP record, generated at build and byte-compared against the committed copy |
 
 ## Licensing
 

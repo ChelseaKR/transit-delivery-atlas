@@ -1,0 +1,147 @@
+{
+  "@context": {
+    "dcat": "http://www.w3.org/ns/dcat#",
+    "dct": "http://purl.org/dc/terms/",
+    "foaf": "http://xmlns.com/foaf/0.1/",
+    "spdx": "http://spdx.org/rdf/terms#"
+  },
+  "@id": "https://transit.chelseakr.com/data",
+  "@type": "dcat:Dataset",
+  "dct:identifier": "transit-delivery-atlas",
+  "dct:title": "Transit Delivery Atlas",
+  "dct:description": "An independent, unofficial crosswalk of a signed California transit executive order: its directive units, the organizations it names, the public artifacts reviewed against them, and a separately labelled analytical layer. Source, evidence, analysis and context are separate layers and never blur; every column name says which layer it belongs to.",
+  "dct:publisher": {
+    "@type": "foaf:Agent",
+    "foaf:name": "Transit Delivery Atlas contributors"
+  },
+  "dct:issued": "2026-07-12",
+  "dct:modified": "2026-08-21",
+  "dct:license": "https://creativecommons.org/licenses/by/4.0/legalcode",
+  "dct:rights": "CC BY 4.0 covers this project's original analytical content and the analytical columns derived from it. Source excerpts, government publications, agency names and other third-party material are NOT relicensed by this notice and remain under their own terms. See CONTENT-LICENSE.md.",
+  "dct:accrualPeriodicity": "The sources listed in reviewSources are re-checked on or before nextReviewOn, and again in the week after the 2026-10-24 calculated planning date shared by directives 1(a) through 1(g). Each sweep is recorded in sweeps whether or not it adds a record. A lapsed nextReviewOn is published as lapsed and blocks a release after the same grace window the context watchlist uses.",
+  "dct:source": [
+    {
+      "@type": "dcat:Dataset",
+      "dct:title": "Executive Order N-7-26",
+      "dcat:accessURL": "https://www.gov.ca.gov/wp-content/uploads/2026/06/ATTESTED_6.26-Transit-EO_FINAL_SIGNED.pdf",
+      "dct:publisher": "State of California",
+      "dct:issued": "2026-06-26",
+      "dcat:downloadURL": "https://www.gov.ca.gov/wp-content/uploads/2026/06/ATTESTED_6.26-Transit-EO_FINAL_SIGNED.pdf",
+      "spdx:checksum": {
+        "@type": "spdx:Checksum",
+        "spdx:algorithm": "spdx:checksumAlgorithm_sha256",
+        "spdx:checksumValue": "5378690f2e805c60ac28fdf8417786aebad04fec1f4bcc2ccd1009cd4e680759"
+      }
+    }
+  ],
+  "dcat:keyword": [
+    "california",
+    "transit",
+    "executive order",
+    "public transportation",
+    "government accountability"
+  ],
+  "dcat:distribution": [
+    {
+      "@type": "dcat:Distribution",
+      "dct:title": "Signed directive units",
+      "dct:description": "One row per signed directive unit in the source instrument, with its section locator, the organizations it names by source role, its timing phrases and the planning dates calculated from them, and the separately stored analytical summary and themes. Source and analysis columns are distinguished by name; they are not interchangeable.",
+      "dcat:accessURL": "https://transit.chelseakr.com/data/directives.csv",
+      "dcat:downloadURL": "https://transit.chelseakr.com/data/directives.csv",
+      "dcat:mediaType": "text/csv",
+      "dct:format": "csv",
+      "dct:license": "https://creativecommons.org/licenses/by/4.0/legalcode"
+    },
+    {
+      "@type": "dcat:Distribution",
+      "dct:title": "Reviewed public artifacts",
+      "dct:description": "One row per reviewed public artifact in the selective evidence collection, with its publisher, dates and date kinds, retrieval date, content hash, the directives it is linked to, and the stated limitations of that link. Coverage is selective by design; the scope and coverage-note columns carry that statement on every row.",
+      "dcat:accessURL": "https://transit.chelseakr.com/data/evidence.csv",
+      "dcat:downloadURL": "https://transit.chelseakr.com/data/evidence.csv",
+      "dcat:mediaType": "text/csv",
+      "dct:format": "csv",
+      "dct:license": "https://creativecommons.org/licenses/by/4.0/legalcode"
+    },
+    {
+      "@type": "dcat:Distribution",
+      "dct:title": "Context watchlist",
+      "dct:description": "One row per non-evidentiary research lead. These records are deliberately outside the evidence layer: the evidence-boundary columns record why each one is not evidence and when that judgement was last checked.",
+      "dcat:accessURL": "https://transit.chelseakr.com/data/watchlist.csv",
+      "dcat:downloadURL": "https://transit.chelseakr.com/data/watchlist.csv",
+      "dcat:mediaType": "text/csv",
+      "dct:format": "csv",
+      "dct:license": "https://creativecommons.org/licenses/by/4.0/legalcode"
+    },
+    {
+      "@type": "dcat:Distribution",
+      "dct:title": "Directive-to-organization links, by source role",
+      "dct:description": "One row per (directive, organization) pair, labelled with the source role the signed text gives it: explicit lead, explicit collaborator, or other named party. These are roles the instrument states, not an assignment of responsibility by this project.",
+      "dcat:accessURL": "https://transit.chelseakr.com/data/directive-organizations.csv",
+      "dcat:downloadURL": "https://transit.chelseakr.com/data/directive-organizations.csv",
+      "dcat:mediaType": "text/csv",
+      "dct:format": "csv",
+      "dct:license": "https://creativecommons.org/licenses/by/4.0/legalcode"
+    },
+    {
+      "@type": "dcat:Distribution",
+      "dct:title": "Analytical cross-references between directives",
+      "dct:description": "One row per analytical cross-reference. These are analysis, not source: the origin and confidence columns say so on every row, and a cross-reference identifies a question rather than a directional handoff.",
+      "dcat:accessURL": "https://transit.chelseakr.com/data/directive-relationships.csv",
+      "dcat:downloadURL": "https://transit.chelseakr.com/data/directive-relationships.csv",
+      "dcat:mediaType": "text/csv",
+      "dct:format": "csv",
+      "dct:license": "https://creativecommons.org/licenses/by/4.0/legalcode"
+    },
+    {
+      "@type": "dcat:Distribution",
+      "dct:title": "Structured public dataset",
+      "dct:description": "The nested dataset the site is built from: source record, organizations, themes, directive units with their analysis, the evidence scope, and the evidence records.",
+      "dcat:accessURL": "https://transit.chelseakr.com/data/directives.json",
+      "dcat:downloadURL": "https://transit.chelseakr.com/data/directives.json",
+      "dcat:mediaType": "application/json",
+      "dct:format": "json",
+      "dct:license": "https://creativecommons.org/licenses/by/4.0/legalcode"
+    },
+    {
+      "@type": "dcat:Distribution",
+      "dct:title": "Context watchlist",
+      "dct:description": "The nested context-watchlist dataset, with its scope and review dates.",
+      "dcat:accessURL": "https://transit.chelseakr.com/data/watchlist.json",
+      "dcat:downloadURL": "https://transit.chelseakr.com/data/watchlist.json",
+      "dcat:mediaType": "application/json",
+      "dct:format": "json",
+      "dct:license": "https://creativecommons.org/licenses/by/4.0/legalcode"
+    },
+    {
+      "@type": "dcat:Distribution",
+      "dct:title": "JSON Schema for the structured public dataset",
+      "dct:description": "The committed JSON Schema `directives.json` is validated against at build.",
+      "dcat:accessURL": "https://transit.chelseakr.com/data/schema.json",
+      "dcat:downloadURL": "https://transit.chelseakr.com/data/schema.json",
+      "dcat:mediaType": "application/json",
+      "dct:format": "json",
+      "dct:license": "https://creativecommons.org/licenses/by/4.0/legalcode"
+    },
+    {
+      "@type": "dcat:Distribution",
+      "dct:title": "JSON Schema for the context watchlist",
+      "dct:description": "The committed JSON Schema `watchlist.json` is validated against at build.",
+      "dcat:accessURL": "https://transit.chelseakr.com/data/watchlist-schema.json",
+      "dcat:downloadURL": "https://transit.chelseakr.com/data/watchlist-schema.json",
+      "dcat:mediaType": "application/json",
+      "dct:format": "json",
+      "dct:license": "https://creativecommons.org/licenses/by/4.0/legalcode"
+    },
+    {
+      "@type": "dcat:Distribution",
+      "dct:title": "TDA/NTD reporting-slice feasibility record",
+      "dct:description": "The four-field reporting slice and the recorded feasibility assessment behind it.",
+      "dcat:accessURL": "https://transit.chelseakr.com/data/tda-ntd-feasibility.json",
+      "dcat:downloadURL": "https://transit.chelseakr.com/data/tda-ntd-feasibility.json",
+      "dcat:mediaType": "application/json",
+      "dct:format": "json",
+      "dct:license": "https://creativecommons.org/licenses/by/4.0/legalcode"
+    }
+  ],
+  "dcat:dataDictionary": "https://transit.chelseakr.com/data/datapackage.json"
+}
