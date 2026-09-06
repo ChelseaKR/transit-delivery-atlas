@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { ArtifactIntegrityRow } from "@/components/ArtifactIntegrityRow";
 import { AskDirective } from "@/components/AskDirective";
 import { LayerLabel } from "@/components/LayerLabel";
 import { PrintRecordButton } from "@/components/PrintRecordButton";
@@ -254,6 +255,7 @@ export default async function DirectivePage({ params }: PageProps) {
                               {record.pageCount === 1 ? "page" : "pages"}
                             </dd>
                           </div>
+                          <ArtifactIntegrityRow recordId={record.id} />
                         </dl>
 
                         <div className="evidence-card__section">
