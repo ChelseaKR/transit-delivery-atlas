@@ -12,6 +12,7 @@ import { BUILD_DATE } from "@/lib/build-date";
 import { directiveById, directives, evidenceCoverageFor, evidenceScope, source } from "@/lib/data";
 import { coverageStatement } from "@/lib/evidence-coverage.mjs";
 import { timingCurrency } from "@/lib/directive-timing.mjs";
+import { reviewCurrency } from "@/lib/watchlist-review.mjs";
 import { formatDate } from "@/lib/format";
 import { TIMING_PASSED_LABEL, timingCurrencyNote } from "@/lib/register-labels";
 
@@ -51,6 +52,14 @@ export default async function DirectivePage({ params }: PageProps) {
   const pageFragment = directive.locator.pages[0];
   const coverage = evidenceCoverageFor(directive.id);
   const coveringSources = [...coverage.checkedSources, ...coverage.failedSources];
+  // The evidence collection is a reviewed item under the same rule as a
+  // watchlist item, so its planned date has to expire against the build date
+  // here too. The release gate already treated it that way; only the render
+  // did not.
+  const evidenceReview = reviewCurrency(
+    { lastReviewedOn: evidenceScope.lastUpdatedOn, nextReviewOn: evidenceScope.nextReviewOn },
+    BUILD_DATE,
+  );
 
   return (
     <>
@@ -304,7 +313,7 @@ export default async function DirectivePage({ params }: PageProps) {
               aria-labelledby="evidence-coverage-title"
             >
               <h3 id="evidence-coverage-title">Where the Atlas has looked</h3>
-              <p>{coverageStatement(coverage)}</p>
+              <p>{coverageStatement(coverage, BUILD_DATE)}</p>
               {coveringSources.length > 0 ? (
                 <ul className="evidence-coverage__sources">
                   {coveringSources.map((reviewSource) => (
@@ -323,12 +332,21 @@ export default async function DirectivePage({ params }: PageProps) {
               ) : (
                 <p>No listed public source covers this directive yet.</p>
               )}
-              <p className="evidence-coverage__commitment">
-                Next planned check of the listed sources:{" "}
+              <p
+                className={
+                  evidenceReview.overdue
+                    ? "evidence-coverage__commitment evidence-coverage__commitment--overdue"
+                    : "evidence-coverage__commitment"
+                }
+              >
+                {evidenceReview.overdue ? "Check overdue since" : "Next planned check of the listed sources:"}{" "}
                 <time dateTime={evidenceScope.nextReviewOn}>
                   {formatDate(evidenceScope.nextReviewOn)}
                 </time>
-                . The full source list and sweep log are on the{" "}
+                {evidenceReview.overdue
+                  ? ` — ${evidenceReview.daysOverdue} day${evidenceReview.daysOverdue === 1 ? "" : "s"} overdue at this build (${formatDate(evidenceReview.buildDate)}).`
+                  : "."}{" "}
+                The full source list and sweep log are on the{" "}
                 <Link href="/evidence#review">evidence register</Link>.
               </p>
             </div>
