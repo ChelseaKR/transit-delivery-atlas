@@ -5,6 +5,37 @@ recorded here.
 
 ## [Unreleased]
 
+### Fixed
+
+- **A quotation past page nine was published with the wrong page.** The page markers this
+  project writes into the retained text were matched with `\d`, not `\d+`, in both
+  `pageOfQuote` and `quoteIsVerbatim`. On the five-page signed order that is inert; on the
+  first instrument longer than nine pages it is not. `pageOfQuote` stopped recognising
+  markers at `=== PAGE 10 ===` and carried the last page it had matched forward, so a
+  quotation on page 11 was located on **page 9** — a wrong locator, not a missing one, in
+  the one field a reader uses to check a quotation against the signed image. Measured on a
+  synthetic twelve-page instrument before the fix. `quoteIsVerbatim` had the same shape:
+  markers past page nine survived into the haystack a quotation is matched against.
+
+  The pattern is now declared once, beside the corpus directory, with each use carrying
+  its own flags — a `g`-flagged regex is stateful, and sharing one object between a
+  `replace` and a `split` would be a bug of a different kind. `tests/corpus.test.mjs`
+  builds a twelve-page instrument, because nothing in the committed corpus can exercise
+  this. Relevant to the multi-instrument work: a longer statute or trailer bill is exactly
+  where this would first have been noticed, by being wrong.
+
+- **A source that had never been checked was reported as checked today.**
+  `nextCheckSentence` passed `coverage.lastCheckedOn ?? buildDate` into `reviewCurrency`,
+  substituting the build date for a coverage record whose listed sources have never been
+  successfully checked. `reviewCurrency` duly reported `daysSinceReview: 0` — "checked
+  today" for something never checked. Nothing renders that field today, so the published
+  sentence was right by luck rather than by construction, and the next reader of it would
+  have been wrong.
+
+  `reviewCurrency` now accepts `lastReviewedOn: null` and reports `daysSinceReview: null`,
+  so absence travels through as absence instead of arriving as a zero. The planned date
+  still expires on its own terms; only the review *age* is unknown, and it says so.
+
 ### Added
 
 - **The exports now carry their own contract.** `public/data/datapackage.json` is a

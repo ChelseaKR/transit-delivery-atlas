@@ -5,6 +5,7 @@ import {
   applyCorrections,
   loadCorpus,
   normalizeForQuote,
+  PAGE_MARKER_GLOBAL,
   pageOfQuote,
   quoteIsVerbatim,
   sha256,
@@ -160,4 +161,42 @@ test("normalisation survives the punctuation the scan gets wrong", () => {
   assert.equal(normalizeForQuote("Statutes.of 2023"), "statutes of 2023");
   assert.equal(normalizeForQuote("“Order”—now"), "order now");
   assert.equal(normalizeForQuote("portfolio—spanning"), "portfolio spanning");
+});
+
+/**
+ * A synthetic instrument long enough to have two-digit page numbers. The retained order
+ * is five pages, so nothing in the committed corpus exercises this — which is exactly why
+ * it has to be constructed rather than found.
+ */
+function twelvePageText() {
+  return Array.from(
+    { length: 12 },
+    (_, index) =>
+      `=== PAGE ${index + 1} ===\nThis is the body text of page ${index + 1} of the instrument.\n`,
+  ).join("");
+}
+
+test("a quotation past page nine is located on the page it is actually on", () => {
+  const text = twelvePageText();
+
+  // The page markers are matched with `\d+`. With `\d` the split stopped recognising
+  // markers at `=== PAGE 10 ===`, so `pageOfQuote` carried the last page it had matched
+  // forward and published 9 for a quotation on page 11 — a wrong locator, not a missing
+  // one, in the one field a reader uses to check a quotation against the signed image.
+  assert.equal(pageOfQuote("body text of page 11 of the instrument", text), 11);
+  assert.equal(pageOfQuote("body text of page 12 of the instrument", text), 12);
+  // Single-digit pages must keep working; the fix is a widening, not a replacement.
+  assert.equal(pageOfQuote("body text of page 3 of the instrument", text), 3);
+  assert.equal(pageOfQuote("body text of page 9 of the instrument", text), 9);
+});
+
+test("a two-digit page marker is stripped before a quotation is matched", () => {
+  const text = twelvePageText();
+
+  // Page markers are ours, not the order's, so none may survive into the haystack a
+  // quotation is compared against — otherwise a quotation spanning a page break past
+  // page nine would fail to verify against text it genuinely matches.
+  assert.equal(quoteIsVerbatim("body text of page 11 of the instrument", text).verbatim, true);
+  assert.doesNotMatch(normalizeForQuote(text.replace(PAGE_MARKER_GLOBAL, " ")), /=== PAGE/);
+  assert.match(text, /=== PAGE 11 ===/);
 });
