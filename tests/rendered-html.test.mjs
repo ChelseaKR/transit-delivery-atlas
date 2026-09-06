@@ -265,6 +265,69 @@ test("renders Order 5 evidence between the signed source and independent analysi
   assert.match(html, /Context only · Not implementation evidence/);
 });
 
+test("every surface that cites an artifact publishes its link-integrity check", async () => {
+  // The re-hash check shipped on /evidence alone. The directive page renders the
+  // same records, from the same log, in the same `evidence-meta` list, and carried
+  // no integrity line at all -- so with one artifact marked `changed`, /evidence
+  // published the hash mismatch while /directives/n-7-26-5 rendered the identical
+  // card with nothing said and still offered "Open public record" beside it.
+  //
+  // Derived from the data rather than listed, so a new record, or a new directive
+  // citing an existing one, is covered the day it lands.
+  const [log, evidenceData] = await Promise.all([
+    readJson("data/evidence-verification.json"),
+    readJson("data/evidence.json"),
+  ]);
+  const covered = new Map(log.records.map((record) => [record.id, record]));
+  assert.ok(covered.size > 0, "a link-integrity screen over zero records passes forever");
+
+  /** Which published page carries which record's card. @type {Map<string, Set<string>>} */
+  const surfaces = new Map();
+  const cite = (path, id) => {
+    if (!surfaces.has(path)) surfaces.set(path, new Set());
+    surfaces.get(path).add(id);
+  };
+  for (const record of evidenceData.evidence) {
+    cite("/evidence", record.id);
+    for (const link of record.directiveLinks) cite(`/directives/${link.directiveId}`, record.id);
+  }
+  // The index and at least one directive page, or this test is screening one
+  // surface again and would not have caught the defect it exists for.
+  assert.ok(
+    surfaces.size >= 2 && [...surfaces.keys()].some((path) => path.startsWith("/directives/")),
+    `expected the evidence index and at least one directive page, found ${[...surfaces.keys()].join(", ")}`,
+  );
+
+  for (const [path, recordIds] of surfaces) {
+    const html = await (await render(path)).text();
+    const cards = (html.match(/Reviewed public artifact</g) || []).length;
+    const rows = (html.match(/Artifact last re-checked</g) || []).length;
+    assert.equal(cards, recordIds.size, `${path} should render ${recordIds.size} evidence card(s)`);
+    // Every card, not merely one somewhere on the page: a single row on a page of
+    // four would otherwise read as full coverage.
+    assert.equal(
+      rows,
+      [...recordIds].filter((id) => covered.has(id)).length,
+      `${path} renders ${cards} evidence card(s) but only ${rows} link-integrity row(s)`,
+    );
+    for (const id of recordIds) {
+      const record = covered.get(id);
+      if (!record) continue;
+      // The outcome the log actually records, so a surface cannot publish the row
+      // and still soften what it says. `changed`, `moved` and `gone` each carry
+      // their own detail sentence, and both surfaces must carry the same one.
+      const outcome =
+        record.artifact.outcome === "intact"
+          ? "The published file still hashes to the bytes reviewed for this record."
+          : record.artifact.detail;
+      assert.ok(
+        html.includes(outcome),
+        `${path} cites ${id} without publishing its recorded outcome (${record.artifact.outcome}): ${JSON.stringify(outcome)}`,
+      );
+    }
+  }
+});
+
 test("renders the selective public-evidence index", async () => {
   const response = await render("/evidence");
   assert.equal(response.status, 200);

@@ -14,8 +14,8 @@ recorded here.
   exist, with every gate green. `npm run evidence:verify` re-fetches each artifact and
   context URL and classifies the record `intact`, `changed`, `moved`, or `gone`; the run
   is committed as `data/evidence-verification.json`, `scripts/validate-data.mjs` requires
-  it to cover every record with the URLs those records cite, and the evidence page renders
-  the date of the last re-check.
+  it to cover every record with the URLs those records cite, and every page that renders an
+  evidence card renders the date of the last re-check with it.
 
   A context URL is never called `intact` — nothing is stored to compare it against — and a
   run in which no URL answered is reported as a run that could not happen rather than as
@@ -27,6 +27,26 @@ recorded here.
   for them, and all four context URLs answered.
 
 ### Fixed
+
+- **The directive page cited artifacts without publishing whether they still resolve.** The
+  link-integrity check landed on the evidence index only. The directive page renders the same
+  records, from the same log, in the same `evidence-meta` list, and carried no integrity line
+  at all — so the half of the fix that tells a reader a citation has drifted reached one of
+  the two surfaces that publish the citation.
+
+  Measured on a build with one record's artifact marked `changed`: `/evidence` published
+  "Artifact last re-checked Sep 6, 2026 — hash is …, the reviewed artifact hashed …", while
+  `/directives/n-7-26-5` rendered the identical card with nothing said and still offered
+  "Open public record" beside it. Same record, same build, two different answers to whether
+  the citation still resolves. All four cited artifacts hang off that one directive page, so
+  the surface that was silent is the one carrying every citation the register makes.
+
+  The row is now one shared `components/ArtifactIntegrityRow.tsx` used by both pages, rather
+  than a second copy of the same nine lines — a second copy is exactly what this defect was.
+  A record the log does not cover still renders no line at all, on either surface. The new
+  screen in `tests/rendered-html.test.mjs` derives the surfaces from the data, so a new
+  record or a new citing directive is covered the day it lands, and requires each page to
+  publish the outcome the log actually records rather than merely showing the row.
 
 - **A quotation past page nine was published with the wrong page.** The page markers this
   project writes into the retained text were matched with `\d`, not `\d+`, in both

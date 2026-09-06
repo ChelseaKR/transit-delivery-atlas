@@ -132,8 +132,16 @@ person to read and paste into `limitations`. The drafted text states what was
 observed and on what date, makes no claim about why, and is held to the same
 verdict-language screen as every published sentence.
 
-The evidence page renders the date of the last re-check per record, from the
-committed log. A record the log does not cover renders no such line at all.
+Every page that renders an evidence card renders the date of the last re-check
+with it, from the committed log — the evidence index and each directive page
+citing that record — through the one `components/ArtifactIntegrityRow.tsx` they
+share. A record the log does not cover renders no such line at all.
+
+The shared component is the point. The check first shipped on the evidence index
+alone, so a record whose artifact had `changed` was disclosed there and cited in
+silence on the directive page rendering the same card: same record, same build,
+two different answers to whether the citation still resolves. A surface that
+cites an artifact now inherits the disclosure rather than reimplementing it.
 
 ## Corrections
 
