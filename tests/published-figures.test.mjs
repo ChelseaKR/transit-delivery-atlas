@@ -18,6 +18,15 @@
 // two findings at once: the number is wrong, or the sentence that was supposed to
 // state it has been rewritten away, and the second is as much a reason to stop as
 // the first. That is why each assertion names which sentence it could not find.
+//
+// README.md joined that scope on 2026-09-06, after its copy of two of those figures
+// was measured to survive a merge the first copy fails. Two branches that each add
+// one source-role link and each republish the figure 50 -> 51 make the *same*
+// textual edit, so git takes it once and rebases clean with no conflict: the data
+// then carries 52 links and both documents say 51. The RELATIONSHIP-MODEL test
+// above goes red and names that file, a maintainer fixes the file the failure
+// names, the suite goes green -- and README.md goes on publishing 51, because
+// nothing read it. Same collapse, one document further out, and silent.
 
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
@@ -154,6 +163,29 @@ test("RELATIONSHIP-MODEL states the analytical layer the analysis actually conta
     figure(doc, /unique directive pairs, ([\d,]+) of which\s*\n?\s*are reciprocal/, where),
     reciprocal,
     `${where} states a reciprocal-pair count the analysis does not produce`,
+  );
+});
+
+test("README states the same normalized-link figures the data carries", async () => {
+  const doc = await readDoc("README.md");
+  const where = "README.md";
+  const { links } = sourceRoleLinks();
+  const { references } = analyticalReferences();
+
+  // The README's public-data paragraph restates two figures docs/RELATIONSHIP-MODEL.md
+  // also states, this time describing the two normalized exports. Both are derived
+  // here from `data/` rather than compared against the other document: a check that
+  // held one prose copy to the other would pass while both were wrong, which is
+  // precisely the state a merge of two equal increments leaves them in.
+  assert.equal(
+    figure(doc, /normalizes the ([\d,]+) source-role links/, where),
+    links,
+    `${where} states a source-role link count the directives do not carry`,
+  );
+  assert.equal(
+    figure(doc, /normalizes the ([\d,]+) inferred cross-references/, where),
+    references,
+    `${where} states a cross-reference count the analysis does not contain`,
   );
 });
 
