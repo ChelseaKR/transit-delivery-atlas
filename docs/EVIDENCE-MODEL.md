@@ -99,6 +99,42 @@ None of the three is an implementation status. "Checked, nothing found" is a
 fact about the Atlas's own search, stated with its date and its source list so
 a reader can repeat it; it says nothing about work outside those sources.
 
+## Link integrity
+
+Each record's SHA-256 exists so a quotation can be checked against the
+publisher's own file. `npm run evidence:verify` re-fetches every artifact URL and
+context URL and compares what is served now with what was reviewed, writing
+`data/evidence-verification.json`. `scripts/validate-data.mjs` requires that log
+to cover every evidence record, with the URLs the records actually cite, so a
+record cannot quietly stop being re-checked.
+
+Four artifact outcomes, and three for a context URL:
+
+| Outcome | Applies to | Meaning |
+| --- | --- | --- |
+| `intact` | artifact | The bytes served now hash to the hash recorded at review. |
+| `changed` | artifact | The bytes hash to something else — the publisher edited or re-issued the file at the same address. |
+| `moved` | artifact, context | The URL redirects to a different address. |
+| `gone` | artifact, context | HTTP 4xx/5xx, or no response at all. |
+| `reachable` | context | The page answered. |
+
+A context URL is **never** `intact`. It is a publisher's index page, no hash is
+stored for it, and nothing was compared; calling the absence of a comparison a
+match would be the same defect the hash exists to prevent. For the same reason,
+a run in which no URL answered at all is reported as a run that could not happen
+(exit 2, no log written) rather than as four artifacts having disappeared: a
+machine with no network is not a finding about a public body's website.
+
+Nothing is edited automatically. A record whose artifact is `gone` keeps its
+place in the register and its review date — absence is disclosed, not deleted —
+and `--draft-limitations` prints the sentence such a record would carry for a
+person to read and paste into `limitations`. The drafted text states what was
+observed and on what date, makes no claim about why, and is held to the same
+verdict-language screen as every published sentence.
+
+The evidence page renders the date of the last re-check per record, from the
+committed log. A record the log does not cover renders no such line at all.
+
 ## Corrections
 
 Evidence corrections must identify the evidence ID, public artifact URL,

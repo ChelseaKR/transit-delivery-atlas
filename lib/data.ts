@@ -1,6 +1,7 @@
 import analysisRaw from "@/data/analysis.json";
 import directivesRaw from "@/data/directives.json";
 import evidenceRaw from "@/data/evidence.json";
+import evidenceVerificationRaw from "@/data/evidence-verification.json";
 import organizationsRaw from "@/data/organizations.json";
 import sourcesRaw from "@/data/sources.json";
 import tdaNtdFeasibilityRaw from "@/data/tda-ntd-feasibility.json";
@@ -81,6 +82,30 @@ export const evidenceScope = {
 };
 export type EvidenceReviewSource = (typeof evidenceRaw.reviewSources)[number];
 export type EvidenceSweep = (typeof evidenceRaw.sweeps)[number];
+
+/**
+ * The committed link-integrity log: the last time each cited artifact was
+ * re-hashed against the register's stored hash (`npm run evidence:verify`).
+ *
+ * `evidenceVerificationFor` returns `undefined` for a record the log does not
+ * cover, and the page renders nothing rather than a date. `scripts/validate-data.mjs`
+ * requires every evidence record to appear, so `undefined` is unreachable while
+ * the gate holds -- but a page that filled the gap with the log's own date would
+ * publish a check that never ran, which is exactly what this log exists to
+ * prevent.
+ */
+export const evidenceVerification = evidenceVerificationRaw;
+export type EvidenceVerificationRecord = (typeof evidenceVerificationRaw.records)[number];
+
+const evidenceVerificationById = new Map<string, EvidenceVerificationRecord>(
+  evidenceVerificationRaw.records.map((record) => [record.id, record]),
+);
+
+export function evidenceVerificationFor(
+  recordId: string,
+): EvidenceVerificationRecord | undefined {
+  return evidenceVerificationById.get(recordId);
+}
 
 /**
  * Which of the three empty/linked states a directive's evidence list is in,

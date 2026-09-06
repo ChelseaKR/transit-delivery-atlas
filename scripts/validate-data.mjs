@@ -362,6 +362,7 @@ const [
   directiveData,
   analysisData,
   evidenceData,
+  evidenceVerification,
   watchlistData,
   feasibilityData,
 ] =
@@ -372,6 +373,7 @@ const [
     readJson("data/directives.json"),
     readJson("data/analysis.json"),
     readJson("data/evidence.json"),
+    readJson("data/evidence-verification.json"),
     readJson("data/watchlist.json"),
     readJson("data/tda-ntd-feasibility.json"),
   ]);
@@ -837,6 +839,93 @@ const evidenceLastUpdatedOn = evidenceData.evidence
   .at(-1);
 if (evidenceData.lastUpdatedOn !== evidenceLastUpdatedOn) {
   throw new Error("Evidence lastUpdatedOn must equal the latest record review date.");
+}
+
+// The committed link-integrity log (issue #106). Every evidence record carries a
+// hash so a quotation can be checked against the publisher's own file; this is
+// the record of the last time that hash was actually re-checked. It is written
+// by `npm run evidence:verify`, never by hand, and the evidence page renders its
+// dates -- so it is validated here rather than trusted.
+const verifiedHalfSchema = z
+  .object({
+    url: z.string().url().startsWith("https://"),
+    outcome: z.string().min(1),
+    detail: z.string().min(1),
+    httpStatus: z.number().int().nullable(),
+    servedFrom: z.string().url().nullable(),
+  })
+  .passthrough();
+
+z.object({
+  schemaVersion: z.literal("0.1.0"),
+  checkedOn: date,
+  records: z
+    .array(
+      z
+        .object({
+          id: identifier,
+          checkedOn: date,
+          artifact: verifiedHalfSchema.extend({
+            outcome: z.enum(["intact", "changed", "moved", "gone"]),
+            observedSha256: z.string().regex(/^[a-f0-9]{64}$/).nullable(),
+            observedMediaType: z.string().min(1).nullable(),
+          }),
+          context: verifiedHalfSchema.extend({
+            // Never `intact`: no hash is stored for a publisher's index page, so
+            // nothing was compared, and a word claiming otherwise would be the
+            // defect this check exists to catch.
+            outcome: z.enum(["reachable", "moved", "gone"]),
+          }),
+        })
+        .strict(),
+    )
+    .min(1),
+})
+  .strict()
+  .parse(evidenceVerification);
+
+unique(evidenceVerification.records.map(({ id }) => id), "Evidence verification record IDs");
+
+// Every id resolves, and every evidence record is covered. A log that silently
+// omitted a record would let the page render "last verified" for three of four
+// artifacts and say nothing at all about the fourth, which reads as coverage.
+const verifiedIds = new Set(evidenceVerification.records.map(({ id }) => id));
+for (const record of evidenceVerification.records) {
+  if (!evidenceData.evidence.some(({ id }) => id === record.id)) {
+    throw new Error(
+      `Evidence verification log names ${record.id}, which is not an evidence record.`,
+    );
+  }
+}
+for (const record of evidenceData.evidence) {
+  if (!verifiedIds.has(record.id)) {
+    throw new Error(
+      `Evidence record ${record.id} has never been link-verified. Run \`npm run evidence:verify\`.`,
+    );
+  }
+  const verified = evidenceVerification.records.find(({ id }) => id === record.id);
+  if (verified.artifact.url !== record.url) {
+    throw new Error(
+      `Evidence verification log checked ${verified.artifact.url} for ${record.id}, but the record cites ${record.url}.`,
+    );
+  }
+  if (verified.context.url !== record.contextUrl) {
+    throw new Error(
+      `Evidence verification log checked ${verified.context.url} as ${record.id}'s context, but the record cites ${record.contextUrl}.`,
+    );
+  }
+}
+for (const record of evidenceVerification.records) {
+  if (record.checkedOn > evidenceVerification.checkedOn) {
+    throw new Error(
+      `Evidence verification record ${record.id} is dated after the log itself.`,
+    );
+  }
+}
+if (evidenceVerification.checkedOn < evidenceData.lastUpdatedOn) {
+  throw new Error(
+    `The evidence link-integrity log is dated ${evidenceVerification.checkedOn}, before the evidence layer's own ${evidenceData.lastUpdatedOn}. Re-run \`npm run evidence:verify\`.`,
+  );
 }
 
 // The evidence layer's forward commitment (issue #59). Without a source list

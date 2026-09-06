@@ -1,0 +1,86 @@
+{
+  "schemaVersion": "0.1.0",
+  "checkedOn": "2026-09-06",
+  "records": [
+    {
+      "id": "ctc-2026-07-15-order-5-reference-material",
+      "checkedOn": "2026-09-06",
+      "artifact": {
+        "url": "https://catc.ca.gov/-/media/ctc-media/documents/programs/senate-bill-1/july-15-sccp-and-lpp-c-workshop-transit-eo-resource-material-002-a11y.pdf",
+        "outcome": "intact",
+        "detail": "bytes match the reviewed artifact",
+        "httpStatus": 200,
+        "servedFrom": "https://catc.ca.gov/-/media/ctc-media/documents/programs/senate-bill-1/july-15-sccp-and-lpp-c-workshop-transit-eo-resource-material-002-a11y.pdf",
+        "observedSha256": "e67d692cc3e780e8140a5414e6448619a7d9a7db0471069ab768686c7ecd04a4",
+        "observedMediaType": "application/pdf"
+      },
+      "context": {
+        "url": "https://catc.ca.gov/meetings-events/workshops",
+        "outcome": "reachable",
+        "detail": "answered HTTP 200",
+        "httpStatus": 200,
+        "servedFrom": "https://catc.ca.gov/meetings-events/workshops"
+      }
+    },
+    {
+      "id": "ctc-2026-07-15-order-5-workshop-presentation",
+      "checkedOn": "2026-09-06",
+      "artifact": {
+        "url": "https://catc.ca.gov/-/media/ctc-media/documents/programs/senate-bill-1/07-15-2026-2026-eluh-workshop-v-4-5-final-a11y.pdf",
+        "outcome": "intact",
+        "detail": "bytes match the reviewed artifact",
+        "httpStatus": 200,
+        "servedFrom": "https://catc.ca.gov/-/media/ctc-media/documents/programs/senate-bill-1/07-15-2026-2026-eluh-workshop-v-4-5-final-a11y.pdf",
+        "observedSha256": "0ef1bc99da045d7b34feddbe0573ca2dfa3951b34bcee394da91aca69cc7dcf5",
+        "observedMediaType": "application/pdf"
+      },
+      "context": {
+        "url": "https://catc.ca.gov/meetings-events/workshops",
+        "outcome": "reachable",
+        "detail": "answered HTTP 200",
+        "httpStatus": 200,
+        "servedFrom": "https://catc.ca.gov/meetings-events/workshops"
+      }
+    },
+    {
+      "id": "ctc-2026-08-20-sccp-guidelines-adoption-item",
+      "checkedOn": "2026-09-06",
+      "artifact": {
+        "url": "https://catc.ca.gov/-/media/ctc-media/documents/ctc-meetings/2026/2026-08/19-4-6-a11y.pdf",
+        "outcome": "intact",
+        "detail": "bytes match the reviewed artifact",
+        "httpStatus": 200,
+        "servedFrom": "https://catc.ca.gov/-/media/ctc-media/documents/ctc-meetings/2026/2026-08/19-4-6-a11y.pdf",
+        "observedSha256": "6a3119bc2b84e218bf02bc732f8b07d04c34c5e239e7b8dec287e0f184659357",
+        "observedMediaType": "application/pdf"
+      },
+      "context": {
+        "url": "https://catc.ca.gov/meetings-events/commission-meetings/2026-08-20-21",
+        "outcome": "reachable",
+        "detail": "answered HTTP 200",
+        "httpStatus": 200,
+        "servedFrom": "https://catc.ca.gov/meetings-events/commission-meetings/2026-08-20-21"
+      }
+    },
+    {
+      "id": "ctc-2026-08-20-lpp-c-guidelines-adoption-item",
+      "checkedOn": "2026-09-06",
+      "artifact": {
+        "url": "https://catc.ca.gov/-/media/ctc-media/documents/ctc-meetings/2026/2026-08/24-4-10-a11y.pdf",
+        "outcome": "intact",
+        "detail": "bytes match the reviewed artifact",
+        "httpStatus": 200,
+        "servedFrom": "https://catc.ca.gov/-/media/ctc-media/documents/ctc-meetings/2026/2026-08/24-4-10-a11y.pdf",
+        "observedSha256": "11aed232cd9fb080adf54d4e1cd71cdf51d39e3c3419f2db24556cecb01e37d8",
+        "observedMediaType": "application/pdf"
+      },
+      "context": {
+        "url": "https://catc.ca.gov/meetings-events/commission-meetings/2026-08-20-21",
+        "outcome": "reachable",
+        "detail": "answered HTTP 200",
+        "httpStatus": 200,
+        "servedFrom": "https://catc.ca.gov/meetings-events/commission-meetings/2026-08-20-21"
+      }
+    }
+  ]
+}
