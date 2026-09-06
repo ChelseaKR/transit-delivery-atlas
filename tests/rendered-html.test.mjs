@@ -182,7 +182,21 @@ test("this build configures no question service, so it offers no AI affordance",
   // the record already linked, so a provider endpoint cannot hide behind a
   // lookalike name; the ask endpoint is a same-origin relative path baked in
   // at build time.
-  const allowedHosts = new Set(["transit.chelseakr.com", "www.gov.ca.gov", "dot.ca.gov", "github.com"]);
+  // Every host here is a deliberate entry, not a convenience. `ko-fi.com` is the
+  // footer support link: an outbound href only. Its button image is served from
+  // this origin (`/kofi.png`) because the site's CSP is `img-src 'self' data:`
+  // (infra/static-site.json), so the vendor's CDN copy would be blocked -- and
+  // self-hosting it also keeps a third party from seeing who reads this site.
+  // Nothing on any page loads a resource from ko-fi.com, which is what this
+  // check is really guarding: `default-src 'self'` means an origin named here
+  // can be navigated TO, never fetched FROM.
+  const allowedHosts = new Set([
+    "transit.chelseakr.com",
+    "www.gov.ca.gov",
+    "dot.ca.gov",
+    "github.com",
+    "ko-fi.com",
+  ]);
   const hosts = new Set();
   for (const [absoluteUrl] of html.matchAll(/https?:\/\/[^\s"'<>)\\]+/gi)) {
     let parsed;
