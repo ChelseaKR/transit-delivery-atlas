@@ -284,3 +284,32 @@ test("the watchlist page states its review currency against the build date", asy
     assert.doesNotMatch(html, /past their planned review date/);
   }
 });
+
+test("a source that has never been checked reports no review age, not a zero one", () => {
+  // `lib/evidence-coverage.mjs` used to pass the build date in place of a missing
+  // `lastCheckedOn`, which made `reviewCurrency` report `daysSinceReview: 0` — "checked
+  // today" for something never checked. Absence has to travel through as absence.
+  const never = reviewCurrency(
+    { id: "coverage", lastReviewedOn: null, nextReviewOn: "2026-12-01" },
+    "2026-09-06",
+  );
+
+  assert.equal(never.lastReviewedOn, null);
+  assert.equal(never.daysSinceReview, null);
+  assert.notEqual(never.daysSinceReview, 0);
+  // The planned date still expires on its own terms; only the review age is unknown.
+  assert.equal(never.overdue, false);
+  assert.equal(reviewCurrency(
+    { id: "coverage", lastReviewedOn: null, nextReviewOn: "2026-08-01" },
+    "2026-09-06",
+  ).overdue, true);
+});
+
+test("a real review date still yields a real review age", () => {
+  const checked = reviewCurrency(
+    { id: "coverage", lastReviewedOn: "2026-08-30", nextReviewOn: "2026-12-01" },
+    "2026-09-06",
+  );
+
+  assert.equal(checked.daysSinceReview, 7);
+});
