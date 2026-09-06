@@ -6,6 +6,7 @@ import {
   directiveById,
   evidenceRecords,
   evidenceScope,
+  evidenceVerificationFor,
 } from "@/lib/data";
 import { CONTENT_CORRECTION_URL } from "@/lib/feedback";
 import { formatDate } from "@/lib/format";
@@ -237,6 +238,30 @@ export default function EvidencePage() {
                             {record.pageCount === 1 ? "page" : "pages"}
                           </dd>
                         </div>
+                        {(() => {
+                          // Rendered only from the committed link-integrity log.
+                          // A record the log does not cover shows no row at all:
+                          // "never re-checked" is not a check that passed, and
+                          // the one thing this row must never do is imply that
+                          // an unverified artifact was verified.
+                          const verified = evidenceVerificationFor(record.id);
+                          if (!verified) return null;
+                          return (
+                            <div>
+                              <dt>Artifact last re-checked</dt>
+                              <dd>
+                                <time dateTime={verified.checkedOn}>
+                                  {formatDate(verified.checkedOn)}
+                                </time>
+                                <span>
+                                  {verified.artifact.outcome === "intact"
+                                    ? "The published file still hashes to the bytes reviewed for this record."
+                                    : verified.artifact.detail}
+                                </span>
+                              </dd>
+                            </div>
+                          );
+                        })()}
                       </dl>
 
                       <div className="evidence-card__section">

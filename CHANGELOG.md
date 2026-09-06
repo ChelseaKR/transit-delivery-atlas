@@ -5,6 +5,27 @@ recorded here.
 
 ## [Unreleased]
 
+### Added
+
+- **The evidence layer's hashes are now re-checked, not merely stored.** Every evidence
+  record carried a SHA-256 so a quotation could be verified against the publisher's own
+  file, and nothing had ever re-read that hash after the review. Link rot or a silent
+  re-issue would have left the register asserting a relationship to bytes that no longer
+  exist, with every gate green. `npm run evidence:verify` re-fetches each artifact and
+  context URL and classifies the record `intact`, `changed`, `moved`, or `gone`; the run
+  is committed as `data/evidence-verification.json`, `scripts/validate-data.mjs` requires
+  it to cover every record with the URLs those records cite, and the evidence page renders
+  the date of the last re-check.
+
+  A context URL is never called `intact` — nothing is stored to compare it against — and a
+  run in which no URL answered is reported as a run that could not happen rather than as
+  every artifact having disappeared. Nothing is edited automatically: a record whose
+  artifact is gone keeps its place and its review date, and `--draft-limitations` prints
+  the sentence it would carry for a person to paste.
+
+  First real run, 2026-09-06: all four cited artifacts still hash to the bytes reviewed
+  for them, and all four context URLs answered.
+
 ### Fixed
 
 - **A quotation past page nine was published with the wrong page.** The page markers this
