@@ -62,8 +62,16 @@ jobs:
         run: |
           set -uo pipefail
           expected_sha="$(git rev-parse HEAD)"
-          node scripts/verify-live-site.mjs
-          verify_rc="$?"
+
+          # GitHub's default shell is `bash -e {0}`, and a `set` line cannot
+          # remove an already-applied `-e`. So `node ...` on its own line aborted
+          # the step the moment the verifier exited nonzero, and every line below
+          # it -- including the deploy-race excuse this step exists for -- was
+          # unreachable on exactly the runs it was written for. Capturing the
+          # status with `|| verify_rc=$?` is what actually keeps the step alive.
+          verify_rc=0
+          node scripts/verify-live-site.mjs || verify_rc=$?
+
           # A deploy for a newer commit may have landed while this ran, in which case
           # the live site naming a different commit is the deploy working. Only that
           # exact case is excused, and only by re-reading the remote afterwards.
@@ -71,5 +79,17 @@ jobs:
           if [ "$remote_sha" != "$expected_sha" ]; then
             echo "::warning::main moved to ${remote_sha} while this ran; re-run once its deploy finishes"
             exit 0
+          fi
+
+          # The verifier distinguishes "the live site differs" (1) from "the check
+          # could not run" (4), and that distinction was being thrown away with the
+          # rest of the block. A check that could not run is not a check that passed,
+          # so both still fail -- but they say which happened.
+          if [ "$verify_rc" -eq 4 ]; then
+            echo "::error::the live-site check COULD NOT RUN (exit 4). This is not a"\
+                 "clean bill of health: nothing was compared. Read the log above for"\
+                 "the reason it could not reach or parse the live site."
+          elif [ "$verify_rc" -ne 0 ]; then
+            echo "::error::the live site differs from what ${expected_sha} publishes (exit ${verify_rc})."
           fi
           exit "$verify_rc"

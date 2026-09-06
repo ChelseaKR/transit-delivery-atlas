@@ -1,11 +1,19 @@
 name: Quality
 
+# `docs/**` and `**.md` are deliberately NOT ignored. Three committed tests grade
+# documentation against the data it describes -- tests/accessibility-scope.test.mjs
+# reads docs/ACCESSIBILITY.md, and tests/published-figures.test.mjs reads
+# docs/RELATIONSHIP-MODEL.md and docs/BRAND.md -- so ignoring those paths meant the
+# only tests that can catch doc drift were the ones no documentation change could
+# ever run. The failure did not disappear; it moved to `main`, where deploy.yml has
+# no paths filter and `deploy` needs `verify`, so a doc edit that breaks a
+# doc-derived test merged green and then stopped the site deploying.
 on:
   pull_request:
-    paths-ignore: ['**.md', 'docs/**', 'LICENSE']
+    paths-ignore: ['LICENSE']
   push:
     branches: [main]
-    paths-ignore: ['**.md', 'docs/**', 'LICENSE']
+    paths-ignore: ['LICENSE']
 
 permissions:
   contents: read
