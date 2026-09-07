@@ -7,6 +7,69 @@ recorded here.
 
 ### Added
 
+- **A dated, record-level change log, and an Atom feed of it.** The Atlas had no way
+  for a reader to learn that it had learned something without loading the site and
+  comparing it with what they remembered. `/changes.xml` is an Atom 1.0 feed and
+  `/changes.json` the same entries as data, with a filtered feed per directive at
+  `/directives/<id>/changes.xml`. The site has no accounts, no analytics and no
+  subscriptions by design, and a static feed is the one push channel that keeps all
+  three true.
+
+  Entries are derived, not written: review sweeps and the evidence records each sweep
+  added, re-reviews on both curated layers, cited-artifact re-checks read from the
+  verification log rather than a second retrieval path of their own, context-watchlist
+  re-reviews and narrowings, calculated planning dates the build date has reached, and
+  planned review dates the build found had passed. `data/changes.json` carries only the
+  two kinds of event the data cannot infer -- a correction, and a narrowing -- and is
+  empty until one occurs.
+
+  Three rules make it a record rather than a narrative. An entry says what the Atlas
+  did and never what a named body did, and every entry is screened through the same
+  verdict lexicon the published pages are. An entry that names a record the dataset
+  does not hold fails the release gate rather than being dropped, because a shorter
+  feed says nothing about why it is shorter. And `observedBy` separates the two kinds
+  of date: `data` entries do not move when the site is rebuilt, while a `build` entry
+  is that build's own observation of an absence, which is the only honest date a lapsed
+  review can carry -- the lapse is the missing record, and a missing record has no date.
+
+  A `watchlist-boundary-checked` kind was written and then removed: the release gate
+  holds `evidenceBoundary.checkedOn` equal to `lastReviewedOn`, so it could never
+  produce an entry the review entry did not already carry on the same date. The rule
+  check is folded into the review entry instead, and a dataset where the two dates
+  disagree fails rather than publishing one date for both.
+
+- **Every body and role group the order names now has its own record page.** The
+  handoff view indexed the 23 registered bodies and gave none of them a permalink, so
+  the three things a reader of one body needs -- what the signed order says about it,
+  what reviewed public artifacts carry its name, and what the analytical layer says near
+  it -- had nowhere to meet without blurring. `/organizations` lists the registry
+  alphabetically, and `/organizations/<id>` renders one body under the same layer order
+  the directive page uses: source, then evidence, then analysis, then context.
+
+  Source-role appearances are exactly the directive-level fields they come from, carried
+  with the section locator and the reviewed excerpt behind each one. Nothing is inferred
+  about which action inside a compound directive a named body owns, because no such
+  record exists; the methodology says so and a page per body is where inventing one would
+  be easiest.
+
+  Evidence and watchlist attribution is by an exact match between the artifact's
+  `publisher` field and the registry name -- never a substring, prefix or short name,
+  because a loose match is how one agency acquires another's document. A body with
+  nothing published under its name says so in words instead of rendering an empty list
+  that reads as a zero, and one body in the registry today matches a publisher.
+
+  `organizations.csv` joins the exports with one row per registry member, including any
+  the signed instrument does not name: `directive-organizations.csv` is keyed on the
+  (directive, organization) pair and therefore cannot represent an unnamed member at all,
+  so a registry export built the same way would report a smaller registry than exists.
+  The Frictionless resource, the DCAT distribution, the sitemap, the CloudFront
+  clean-route cases, the accessibility route classification and the published-language
+  screen's page floor all move with it; the screen's floor was raised from 31 pages to
+  55, because a floor the export has outgrown is not a floor.
+
+  Ordering is alphabetical and by nothing else. An order by appearance count would read
+  as a ranking of importance, effort or responsibility, and this register ranks nothing.
+
 - **The evidence layer's hashes are now re-checked, not merely stored.** Every evidence
   record carried a SHA-256 so a quotation could be verified against the publisher's own
   file, and nothing had ever re-read that hash after the review. Link rot or a silent
