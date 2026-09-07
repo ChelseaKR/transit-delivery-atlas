@@ -3,6 +3,7 @@ import { readFile } from "node:fs/promises";
 import test from "node:test";
 import {
   CHANGE_KINDS,
+  changeEntry,
   changesForDirective,
   deriveChanges,
   escapeXml,
@@ -324,19 +325,64 @@ test("every kind the module emits is categorised into a published layer", () => 
 });
 
 test("an uncategorised kind is refused rather than published without a layer", () => {
-  // Reaching the guard directly: nothing in the data can produce an unknown
-  // kind, which is the point, so the fixture is the guard's own input.
-  assert.throws(
-    () =>
-      renderAtom([{ id: "x", date: "2026-01-01", kind: "invented", layer: undefined }], {
-        siteUrl: "https://example.test",
-        selfPath: "/changes.xml",
-        title: "t",
-        subtitle: "s",
-        buildDate: "not a date",
-      }),
-    /ISO calendar date/,
+  // Nothing in the committed data can reach this: every call site inside the
+  // module passes a literal kind. It is the contract for whoever adds the next
+  // kind, and a guard nothing exercises is a guard nobody knows works.
+  const fields = {
+    date: "2026-01-01",
+    recordId: "x",
+    path: "/evidence/",
+    directiveIds: [],
+    title: "t",
+    detail: "d",
+    observedBy: "data",
+  };
+
+  assert.throws(() => changeEntry({ ...fields, kind: "invented" }), /not a change kind/);
+  assert.throws(() => changeEntry({ ...fields, kind: "evidence-added", date: "2026-02-30" }), /ISO calendar date/);
+  assert.equal(changeEntry({ ...fields, kind: "evidence-added" }).layer, "evidence");
+});
+
+test("a record with no directive links produces an entry with an empty, sorted link list", () => {
+  const sweep = entries().find(({ kind }) => kind === "sweep-recorded");
+
+  assert.deepEqual(sweep.directiveIds, []);
+  assert.equal(
+    changeEntry({
+      kind: "evidence-added",
+      date: "2026-01-01",
+      recordId: "x",
+      path: "/evidence/",
+      directiveIds: ["n-7-26-5", "n-7-26-1a"],
+      title: "t",
+      detail: "d",
+      observedBy: "data",
+    }).directiveIds.join(","),
+    "n-7-26-1a,n-7-26-5",
   );
+});
+
+test("a missing outcome or boundary reason is stated as missing, never as a fact", () => {
+  const withoutDetail = entries(AT_BUILD, {
+    verification: { records: [{ id: evidence.evidence[0].id, checkedOn: "2026-09-06", artifact: {} }] },
+  }).find(({ kind }) => kind === "evidence-artifact-rechecked");
+  const withoutReason = entries(AT_BUILD, {
+    watchlist: {
+      ...watchlist,
+      items: [{ ...watchlist.items[0], evidenceBoundary: undefined }],
+    },
+  }).find(({ kind }) => kind === "watchlist-reviewed");
+
+  assert.match(withoutDetail.detail, /unrecorded/);
+  assert.match(withoutDetail.detail, /no detail recorded/);
+  assert.match(withoutReason.detail, /no reason recorded/);
+});
+
+test("an absent verification log yields no re-check entries rather than empty ones", () => {
+  const derived = deriveChanges({ ...inputs, verification: undefined, buildDate: AT_BUILD });
+
+  assert.equal(derived.filter(({ kind }) => kind === "evidence-artifact-rechecked").length, 0);
+  assert.ok(derived.length > 0);
 });
 
 test("the five predefined XML entities are all escaped, in text and in attributes", () => {
