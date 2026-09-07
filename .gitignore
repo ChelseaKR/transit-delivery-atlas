@@ -18,6 +18,14 @@
 /.vinext/
 /out/
 /public/version.json
+# The change log and its Atom feeds. Derived from the committed data AND the build
+# date, which is the one input a committed file cannot pin: an entry dated to the
+# build that observed a lapsed review would make a committed copy stale the next day,
+# and `data:export:check` would fail on a file nobody edited. Written by
+# scripts/write-changes.mjs immediately before `next build`, like version.json.
+/public/changes.json
+/public/changes.xml
+/public/directives/
 
 # misc
 .DS_Store

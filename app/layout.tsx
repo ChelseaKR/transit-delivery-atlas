@@ -75,6 +75,21 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${display.variable} ${body.variable}`}>
+        {/*
+          The one push channel a site with no accounts, no analytics and no
+          subscriptions can offer, declared on every page so a reader's feed
+          reader finds it from wherever they landed. Rendered here rather than
+          through `metadata.alternates`: every page sets its own
+          `alternates.canonical`, which replaces the parent's `alternates`
+          entirely, so a feed declared there would have appeared on no page at
+          all. React hoists this into the head.
+        */}
+        <link
+          rel="alternate"
+          type="application/atom+xml"
+          title="Transit Delivery Atlas record changes"
+          href="/changes.xml"
+        />
         <a className="skip-link" href="#main-content">
           Skip to main content
         </a>

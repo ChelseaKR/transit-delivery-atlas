@@ -120,7 +120,54 @@ export default function DataPage() {
                   <strong>DCAT-AP catalog record</strong>
                   <small>JSON-LD dataset description for catalog harvesters</small>
                 </a>
+                <a className="download-card" href="/changes.json">
+                  <span className="file-type">CHANGE LOG</span>
+                  <strong>Record-level change log</strong>
+                  <small>Every dated event this build can derive, one entry per record</small>
+                </a>
+                <a className="download-card" href="/changes.xml">
+                  <span className="file-type">ATOM</span>
+                  <strong>Change feed</strong>
+                  <small>The same entries as Atom 1.0, plus one feed per directive</small>
+                </a>
               </div>
+            </section>
+
+            <section>
+              <h2>Following the record without polling it</h2>
+              <p>
+                <a href="/changes.xml">
+                  <code>changes.xml</code>
+                </a>{" "}
+                is an Atom 1.0 feed of dated, record-level events: a review
+                sweep recorded, an evidence record added or re-reviewed, a cited
+                artifact retrieved again, a context-watchlist item re-reviewed
+                or narrowed, a calculated planning date reached, and a planned
+                review date that this build found had passed. Each directive has
+                its own filtered feed at{" "}
+                <code>/directives/&lt;id&gt;/changes.xml</code>, so a reader
+                following one directive is not sent everything.
+              </p>
+              <p>
+                There is nothing to sign up for and nothing that identifies you:
+                the feed is a static file served from this origin, like every
+                other file on this page. The same entries are also published as{" "}
+                <a href="/changes.json">
+                  <code>changes.json</code>
+                </a>
+                , which carries the layer, the record id, and the path each entry
+                resolves to.
+              </p>
+              <p>
+                An entry records what this project did, never what a named body
+                did. Every entry carries an <code>observedBy</code> field:{" "}
+                <code>data</code> means the entry&rsquo;s date is one the
+                committed data holds, so rebuilding the site does not move it;{" "}
+                <code>build</code> means the date is this build&rsquo;s own
+                observation of an absence, which is how a lapsed review date is
+                recorded, because the lapse is the missing record and a missing
+                record carries no date of its own.
+              </p>
             </section>
 
             <section>
