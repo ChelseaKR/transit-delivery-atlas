@@ -170,7 +170,7 @@ jobs:
           # that used to be asserted here, it survives every legitimate data
           # change. The file list is read from the artifact, so a new export is
           # covered without editing this workflow.
-          for built in $(find out/data -type f | sort) out/og.png out/sitemap.xml out/robots.txt; do
+          for built in $(find out/data -type f | sort) $(find out -name changes.xml | sort) out/changes.json out/og.png out/sitemap.xml out/robots.txt; do
             route="${built#out/}"
             curl_edge "https://${site_domain}/${route}" > /tmp/edge-artifact
             if ! cmp -s /tmp/edge-artifact "$built"; then
