@@ -19,6 +19,7 @@ export function SiteFooter() {
           <nav className="site-footer__links" aria-label="Footer navigation">
             <Link href="/corrections">Corrections and review</Link>
             <Link href="/handoffs">Delivery relationships</Link>
+            <Link href="/organizations">Bodies and groups</Link>
             <Link href="/evidence">Public evidence</Link>
             <Link href="/watchlist">Context watchlist</Link>
             <Link href="/methodology">Methodology</Link>

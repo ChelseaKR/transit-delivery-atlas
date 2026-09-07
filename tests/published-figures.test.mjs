@@ -166,6 +166,24 @@ test("RELATIONSHIP-MODEL states the analytical layer the analysis actually conta
   );
 });
 
+test("README states the registry size the data carries", async () => {
+  // The registry export's row count is a published figure like the other two, and
+  // it is the one a reader checks a "complete registry" claim against. Derived
+  // here so the sentence cannot outlive the data it describes.
+  const doc = await readDoc("README.md");
+  const stated = figure(
+    doc,
+    /`organizations\.csv` lists all ([\d,]+) registered bodies/,
+    "README.md",
+  );
+
+  assert.equal(
+    stated,
+    organizations.length,
+    "README.md states a registry size the registry does not have",
+  );
+});
+
 test("README states the same normalized-link figures the data carries", async () => {
   const doc = await readDoc("README.md");
   const where = "README.md";

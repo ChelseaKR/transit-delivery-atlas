@@ -85,6 +85,8 @@ These are the routes that existed at `ef1d11b`, plus the exported 404 page.
 - `/research/tda-ntd` — added 2026-07-13 (`c47f909`)
 - `/corrections` — added 2026-07-14 (`64608c6`)
 - `/watchlist` — added 2026-07-29 (`bba96c0`)
+- `/organizations` — added 2026-09-07
+- `/organizations/[id]` — added 2026-09-07
 
 ### Interaction patterns and presentation not covered by that review
 

@@ -59,9 +59,10 @@ test("the exported not-found page is generic and has one noindex directive", asy
 });
 
 test("sitemap lists every static route and every directive record exactly once", async () => {
-  const [sitemap, directives, routes] = await Promise.all([
+  const [sitemap, directives, organizations, routes] = await Promise.all([
     readProjectFile("out/sitemap.xml"),
     readProjectFile("data/directives.json").then((raw) => JSON.parse(raw).directives),
+    readProjectFile("data/organizations.json").then((raw) => JSON.parse(raw)),
     appRoutes(),
   ]);
 
@@ -90,9 +91,19 @@ test("sitemap lists every static route and every directive record exactly once",
     );
   }
 
+  // Every registry member, including any the signed instrument does not name. The
+  // organization pages are generated from the registry, so checking the registry here
+  // is what makes an unlisted page a failure rather than a page nobody can find.
+  for (const organization of organizations) {
+    assert.ok(
+      locs.includes(`https://transit.chelseakr.com/organizations/${organization.id}/`),
+      `sitemap is missing organization ${organization.id}`,
+    );
+  }
+
   assert.equal(
     locs.length,
-    staticPaths.length + directives.length,
+    staticPaths.length + directives.length + organizations.length,
     "the sitemap lists a URL the app does not export",
   );
 });
@@ -125,6 +136,12 @@ test("CloudFront clean-route function maps pages without rewriting assets", asyn
     ["/corrections", "/corrections/index.html"],
     ["/corrections/", "/corrections/index.html"],
     ["/directives/n-7-26-5", "/directives/n-7-26-5/index.html"],
+    ["/organizations", "/organizations/index.html"],
+    ["/organizations/", "/organizations/index.html"],
+    ["/organizations/caltrans", "/organizations/caltrans/index.html"],
+    // The registry export shares the /organizations prefix with the page routes and
+    // must not be rewritten into an HTML document by the clean-route function.
+    ["/data/organizations.csv", "/data/organizations.csv"],
     ["/data/directives.json", "/data/directives.json"],
     ["/data/directives.csv", "/data/directives.csv"],
     ["/data/directive-organizations.csv", "/data/directive-organizations.csv"],
