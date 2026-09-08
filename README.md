@@ -130,6 +130,38 @@ and CSV under `public/data/`.
   [watchlist model](docs/WATCHLIST-MODEL.md))
 - `tda-ntd-feasibility.json` contains the cited four-field reporting research,
   feasibility classes, controls, and remaining evidence needs
+- `changes.json` holds the record-level events the committed data cannot infer:
+  a correction applied to a published record, and the narrowing of a
+  context-watchlist item. Everything else in the change log is derived, so this
+  file is deliberately small and is empty until such an event occurs
+
+### Following the record without polling it
+
+`/changes.xml` is an [Atom 1.0](https://www.rfc-editor.org/rfc/rfc4287) feed of
+dated, record-level events, and each directive has its own filtered feed at
+`/directives/<id>/changes.xml`. The same entries are published as
+`/changes.json`. There are no accounts, no analytics and no subscriptions on
+this site, and a static feed is the one push channel that keeps all three true:
+it is a file served from this origin, and nothing about the reader reaches
+anybody.
+
+An entry records what the Atlas did, never what a named body did, and every
+entry is screened through the same verdict lexicon
+(`lib/verdict-language.mjs`) the published pages are. Entries are derived from
+`evidence.sweeps`, `lastReviewedOn` on both curated layers,
+`evidence-verification.json`, the calculated planning dates in
+`directives.json`, and the build date; an entry naming a record the dataset
+does not hold fails the release gate rather than being dropped, because a
+shorter feed says nothing about why it is shorter.
+
+Every entry carries `observedBy`. `data` means the entry's date is one the
+committed data holds, so rebuilding the site does not move it. `build` means
+the date is that build's own observation of an absence — a planned review date
+found to have passed — because the lapse is a missing record and a missing
+record carries no date of its own. Rebuilding an unchanged dataset on a later
+date therefore adds nothing except the entries the later date itself justifies.
+The feed and the log are build artifacts for the same reason and are not
+committed; `public/version.json` already worked this way.
 
 The first reporting slice compares passenger boardings, vehicle revenue miles,
 vehicle revenue hours, and operating expense across the State Controller's

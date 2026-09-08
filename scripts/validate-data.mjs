@@ -7,6 +7,7 @@ import {
   overdueReviewReport,
   overdueReviews,
 } from "../lib/watchlist-review.mjs";
+import { CHANGE_KINDS, deriveChanges } from "../lib/changes.mjs";
 
 const root = new URL("../", import.meta.url);
 
@@ -365,6 +366,7 @@ const [
   evidenceVerification,
   watchlistData,
   feasibilityData,
+  changeEvents,
 ] =
   await Promise.all([
     readJson("data/sources.json"),
@@ -376,6 +378,7 @@ const [
     readJson("data/evidence-verification.json"),
     readJson("data/watchlist.json"),
     readJson("data/tda-ntd-feasibility.json"),
+    readJson("data/changes.json"),
   ]);
 
 z.array(sourceSchema).min(1).parse(sources);
@@ -1136,6 +1139,48 @@ console.log(
 // is a fact about the calendar, and failing on it would block every later
 // deploy for something no re-review could clear. The line exists so the date
 // moving is visible in CI output rather than only to a reader of the page.
+// The change log, derived here as well as at build time so an event naming a
+// record the dataset does not hold fails the gate rather than the deploy. The
+// derivation is the check: `deriveChanges` throws on an unresolvable id, and it
+// screens nothing else, so this is a resolution test and not a second opinion
+// about the wording.
+z.object({
+  schemaVersion: z.literal("0.1.0"),
+  note: z.string().min(1),
+  events: z.array(
+    z
+      .object({
+        kind: z.enum(["watchlist-narrowed", "source-correction-applied"]),
+        date,
+        recordId: z.string().min(1),
+        note: z.string().min(20),
+        promotedToEvidenceId: z.string().min(1).optional(),
+      })
+      .strict(),
+  ),
+})
+  .strict()
+  .parse(changeEvents);
+
+const changeEntries = deriveChanges({
+  directives: directiveData.directives,
+  evidence: evidenceData,
+  watchlist: watchlistData,
+  verification: evidenceVerification,
+  changes: changeEvents,
+  buildDate,
+});
+for (const entryRecord of changeEntries) {
+  if (!Object.hasOwn(CHANGE_KINDS, entryRecord.kind)) {
+    throw new Error(`Change entry ${entryRecord.id} carries an uncategorised kind.`);
+  }
+}
+console.log(
+  `Change log at ${buildDate}: ${changeEntries.length} record-level entries, ` +
+    `${changeEntries.filter(({ observedBy }) => observedBy === "build").length} of them dated to ` +
+    "this build rather than to the data.",
+);
+
 const passedPlanningDates = passedTimings(directiveData.directives, buildDate);
 const totalTimings = directiveData.directives.reduce(
   (count, directive) => count + directive.timing.length,
