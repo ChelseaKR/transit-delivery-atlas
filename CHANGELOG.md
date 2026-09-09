@@ -38,38 +38,6 @@ recorded here.
   check is folded into the review entry instead, and a dataset where the two dates
   disagree fails rather than publishing one date for both.
 
-- **Every body and role group the order names now has its own record page.** The
-  handoff view indexed the 23 registered bodies and gave none of them a permalink, so
-  the three things a reader of one body needs -- what the signed order says about it,
-  what reviewed public artifacts carry its name, and what the analytical layer says near
-  it -- had nowhere to meet without blurring. `/organizations` lists the registry
-  alphabetically, and `/organizations/<id>` renders one body under the same layer order
-  the directive page uses: source, then evidence, then analysis, then context.
-
-  Source-role appearances are exactly the directive-level fields they come from, carried
-  with the section locator and the reviewed excerpt behind each one. Nothing is inferred
-  about which action inside a compound directive a named body owns, because no such
-  record exists; the methodology says so and a page per body is where inventing one would
-  be easiest.
-
-  Evidence and watchlist attribution is by an exact match between the artifact's
-  `publisher` field and the registry name -- never a substring, prefix or short name,
-  because a loose match is how one agency acquires another's document. A body with
-  nothing published under its name says so in words instead of rendering an empty list
-  that reads as a zero, and one body in the registry today matches a publisher.
-
-  `organizations.csv` joins the exports with one row per registry member, including any
-  the signed instrument does not name: `directive-organizations.csv` is keyed on the
-  (directive, organization) pair and therefore cannot represent an unnamed member at all,
-  so a registry export built the same way would report a smaller registry than exists.
-  The Frictionless resource, the DCAT distribution, the sitemap, the CloudFront
-  clean-route cases, the accessibility route classification and the published-language
-  screen's page floor all move with it; the screen's floor was raised from 31 pages to
-  55, because a floor the export has outgrown is not a floor.
-
-  Ordering is alphabetical and by nothing else. An order by appearance count would read
-  as a ranking of importance, effort or responsibility, and this register ranks nothing.
-
 - **The evidence layer's hashes are now re-checked, not merely stored.** Every evidence
   record carried a SHA-256 so a quotation could be verified against the publisher's own
   file, and nothing had ever re-read that hash after the review. Link rot or a silent
@@ -90,6 +58,37 @@ recorded here.
   for them, and all four context URLs answered.
 
 ### Fixed
+
+- **The changelog announced a record page the site does not serve.** A twenty-line
+  `[Unreleased]` entry stated that every body the order names now has its own record page,
+  that the site lists the registry alphabetically under a record-page route, and that an
+  organizations export joins the other CSVs. None of it is on `main`: there is no
+  organizations route under `app/`, none in `app/sitemap.ts`, and no such CSV in
+  `public/data/`. The feature is real and is on an unmerged branch; the entry reached `main`
+  through a changelog conflict resolved in the other direction, inside a pull request whose
+  own diff contained not one line of it. Both branches were green throughout, because an
+  `[Unreleased]` paragraph is not a thing anything read -- `.github/workflows/quality.yml`
+  runs no job for a docs-only change, and `published-figures.test.mjs` holds the docs'
+  *numbers* to the data and their prose to nothing.
+
+  The entry is removed here rather than corrected, because it is not wrong about the branch
+  it was written for; it is on the wrong branch. It returns when that branch does.
+
+  `tests/changelog-claims.test.mjs` re-derives the check: every route the `[Unreleased]`
+  section names in backticks must be one the built `out/` artifact actually serves,
+  resolved against the export rather than against the source tree for the reason
+  `release-artifact.test.mjs` uses it -- a route is a fact about what was built. Backticks
+  are the convention it keys on, and it is stated as a convention rather than implied: this
+  file writes every path in backticks, so a backticked route is an announcement, and prose
+  that names a route as an example of a wrong claim is not one. It is deliberately the cheap
+  half. It asks whether an announced page is reachable, never whether the page contains what
+  the sentence claims, so a sentence can still be wrong about a page that exists.
+
+  On the tree before this change it named the route and failed. Two floors keep it from
+  passing over nothing: it refuses when `out/index.html` is absent, and it asserts the
+  resolver can still find three routes the build always writes -- otherwise a resolver that
+  stopped matching would report every route as unserved and blame the changelog, and an
+  extractor that stopped matching would report an empty list and read as clean.
 
 - **The directive page cited artifacts without publishing whether they still resolve.** The
   link-integrity check landed on the evidence index only. The directive page renders the same
