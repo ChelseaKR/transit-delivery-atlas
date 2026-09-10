@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { directives } from "@/lib/data";
+import { organizationRecords } from "@/lib/organizations";
 
 // Required for `output: "export"`: without this, Next.js treats sitemap.ts as
 // a dynamic route and the static export build fails.
@@ -12,6 +13,7 @@ const SITE_URL = "https://transit.chelseakr.com";
 const staticRoutes = [
   "/",
   "/handoffs",
+  "/organizations",
   "/evidence",
   "/watchlist",
   "/research/tda-ntd",
@@ -31,5 +33,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     lastModified: directive.lastReviewedOn,
   }));
 
-  return [...staticEntries, ...directiveEntries];
+  // One entry per body or role group. Derived from the same list the pages are
+  // generated from, so a registry addition cannot render a page the sitemap
+  // does not know about.
+  const organizationEntries: MetadataRoute.Sitemap = organizationRecords.map((record) => ({
+    url: `${SITE_URL}/organizations/${record.id}/`,
+  }));
+
+  return [...staticEntries, ...directiveEntries, ...organizationEntries];
 }

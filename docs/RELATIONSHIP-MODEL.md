@@ -54,6 +54,8 @@ they are neither signed-source roles nor analytical delivery dependencies.
 
 Two generated CSVs make the embedded arrays easier to inspect:
 
+- `organizations.csv` contains one row per registered body or role group,
+  including any the signed instrument does not name;
 - `directive-organizations.csv` contains one row per explicit source-role link;
 - `directive-relationships.csv` contains one row per analytical
   cross-reference.

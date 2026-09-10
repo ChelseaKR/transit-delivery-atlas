@@ -25,12 +25,14 @@ function relative(filePath) {
 
 test("the sweep reads the whole static export, not a sample of it", async () => {
   // A screen that runs over zero pages passes forever. The export has one page
-  // per route plus one per directive, so the floor is the twenty-one directive
-  // pages and the ten route pages.
+  // per route plus one per directive plus one per registered organization, so the
+  // floor is the twenty-one directive pages, the twenty-three organization pages,
+  // and the eleven route pages. Raising this floor with each route is the point:
+  // a floor left behind by the export stops being a floor.
   const pages = await exportedPages();
 
   assert.ok(
-    pages.length >= 31,
+    pages.length >= 55,
     `expected the full static export, found ${pages.length} HTML file(s): run the build first`,
   );
 
@@ -41,7 +43,21 @@ test("the sweep reads the whole static export, not a sample of it", async () => 
     "every directive page must be screened, not a selected few",
   );
 
-  for (const route of ["index.html", "evidence/index.html", "watchlist/index.html"]) {
+  const organizationPages = pages.filter((page) =>
+    /\/organizations\/[^/]+\/index\.html$/.test(page),
+  );
+  assert.equal(
+    organizationPages.length,
+    23,
+    "every organization page must be screened, not a selected few",
+  );
+
+  for (const route of [
+    "index.html",
+    "evidence/index.html",
+    "watchlist/index.html",
+    "organizations/index.html",
+  ]) {
     assert.ok(
       pages.some((page) => relative(page) === route),
       `${route} must be in the swept set`,

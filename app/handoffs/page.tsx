@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import {
   DependencyExplorer,
   OrganizationExplorer,
@@ -103,6 +104,13 @@ export default function HandoffsPage() {
                 explicit leads, explicit collaborators, and other named parties.
                 The labels do not imply that every party participates in every
                 action inside a compound directive.
+              </p>
+              <p>
+                Every body and group also has its own record page:{" "}
+                <Link href="/organizations">
+                  browse the registry one body at a time
+                </Link>
+                .
               </p>
             </div>
             <OrganizationExplorer records={namedBodies} />

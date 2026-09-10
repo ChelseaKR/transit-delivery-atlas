@@ -510,6 +510,63 @@ const directiveRelationshipsCsv = [
   ...directiveRelationshipsCsvRows.map((row) => row.map(csvCell).join(",")),
 ].join("\n");
 
+// One row per registered organization, which `directive-organizations.csv` cannot be:
+// that file is keyed on (directive, organization) and so drops any body the order does
+// not name. A registry export that silently omits its unnamed members would report a
+// smaller registry than exists, which is the same defect as publishing an absence as a
+// count. Every row in the registry appears here, including one whose link count is 0.
+const organizationsCsvColumns = [
+  "schema_version",
+  "organization_id",
+  "organization_name",
+  "organization_short_name",
+  "organization_kind",
+  "explicit_lead_links",
+  "explicit_collaborator_links",
+  "other_named_party_links",
+  "source_role_links",
+  "directive_units_named_in",
+  "record_path",
+];
+
+function linksFor(organizationId, field) {
+  return directives.filter((directive) => directive[field].includes(organizationId)).length;
+}
+
+const organizationsCsvRows = organizations
+  .map((organization) => {
+    const lead = linksFor(organization.id, "leadOrgIds");
+    const collaborator = linksFor(organization.id, "collaboratorOrgIds");
+    const mentioned = linksFor(organization.id, "mentionedOrgIds");
+    // Distinct directive units, so a body named twice on one unit is named in one unit.
+    const units = new Set(
+      directives
+        .filter((directive) =>
+          sourceRoleGroups.some(([, field]) => directive[field].includes(organization.id)),
+        )
+        .map((directive) => directive.id),
+    ).size;
+    return [
+      directiveData.schemaVersion,
+      organization.id,
+      organization.name,
+      organization.shortName,
+      organization.kind,
+      lead,
+      collaborator,
+      mentioned,
+      lead + collaborator + mentioned,
+      units,
+      `/organizations/${organization.id}/`,
+    ];
+  })
+  .sort((a, b) => String(a[2]).localeCompare(String(b[2]), "en"));
+
+const organizationsCsv = [
+  organizationsCsvColumns.map(csvCell).join(","),
+  ...organizationsCsvRows.map((row) => row.map(csvCell).join(",")),
+].join("\n");
+
 // --- Frictionless Data Package and DCAT record ----------------------------------
 //
 // The exports are the machine-readable product, and their contract lived in prose plus
@@ -636,6 +693,18 @@ const tabularResources = [
       "project.",
     columns: directiveOrganizationsCsvColumns,
     rows: directiveOrganizationsCsvRows,
+  },
+  {
+    name: "organizations",
+    file: "organizations.csv",
+    title: "Registered bodies and role groups",
+    description:
+      "One row per body or role group in the registry, with its kind and how many " +
+      "directive units name it under each source-role label. Every registry member is " +
+      "present, including any the signed instrument does not name; a count of zero here " +
+      "is a measured zero and not an omission.",
+    columns: organizationsCsvColumns,
+    rows: organizationsCsvRows,
   },
   {
     name: "directive-relationships",
@@ -825,6 +894,7 @@ const exports = new Map([
   ["watchlist.csv", `${watchlistCsv}\n`],
   ["watchlist-schema.json", `${JSON.stringify(watchlistSchema, null, 2)}\n`],
   ["directive-organizations.csv", `${directiveOrganizationsCsv}\n`],
+  ["organizations.csv", `${organizationsCsv}\n`],
   ["directive-relationships.csv", `${directiveRelationshipsCsv}\n`],
   ["schema.json", `${JSON.stringify(schema, null, 2)}\n`],
   ["tda-ntd-feasibility.json", `${JSON.stringify(feasibilityData, null, 2)}\n`],

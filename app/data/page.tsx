@@ -86,6 +86,11 @@ export default function DataPage() {
                   <strong>Watchlist JSON Schema</strong>
                   <small>Independent contract for context-only research records</small>
                 </a>
+                <a className="download-card" href="/data/organizations.csv" download>
+                  <span className="file-type">REGISTRY CSV</span>
+                  <strong>Bodies and role groups</strong>
+                  <small>One row per registered body, named by the order or not</small>
+                </a>
                 <a className="download-card" href="/data/directive-organizations.csv" download>
                   <span className="file-type">SOURCE LINKS CSV</span>
                   <strong>Directive-to-body relationships</strong>

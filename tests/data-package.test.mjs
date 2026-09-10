@@ -60,6 +60,7 @@ test("the data package describes every published export, and nothing it does not
     "watchlist-schema.json",
     "directive-organizations.csv",
     "directive-relationships.csv",
+    "organizations.csv",
     "schema.json",
     "tda-ntd-feasibility.json",
   ]);
