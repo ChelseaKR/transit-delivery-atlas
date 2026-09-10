@@ -7,6 +7,53 @@ recorded here.
 
 ### Added
 
+- **The review sweep can now be run, not only attested.** `docs/EVIDENCE-MODEL.md`
+  commits this project to periodically checking the official sources that would
+  publish an artifact citing the order, and every sweep so far has been a manual
+  crawl of a dozen pages whose record -- a `sweeps[]` entry and a `lastCheckedOn`
+  per source -- was a statement nobody could reproduce. `npm run sweep` fetches
+  every review source and every watchlist item and prints a worksheet saying what
+  moved.
+
+  It is an assistant and not an author, by construction rather than by care: the
+  program has no code path that edits a record. `--write-draft` puts a worksheet
+  and a patch in an untracked `.sweep/`, and a person applies the patch by hand.
+  `nextReviewOn` is never touched, and nothing resembling an evidence record is
+  ever drafted.
+
+  Three distinctions it will not collapse, each of which is the same defect in a
+  different place. A transport failure or an HTTP error is `retrieval-failed`,
+  carries no observation to store and does not move `lastCheckedOn` -- storing a
+  digest of an error page would make the next sweep compare against the outage. A
+  first sweep is `no-baseline`, never "unchanged": "unchanged since 2026-08-21"
+  asserts that something was compared, and with nothing stored nothing was. And a
+  page whose text this runtime cannot read -- a PDF -- is `not-established` on the
+  order reference rather than `absent`, because "N-7-26 is not on this page" would
+  be a claim about a document nobody read.
+
+  **The digest is taken over extracted text, not raw bytes, and every source is
+  fetched twice.** The link-integrity check refuses to hash a context URL, and says
+  why: a publisher's index page "changes whenever they publish anything, and hashing
+  it would report `changed` on every run, which is a check that fails for a reason
+  that is not drift". Every review source is such a page. Here `changed` means *go
+  and look*, which is what a sweep is for -- but a rotating request id or an embedded
+  build stamp would flip a byte digest every run and make the signal worthless while
+  looking like a busy publisher. Text extraction removes the commonest churn, and the
+  second fetch catches the rest: two different digests in one run means the page is
+  **not watchable by digest**, reported as that rather than as changed, and not
+  offered as a baseline. Churn that is stable within a burst and moves across days is
+  invisible to a single run, and the doc says so.
+
+  There is no text diff. Only a digest is retained, so a changed page can be reported
+  as changed and no further; keeping the previous text would mean retaining copies of
+  other people's pages, which is #132.
+
+  `lastObservation` (`{sha256, basis, mentionsOrder, observedOn}`) is a new optional
+  field on a review source and on a watchlist item, in both JSON Schemas and the
+  validator. No source carries one yet, so today every source reports `no-baseline`
+  -- which is the true state of a register that has never been swept by machine, and
+  the first thing this change makes sayable.
+
 - **A dated, record-level change log, and an Atom feed of it.** The Atlas had no way
   for a reader to learn that it had learned something without loading the site and
   comparing it with what they remembered. `/changes.xml` is an Atom 1.0 feed and

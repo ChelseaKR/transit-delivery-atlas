@@ -240,6 +240,23 @@ const watchlistDirectiveLinkSchema = z
   })
   .strict();
 
+// A machine observation of a source, written by a person after reading
+// `npm run sweep`'s worksheet. It is the baseline the NEXT sweep compares
+// against, and it is optional because a source that has never been swept has
+// no baseline -- which is a state the sweep reports by name rather than
+// rendering as "unchanged". `basis` travels with the digest because a hash
+// taken over extracted text and one taken over raw bytes are not comparable,
+// and `mentionsOrder` is nullable because a document whose text this runtime
+// cannot read (a PDF) yields a digest and no reading.
+const lastObservationSchema = z
+  .object({
+    sha256: z.string().regex(/^[0-9a-f]{64}$/),
+    basis: z.enum(["text", "bytes"]),
+    mentionsOrder: z.boolean().nullable(),
+    observedOn: date,
+  })
+  .strict();
+
 const watchlistItemSchema = z
   .object({
     id: identifier,
@@ -260,6 +277,7 @@ const watchlistItemSchema = z
     nextReviewOn: date,
     watchFor: z.array(z.string().min(30)).min(1),
     limitations: z.array(z.string().min(30)).min(1),
+    lastObservation: lastObservationSchema.optional(),
   })
   .strict();
 
@@ -443,6 +461,7 @@ const reviewSourceSchema = z
     lastCheckedOn: date,
     lastCheckOutcome: z.enum(["checked", "retrieval-failed"]),
     note: z.string().min(30),
+    lastObservation: lastObservationSchema.optional(),
   })
   .strict();
 

@@ -288,7 +288,20 @@
         },
         "lastCheckedOn": { "$ref": "#/$defs/date" },
         "lastCheckOutcome": { "enum": ["checked", "retrieval-failed"] },
-        "note": { "type": "string", "minLength": 30 }
+        "note": { "type": "string", "minLength": 30 },
+        "lastObservation": { "$ref": "#/$defs/lastObservation" }
+      },
+      "additionalProperties": false
+    },
+    "lastObservation": {
+      "type": "object",
+      "description": "A machine observation of a source's URL, recorded by a person from the worksheet `npm run sweep` prints. Optional: a source that has never been swept has no baseline, which the sweep reports by name rather than as \"unchanged\". `basis` travels with the digest because a hash over extracted text and one over raw bytes are not comparable; `mentionsOrder` is null when the document's text could not be read.",
+      "required": ["sha256", "basis", "mentionsOrder", "observedOn"],
+      "properties": {
+        "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+        "basis": { "enum": ["text", "bytes"] },
+        "mentionsOrder": { "type": ["boolean", "null"] },
+        "observedOn": { "$ref": "#/$defs/date" }
       },
       "additionalProperties": false
     },
