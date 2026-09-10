@@ -99,3 +99,12 @@ schema files must match their source records.
   [docs/ACCESSIBILITY.md](docs/ACCESSIBILITY.md) and on `/accessibility`. Until
   it is reviewed, list it as not covered; never let a new surface inherit an
   older evaluation.
+
+## Commercial solicitation
+
+Issues here are not open to bids. They are design records, written so a decision is
+reconstructable later, rather than scope documents for outside quoting. Unsolicited offers to
+implement one for a fee will be declined.
+
+Contributions through the normal fork-and-PR process are welcome, and `good first issue` is the
+place to start.
