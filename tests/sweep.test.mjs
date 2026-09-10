@@ -85,6 +85,19 @@ test("whitespace and tag churn do not change the text digest, but words do", () 
   assert.equal(a.basis, "text");
 });
 
+test("entities are unescaped once, not once per entity", () => {
+  // `&amp;lt;` is a literal "&lt;" on the page. Unescaping `&amp;` in one pass
+  // and `&lt;` in a later pass turns it into "<" -- the first pass writes an `&`
+  // the second consumes. CodeQL names it js/double-escaping, and it matters here
+  // because two pages differing only in escaping would produce one digest.
+  assert.equal(htmlToText("<p>a &amp;lt; b</p>"), "a &lt; b");
+  assert.equal(htmlToText("<p>Tom &amp; Jerry &lt;br&gt; &nbsp;end</p>"), "Tom & Jerry <br> end");
+  assert.notEqual(
+    digestOf(encoder.encode("<p>&amp;lt;</p>"), "text/html").sha256,
+    digestOf(encoder.encode("<p>&lt;</p>"), "text/html").sha256,
+  );
+});
+
 test("a PDF is digested over bytes and yields no text to read", () => {
   const digest = digestOf(encoder.encode("%PDF-1.7 ..."), "application/pdf");
   assert.equal(digest.basis, "bytes");
