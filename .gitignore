@@ -27,6 +27,10 @@
 /public/changes.xml
 /public/directives/
 
+# `npm run sweep -- --write-draft`. A worksheet and a draft patch for a person to
+# read and apply by hand; never data, and never committed from the tool.
+/.sweep/
+
 # misc
 .DS_Store
 *.pem
