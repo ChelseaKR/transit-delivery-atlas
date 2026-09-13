@@ -1,5 +1,5 @@
-import type { Metadata } from "next";
 import { DirectiveExplorer } from "@/components/DirectiveExplorer";
+import { PageStructuredData } from "@/components/PageStructuredData";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
 import { BUILD_DATE } from "@/lib/build-date";
@@ -12,10 +12,9 @@ import {
   themes,
 } from "@/lib/data";
 import { formatDate } from "@/lib/format";
+import { pageMetadata } from "@/lib/routes";
 
-export const metadata: Metadata = {
-  alternates: { canonical: "/" },
-};
+export const metadata = pageMetadata("/");
 
 export default function Home() {
   const explorerDirectives = directives.map((directive) => ({
@@ -45,6 +44,7 @@ export default function Home() {
 
   return (
     <>
+      <PageStructuredData path="/" />
       <SiteHeader />
       <main id="main-content" tabIndex={-1}>
         <section className="atlas-intro" aria-labelledby="atlas-title">

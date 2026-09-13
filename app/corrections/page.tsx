@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import { PageStructuredData } from "@/components/PageStructuredData";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
 import {
@@ -6,17 +6,14 @@ import {
   REVIEW_FEEDBACK_URL,
   SECURITY_POLICY_URL,
 } from "@/lib/feedback";
+import { pageMetadata } from "@/lib/routes";
 
-export const metadata: Metadata = {
-  title: "Corrections and review",
-  description:
-    "Suggest a source-backed correction or share structured review feedback about Transit Delivery Atlas.",
-  alternates: { canonical: "/corrections" },
-};
+export const metadata = pageMetadata("/corrections");
 
 export default function CorrectionsPage() {
   return (
     <>
+      <PageStructuredData path="/corrections" />
       <SiteHeader />
       <main id="main-content" className="document-page" tabIndex={-1}>
         <header className="document-hero">
