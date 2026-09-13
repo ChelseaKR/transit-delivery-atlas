@@ -33,12 +33,18 @@ export const OG_CARD_ALT =
   "Transit Delivery Atlas handoff rail from source to entity, timing, public evidence, and analysis";
 
 /**
- * The absolute URL of a path, in the form the build actually serves it.
+ * A canonical path in the form the build actually serves it.
  *
  * `trailingSlash: true` in `next.config.ts` means Next appends a slash to the
- * canonical it renders, so a copy of that URL built any other way would differ
- * from the tag by one character and be a different URL to a crawler.
+ * canonical it renders, so a copy of that path built any other way would differ
+ * by one character and be a different URL to a crawler. `lib/sitemap-lastmod.mjs`
+ * keys its dates on this form too.
  */
+export function servedPath(path: string): string {
+  return path === "/" ? "/" : `${path}/`;
+}
+
+/** The absolute URL of a path, in the form the build actually serves it. */
 export function absoluteUrl(path: string): string {
-  return path === "/" ? `${SITE_URL}/` : `${SITE_URL}${path}/`;
+  return `${SITE_URL}${servedPath(path)}`;
 }

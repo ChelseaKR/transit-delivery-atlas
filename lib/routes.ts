@@ -33,8 +33,6 @@ export interface RouteRecord {
   readonly title: string | null;
   /** `null` where the page inherits the layout's site-wide description. */
   readonly description: string | null;
-  /** Only where the record itself records a review date. */
-  readonly lastModified?: string;
 }
 
 const staticRoutes: readonly RouteRecord[] = [
@@ -98,7 +96,6 @@ const directiveRoutes: readonly RouteRecord[] = directives.map((directive) => ({
   path: `/directives/${directive.id}`,
   title: `${directive.label} ${directive.title}`,
   description: `Source-linked record for Executive Order N-7-26, section ${directive.locator.section}, with named entities, timing, public-evidence coverage, separately labeled analysis, and context-watchlist leads when available.`,
-  lastModified: directive.lastReviewedOn,
 }));
 
 export const routes: readonly RouteRecord[] = [...staticRoutes, ...directiveRoutes];

@@ -147,6 +147,43 @@ recorded here.
 
 ### Fixed
 
+- **The sitemap dated 21 URLs from one field and could not see two months of change
+  behind them.** Every directive URL carried `<lastmod>2026-07-12` -- the
+  `lastReviewedOn` on the directive record, identical across all 21 -- and the other
+  nine URLs carried none. Measured live on 2026-09-13: the evidence layer behind those
+  same pages had been swept on 2026-09-06 and records the pages render had been
+  re-reviewed in July and September. A directive page publishes its own record
+  *together with* the evidence records and watchlist items linked to it, so a linked
+  artifact re-reviewed in September changes what that page says, and one field on one
+  record could not represent it.
+
+  `<lastmod>` now comes from the record-level change log (`lib/changes.mjs`), which
+  already answers this question and is already gated. `lib/sitemap-lastmod.mjs` takes,
+  per route, the newest entry that declares that route as its path -- plus, for a
+  directive route, its own review date and every entry linking to it. The exported
+  sitemap now dates 23 of 30 URLs across four distinct dates (`2026-07-12`,
+  `2026-07-28`, `2026-08-21`, `2026-09-06`) instead of 21 across one.
+
+  **It is deliberately not the build date, which the page's own arithmetic would
+  suggest.** A directive page re-renders every build: the timing column writes "this
+  calculated date is 42 days after the build it is published from", and that number
+  moves daily. The bytes change; the document does not. `<lastmod>` is defined on
+  *significant* modification and a recalculated countdown is the named example of a
+  change that is not one, so stamping the build here would publish 30 URLs claiming
+  they changed this morning, every morning -- the defect this project files against
+  other sites, arriving through the front door. The change log already separates the
+  two with `observedBy`: a lapsed review is dated to the build that noticed it, and
+  only `observedBy: "data"` entries are read, so the exclusion holds by construction
+  rather than by a filter someone has to remember.
+
+  **Seven routes still carry no `<lastmod>`, and now there is a rule saying why.** The
+  element is optional and the honest artifact for "no dated record lives here" is
+  silence. `tests/hosting.test.mjs` reads the dates back out of `out/sitemap.xml` and
+  fails unless they are exactly the ones the committed records support, unless one is
+  malformed or after the build, and -- the case a correct-looking sitemap is otherwise
+  indistinguishable from -- unless at least one dated route reads something other than
+  the build date.
+
 - **The changelog announced a record page the site does not serve.** A twenty-line
   `[Unreleased]` entry stated that every body the order names now has its own record page,
   that the site lists the registry alphabetically under a record-page route, and that an
