@@ -5,6 +5,9 @@ import { fileURLToPath } from "node:url";
 import { runInNewContext } from "node:vm";
 import test from "node:test";
 
+import { deriveChanges } from "../lib/changes.mjs";
+import { lastModifiedByRoute } from "../lib/sitemap-lastmod.mjs";
+
 const projectRoot = new URL("../", import.meta.url);
 
 async function readProjectFile(path) {
@@ -94,6 +97,72 @@ test("sitemap lists every static route and every directive record exactly once",
     locs.length,
     staticPaths.length + directives.length,
     "the sitemap lists a URL the app does not export",
+  );
+});
+
+test("every sitemap date is one the committed records support, and none is the build's", async () => {
+  // Read back out of the exported artifact, not out of the function that wrote it.
+  // `app/sitemap.ts` derives the dates and Next serialises them; those are two pieces
+  // of code and only the second one is published. The sprout lane hit exactly this: a
+  // build that printed an honest count while the file beside it carried the build date
+  // on every URL.
+  const [sitemap, version, directiveData, evidence, watchlist, verification, changes] =
+    await Promise.all([
+      readProjectFile("out/sitemap.xml"),
+      readProjectFile("out/version.json").then(JSON.parse),
+      readProjectFile("data/directives.json").then(JSON.parse),
+      readProjectFile("data/evidence.json").then(JSON.parse),
+      readProjectFile("data/watchlist.json").then(JSON.parse),
+      readProjectFile("data/evidence-verification.json").then(JSON.parse),
+      readProjectFile("data/changes.json").then(JSON.parse),
+    ]);
+
+  const buildDate = String(version.builtAt).slice(0, 10);
+  const expected = lastModifiedByRoute({
+    entries: deriveChanges({
+      directives: directiveData.directives,
+      evidence,
+      watchlist,
+      verification,
+      changes,
+      buildDate,
+    }),
+    directives: directiveData.directives,
+  });
+
+  const published = new Map();
+  for (const block of sitemap.matchAll(/<url>([\s\S]*?)<\/url>/g)) {
+    const loc = block[1].match(/<loc>([^<]+)<\/loc>/)[1];
+    const stamp = block[1].match(/<lastmod>([^<]+)<\/lastmod>/);
+    published.set(loc.replace("https://transit.chelseakr.com", ""), stamp ? stamp[1] : undefined);
+  }
+
+  assert.ok(published.size > 0, "the exported sitemap lists no URL at all");
+
+  let dated = 0;
+  for (const [route, stamp] of published) {
+    const supported = expected.get(route);
+    assert.equal(
+      stamp,
+      supported,
+      supported === undefined
+        ? `${route} is dated ${stamp} and no committed record carries that date`
+        : `${route} is dated ${stamp}; the records behind it say ${supported}`,
+    );
+    if (stamp === undefined) continue;
+    dated += 1;
+    assert.match(stamp, /^\d{4}-\d{2}-\d{2}$/, `${route} has a malformed lastmod: ${stamp}`);
+    assert.ok(stamp <= buildDate, `${route} is dated ${stamp}, after the build (${buildDate})`);
+  }
+
+  // A page re-renders every build -- the timing column counts days against it -- so a
+  // sitemap in which every entry reads the build date is the failure mode here, and it
+  // would otherwise be indistinguishable from a correct one on a day when a record
+  // really did change.
+  assert.ok(dated > 0, `no route carries a lastmod at all, of ${published.size}`);
+  assert.ok(
+    [...published.values()].some((stamp) => stamp !== undefined && stamp !== buildDate),
+    `every dated route reads the build date (${buildDate}); nothing here is about the content`,
   );
 });
 
