@@ -1,6 +1,6 @@
-import type { Metadata } from "next";
 import Link from "next/link";
 import { ArtifactIntegrityRow } from "@/components/ArtifactIntegrityRow";
+import { PageStructuredData } from "@/components/PageStructuredData";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
 import {
@@ -11,14 +11,10 @@ import {
 import { CONTENT_CORRECTION_URL } from "@/lib/feedback";
 import { formatDate } from "@/lib/format";
 import { BUILD_DATE } from "@/lib/build-date";
+import { pageMetadata } from "@/lib/routes";
 import { reviewCurrency } from "@/lib/watchlist-review.mjs";
 
-export const metadata: Metadata = {
-  title: "Public evidence",
-  description:
-    "Reviewed public artifacts linked to Transit Delivery Atlas directives, with provenance, review dates, and explicit coverage limitations.",
-  alternates: { canonical: "/evidence" },
-};
+export const metadata = pageMetadata("/evidence");
 
 export default function EvidencePage() {
   const latestSweep = evidenceScope.sweeps[evidenceScope.sweeps.length - 1];
@@ -30,6 +26,7 @@ export default function EvidencePage() {
   );
   return (
     <>
+      <PageStructuredData path="/evidence" />
       <SiteHeader />
       <main id="main-content" className="document-page" tabIndex={-1}>
         <header className="document-hero document-hero--evidence">

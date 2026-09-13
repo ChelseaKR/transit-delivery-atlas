@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { ArtifactIntegrityRow } from "@/components/ArtifactIntegrityRow";
 import { AskDirective } from "@/components/AskDirective";
 import { LayerLabel } from "@/components/LayerLabel";
+import { PageStructuredData } from "@/components/PageStructuredData";
 import { PrintRecordButton } from "@/components/PrintRecordButton";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
@@ -16,12 +17,15 @@ import { timingCurrency } from "@/lib/directive-timing.mjs";
 import { reviewCurrency } from "@/lib/watchlist-review.mjs";
 import { formatDate } from "@/lib/format";
 import { TIMING_PASSED_LABEL, timingCurrencyNote } from "@/lib/register-labels";
+import { pageMetadata } from "@/lib/routes";
 
 // Build-time gate for the optional question service (ADR-0002). The panel is
 // rendered only where a service is actually configured to answer; with no
 // endpoint the record renders with no AI affordance at all, rather than a
 // control whose only possible reply is that it does not exist.
 const askEndpoint = resolveAskEndpoint(process.env.NEXT_PUBLIC_ASK_ENDPOINT);
+
+const directivePath = (id: string) => `/directives/${id}`;
 
 interface PageProps {
   params: Promise<{ id: string }>;
@@ -35,11 +39,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const { id } = await params;
   const directive = directiveById(id);
   if (!directive) return {};
-  return {
-    title: `${directive.label} ${directive.title}`,
-    description: `Source-linked record for Executive Order N-7-26, section ${directive.locator.section}, with named entities, timing, public-evidence coverage, separately labeled analysis, and context-watchlist leads when available.`,
-    alternates: { canonical: `/directives/${directive.id}` },
-  };
+  return pageMetadata(directivePath(directive.id));
 }
 
 export default async function DirectivePage({ params }: PageProps) {
@@ -64,6 +64,7 @@ export default async function DirectivePage({ params }: PageProps) {
 
   return (
     <>
+      <PageStructuredData path={directivePath(directive.id)} />
       <SiteHeader />
       <main id="main-content" className="directive-page" tabIndex={-1}>
         <header className="directive-hero">

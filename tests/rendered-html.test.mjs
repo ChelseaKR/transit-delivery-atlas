@@ -190,12 +190,18 @@ test("this build configures no question service, so it offers no AI affordance",
   // Nothing on any page loads a resource from ko-fi.com, which is what this
   // check is really guarding: `default-src 'self'` means an origin named here
   // can be navigated TO, never fetched FROM.
+  // `schema.org` is the `@context` of the page's structured data: a vocabulary
+  // identifier, not an address. Nothing resolves it -- a consumer that knows
+  // schema.org already knows what the terms mean, and one that does not is not
+  // served by this page fetching anything. It is named here for the same reason
+  // the others are: so that adding an origin to a page stays a decision.
   const allowedHosts = new Set([
     "transit.chelseakr.com",
     "www.gov.ca.gov",
     "dot.ca.gov",
     "github.com",
     "ko-fi.com",
+    "schema.org",
   ]);
   const hosts = new Set();
   for (const [absoluteUrl] of html.matchAll(/https?:\/\/[^\s"'<>)\\]+/gi)) {

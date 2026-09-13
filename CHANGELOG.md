@@ -7,6 +7,47 @@ recorded here.
 
 ### Added
 
+- **Every page now states what it is and where it sits, in a form a crawler can
+  read.** Thirty routes served thirty pages that no machine-readable node described
+  at all: unique titles, unique descriptions, a sitemap and a crawl that agreed
+  exactly, and nothing that said *this is a page of this site, and here is the trail
+  to it*. Each page now carries one `application/ld+json` graph of four nodes -- the
+  site, the page, its breadcrumb trail, and the share card.
+
+  Nothing in the graph is typed twice. The node's `name` is the page's `<title>`, its
+  `description` is the `<meta name="description">`, its `url` is the canonical, and
+  the trail is walked from the path the page is actually at rather than listed. That
+  required giving each route's title, description and canonical a single home:
+  `app/sitemap.ts` had kept its own list of static paths under a comment asking
+  whoever edited it to keep it in step with the pages, and `lib/routes.ts` now holds
+  one record per route that the head tags, the sitemap, the trail and the graph all
+  read. The share card's dimensions are read off `public/og.png` rather than stated,
+  so the tags cannot keep describing an image the file stopped being.
+
+  A trail step is only ever a route the site serves. `/research` and `/directives`
+  are route folders with no page of their own, and a crumb linking to either would
+  be a link to a 404, so the derivation skips a segment it cannot resolve instead of
+  publishing one.
+
+  **What it deliberately does not say.** There is no `Dataset`, no `DataCatalog`, no
+  `distribution` and no DCAT or VoID vocabulary in any page, and no per-directive
+  node of any type. A dataset descriptor is not a description, it is an invitation:
+  it exists so that dataset search engines and open-data catalogs harvest the thing
+  it names, and a catalog listing is far easier to acquire than to withdraw. A
+  machine-readable record for each directive, repeated across thirty pages, is the
+  same thing wearing a different `@type` -- a derived corpus of a signed state order
+  published for harvest -- and `Legislation` or `GovernmentService` would read as the
+  State of California publishing this, which every page of it denies. There is no
+  `Organization` node either, because nothing on the site names a publisher and
+  inventing one would publish an entity that does not exist.
+
+  `tests/structured-data.test.mjs` holds all of it. It parses the built pages with a
+  tokenizer that matches on the element and its `type` attribute -- never on the
+  string `application/ld+json`, which an `accept` attribute also contains -- reports
+  coverage as two numbers rather than one, fails if a served page carries no node or
+  if the examined set is empty, holds every value against the tag it came from, and
+  forbids the harvest vocabulary and the per-record types permanently.
+
 - **The review sweep can now be run, not only attested.** `docs/EVIDENCE-MODEL.md`
   commits this project to periodically checking the official sources that would
   publish an artifact citing the order, and every sweep so far has been a manual
