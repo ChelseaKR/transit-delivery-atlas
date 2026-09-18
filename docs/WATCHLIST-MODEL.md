@@ -82,7 +82,7 @@ site is a static export that can sit unchanged at the edge for months.
   that build, and a note that its watch-for statements are what the next review
   will check rather than findings. The watchlist page counts the lapsed items
   and dates that count to the build. A `scheduled-event` source date that has
-  passed without a later review is labelled as such instead of rendering as a
+  passed without a later review is labeled as such instead of rendering as a
   plain date.
 - **The gate says so.** `scripts/validate-data.mjs` warns from `nextReviewOn`
   and fails the release once an item is more than

@@ -59,7 +59,7 @@ test("statically renders the complete atlas home page", async () => {
   assert.doesNotMatch(html, /codex-preview|Your site is taking shape|react-loading-skeleton/i);
 });
 
-test("no register row publishes a bare evidence count or an unlabelled layer", async () => {
+test("no register row publishes a bare evidence count or an unlabeled layer", async () => {
   const html = (await (await render()).text()).replaceAll("<!-- -->", "");
   const [directiveData, evidenceData] = await Promise.all([
     readJson("data/directives.json"),
@@ -84,9 +84,9 @@ test("no register row publishes a bare evidence count or an unlabelled layer", a
     /No reviewed evidence linked in this release\. This is a statement about Atlas coverage, not evidence that no implementation activity or public record exists\./,
   );
 
-  const labelled = [...html.matchAll(/directive-row__provenance/g)].length;
+  const labeled = [...html.matchAll(/directive-row__provenance/g)].length;
   assert.equal(
-    labelled,
+    labeled,
     directiveData.directives.length,
     "every rendered row must carry a provenance block",
   );

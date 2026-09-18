@@ -156,7 +156,7 @@ test("the verifier rejects paraphrase, reordering, and trivially short fragments
   );
 });
 
-test("normalisation survives the punctuation the scan gets wrong", () => {
+test("normalization survives the punctuation the scan gets wrong", () => {
   assert.equal(normalizeForQuote("first- and last-mile"), "first and last mile");
   assert.equal(normalizeForQuote("Statutes.of 2023"), "statutes of 2023");
   assert.equal(normalizeForQuote("“Order”—now"), "order now");
@@ -179,7 +179,7 @@ function twelvePageText() {
 test("a quotation past page nine is located on the page it is actually on", () => {
   const text = twelvePageText();
 
-  // The page markers are matched with `\d+`. With `\d` the split stopped recognising
+  // The page markers are matched with `\d+`. With `\d` the split stopped recognizing
   // markers at `=== PAGE 10 ===`, so `pageOfQuote` carried the last page it had matched
   // forward and published 9 for a quotation on page 11 — a wrong locator, not a missing
   // one, in the one field a reader uses to check a quotation against the signed image.

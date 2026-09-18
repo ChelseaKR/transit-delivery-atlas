@@ -256,7 +256,7 @@ test("the day the check falls due is not yet overdue", () => {
 });
 
 test("the statement refuses to be made without a reference date", () => {
-  // An optional build date would silently restore the non-expiring behaviour
+  // An optional build date would silently restore the non-expiring behavior
   // this test exists to prevent, so the parameter is required and fails loudly.
   // Making it required also surfaced a third caller nobody had found: the
   // question-answering service in service/knowledge.ts.

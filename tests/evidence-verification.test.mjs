@@ -106,7 +106,7 @@ test("a redirect to a new address with the same bytes is moved, not intact", asy
 
 test("a media type the record does not claim is recorded, not escalated to changed", async () => {
   // Identical bytes cannot be a different document. This is the publisher's server
-  // relabelling the response, and calling it `changed` would say something untrue
+  // relabeling the response, and calling it `changed` would say something untrue
   // about the file -- so it is written down and the outcome stays `intact`.
   const log = await verifyEvidence({
     records: [record()],
@@ -252,7 +252,7 @@ test("the committed log covers every committed evidence record", async () => {
 test("the committed log records a real comparison, not an empty one", async () => {
   const verification = await readJson("data/evidence-verification.json");
   // Every recorded outcome must be one this vocabulary defines. A log carrying an
-  // unrecognised word would render on the evidence page as if it were a verdict.
+  // unrecognized word would render on the evidence page as if it were a verdict.
   for (const record of verification.records) {
     assert.ok(["intact", "changed", "moved", "gone"].includes(record.artifact.outcome));
     assert.ok(["reachable", "moved", "gone"].includes(record.context.outcome));

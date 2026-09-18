@@ -146,7 +146,7 @@ test("a required constraint is only claimed where the column is genuinely always
   }
 });
 
-test("the licence split is stated, not collapsed into one identifier", () => {
+test("the license split is stated, not collapsed into one identifier", () => {
   assert.equal(dataPackage.licenses[0].name, "CC-BY-4.0");
   assert.match(dataPackage.licenseNotes, /NOT relicensed/);
   assert.match(dataPackage.licenseNotes, /CONTENT-LICENSE\.md/);

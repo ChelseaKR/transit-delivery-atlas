@@ -20,7 +20,7 @@ make an exception for its own feature.
 Both directions are pinned by `tests/ask-gate.test.mjs`: the ordinary build is
 asserted to render no panel on any of the twenty-one directive pages, and a
 second, isolated build with `NEXT_PUBLIC_ASK_ENDPOINT` set is asserted to
-render it, labelled and inert until used. (`NEXT_EXPORT_DIR` in
+render it, labeled and inert until used. (`NEXT_EXPORT_DIR` in
 `next.config.ts` exists only so that second build cannot overwrite the `out/`
 artifact the rest of the suite reads.)
 

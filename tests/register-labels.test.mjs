@@ -29,7 +29,7 @@ test("absence renders as absence, not as a count of zero", () => {
   assert.match(evidenceCell(1, "Directive 5").detail, /1 reviewed public artifact is linked/);
 });
 
-test("a row that cannot be labelled fails instead of rendering", () => {
+test("a row that cannot be labeled fails instead of rendering", () => {
   assert.throws(
     () => evidenceCell(Number.NaN, "Directive 1(a)"),
     /must not render/,
@@ -67,7 +67,7 @@ test("the provenance sentence names all three layers", () => {
   );
 });
 
-test("a calculated date is labelled as calculated, with its derivation", () => {
+test("a calculated date is labeled as calculated, with its derivation", () => {
   const detail = timingDetail(timing, "Directive 1(a)");
   assert.match(detail, /Calculated planning date, not text from the order/);
   assert.match(detail, /Within 120 days of this Order/);

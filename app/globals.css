@@ -1877,7 +1877,7 @@ code {
 }
 
 /* A calculated planning date that is behind the build. The state is carried by
-   the flag's text, never by colour alone. */
+   the flag's text, never by color alone. */
 .timing-flag {
   justify-self: start;
   padding: 0.15rem 0.4rem;
@@ -2148,7 +2148,7 @@ code {
 }
 
 /* The optional AI question panel: visually separate from the three canonical
-   layers, labelled before it does anything, inert until used. */
+   layers, labeled before it does anything, inert until used. */
 .ask-directive {
   margin-top: 2.5rem;
   padding: 1.5rem;
@@ -3661,7 +3661,7 @@ a {
 }
 
 /* The support link wraps an image rather than text. `.site-footer a` sets an
-   underline colour and thickness for the text links beside it, which would
+   underline color and thickness for the text links beside it, which would
    otherwise draw a rule under the button artwork; inline-flex also drops the
    inline-baseline gap beneath the image. */
 .site-footer__kofi {

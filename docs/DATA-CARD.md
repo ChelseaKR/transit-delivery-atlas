@@ -1,7 +1,7 @@
 # Data card — Transit Delivery Atlas public exports
 
 This card describes the published dataset as a whole. The machine-readable contract for
-every file — column names, types, required-ness, licence and provenance — is
+every file — column names, types, required-ness, license and provenance — is
 [`public/data/datapackage.json`](../public/data/datapackage.json), a Frictionless Data
 Package generated at build from the same values the CSVs are written from, with a
 [DCAT-AP record](../public/data/dcat.jsonld) beside it for catalog harvesters.
@@ -74,7 +74,7 @@ Set by the data, not by this card:
 A lapsed review date is published as lapsed and blocks a release after the documented
 grace window. It is never quietly renewed.
 
-## Licence
+## License
 
 Split, and the split matters:
 

@@ -104,7 +104,7 @@ Consequential choices:
 - The README's standards table row for AI Evaluation changes from N/A to
   Applies, and every place that said the site has no model component now says
   "none in the static site; an optional runtime service under ADR-0002".
-- AI output is always labelled AI-generated and unofficial, is never a
+- AI output is always labeled AI-generated and unofficial, is never a
   compliance determination, and sits under the same "not an official State of
   California website" notice as everything else.
 - The verifier and the refusal rules are the review that exists for runtime
@@ -125,7 +125,7 @@ Consequential choices:
   form; the service inserts it.
 - **Build-time generated summaries instead of runtime answers.** Rejected by
   the owner as not meeting the product goal; the reviewed `analysis.json`
-  summaries remain and are a separate, labelled layer.
+  summaries remain and are a separate, labeled layer.
 - **A Python service.** Considered; rejected because the repository is
   Node-native and the existing gate (`npm run check`) can cover a TypeScript
   service without a second toolchain in CI.
