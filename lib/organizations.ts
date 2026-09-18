@@ -104,7 +104,7 @@ function rolesFor(organizationId: string) {
 /**
  * Dependency statements on the directives this body explicitly leads.
  *
- * Analysis, and labelled as analysis wherever it renders. It is attached to the
+ * Analysis, and labeled as analysis wherever it renders. It is attached to the
  * body only through the source-role field, so the page never implies that an
  * analyst's dependency statement is something the body said or agreed to.
  */

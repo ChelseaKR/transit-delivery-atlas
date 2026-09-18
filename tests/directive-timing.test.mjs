@@ -87,7 +87,7 @@ test("a passed calculated date is stated as arithmetic, never as a delivery find
     assert.doesNotMatch(
       note,
       forbidden,
-      "a passed planning date must not be labelled with accountability language",
+      "a passed planning date must not be labeled with accountability language",
     );
   }
   assert.doesNotMatch(TIMING_PASSED_LABEL, /\boverdue\b|\blate\b|\bmissed\b/i);

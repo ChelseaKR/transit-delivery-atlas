@@ -2,10 +2,15 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { LayerLabel } from "@/components/LayerLabel";
+import { PageStructuredData } from "@/components/PageStructuredData";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
+import { source } from "@/lib/data";
 import { formatDate } from "@/lib/format";
 import { organizationById, organizationRecords } from "@/lib/organizations";
+import { pageMetadata } from "@/lib/routes";
+
+const organizationPath = (id: string) => `/organizations/${id}`;
 
 interface PageProps {
   params: Promise<{ id: string }>;
@@ -19,11 +24,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const { id } = await params;
   const record = organizationById(id);
   if (!record) return {};
-  return {
-    title: record.name,
-    description: `Everything Executive Order N-7-26 says about ${record.name}, grouped by source-role label with section locators and reviewed excerpts, plus separately labeled analysis and reviewed public evidence published under this name.`,
-    alternates: { canonical: `/organizations/${record.id}` },
-  };
+  return pageMetadata(organizationPath(record.id));
 }
 
 export default async function OrganizationPage({ params }: PageProps) {
@@ -33,6 +34,7 @@ export default async function OrganizationPage({ params }: PageProps) {
 
   return (
     <>
+      <PageStructuredData path={organizationPath(record.id)} />
       <SiteHeader />
       <main id="main-content" className="directive-page" tabIndex={-1}>
         <header className="directive-hero" data-organization-id={record.id}>
@@ -59,6 +61,14 @@ export default async function OrganizationPage({ params }: PageProps) {
               not assign an action inside a compound directive, and it is not an
               account of anything anyone has done.
             </p>
+            <p className="layer-intro">
+              Source: signed Executive Order N-7-26, effective{" "}
+              <time dateTime={source.effectiveOn}>{formatDate(source.effectiveOn)}</time>,
+              reviewed{" "}
+              <time dateTime={source.retrievedOn}>{formatDate(source.retrievedOn)}</time>.
+              Excerpts are transcribed from a scanned, untagged PDF, and the
+              source image controls.
+            </p>
 
             {record.roles.length > 0 ? (
               record.roles.map(({ role, label, appearances }) => (
@@ -84,7 +94,10 @@ export default async function OrganizationPage({ params }: PageProps) {
                         <small>
                           Section {appearance.section};{" "}
                           {appearance.pages.length > 1 ? "pages" : "page"}{" "}
-                          {appearance.pages.join("–")}
+                          {appearance.pages.join("–")} ·{" "}
+                          <a href={`${source.url}#page=${appearance.pages[0]}`} rel="noreferrer">
+                            Verify in signed PDF <span aria-hidden="true">↗</span>
+                          </a>
                         </small>
                       </li>
                     ))}
@@ -232,6 +245,11 @@ export default async function OrganizationPage({ params }: PageProps) {
             </aside>
           ) : null}
 
+          <p className="evidence-method-link">
+            <Link href="/methodology">
+              Read how the Atlas separates source, evidence, and analysis
+            </Link>
+          </p>
           <p className="evidence-method-link">
             <Link href="/organizations">Back to every body and group named in the order</Link>
           </p>

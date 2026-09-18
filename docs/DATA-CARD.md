@@ -1,7 +1,7 @@
 # Data card — Transit Delivery Atlas public exports
 
 This card describes the published dataset as a whole. The machine-readable contract for
-every file — column names, types, required-ness, licence and provenance — is
+every file — column names, types, required-ness, license and provenance — is
 [`public/data/datapackage.json`](../public/data/datapackage.json), a Frictionless Data
 Package generated at build from the same values the CSVs are written from, with a
 [DCAT-AP record](../public/data/dcat.jsonld) beside it for catalog harvesters.
@@ -37,8 +37,10 @@ passed date is published as passed. Neither is a status.
 ## Classification and personal data
 
 Public information only. The exports contain no personal data: no names of individuals,
-no contact details, no user data of any kind. There are no accounts, no analytics and no
-trackers on the site the exports are published from, so there is nothing to de-identify.
+no contact details, no user data of any kind, and no script. The site the exports are
+published from has no accounts; its HTML pages load Google Analytics 4
+([ADR-0003](adr/0003-google-analytics-4.md)), which counts visits to pages and never
+touches the exports, so there is nothing in them to de-identify.
 
 Organizations are public bodies, identified by their published names.
 
@@ -72,7 +74,7 @@ Set by the data, not by this card:
 A lapsed review date is published as lapsed and blocks a release after the documented
 grace window. It is never quietly renewed.
 
-## Licence
+## License
 
 Split, and the split matters:
 

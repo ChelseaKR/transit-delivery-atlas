@@ -27,12 +27,12 @@ test("the sweep reads the whole static export, not a sample of it", async () => 
   // A screen that runs over zero pages passes forever. The export has one page
   // per route plus one per directive plus one per registered organization, so the
   // floor is the twenty-one directive pages, the twenty-three organization pages,
-  // and the eleven route pages. Raising this floor with each route is the point:
+  // and the twelve route pages. Raising this floor with each route is the point:
   // a floor left behind by the export stops being a floor.
   const pages = await exportedPages();
 
   assert.ok(
-    pages.length >= 55,
+    pages.length >= 56,
     `expected the full static export, found ${pages.length} HTML file(s): run the build first`,
   );
 
@@ -67,19 +67,19 @@ test("the sweep reads the whole static export, not a sample of it", async () => 
 
 test("no exported page publishes a verdict about a directive", async () => {
   const pages = await exportedPages();
-  const offences = [];
+  const offenses = [];
 
   for (const page of pages) {
     const html = await readFile(page, "utf8");
     for (const finding of unregisteredVerdictSentences(html)) {
-      offences.push(`${relative(page)}\n    ${finding.pattern}\n    ${finding.sentence}`);
+      offenses.push(`${relative(page)}\n    ${finding.pattern}\n    ${finding.sentence}`);
     }
   }
 
   assert.deepEqual(
-    offences,
+    offenses,
     [],
-    `The site published ${offences.length} sentence(s) carrying verdict language with no registered reason.\n\n${offences.join(
+    `The site published ${offenses.length} sentence(s) carrying verdict language with no registered reason.\n\n${offenses.join(
       "\n\n",
     )}\n\nEither reword the prose, or, if the sentence disclaims the verdict rather than making one, register it in PERMITTED_VERDICT_SENTENCES with the reason it is not a finding.`,
   );

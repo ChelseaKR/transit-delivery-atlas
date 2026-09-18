@@ -121,7 +121,7 @@
           },
           "SecurityHeadersConfig": {
             "ContentSecurityPolicy": {
-              "ContentSecurityPolicy": "default-src 'self'; base-uri 'self'; connect-src 'self'; font-src 'self' data:; form-action 'self'; frame-ancestors 'none'; img-src 'self' data:; object-src 'none'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'",
+              "ContentSecurityPolicy": "default-src 'self'; base-uri 'self'; connect-src 'self' https://*.google-analytics.com https://*.analytics.google.com; font-src 'self' data:; form-action 'self'; frame-ancestors 'none'; img-src 'self' data: https://*.google-analytics.com https://*.analytics.google.com; object-src 'none'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com; style-src 'self' 'unsafe-inline'",
               "Override": true
             },
             "ContentTypeOptions": {

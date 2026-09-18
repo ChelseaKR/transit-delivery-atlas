@@ -16,7 +16,8 @@ recorded here.
   the directive page uses: source, then evidence, then analysis, then context.
 
   Source-role appearances are exactly the directive-level fields they come from, carried
-  with the section locator and the reviewed excerpt behind each one. Nothing is inferred
+  with the section locator, the reviewed excerpt and a link to that page of the signed PDF
+  behind each one, under the order's effective and review dates. Nothing is inferred
   about which action inside a compound directive a named body owns, because no such
   record exists; the methodology says so and a page per body is where inventing one would
   be easiest.
@@ -31,21 +32,132 @@ recorded here.
   the signed instrument does not name: `directive-organizations.csv` is keyed on the
   (directive, organization) pair and therefore cannot represent an unnamed member at all,
   so a registry export built the same way would report a smaller registry than exists.
-  The Frictionless resource, the DCAT distribution, the sitemap, the CloudFront
+  The Frictionless resource, the DCAT distribution, the route records in `lib/routes.ts`
+  (and with them the sitemap, the head tags and the structured data), the CloudFront
   clean-route cases, the accessibility route classification and the published-language
   screen's page floor all move with it; the screen's floor was raised from 31 pages to
-  55, because a floor the export has outgrown is not a floor.
+  56, because a floor the export has outgrown is not a floor.
 
   Ordering is alphabetical and by nothing else. An order by appearance count would read
   as a ranking of importance, effort or responsibility, and this register ranks nothing.
+
+- **Every page now states what it is and where it sits, in a form a crawler can
+  read.** Thirty-one routes served thirty-one pages that no machine-readable node described
+  at all: unique titles, unique descriptions, a sitemap and a crawl that agreed
+  exactly, and nothing that said *this is a page of this site, and here is the trail
+  to it*. Each page now carries one `application/ld+json` graph of four nodes -- the
+  site, the page, its breadcrumb trail, and the share card.
+
+  Nothing in the graph is typed twice. The node's `name` is the page's `<title>`, its
+  `description` is the `<meta name="description">`, its `url` is the canonical, and
+  the trail is walked from the path the page is actually at rather than listed. That
+  required giving each route's title, description and canonical a single home:
+  `app/sitemap.ts` had kept its own list of static paths under a comment asking
+  whoever edited it to keep it in step with the pages, and `lib/routes.ts` now holds
+  one record per route that the head tags, the sitemap, the trail and the graph all
+  read. The share card's dimensions are read off `public/og.png` rather than stated,
+  so the tags cannot keep describing an image the file stopped being.
+
+  A trail step is only ever a route the site serves. `/research` and `/directives`
+  are route folders with no page of their own, and a crumb linking to either would
+  be a link to a 404, so the derivation skips a segment it cannot resolve instead of
+  publishing one.
+
+  **What it deliberately does not say.** There is no `Dataset`, no `DataCatalog`, no
+  `distribution` and no DCAT or VoID vocabulary in any page, and no per-directive
+  node of any type. A dataset descriptor is not a description, it is an invitation:
+  it exists so that dataset search engines and open-data catalogs harvest the thing
+  it names, and a catalog listing is far easier to acquire than to withdraw. A
+  machine-readable record for each directive, repeated across thirty-one pages, is the
+  same thing wearing a different `@type` -- a derived corpus of a signed state order
+  published for harvest -- and `Legislation` or `GovernmentService` would read as the
+  State of California publishing this, which every page of it denies. There is no
+  `Organization` node either, because nothing on the site names a publisher and
+  inventing one would publish an entity that does not exist.
+
+  `tests/structured-data.test.mjs` holds all of it. It parses the built pages with a
+  tokenizer that matches on the element and its `type` attribute -- never on the
+  string `application/ld+json`, which an `accept` attribute also contains -- reports
+  coverage as two numbers rather than one, fails if a served page carries no node or
+  if the examined set is empty, holds every value against the tag it came from, and
+  forbids the harvest vocabulary and the per-record types permanently.
+
+- **Google Analytics 4 on the pages, and a `/privacy` page that says what it
+  records (ADR-0003).** Per the owner's 2026-09-17 decision to run GA4 on every
+  public site in the portfolio. `lib/analytics.ts` holds the measurement ID
+  (`G-SEHF9W5L74`) and an inline loader `app/layout.tsx` puts in every page's
+  `<head>`. It loads nothing off `transit.chelseakr.com`, so no local, test or
+  CI build contacts Google, and nothing under Global Privacy Control, Do Not
+  Track, or the new footer "Opt out of analytics" control, which is remembered
+  in `localStorage` under `transit-delivery-atlas:analytics-opt-out`. Google
+  signals and ad personalization are off, the three advertising consent
+  settings are denied everywhere, and `analytics_storage` is denied by default
+  in the EEA, the UK and Switzerland (cookieless pings there) and granted
+  elsewhere. Links navigate on the client, so gtag's own page view is off and
+  `components/AnalyticsPageViews.tsx` sends one per route, with the query string
+  cut to `utm_*` parameters: the explorers keep what a reader types there. The
+  CloudFront CSP in `infra/static-site.json` now allows
+  `www.googletagmanager.com` for scripts and `*.google-analytics.com` and
+  `*.analytics.google.com` for connections and images; that takes a stack
+  update to reach the live site. This reverses the site's earlier "no
+  analytics" position; README, SECURITY.md, CONTRIBUTING.md,
+  `docs/DATA-CARD.md`, `docs/AI-SERVICE.md` and the two entries below were
+  changed to match.
+
+- **The review sweep can now be run, not only attested.** `docs/EVIDENCE-MODEL.md`
+  commits this project to periodically checking the official sources that would
+  publish an artifact citing the order, and every sweep so far has been a manual
+  crawl of a dozen pages whose record -- a `sweeps[]` entry and a `lastCheckedOn`
+  per source -- was a statement nobody could reproduce. `npm run sweep` fetches
+  every review source and every watchlist item and prints a worksheet saying what
+  moved.
+
+  It is an assistant and not an author, by construction rather than by care: the
+  program has no code path that edits a record. `--write-draft` puts a worksheet
+  and a patch in an untracked `.sweep/`, and a person applies the patch by hand.
+  `nextReviewOn` is never touched, and nothing resembling an evidence record is
+  ever drafted.
+
+  Three distinctions it will not collapse, each of which is the same defect in a
+  different place. A transport failure or an HTTP error is `retrieval-failed`,
+  carries no observation to store and does not move `lastCheckedOn` -- storing a
+  digest of an error page would make the next sweep compare against the outage. A
+  first sweep is `no-baseline`, never "unchanged": "unchanged since 2026-08-21"
+  asserts that something was compared, and with nothing stored nothing was. And a
+  page whose text this runtime cannot read -- a PDF -- is `not-established` on the
+  order reference rather than `absent`, because "N-7-26 is not on this page" would
+  be a claim about a document nobody read.
+
+  **The digest is taken over extracted text, not raw bytes, and every source is
+  fetched twice.** The link-integrity check refuses to hash a context URL, and says
+  why: a publisher's index page "changes whenever they publish anything, and hashing
+  it would report `changed` on every run, which is a check that fails for a reason
+  that is not drift". Every review source is such a page. Here `changed` means *go
+  and look*, which is what a sweep is for -- but a rotating request id or an embedded
+  build stamp would flip a byte digest every run and make the signal worthless while
+  looking like a busy publisher. Text extraction removes the commonest churn, and the
+  second fetch catches the rest: two different digests in one run means the page is
+  **not watchable by digest**, reported as that rather than as changed, and not
+  offered as a baseline. Churn that is stable within a burst and moves across days is
+  invisible to a single run, and the doc says so.
+
+  There is no text diff. Only a digest is retained, so a changed page can be reported
+  as changed and no further; keeping the previous text would mean retaining copies of
+  other people's pages, which is #132.
+
+  `lastObservation` (`{sha256, basis, mentionsOrder, observedOn}`) is a new optional
+  field on a review source and on a watchlist item, in both JSON Schemas and the
+  validator. No source carries one yet, so today every source reports `no-baseline`
+  -- which is the true state of a register that has never been swept by machine, and
+  the first thing this change makes sayable.
 
 - **A dated, record-level change log, and an Atom feed of it.** The Atlas had no way
   for a reader to learn that it had learned something without loading the site and
   comparing it with what they remembered. `/changes.xml` is an Atom 1.0 feed and
   `/changes.json` the same entries as data, with a filtered feed per directive at
-  `/directives/<id>/changes.xml`. The site has no accounts, no analytics and no
-  subscriptions by design, and a static feed is the one push channel that keeps all
-  three true.
+  `/directives/<id>/changes.xml`. The site has no accounts and no subscriptions by
+  design, and a static feed is the one push channel that keeps both true; a feed
+  carries no script, so reading one is not measured.
 
   Entries are derived, not written: review sweeps and the evidence records each sweep
   added, re-reviews on both curated layers, cited-artifact re-checks read from the
@@ -90,6 +202,43 @@ recorded here.
   for them, and all four context URLs answered.
 
 ### Fixed
+
+- **The sitemap dated 21 URLs from one field and could not see two months of change
+  behind them.** Every directive URL carried `<lastmod>2026-07-12` -- the
+  `lastReviewedOn` on the directive record, identical across all 21 -- and the other
+  nine URLs carried none. Measured live on 2026-09-13: the evidence layer behind those
+  same pages had been swept on 2026-09-06 and records the pages render had been
+  re-reviewed in July and September. A directive page publishes its own record
+  *together with* the evidence records and watchlist items linked to it, so a linked
+  artifact re-reviewed in September changes what that page says, and one field on one
+  record could not represent it.
+
+  `<lastmod>` now comes from the record-level change log (`lib/changes.mjs`), which
+  already answers this question and is already gated. `lib/sitemap-lastmod.mjs` takes,
+  per route, the newest entry that declares that route as its path -- plus, for a
+  directive route, its own review date and every entry linking to it. The exported
+  sitemap now dates 23 of 30 URLs across four distinct dates (`2026-07-12`,
+  `2026-07-28`, `2026-08-21`, `2026-09-06`) instead of 21 across one.
+
+  **It is deliberately not the build date, which the page's own arithmetic would
+  suggest.** A directive page re-renders every build: the timing column writes "this
+  calculated date is 42 days after the build it is published from", and that number
+  moves daily. The bytes change; the document does not. `<lastmod>` is defined on
+  *significant* modification and a recalculated countdown is the named example of a
+  change that is not one, so stamping the build here would publish 30 URLs claiming
+  they changed this morning, every morning -- the defect this project files against
+  other sites, arriving through the front door. The change log already separates the
+  two with `observedBy`: a lapsed review is dated to the build that noticed it, and
+  only `observedBy: "data"` entries are read, so the exclusion holds by construction
+  rather than by a filter someone has to remember.
+
+  **Seven routes still carry no `<lastmod>`, and now there is a rule saying why.** The
+  element is optional and the honest artifact for "no dated record lives here" is
+  silence. `tests/hosting.test.mjs` reads the dates back out of `out/sitemap.xml` and
+  fails unless they are exactly the ones the committed records support, unless one is
+  malformed or after the build, and -- the case a correct-looking sitemap is otherwise
+  indistinguishable from -- unless at least one dated route reads something other than
+  the build date.
 
 - **The changelog announced a record page the site does not serve.** A twenty-line
   `[Unreleased]` entry stated that every body the order names now has its own record page,
@@ -146,7 +295,7 @@ recorded here.
 - **A quotation past page nine was published with the wrong page.** The page markers this
   project writes into the retained text were matched with `\d`, not `\d+`, in both
   `pageOfQuote` and `quoteIsVerbatim`. On the five-page signed order that is inert; on the
-  first instrument longer than nine pages it is not. `pageOfQuote` stopped recognising
+  first instrument longer than nine pages it is not. `pageOfQuote` stopped recognizing
   markers at `=== PAGE 10 ===` and carried the last page it had matched forward, so a
   quotation on page 11 was located on **page 9** — a wrong locator, not a missing one, in
   the one field a reader uses to check a quotation against the signed image. Measured on a
@@ -177,7 +326,7 @@ recorded here.
 - **The exports now carry their own contract.** `public/data/datapackage.json` is a
   Frictionless Data Package describing every published file: a Table Schema per CSV
   giving each column its name, type and whether it is ever empty, the separator a
-  multi-valued cell uses, the licence split, and the signed source's retrieval date and
+  multi-valued cell uses, the license split, and the signed source's retrieval date and
   SHA-256. `public/data/dcat.jsonld` is the same dataset as a DCAT-AP record for catalog
   harvesters. Both are generated at build by `scripts/export-data.mjs` and byte-compared
   against the committed copies by `npm run data:export:check`, like every other export.
@@ -195,13 +344,13 @@ recorded here.
   pull request and teach everyone to regenerate without reading. It is published per
   build at `/version.json` and the package points there; the dataset is dated by
   `dataReviewedThrough`, a real review date read off the records. And a **single SPDX
-  identifier** is not used, because the licence genuinely is split: CC BY 4.0 covers the
+  identifier** is not used, because the license genuinely is split: CC BY 4.0 covers the
   analytical content, and the signed order's excerpts, agency names and government
   publications are not relicensed by this project. Naming only CC BY 4.0 at the top would
   be a claim about the source layer this project is not entitled to make.
 
 - `docs/DATA-CARD.md`, stating the dataset's classification (public information only, no
-  personal data), provenance, update cadence, licence split and known limitations, linked
+  personal data), provenance, update cadence, license split and known limitations, linked
   from the `/data` page. It copies no number out of the data: counts and review dates
   live in the exports, and the card names the field that holds each one. With it, the
   Data Governance row of the standards conformance table moves from partially met to met.
@@ -210,10 +359,10 @@ recorded here.
 
 - Two commits reached `main` with no CI verdict at all. `quality.yml` keyed its
   concurrency group on `github.ref` alone, so every push to `main` shared one group;
-  with `cancel-in-progress: true`, each merge cancelled the run still executing for
+  with `cancel-in-progress: true`, each merge canceled the run still executing for
   the merge before it. On 2026-09-06 that left `afb757e2` (#116) and `0b9b1ada` (#119)
   on `main` with `validate` recorded as `cancelled` and no other check — and a
-  cancelled run is not a pass, it is no verdict. `main` read as green only because the
+  canceled run is not a pass, it is no verdict. `main` read as green only because the
   tip's run happened to be the one that survived. The key now appends the commit SHA on
   push, so each commit gets its own run; pull requests still collapse onto the branch
   ref, which is the cancellation that was wanted.
@@ -319,7 +468,7 @@ recorded here.
   on null." Nothing threw, so a bad build shipped silently, and the same value
   feeds the answer verifier's freshness block. The statement now says no check
   date is available, and `scripts/validate-data.mjs` separately refuses the
-  data-modelling error behind it: an evidence record linking a directive that
+  data-modeling error behind it: an evidence record linking a directive that
   no review source lists in `coversDirectiveIds`. A retrieval failure is left
   to the renderer, because failing the release on it would block a deploy for
   something no re-review can clear.
@@ -346,15 +495,16 @@ recorded here.
   invited to ask a question has already been told something untrue by the time
   an error string explains the invitation was empty. `tests/ask-gate.test.mjs`
   pins both directions: absent across all twenty-one directive pages in the
-  ordinary build, present and labelled in a second isolated build with the
+  ordinary build, present and labeled in a second isolated build with the
   variable set. Turning the panel on is now explicitly part of deploying the
   service (`docs/AI-SERVICE.md`).
 
 ### Added
 
 - Ko-fi support link in the site footer, using a self-hosted copy of the button
-  image so the page makes no third-party request and stays within the site's
-  `img-src 'self' data:` content-security policy
+  image so the page makes no request to Ko-fi and stays within the site's
+  content-security policy, which allows images only from this origin (and, since
+  the GA4 entry above, Google Analytics' collection hosts)
 - "Ask about this directive": an explicit opt-in AI panel on each directive
   page. Until a reader opens it and submits a question the page performs no
   request of any kind (`lib/ask-client.ts` is constructed with an injectable

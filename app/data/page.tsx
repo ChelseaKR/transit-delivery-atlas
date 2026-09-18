@@ -1,14 +1,10 @@
-import type { Metadata } from "next";
+import { PageStructuredData } from "@/components/PageStructuredData";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
 import { CONTENT_CORRECTION_URL } from "@/lib/feedback";
+import { pageMetadata } from "@/lib/routes";
 
-export const metadata: Metadata = {
-  title: "Open data",
-  description:
-    "Download the Transit Delivery Atlas directive, relationship, public-evidence, and context-watchlist datasets and review their public schemas.",
-  alternates: { canonical: "/data" },
-};
+export const metadata = pageMetadata("/data");
 
 const fields = [
   ["id", "Stable analytical identifier; not an official identifier"],
@@ -33,6 +29,7 @@ const fields = [
 export default function DataPage() {
   return (
     <>
+      <PageStructuredData path="/data" />
       <SiteHeader />
       <main id="main-content" className="document-page" tabIndex={-1}>
         <header className="document-hero document-hero--data">
@@ -118,7 +115,7 @@ export default function DataPage() {
                 <a className="download-card" href="/data/datapackage.json">
                   <span className="file-type">DATA PACKAGE</span>
                   <strong>Frictionless Data Package</strong>
-                  <small>Typed Table Schemas, licence split, and source provenance for every file here</small>
+                  <small>Typed Table Schemas, license split, and source provenance for every file here</small>
                 </a>
                 <a className="download-card" href="/data/dcat.jsonld">
                   <span className="file-type">DCAT</span>
@@ -185,7 +182,7 @@ export default function DataPage() {
                 <a href="https://datapackage.org/">Frictionless Data Package</a>{" "}
                 describing every file above: a Table Schema per CSV giving each
                 column its name, type and whether it is ever empty, the
-                separator a multi-valued cell uses, the licence split, and the
+                separator a multi-valued cell uses, the license split, and the
                 signed source&rsquo;s retrieval date and SHA-256. It is
                 generated at build from the same values the CSVs are written
                 from and compared byte for byte against the committed copy, so a
@@ -207,7 +204,7 @@ export default function DataPage() {
                 <a href="https://github.com/ChelseaKR/transit-delivery-atlas/blob/main/docs/DATA-CARD.md">
                   data card
                 </a>{" "}
-                states the classification, provenance, update cadence, licence
+                states the classification, provenance, update cadence, license
                 split and known limitations of the dataset as a whole.
               </p>
             </section>

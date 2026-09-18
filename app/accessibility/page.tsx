@@ -1,17 +1,14 @@
-import type { Metadata } from "next";
+import { PageStructuredData } from "@/components/PageStructuredData";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
+import { pageMetadata } from "@/lib/routes";
 
-export const metadata: Metadata = {
-  title: "Accessibility",
-  description:
-    "Accessibility standards, test scope, and known limitations for Transit Delivery Atlas.",
-  alternates: { canonical: "/accessibility" },
-};
+export const metadata = pageMetadata("/accessibility");
 
 export default function AccessibilityPage() {
   return (
     <>
+      <PageStructuredData path="/accessibility" />
       <SiteHeader />
       <main id="main-content" className="document-page" tabIndex={-1}>
         <header className="document-hero document-hero--accessibility">
@@ -86,17 +83,19 @@ export default function AccessibilityPage() {
                 <li><code>/research/tda-ntd</code> — added Jul 13, 2026</li>
                 <li><code>/corrections</code> — added Jul 14, 2026</li>
                 <li><code>/watchlist</code> — added Jul 29, 2026</li>
-                <li><code>/organizations</code> — added Sep 7, 2026</li>
-                <li><code>/organizations/[id]</code> — added Sep 7, 2026</li>
+                <li><code>/privacy</code> — added Sep 17, 2026</li>
+                <li><code>/organizations</code> — added Sep 18, 2026</li>
+                <li><code>/organizations/[id]</code> — added Sep 18, 2026</li>
                 <li>
                   <strong>The presentation of every route above:</strong> the
                   register was redesigned on Jul 22, 2026, after the review.
                 </li>
                 <li>
                   <strong>Patterns added since:</strong> the print control on
-                  directive records, filters that rewrite the URL, and the
+                  directive records, filters that rewrite the URL, the
                   watchlist disclosure widget on <code>/watchlist</code> and on
-                  every directive page.
+                  every directive page, and the analytics opt-out control in
+                  every footer.
                 </li>
               </ul>
               <p>

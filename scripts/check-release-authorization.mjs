@@ -60,7 +60,7 @@ function fail(message) {
  * Deliberately narrow and fail-closed: this walks the indentation rather than
  * parsing YAML (the repository has no YAML parser in its dependency tree, and
  * adding one to a supply-chain check is its own problem). Anything it cannot
- * recognise is an error, never a pass.
+ * recognize is an error, never a pass.
  */
 export function parseAuthorizeUses(workflowYaml) {
   const lines = workflowYaml.split("\n");
@@ -234,7 +234,7 @@ async function main() {
   }
   checks.push("pinned commit resolves in the host repository");
 
-  // 3. The reusable workflow must still exist at that pin and still honour the
+  // 3. The reusable workflow must still exist at that pin and still honor the
   //    input and output contract release.yml is written against.
   const contents = await api(
     `/repos/${host}/contents/${encodeURI(authorize.path)}?ref=${authorize.ref}`,

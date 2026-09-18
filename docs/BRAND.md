@@ -39,7 +39,7 @@ The page’s single job is to make those records inspectable.
 
 The design is a **public research register**: quiet, dense, source-led, and
 designed for repeated inspection. It should feel closer to an annotated
-catalogue than to a campaign landing page, operations dashboard, newspaper, or
+catalog than to a campaign landing page, operations dashboard, newspaper, or
 government website.
 
 The interface leads with the records themselves. Large promotional headlines,

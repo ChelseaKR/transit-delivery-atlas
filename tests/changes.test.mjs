@@ -128,7 +128,7 @@ test("the artifact re-hash log is reused rather than reimplemented", () => {
     assert.equal(found.date, record.checkedOn);
     assert.ok(
       found.detail.includes(record.artifact.outcome),
-      "the outcome word must travel through unchanged, not be reworded into a judgement",
+      "the outcome word must travel through unchanged, not be reworded into a judgment",
     );
   }
 });
@@ -219,13 +219,13 @@ test("a watchlist item promoted to evidence produces two linked entries and no v
 });
 
 test("no entry publishes a verdict about a directive or a body", () => {
-  const offences = [];
+  const offenses = [];
   for (const item of entries(LATER)) {
     const pattern = verdictPatternIn(`${item.title} ${item.detail}`);
-    if (pattern) offences.push(`${item.id}\n    ${pattern}\n    ${item.title} ${item.detail}`);
+    if (pattern) offenses.push(`${item.id}\n    ${pattern}\n    ${item.title} ${item.detail}`);
   }
 
-  assert.deepEqual(offences, [], `change entries carrying verdict language:\n  ${offences.join("\n  ")}`);
+  assert.deepEqual(offenses, [], `change entries carrying verdict language:\n  ${offenses.join("\n  ")}`);
 });
 
 test("a lapsed review date is dated to the build that observed it", () => {
@@ -312,7 +312,7 @@ test("a per-directive feed carries only that directive's entries", () => {
   assert.ok(nonEmpty > 1, "at least two directives must have entries for the filter to mean anything");
 });
 
-test("every kind the module emits is categorised into a published layer", () => {
+test("every kind the module emits is categorized into a published layer", () => {
   const emitted = new Set(entries(LATER).map(({ kind }) => kind));
 
   assert.ok(emitted.size >= 6, `only ${emitted.size} kinds were exercised; widen the fixture`);
@@ -324,7 +324,7 @@ test("every kind the module emits is categorised into a published layer", () => 
   }
 });
 
-test("an uncategorised kind is refused rather than published without a layer", () => {
+test("an uncategorized kind is refused rather than published without a layer", () => {
   // Nothing in the committed data can reach this: every call site inside the
   // module passes a literal kind. It is the contract for whoever adds the next
   // kind, and a guard nothing exercises is a guard nobody knows works.

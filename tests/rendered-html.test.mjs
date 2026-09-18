@@ -59,7 +59,7 @@ test("statically renders the complete atlas home page", async () => {
   assert.doesNotMatch(html, /codex-preview|Your site is taking shape|react-loading-skeleton/i);
 });
 
-test("no register row publishes a bare evidence count or an unlabelled layer", async () => {
+test("no register row publishes a bare evidence count or an unlabeled layer", async () => {
   const html = (await (await render()).text()).replaceAll("<!-- -->", "");
   const [directiveData, evidenceData] = await Promise.all([
     readJson("data/directives.json"),
@@ -84,9 +84,9 @@ test("no register row publishes a bare evidence count or an unlabelled layer", a
     /No reviewed evidence linked in this release\. This is a statement about Atlas coverage, not evidence that no implementation activity or public record exists\./,
   );
 
-  const labelled = [...html.matchAll(/directive-row__provenance/g)].length;
+  const labeled = [...html.matchAll(/directive-row__provenance/g)].length;
   assert.equal(
-    labelled,
+    labeled,
     directiveData.directives.length,
     "every rendered row must carry a provenance block",
   );
@@ -190,12 +190,23 @@ test("this build configures no question service, so it offers no AI affordance",
   // Nothing on any page loads a resource from ko-fi.com, which is what this
   // check is really guarding: `default-src 'self'` means an origin named here
   // can be navigated TO, never fetched FROM.
+  // `schema.org` is the `@context` of the page's structured data: a vocabulary
+  // identifier, not an address. Nothing resolves it -- a consumer that knows
+  // schema.org already knows what the terms mean, and one that does not is not
+  // served by this page fetching anything. It is named here for the same reason
+  // the others are: so that adding an origin to a page stays a decision.
+  // `www.googletagmanager.com` is the one host a page does fetch from: the
+  // GA4 loader (lib/analytics.ts, ADR-0003) names gtag.js and requests it only
+  // on the production host and never under GPC, DNT or the footer opt-out.
+  // tests/analytics.test.mjs runs that loader and holds each of those guards.
   const allowedHosts = new Set([
     "transit.chelseakr.com",
     "www.gov.ca.gov",
     "dot.ca.gov",
     "github.com",
     "ko-fi.com",
+    "schema.org",
+    "www.googletagmanager.com",
   ]);
   const hosts = new Set();
   for (const [absoluteUrl] of html.matchAll(/https?:\/\/[^\s"'<>)\\]+/gi)) {

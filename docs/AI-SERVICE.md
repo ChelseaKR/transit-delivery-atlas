@@ -20,7 +20,7 @@ make an exception for its own feature.
 Both directions are pinned by `tests/ask-gate.test.mjs`: the ordinary build is
 asserted to render no panel on any of the twenty-one directive pages, and a
 second, isolated build with `NEXT_PUBLIC_ASK_ENDPOINT` set is asserted to
-render it, labelled and inert until used. (`NEXT_EXPORT_DIR` in
+render it, labeled and inert until used. (`NEXT_EXPORT_DIR` in
 `next.config.ts` exists only so that second build cannot overwrite the `out/`
 artifact the rest of the suite reads.)
 
@@ -125,7 +125,8 @@ a production deployment must record that subprocessor relationship.
 Nothing below is provisioned. It is the shape a deployment would take so the
 decision is concrete:
 
-- **Same-origin path, no CSP change.** The site's CSP is `connect-src 'self'`.
+- **Same-origin path, no CSP change.** The site's CSP allows `connect-src`
+  only to its own origin and Google Analytics' collection hosts (ADR-0003).
   Run the service behind the existing CloudFront distribution as a second
   origin with a behavior for `/api/ask*` (origin: a Lambda function URL or a
   small App Runner/Fargate service running `npm run ask:serve`). The page then

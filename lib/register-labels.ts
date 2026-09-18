@@ -1,5 +1,5 @@
 /**
- * Provenance labelling for the directive register.
+ * Provenance labeling for the directive register.
  *
  * The register on `/` is the one surface most readers see, and it was the one
  * surface where the layer discipline the rest of the site enforces was dropped:
@@ -9,8 +9,8 @@
  * the signed order.
  *
  * These builders are the only way a row gets a label, and they throw rather
- * than return a partial one, so a row that cannot be labelled fails the build
- * instead of rendering unlabelled.
+ * than return a partial one, so a row that cannot be labeled fails the build
+ * instead of rendering unlabeled.
  */
 
 const ISO_DATE_PATTERN = /^\d{4}-\d{2}-\d{2}$/;
@@ -29,7 +29,7 @@ export const NO_EVIDENCE_LABEL =
 function requireText(value: unknown, field: string, context: string): string {
   if (typeof value !== "string" || value.trim() === "") {
     throw new Error(
-      `${context} cannot be labelled: ${field} is missing. A register row without its provenance labels must not render.`,
+      `${context} cannot be labeled: ${field} is missing. A register row without its provenance labels must not render.`,
     );
   }
   return value;
@@ -45,7 +45,7 @@ export function evidenceCell(
 ): { text: string; detail: string; hasEvidence: boolean } {
   if (!Number.isInteger(evidenceCount) || evidenceCount < 0) {
     throw new Error(
-      `${context} cannot be labelled: evidence count ${JSON.stringify(evidenceCount)} is not a record count. A register row without its provenance labels must not render.`,
+      `${context} cannot be labeled: evidence count ${JSON.stringify(evidenceCount)} is not a record count. A register row without its provenance labels must not render.`,
     );
   }
 
@@ -87,7 +87,7 @@ export function timingDetail(timing: RegisterTiming, context: string): string {
 
   if (!ISO_DATE_PATTERN.test(derivedDate)) {
     throw new Error(
-      `${context} cannot be labelled: derived date ${JSON.stringify(derivedDate)} is not an ISO calendar date. A register row without its provenance labels must not render.`,
+      `${context} cannot be labeled: derived date ${JSON.stringify(derivedDate)} is not an ISO calendar date. A register row without its provenance labels must not render.`,
     );
   }
 

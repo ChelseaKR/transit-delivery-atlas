@@ -1,20 +1,17 @@
-import type { Metadata } from "next";
 import Link from "next/link";
 import { LayerLabel } from "@/components/LayerLabel";
+import { PageStructuredData } from "@/components/PageStructuredData";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
 import { organizationRecords, organizationTotals } from "@/lib/organizations";
+import { pageMetadata } from "@/lib/routes";
 
-export const metadata: Metadata = {
-  title: "Bodies and groups named in the order",
-  description:
-    "One record page per body or role group named in California Executive Order N-7-26, with the source-role label, section locator, and reviewed excerpt behind every appearance.",
-  alternates: { canonical: "/organizations" },
-};
+export const metadata = pageMetadata("/organizations");
 
 export default function OrganizationsIndexPage() {
   return (
     <>
+      <PageStructuredData path="/organizations" />
       <SiteHeader />
       <main id="main-content" className="document-page" tabIndex={-1}>
         <header className="document-hero">
@@ -73,6 +70,11 @@ export default function OrganizationsIndexPage() {
               </li>
             ))}
           </ul>
+          <p className="evidence-method-link">
+            <Link href="/methodology">
+              Read how the Atlas separates source, evidence, and analysis
+            </Link>
+          </p>
         </section>
       </main>
       <SiteFooter />

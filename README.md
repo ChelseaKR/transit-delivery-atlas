@@ -140,10 +140,10 @@ and CSV under `public/data/`.
 `/changes.xml` is an [Atom 1.0](https://www.rfc-editor.org/rfc/rfc4287) feed of
 dated, record-level events, and each directive has its own filtered feed at
 `/directives/<id>/changes.xml`. The same entries are published as
-`/changes.json`. There are no accounts, no analytics and no subscriptions on
-this site, and a static feed is the one push channel that keeps all three true:
-it is a file served from this origin, and nothing about the reader reaches
-anybody.
+`/changes.json`. There are no accounts and no subscriptions on this site, and
+a static feed is the one push channel that keeps both true: it is a file served
+from this origin that carries no script, so a feed reader fetching it is not
+measured by anybody.
 
 An entry records what the Atlas did, never what a named body did, and every
 entry is screened through the same verdict lexicon
@@ -196,6 +196,23 @@ See [the methodology](docs/METHODOLOGY.md),
 [product specification](docs/PRD.md) for the classification model, acceptance
 criteria, and known limitations.
 
+## Privacy and analytics
+
+The HTML pages use Google Analytics 4 to count visits
+([ADR-0003](docs/adr/0003-google-analytics-4.md)); `/privacy` on the site says
+what it records. The loader in `lib/analytics.ts` runs only on
+`transit.chelseakr.com`, never in a local, test or CI build, and loads nothing
+when the browser sends Global Privacy Control or Do Not Track or the reader has
+used the footer's "Opt out of analytics" control. Google signals and ad
+personalization are off, the advertising consent settings are denied
+everywhere, and analytics storage is denied by default in the EEA, the UK and
+Switzerland, where Google still receives cookieless pings. Links navigate on
+the client, so `components/AnalyticsPageViews.tsx` sends one page view per
+route, with the query string reduced to `utm_*` parameters because the
+explorers keep what a reader types in it. The open-data files, feeds and
+`changes.json` carry no script. Setting `GA4_MEASUREMENT_ID` to `""` removes GA
+from the next build.
+
 ## Corrections and contributions
 
 Corrections should identify the directive, evidence, or watchlist ID; public
@@ -227,9 +244,10 @@ and covered the routes that existed then. Lint, canonical-data validation and
 rendered-HTML assertions still run on every build; the representative-route
 scans and spot checks from that review were a one-off and are not reproducible.
 
-`/research/tda-ntd`, `/corrections` and `/watchlist`, the watchlist disclosure
-pattern, the print control, the URL-syncing filters, and the 2026-07-22 register
-redesign shipped after that review and are **not** covered by it. That is a
+`/research/tda-ntd`, `/corrections`, `/watchlist` and `/privacy`, the watchlist
+disclosure pattern, the print control, the URL-syncing filters, the footer's
+analytics opt-out control, and the 2026-07-22 register redesign shipped after
+that review and are **not** covered by it. That is a
 statement about evaluation coverage, not a finding about those surfaces. Full
 cross-browser keyboard, screen-reader, zoom, forced-colors, and disabled-user
 evaluation remains pending. These checks are quality controls, not an
@@ -275,7 +293,7 @@ re-reviewed 2026-08-22 when the runtime service landed.
 | Quality & Metrics | Applies | Data-integrity, filter, rendered-HTML, and hosting test suites run in the release gate |
 | Release & Versioning | Applies | CHANGELOG (Keep-a-Changelog), semver in package.json, tag-triggered release workflow re-runs the full gate at the tagged commit |
 | Incident Response | Applies | Not met. `SECURITY.md` covers private vulnerability reporting only. There is no severity ladder, no incident label convention, no committed postmortem artifact, and no secret-leak runbook |
-| Data Governance | Applies | Met. Every record in `data/sources.json` carries a publisher, canonical URL, retrieval date, and SHA-256; reuse terms are stated in [`CONTENT-LICENSE.md`](CONTENT-LICENSE.md); the published exports are validated against the published `data/public-schema.json` in the release gate. [`docs/DATA-CARD.md`](docs/DATA-CARD.md) states the classification (public information only, no personal data), provenance, update cadence, licence split and known limitations, and `public/data/datapackage.json` carries the same contract per file as typed Table Schemas beside a DCAT-AP record, generated at build and byte-compared against the committed copy |
+| Data Governance | Applies | Met. Every record in `data/sources.json` carries a publisher, canonical URL, retrieval date, and SHA-256; reuse terms are stated in [`CONTENT-LICENSE.md`](CONTENT-LICENSE.md); the published exports are validated against the published `data/public-schema.json` in the release gate. [`docs/DATA-CARD.md`](docs/DATA-CARD.md) states the classification (public information only, no personal data), provenance, update cadence, license split and known limitations, and `public/data/datapackage.json` carries the same contract per file as typed Table Schemas beside a DCAT-AP record, generated at build and byte-compared against the committed copy |
 
 ## Licensing
 

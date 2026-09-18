@@ -91,7 +91,9 @@ schema files must match their source records.
 - Do not turn reviewed evidence into implementation status, progress, scoring,
   compliance, or performance claims.
 - Do not introduce agency logos, seals, official wrappers, trackers, or
-  personal acknowledgments.
+  personal acknowledgments. The one exception is the guarded Google Analytics 4
+  loader in `lib/analytics.ts` ([ADR-0003](docs/adr/0003-google-analytics-4.md));
+  a change to it keeps `/privacy` and `tests/analytics.test.mjs` true.
 - Describe accessibility tests accurately; never call automated checks a
   certification.
 - A pull request that adds a route or an interaction pattern re-runs the manual
@@ -99,3 +101,12 @@ schema files must match their source records.
   [docs/ACCESSIBILITY.md](docs/ACCESSIBILITY.md) and on `/accessibility`. Until
   it is reviewed, list it as not covered; never let a new surface inherit an
   older evaluation.
+
+## Commercial solicitation
+
+Issues here are not open to bids. They are design records — written so a decision is
+reconstructable later — not scope documents for outside quoting, and unsolicited offers to
+implement one for a fee will be declined.
+
+Contributions through the normal fork-and-PR process are welcome, and `good first issue` is the
+place to start.

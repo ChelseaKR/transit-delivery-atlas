@@ -8,8 +8,8 @@ import {
 } from "../scripts/check-release-authorization.mjs";
 
 // The checker walks indentation instead of parsing YAML, so the parsers are the
-// part most able to fail open. These cases pin the behaviour that matters: the
-// right reference is read out of the right job, and anything unrecognised throws
+// part most able to fail open. These cases pin the behavior that matters: the
+// right reference is read out of the right job, and anything unrecognized throws
 // rather than returning a shape the caller would treat as a pass.
 
 const REAL_RELEASE_WORKFLOW = await readFile(
@@ -25,7 +25,7 @@ test("reads the authorize reference out of the repository's own release workflow
   assert.ok(authorize.repo.length > 0);
 });
 
-test("reads the reference from the authorize job, not from a neighbouring job", () => {
+test("reads the reference from the authorize job, not from a neighboring job", () => {
   const workflow = [
     "jobs:",
     "  preflight:",

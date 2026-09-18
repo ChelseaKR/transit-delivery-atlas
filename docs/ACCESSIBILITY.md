@@ -85,8 +85,9 @@ These are the routes that existed at `ef1d11b`, plus the exported 404 page.
 - `/research/tda-ntd` — added 2026-07-13 (`c47f909`)
 - `/corrections` — added 2026-07-14 (`64608c6`)
 - `/watchlist` — added 2026-07-29 (`bba96c0`)
-- `/organizations` — added 2026-09-07
-- `/organizations/[id]` — added 2026-09-07
+- `/privacy` — added 2026-09-17 (ADR-0003)
+- `/organizations` — added 2026-09-18
+- `/organizations/[id]` — added 2026-09-18
 
 ### Interaction patterns and presentation not covered by that review
 
@@ -96,10 +97,11 @@ review looked at has since been replaced:
 | Change | Date | What is uncovered |
 |---|---|---|
 | Print affordance on directive records (`0905d4c`) | 2026-07-14 | a new control on every directive page |
-| URL-syncing explorer filters (`c47f909`, `79f6113`) | 2026-07-13, 2026-07-17 | focus and live-region behaviour when filters rewrite the URL |
+| URL-syncing explorer filters (`c47f909`, `79f6113`) | 2026-07-13, 2026-07-17 | focus and live-region behavior when filters rewrite the URL |
 | Register redesign (`f82b0d7`) | 2026-07-22 | 1,111 lines of new CSS plus rebuilt header, footer and directive rows: contrast, focus visibility, reflow and zoom across **every** route |
 | Context watchlist layer (`bba96c0`) | 2026-07-29 | a `<details>`/`<summary>` disclosure pattern that was not in scope, on `/watchlist` and on every directive page |
 | `sitemap.xml` and `robots.txt` (`0f6f902`) | 2026-08-04 | no user-facing surface |
+| Footer analytics opt-out (ADR-0003) | 2026-09-17 | a button and a `role="status"` line in every page's footer, rendered only after hydration |
 
 This list is not a finding that any of it is inaccessible. It is a statement
 that it has not been evaluated, which is the only claim the record supports.

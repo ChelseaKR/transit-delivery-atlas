@@ -1877,7 +1877,7 @@ code {
 }
 
 /* A calculated planning date that is behind the build. The state is carried by
-   the flag's text, never by colour alone. */
+   the flag's text, never by color alone. */
 .timing-flag {
   justify-self: start;
   padding: 0.15rem 0.4rem;
@@ -2148,7 +2148,7 @@ code {
 }
 
 /* The optional AI question panel: visually separate from the three canonical
-   layers, labelled before it does anything, inert until used. */
+   layers, labeled before it does anything, inert until used. */
 .ask-directive {
   margin-top: 2.5rem;
   padding: 1.5rem;
@@ -3661,13 +3661,44 @@ a {
 }
 
 /* The support link wraps an image rather than text. `.site-footer a` sets an
-   underline colour and thickness for the text links beside it, which would
+   underline color and thickness for the text links beside it, which would
    otherwise draw a rule under the button artwork; inline-flex also drops the
    inline-baseline gap beneath the image. */
 .site-footer__kofi {
   display: inline-flex;
   align-items: center;
   text-decoration: none;
+}
+
+/* The GA4 disclosure and its opt-out (components/AnalyticsChoice.tsx). The
+   toggle is a <button>, because it changes a setting, dressed as the footer's
+   links; its status line sits beside it. */
+.site-footer__privacy {
+  display: grid;
+  gap: 0.35rem;
+  margin-top: 0.75rem;
+}
+
+.site-footer__analytics-toggle {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--timetable-blue);
+  font: inherit;
+  font-size: 0.82rem;
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  cursor: pointer;
+}
+
+.site-footer__analytics-toggle:hover {
+  text-decoration-color: currentColor;
+}
+
+.site-footer__analytics-toggle:focus-visible {
+  outline: 2px solid var(--timetable-blue);
+  outline-offset: 2px;
 }
 
 @media (max-width: 980px) {

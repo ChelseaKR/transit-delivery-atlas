@@ -99,6 +99,49 @@ None of the three is an implementation status. "Checked, nothing found" is a
 fact about the Atlas's own search, stated with its date and its source list so
 a reader can repeat it; it says nothing about work outside those sources.
 
+### Doing the sweep: `npm run sweep`
+
+The sweep is a manual crawl of a dozen pages, and its record has been an
+attestation rather than something reproducible. `npm run sweep` fetches every
+`reviewSources[]` URL and every `watchlist.items[]` URL and prints a worksheet
+saying what moved. It is an assistant, not an author:
+
+- **It writes nothing into `data/`.** The program has no code path that edits a
+  record. `--write-draft` puts a worksheet and a patch in `.sweep/`, which is
+  untracked, and a person applies the patch by hand.
+- **`checked` requires a response.** A transport failure or an HTTP 4xx/5xx is
+  `retrieval-failed`, carries no observation to store, and does not move
+  `lastCheckedOn`. Storing a digest of an error page would make the next sweep
+  compare against the outage.
+- **A first sweep is `no-baseline`, not "unchanged".** "Unchanged since
+  2026-08-21" asserts that something was compared; with nothing stored, nothing
+  was. The same holds for the order reference: a page that mentions N-7-26 today
+  is `mentions`, and only a page that mentions it today and demonstrably did not
+  at the last observation is `newly-mentions`.
+- **`nextReviewOn` is never touched**, by the tool or by the draft.
+
+`lastObservation` is the optional field a reviewer fills in from the draft:
+`{sha256, basis, mentionsOrder, observedOn}`. It is the baseline the *next*
+sweep compares against, and it is what makes "unchanged" a statement rather than
+an assumption.
+
+**The digest is taken over extracted text, not raw bytes, and every source is
+fetched twice.** The link-integrity check below refuses to hash a context URL
+because a publisher's index page "changes whenever they publish anything" — and
+every review source is such a page. Here `changed` means *go and look*, which is
+the point of a sweep, so a digest is the right instrument; but a rotating request
+id or an embedded build stamp would flip a byte digest on every run and make the
+signal worthless while looking like a busy publisher. Text extraction removes the
+commonest sources of that churn, and the second fetch catches the rest: if one run
+produces two different digests, the page is reported as **not watchable by digest**
+rather than as changed. That is the only per-render churn a single run can see.
+Churn that is stable within a burst and moves across days is invisible to it, and
+the second real sweep is the first measurement that can say anything about that.
+
+There is no text diff. Only a digest is retained, so a changed page can be
+reported as changed and no more; retaining the previous text would mean keeping
+copies of other people's pages, which is #132 and a decision of its own.
+
 ## Link integrity
 
 Each record's SHA-256 exists so a quotation can be checked against the

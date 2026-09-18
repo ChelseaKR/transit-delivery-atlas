@@ -1,18 +1,15 @@
-import type { Metadata } from "next";
+import { PageStructuredData } from "@/components/PageStructuredData";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
 import { orderMetadata, source } from "@/lib/data";
+import { pageMetadata } from "@/lib/routes";
 
-export const metadata: Metadata = {
-  title: "Methodology",
-  description:
-    "How Transit Delivery Atlas separates signed source language, reviewed public evidence, context-watchlist leads, date calculations, and independent analysis.",
-  alternates: { canonical: "/methodology" },
-};
+export const metadata = pageMetadata("/methodology");
 
 export default function MethodologyPage() {
   return (
     <>
+      <PageStructuredData path="/methodology" />
       <SiteHeader />
       <main id="main-content" className="document-page" tabIndex={-1}>
         <header className="document-hero">

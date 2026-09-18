@@ -1,20 +1,16 @@
-import type { Metadata } from "next";
 import Link from "next/link";
 import { WatchlistCard } from "@/components/WatchlistCard";
+import { PageStructuredData } from "@/components/PageStructuredData";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
 import { BUILD_DATE } from "@/lib/build-date";
 import { watchlistItems, watchlistScope } from "@/lib/data";
 import { CONTENT_CORRECTION_URL } from "@/lib/feedback";
 import { formatDate } from "@/lib/format";
+import { pageMetadata } from "@/lib/routes";
 import { overdueReviews } from "@/lib/watchlist-review.mjs";
 
-export const metadata: Metadata = {
-  title: "Context watchlist",
-  description:
-    "Official public developments that are relevant to Transit Delivery Atlas research but do not currently meet the implementation-evidence rule.",
-  alternates: { canonical: "/watchlist" },
-};
+export const metadata = pageMetadata("/watchlist");
 
 export default function WatchlistPage() {
   // Stated against the build date rather than a render-time clock: these bytes
@@ -23,6 +19,7 @@ export default function WatchlistPage() {
 
   return (
     <>
+      <PageStructuredData path="/watchlist" />
       <SiteHeader />
       <main id="main-content" className="document-page" tabIndex={-1}>
         <header className="document-hero document-hero--watchlist">
@@ -80,7 +77,7 @@ export default function WatchlistPage() {
                         `${id} (${daysOverdue} day${daysOverdue === 1 ? "" : "s"} overdue)`,
                     )
                     .join(", ")}
-                  . Those cards are labelled <em>Review overdue</em>. Read them
+                  . Those cards are labeled <em>Review overdue</em>. Read them
                   as a record of their last review date, not as a statement
                   about today.
                 </p>
