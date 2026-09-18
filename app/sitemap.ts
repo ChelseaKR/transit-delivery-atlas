@@ -24,6 +24,7 @@ const staticRoutes = [
   "/research/tda-ntd",
   "/methodology",
   "/accessibility",
+  "/privacy",
   "/data",
   "/corrections",
 ];
