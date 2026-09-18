@@ -84,6 +84,8 @@ export default function AccessibilityPage() {
                 <li><code>/corrections</code> — added Jul 14, 2026</li>
                 <li><code>/watchlist</code> — added Jul 29, 2026</li>
                 <li><code>/privacy</code> — added Sep 17, 2026</li>
+                <li><code>/organizations</code> — added Sep 18, 2026</li>
+                <li><code>/organizations/[id]</code> — added Sep 18, 2026</li>
                 <li>
                   <strong>The presentation of every route above:</strong> the
                   register was redesigned on Jul 22, 2026, after the review.

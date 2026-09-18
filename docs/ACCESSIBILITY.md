@@ -86,6 +86,8 @@ These are the routes that existed at `ef1d11b`, plus the exported 404 page.
 - `/corrections` — added 2026-07-14 (`64608c6`)
 - `/watchlist` — added 2026-07-29 (`bba96c0`)
 - `/privacy` — added 2026-09-17 (ADR-0003)
+- `/organizations` — added 2026-09-18
+- `/organizations/[id]` — added 2026-09-18
 
 ### Interaction patterns and presentation not covered by that review
 

@@ -84,6 +84,16 @@
     },
     {
       "@type": "dcat:Distribution",
+      "dct:title": "Registered bodies and role groups",
+      "dct:description": "One row per body or role group in the registry, with its kind and how many directive units name it under each source-role label. Every registry member is present, including any the signed instrument does not name; a count of zero here is a measured zero and not an omission.",
+      "dcat:accessURL": "https://transit.chelseakr.com/data/organizations.csv",
+      "dcat:downloadURL": "https://transit.chelseakr.com/data/organizations.csv",
+      "dcat:mediaType": "text/csv",
+      "dct:format": "csv",
+      "dct:license": "https://creativecommons.org/licenses/by/4.0/legalcode"
+    },
+    {
+      "@type": "dcat:Distribution",
       "dct:title": "Analytical cross-references between directives",
       "dct:description": "One row per analytical cross-reference. These are analysis, not source: the origin and confidence columns say so on every row, and a cross-reference identifies a question rather than a directional handoff.",
       "dcat:accessURL": "https://transit.chelseakr.com/data/directive-relationships.csv",

@@ -7,6 +7,40 @@ recorded here.
 
 ### Added
 
+- **Every body and role group the order names now has its own record page.** The
+  handoff view indexed the 23 registered bodies and gave none of them a permalink, so
+  the three things a reader of one body needs -- what the signed order says about it,
+  what reviewed public artifacts carry its name, and what the analytical layer says near
+  it -- had nowhere to meet without blurring. `/organizations` lists the registry
+  alphabetically, and `/organizations/<id>` renders one body under the same layer order
+  the directive page uses: source, then evidence, then analysis, then context.
+
+  Source-role appearances are exactly the directive-level fields they come from, carried
+  with the section locator, the reviewed excerpt and a link to that page of the signed PDF
+  behind each one, under the order's effective and review dates. Nothing is inferred
+  about which action inside a compound directive a named body owns, because no such
+  record exists; the methodology says so and a page per body is where inventing one would
+  be easiest.
+
+  Evidence and watchlist attribution is by an exact match between the artifact's
+  `publisher` field and the registry name -- never a substring, prefix or short name,
+  because a loose match is how one agency acquires another's document. A body with
+  nothing published under its name says so in words instead of rendering an empty list
+  that reads as a zero, and one body in the registry today matches a publisher.
+
+  `organizations.csv` joins the exports with one row per registry member, including any
+  the signed instrument does not name: `directive-organizations.csv` is keyed on the
+  (directive, organization) pair and therefore cannot represent an unnamed member at all,
+  so a registry export built the same way would report a smaller registry than exists.
+  The Frictionless resource, the DCAT distribution, the route records in `lib/routes.ts`
+  (and with them the sitemap, the head tags and the structured data), the CloudFront
+  clean-route cases, the accessibility route classification and the published-language
+  screen's page floor all move with it; the screen's floor was raised from 31 pages to
+  56, because a floor the export has outgrown is not a floor.
+
+  Ordering is alphabetical and by nothing else. An order by appearance count would read
+  as a ranking of importance, effort or responsibility, and this register ranks nothing.
+
 - **Every page now states what it is and where it sits, in a form a crawler can
   read.** Thirty-one routes served thirty-one pages that no machine-readable node described
   at all: unique titles, unique descriptions, a sitemap and a crawl that agreed
@@ -209,9 +243,9 @@ recorded here.
 - **The changelog announced a record page the site does not serve.** A twenty-line
   `[Unreleased]` entry stated that every body the order names now has its own record page,
   that the site lists the registry alphabetically under a record-page route, and that an
-  organizations export joins the other CSVs. None of it is on `main`: there is no
-  organizations route under `app/`, none in `app/sitemap.ts`, and no such CSV in
-  `public/data/`. The feature is real and is on an unmerged branch; the entry reached `main`
+  organizations export joins the other CSVs. None of it was on `main` at the time: there
+  was no organizations route under `app/`, none in `app/sitemap.ts`, and no such CSV in
+  `public/data/`. The feature was real and on an unmerged branch; the entry reached `main`
   through a changelog conflict resolved in the other direction, inside a pull request whose
   own diff contained not one line of it. Both branches were green throughout, because an
   `[Unreleased]` paragraph is not a thing anything read -- `.github/workflows/quality.yml`
@@ -219,7 +253,8 @@ recorded here.
   *numbers* to the data and their prose to nothing.
 
   The entry is removed here rather than corrected, because it is not wrong about the branch
-  it was written for; it is on the wrong branch. It returns when that branch does.
+  it was written for; it is on the wrong branch. It returns when that branch does -- which
+  it has: the record-page entry at the top of this section landed with the route it names.
 
   `tests/changelog-claims.test.mjs` re-derives the check: every route the `[Unreleased]`
   section names in backticks must be one the built `out/` artifact actually serves,

@@ -181,6 +181,9 @@ The context watchlist has an independent `watchlist.json`, `watchlist.csv`, and
 JSON Schema contract; it does not contribute to evidence counts.
 `directive-organizations.csv` normalizes the 50 source-role links, and
 `directive-relationships.csv` normalizes the 27 inferred cross-references.
+`organizations.csv` lists all 23 registered bodies and role groups, one row
+each, including any the order does not name -- a registry export keyed on the
+pair would drop them and report a smaller registry than exists.
 The latter preserves analytical-record provenance without asserting workflow
 direction. Omission from the evidence collection does not show that no
 activity or public record exists; inclusion does not establish completion,

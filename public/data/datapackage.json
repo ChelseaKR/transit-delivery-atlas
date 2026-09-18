@@ -772,6 +772,108 @@
       }
     },
     {
+      "name": "organizations",
+      "path": "organizations.csv",
+      "title": "Registered bodies and role groups",
+      "description": "One row per body or role group in the registry, with its kind and how many directive units name it under each source-role label. Every registry member is present, including any the signed instrument does not name; a count of zero here is a measured zero and not an omission.",
+      "profile": "tabular-data-resource",
+      "format": "csv",
+      "mediatype": "text/csv",
+      "encoding": "utf-8",
+      "dialect": {
+        "delimiter": ",",
+        "lineTerminator": "\n",
+        "quoteChar": "\"",
+        "doubleQuote": true,
+        "header": true,
+        "caseSensitiveHeader": true
+      },
+      "schema": {
+        "fields": [
+          {
+            "name": "schema_version",
+            "type": "string",
+            "constraints": {
+              "required": true
+            }
+          },
+          {
+            "name": "organization_id",
+            "type": "string",
+            "constraints": {
+              "required": true
+            }
+          },
+          {
+            "name": "organization_name",
+            "type": "string",
+            "constraints": {
+              "required": true
+            }
+          },
+          {
+            "name": "organization_short_name",
+            "type": "string",
+            "constraints": {
+              "required": true
+            }
+          },
+          {
+            "name": "organization_kind",
+            "type": "string",
+            "constraints": {
+              "required": true
+            }
+          },
+          {
+            "name": "explicit_lead_links",
+            "type": "integer",
+            "constraints": {
+              "required": true
+            }
+          },
+          {
+            "name": "explicit_collaborator_links",
+            "type": "integer",
+            "constraints": {
+              "required": true
+            }
+          },
+          {
+            "name": "other_named_party_links",
+            "type": "integer",
+            "constraints": {
+              "required": true
+            }
+          },
+          {
+            "name": "source_role_links",
+            "type": "integer",
+            "constraints": {
+              "required": true
+            }
+          },
+          {
+            "name": "directive_units_named_in",
+            "type": "integer",
+            "constraints": {
+              "required": true
+            }
+          },
+          {
+            "name": "record_path",
+            "type": "string",
+            "constraints": {
+              "required": true
+            }
+          }
+        ],
+        "missingValues": [
+          ""
+        ]
+      }
+    },
+    {
       "name": "directive-relationships",
       "path": "directive-relationships.csv",
       "title": "Analytical cross-references between directives",

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { analyticsEnabled } from "@/lib/analytics";
 import { directives } from "@/lib/data";
+import { organizationRecords } from "@/lib/organizations";
 import {
   SITE_DESCRIPTION,
   SITE_NAME,
@@ -43,6 +44,12 @@ const staticRoutes: readonly RouteRecord[] = [
     title: "Delivery relationships",
     description:
       "Explore bodies and groups explicitly named in California's transit executive order and separately labeled analytical relationships between its directive units.",
+  },
+  {
+    path: "/organizations",
+    title: "Bodies and groups named in the order",
+    description:
+      "One record page per body or role group named in California Executive Order N-7-26, with the source-role label, section locator, and reviewed excerpt behind every appearance.",
   },
   {
     path: "/evidence",
@@ -108,7 +115,22 @@ const directiveRoutes: readonly RouteRecord[] = directives.map((directive) => ({
   description: `Source-linked record for Executive Order N-7-26, section ${directive.locator.section}, with named entities, timing, public-evidence coverage, separately labeled analysis, and context-watchlist leads when available.`,
 }));
 
-export const routes: readonly RouteRecord[] = [...staticRoutes, ...directiveRoutes];
+/**
+ * One record per registered body or role group, built from the registry the
+ * pages are generated from, so a registry addition cannot render a page with no
+ * route record, sitemap entry or description.
+ */
+const organizationRoutes: readonly RouteRecord[] = organizationRecords.map((record) => ({
+  path: `/organizations/${record.id}`,
+  title: record.name,
+  description: `Everything Executive Order N-7-26 says about ${record.name}, grouped by source-role label with section locators and reviewed excerpts, plus separately labeled analysis and reviewed public evidence published under this name.`,
+}));
+
+export const routes: readonly RouteRecord[] = [
+  ...staticRoutes,
+  ...directiveRoutes,
+  ...organizationRoutes,
+];
 
 const routesByPath = new Map(routes.map((route) => [route.path, route] as const));
 
