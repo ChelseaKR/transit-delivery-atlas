@@ -1,5 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
+import { AnalyticsPageViews } from "@/components/AnalyticsPageViews";
+import { loaderScript } from "@/lib/analytics";
 import { ogCard } from "@/lib/og-card";
 import {
   OG_CARD_ALT,
@@ -73,6 +75,11 @@ export const metadata: Metadata = {
   },
 };
 
+// The GA4 loader (ADR 0003, lib/analytics.ts), or "" when no measurement ID is
+// configured. It runs before hydration so that `AnalyticsPageViews` finds gtag
+// already defined, and it does nothing off the production host.
+const gaLoader = loaderScript();
+
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
@@ -85,10 +92,13 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang={SITE_LANG}>
+      <head>
+        {gaLoader ? <script dangerouslySetInnerHTML={{ __html: gaLoader }} /> : null}
+      </head>
       <body className={`${display.variable} ${body.variable}`}>
         {/*
-          The one push channel a site with no accounts, no analytics and no
-          subscriptions can offer, declared on every page so a reader's feed
+          The one push channel a site with no accounts and no subscriptions
+          can offer, declared on every page so a reader's feed
           reader finds it from wherever they landed. Rendered here rather than
           through `metadata.alternates`: every page sets its own
           `alternates.canonical`, which replaces the parent's `alternates`
@@ -105,6 +115,7 @@ export default function RootLayout({
           Skip to main content
         </a>
         {children}
+        {gaLoader ? <AnalyticsPageViews /> : null}
       </body>
     </html>
   );

@@ -38,7 +38,7 @@ import {
  *
  * There is no per-directive node either -- no `Legislation`, no
  * `GovernmentService`, no `Action`, no `Claim`. A machine-readable record for
- * each directive, repeated across thirty pages, is a derived corpus of
+ * each directive, repeated across thirty-one pages, is a derived corpus of
  * government material published for harvest whatever its `@type` says, and it
  * would also read as the State of California publishing it. The site says on
  * every page that it is not that. Saying "this page is a page of this site, and

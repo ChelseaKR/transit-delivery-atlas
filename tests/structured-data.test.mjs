@@ -393,7 +393,7 @@ test("it solicits no dataset harvest and publishes no per-record node", () => {
   // unofficial model of a government instrument should solicit that indexing is
   // an open question with an owner's name on it.
   //
-  // A node per directive is the same thing wearing a different `@type`. Thirty
+  // A node per directive is the same thing wearing a different `@type`. Thirty-one
   // pages each carrying a machine-readable record of a government directive is
   // a derived corpus published for harvest whatever it is called, and
   // `Legislation` or `GovernmentService` would additionally read as the State
@@ -412,7 +412,7 @@ test("it solicits no dataset harvest and publishes no per-record node", () => {
     }
     if (!value || typeof value !== "object") return;
     if ("@type" in value) {
-      assert.ok(allowed.has(value["@type"]), `${file}: ${value["@type"]} is not an authorised node type`);
+      assert.ok(allowed.has(value["@type"]), `${file}: ${value["@type"]} is not an authorized node type`);
     }
     for (const [key, nested] of Object.entries(value)) {
       assert.ok(!forbiddenKeys.has(key), `${file}: "${key}" is harvest vocabulary`);

@@ -85,6 +85,7 @@ These are the routes that existed at `ef1d11b`, plus the exported 404 page.
 - `/research/tda-ntd` — added 2026-07-13 (`c47f909`)
 - `/corrections` — added 2026-07-14 (`64608c6`)
 - `/watchlist` — added 2026-07-29 (`bba96c0`)
+- `/privacy` — added 2026-09-17 (ADR-0003)
 
 ### Interaction patterns and presentation not covered by that review
 
@@ -98,6 +99,7 @@ review looked at has since been replaced:
 | Register redesign (`f82b0d7`) | 2026-07-22 | 1,111 lines of new CSS plus rebuilt header, footer and directive rows: contrast, focus visibility, reflow and zoom across **every** route |
 | Context watchlist layer (`bba96c0`) | 2026-07-29 | a `<details>`/`<summary>` disclosure pattern that was not in scope, on `/watchlist` and on every directive page |
 | `sitemap.xml` and `robots.txt` (`0f6f902`) | 2026-08-04 | no user-facing surface |
+| Footer analytics opt-out (ADR-0003) | 2026-09-17 | a button and a `role="status"` line in every page's footer, rendered only after hydration |
 
 This list is not a finding that any of it is inaccessible. It is a statement
 that it has not been evaluated, which is the only claim the record supports.

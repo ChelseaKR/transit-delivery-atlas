@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { analyticsEnabled } from "@/lib/analytics";
 import { directives } from "@/lib/data";
 import {
   SITE_DESCRIPTION,
@@ -72,6 +73,15 @@ const staticRoutes: readonly RouteRecord[] = [
     title: "Accessibility",
     description:
       "Accessibility standards, test scope, and known limitations for Transit Delivery Atlas.",
+  },
+  {
+    path: "/privacy",
+    title: "Privacy",
+    // Says what the build actually does: with no measurement ID configured the
+    // page describes a site that runs no analytics, and it must not claim one.
+    description: analyticsEnabled()
+      ? "What Google Analytics records when you read Transit Delivery Atlas, what is switched off, and how to turn it off."
+      : "Transit Delivery Atlas runs no analytics and sets no cookies.",
   },
   {
     path: "/data",

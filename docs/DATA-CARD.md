@@ -37,8 +37,10 @@ passed date is published as passed. Neither is a status.
 ## Classification and personal data
 
 Public information only. The exports contain no personal data: no names of individuals,
-no contact details, no user data of any kind. There are no accounts, no analytics and no
-trackers on the site the exports are published from, so there is nothing to de-identify.
+no contact details, no user data of any kind, and no script. The site the exports are
+published from has no accounts; its HTML pages load Google Analytics 4
+([ADR-0003](adr/0003-google-analytics-4.md)), which counts visits to pages and never
+touches the exports, so there is nothing in them to de-identify.
 
 Organizations are public bodies, identified by their published names.
 

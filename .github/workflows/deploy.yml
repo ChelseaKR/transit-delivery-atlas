@@ -131,7 +131,7 @@ jobs:
           deployed_sha=$(curl_edge "https://${site_domain}/version.json" | jq -r '.sha')
           test "$deployed_sha" = "$EXPECTED_SHA"
 
-          for route in / /handoffs/ /evidence/ /watchlist/ /research/tda-ntd/ /corrections/ /methodology/ /data/ /accessibility/ /directives/n-7-26-5/; do
+          for route in / /handoffs/ /evidence/ /watchlist/ /research/tda-ntd/ /corrections/ /methodology/ /data/ /accessibility/ /privacy/ /directives/n-7-26-5/; do
             curl_edge "https://${site_domain}${route}" > /dev/null
           done
 

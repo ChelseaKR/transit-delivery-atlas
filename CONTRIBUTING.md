@@ -91,7 +91,9 @@ schema files must match their source records.
 - Do not turn reviewed evidence into implementation status, progress, scoring,
   compliance, or performance claims.
 - Do not introduce agency logos, seals, official wrappers, trackers, or
-  personal acknowledgments.
+  personal acknowledgments. The one exception is the guarded Google Analytics 4
+  loader in `lib/analytics.ts` ([ADR-0003](docs/adr/0003-google-analytics-4.md));
+  a change to it keeps `/privacy` and `tests/analytics.test.mjs` true.
 - Describe accessibility tests accurately; never call automated checks a
   certification.
 - A pull request that adds a route or an interaction pattern re-runs the manual
