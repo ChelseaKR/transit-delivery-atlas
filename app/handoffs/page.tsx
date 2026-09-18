@@ -1,9 +1,9 @@
-import type { Metadata } from "next";
 import {
   DependencyExplorer,
   OrganizationExplorer,
 } from "@/components/HandoffExplorer";
 import { LayerLabel } from "@/components/LayerLabel";
+import { PageStructuredData } from "@/components/PageStructuredData";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
 import { themes } from "@/lib/data";
@@ -12,17 +12,14 @@ import {
   namedBodies,
   relationshipTotals,
 } from "@/lib/relationships";
+import { pageMetadata } from "@/lib/routes";
 
-export const metadata: Metadata = {
-  title: "Delivery relationships",
-  description:
-    "Explore bodies and groups explicitly named in California's transit executive order and separately labeled analytical relationships between its directive units.",
-  alternates: { canonical: "/handoffs" },
-};
+export const metadata = pageMetadata("/handoffs");
 
 export default function HandoffsPage() {
   return (
     <>
+      <PageStructuredData path="/handoffs" />
       <SiteHeader />
       <main id="main-content" className="handoff-page" tabIndex={-1}>
         <header className="document-hero document-hero--handoffs">

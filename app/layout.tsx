@@ -2,6 +2,16 @@ import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
 import { AnalyticsPageViews } from "@/components/AnalyticsPageViews";
 import { loaderScript } from "@/lib/analytics";
+import { ogCard } from "@/lib/og-card";
+import {
+  OG_CARD_ALT,
+  OG_CARD_PATH,
+  SITE_DESCRIPTION,
+  SITE_LANG,
+  SITE_NAME,
+  SITE_URL,
+  TITLE_TEMPLATE,
+} from "@/lib/site";
 import "./globals.css";
 
 const display = localFont({
@@ -30,37 +40,38 @@ const body = localFont({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://transit.chelseakr.com"),
+  metadataBase: new URL(SITE_URL),
   title: {
-    default: "Transit Delivery Atlas",
-    template: "%s | Transit Delivery Atlas",
+    default: SITE_NAME,
+    template: TITLE_TEMPLATE,
   },
-  description:
-    "Independent, source-linked crosswalk of California Executive Order N-7-26 directives, named entities, timing, reviewed public evidence, context-watchlist leads, dependencies, and open questions.",
-  applicationName: "Transit Delivery Atlas",
+  description: SITE_DESCRIPTION,
+  applicationName: SITE_NAME,
   category: "public-interest research",
   openGraph: {
     type: "website",
     url: "/",
-    siteName: "Transit Delivery Atlas",
-    title: "Transit Delivery Atlas",
+    siteName: SITE_NAME,
+    title: SITE_NAME,
     description:
       "From directive to delivery—making the handoffs visible. Independent analysis; unofficial.",
     images: [
       {
-        url: "/og.png",
-        width: 1200,
-        height: 630,
-        alt: "Transit Delivery Atlas handoff rail from source to entity, timing, public evidence, and analysis",
+        url: OG_CARD_PATH,
+        // Read off the committed PNG rather than stated here, so the tags
+        // cannot keep describing an image the file stopped being.
+        width: ogCard.width,
+        height: ogCard.height,
+        alt: OG_CARD_ALT,
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Transit Delivery Atlas",
+    title: SITE_NAME,
     description:
       "An independent, source-linked crosswalk with reviewed public evidence for California Executive Order N-7-26.",
-    images: ["/og.png"],
+    images: [OG_CARD_PATH],
   },
 };
 
@@ -80,7 +91,7 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en">
+    <html lang={SITE_LANG}>
       <head>
         {gaLoader ? <script dangerouslySetInnerHTML={{ __html: gaLoader }} /> : null}
       </head>

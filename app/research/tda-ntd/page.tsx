@@ -1,17 +1,13 @@
-import type { Metadata } from "next";
 import Link from "next/link";
+import { PageStructuredData } from "@/components/PageStructuredData";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
 import { tdaNtdFeasibility } from "@/lib/data";
 import { REVIEW_FEEDBACK_URL } from "@/lib/feedback";
 import { formatDate } from "@/lib/format";
+import { pageMetadata } from "@/lib/routes";
 
-export const metadata: Metadata = {
-  title: "TDA/NTD reporting feasibility",
-  description:
-    "A cited four-field comparison of California TDA and National Transit Database reporting, with an explicit automation boundary.",
-  alternates: { canonical: "/research/tda-ntd" },
-};
+export const metadata = pageMetadata("/research/tda-ntd");
 
 const sourceById = new Map(
   tdaNtdFeasibility.sources.map((source) => [source.id, source] as const),
@@ -47,6 +43,7 @@ export default function TdaNtdResearchPage() {
 
   return (
     <>
+      <PageStructuredData path="/research/tda-ntd" />
       <SiteHeader />
       <main id="main-content" className="document-page" tabIndex={-1}>
         <header className="document-hero document-hero--research">

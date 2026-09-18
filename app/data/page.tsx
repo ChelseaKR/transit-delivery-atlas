@@ -1,14 +1,10 @@
-import type { Metadata } from "next";
+import { PageStructuredData } from "@/components/PageStructuredData";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
 import { CONTENT_CORRECTION_URL } from "@/lib/feedback";
+import { pageMetadata } from "@/lib/routes";
 
-export const metadata: Metadata = {
-  title: "Open data",
-  description:
-    "Download the Transit Delivery Atlas directive, relationship, public-evidence, and context-watchlist datasets and review their public schemas.",
-  alternates: { canonical: "/data" },
-};
+export const metadata = pageMetadata("/data");
 
 const fields = [
   ["id", "Stable analytical identifier; not an official identifier"],
@@ -33,6 +29,7 @@ const fields = [
 export default function DataPage() {
   return (
     <>
+      <PageStructuredData path="/data" />
       <SiteHeader />
       <main id="main-content" className="document-page" tabIndex={-1}>
         <header className="document-hero document-hero--data">
