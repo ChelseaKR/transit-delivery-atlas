@@ -260,7 +260,7 @@ recorded here.
 - **A quotation past page nine was published with the wrong page.** The page markers this
   project writes into the retained text were matched with `\d`, not `\d+`, in both
   `pageOfQuote` and `quoteIsVerbatim`. On the five-page signed order that is inert; on the
-  first instrument longer than nine pages it is not. `pageOfQuote` stopped recognising
+  first instrument longer than nine pages it is not. `pageOfQuote` stopped recognizing
   markers at `=== PAGE 10 ===` and carried the last page it had matched forward, so a
   quotation on page 11 was located on **page 9** — a wrong locator, not a missing one, in
   the one field a reader uses to check a quotation against the signed image. Measured on a
@@ -291,7 +291,7 @@ recorded here.
 - **The exports now carry their own contract.** `public/data/datapackage.json` is a
   Frictionless Data Package describing every published file: a Table Schema per CSV
   giving each column its name, type and whether it is ever empty, the separator a
-  multi-valued cell uses, the licence split, and the signed source's retrieval date and
+  multi-valued cell uses, the license split, and the signed source's retrieval date and
   SHA-256. `public/data/dcat.jsonld` is the same dataset as a DCAT-AP record for catalog
   harvesters. Both are generated at build by `scripts/export-data.mjs` and byte-compared
   against the committed copies by `npm run data:export:check`, like every other export.
@@ -309,13 +309,13 @@ recorded here.
   pull request and teach everyone to regenerate without reading. It is published per
   build at `/version.json` and the package points there; the dataset is dated by
   `dataReviewedThrough`, a real review date read off the records. And a **single SPDX
-  identifier** is not used, because the licence genuinely is split: CC BY 4.0 covers the
+  identifier** is not used, because the license genuinely is split: CC BY 4.0 covers the
   analytical content, and the signed order's excerpts, agency names and government
   publications are not relicensed by this project. Naming only CC BY 4.0 at the top would
   be a claim about the source layer this project is not entitled to make.
 
 - `docs/DATA-CARD.md`, stating the dataset's classification (public information only, no
-  personal data), provenance, update cadence, licence split and known limitations, linked
+  personal data), provenance, update cadence, license split and known limitations, linked
   from the `/data` page. It copies no number out of the data: counts and review dates
   live in the exports, and the card names the field that holds each one. With it, the
   Data Governance row of the standards conformance table moves from partially met to met.
@@ -324,10 +324,10 @@ recorded here.
 
 - Two commits reached `main` with no CI verdict at all. `quality.yml` keyed its
   concurrency group on `github.ref` alone, so every push to `main` shared one group;
-  with `cancel-in-progress: true`, each merge cancelled the run still executing for
+  with `cancel-in-progress: true`, each merge canceled the run still executing for
   the merge before it. On 2026-09-06 that left `afb757e2` (#116) and `0b9b1ada` (#119)
   on `main` with `validate` recorded as `cancelled` and no other check — and a
-  cancelled run is not a pass, it is no verdict. `main` read as green only because the
+  canceled run is not a pass, it is no verdict. `main` read as green only because the
   tip's run happened to be the one that survived. The key now appends the commit SHA on
   push, so each commit gets its own run; pull requests still collapse onto the branch
   ref, which is the cancellation that was wanted.
@@ -433,7 +433,7 @@ recorded here.
   on null." Nothing threw, so a bad build shipped silently, and the same value
   feeds the answer verifier's freshness block. The statement now says no check
   date is available, and `scripts/validate-data.mjs` separately refuses the
-  data-modelling error behind it: an evidence record linking a directive that
+  data-modeling error behind it: an evidence record linking a directive that
   no review source lists in `coversDirectiveIds`. A retrieval failure is left
   to the renderer, because failing the release on it would block a deploy for
   something no re-review can clear.
@@ -460,7 +460,7 @@ recorded here.
   invited to ask a question has already been told something untrue by the time
   an error string explains the invitation was empty. `tests/ask-gate.test.mjs`
   pins both directions: absent across all twenty-one directive pages in the
-  ordinary build, present and labelled in a second isolated build with the
+  ordinary build, present and labeled in a second isolated build with the
   variable set. Turning the panel on is now explicitly part of deploying the
   service (`docs/AI-SERVICE.md`).
 

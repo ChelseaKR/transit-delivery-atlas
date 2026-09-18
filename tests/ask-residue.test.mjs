@@ -70,7 +70,7 @@ function moduleSpanContaining(source, marker) {
   const headers = [...source.matchAll(/,(\d{3,6}),(?:\([a-z,\s]*\)|[a-z])\s*=>\s*\{/g)];
   assert.ok(
     headers.length >= 2,
-    "no Turbopack module headers were recognised in the chunk; the bundle format changed " +
+    "no Turbopack module headers were recognized in the chunk; the bundle format changed " +
       "and this measurement is no longer reading what it thinks it is reading",
   );
 
@@ -82,7 +82,7 @@ function moduleSpanContaining(source, marker) {
   assert.notEqual(
     index,
     -1,
-    `${JSON.stringify(marker)} appears before the first recognised module header`,
+    `${JSON.stringify(marker)} appears before the first recognized module header`,
   );
 
   const start = starts[index];

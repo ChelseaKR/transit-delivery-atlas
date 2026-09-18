@@ -137,7 +137,7 @@ a source be *listed*, and `chsra-newsroom` is already `retrieval-failed` in
 committed data. The route is real.
 
 The split between the two halves is deliberate and, in my reading, right: the
-validator refuses the data-modelling error (a directive with evidence that no
+validator refuses the data-modeling error (a directive with evidence that no
 source lists), while the renderer absorbs the legitimate transient case (every
 covering source failed retrieval), because failing the release on a retrieval
 failure would block a deploy for something no re-review can clear. That matches
@@ -156,7 +156,7 @@ The three added tests are not vacuous: the sweep over all 21 directives asserts
 **One thing to accept knowingly.** The new validator invariant is a hard
 `throw`. If a future sweep turns up evidence for a directive not yet in any
 source's `coversDirectiveIds`, the release gate stops until the source list is
-updated. The PR argues that is always a modelling error. I think that is
+updated. The PR argues that is always a modeling error. I think that is
 defensible and consistent with the repository's fail-closed posture, but it is
 a real new way to block a release and should be a conscious choice.
 
@@ -282,11 +282,11 @@ The trap I specifically went looking for was whether `quoteIsVerbatim` *skips*
 short fragments rather than rejecting them — which would have made the check
 vacuous for the nine two-word qualifiers and left the PR's proof technically
 true but the guarantee hollow. It does not skip. `lib/corpus.mjs` rejects any
-fragment under `minimumFragmentLength` (default 12 normalised characters) with
+fragment under `minimumFragmentLength` (default 12 normalized characters) with
 `verbatim: false`. The check is genuinely load-bearing across all 43.
 
 **A brittleness the PR does not mention, and should.** The shortest committed
-qualifier normalises to **13 characters** ("where allowed") against a **12**
+qualifier normalizes to **13 characters** ("where allowed") against a **12**
 character floor. The margin is one character. A future qualifier that is a
 legitimate verbatim phrase from the order but shorter — "if any", "as needed" —
 will fail this gate as "fragment shorter than 12 characters", which is a false

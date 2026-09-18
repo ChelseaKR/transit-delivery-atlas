@@ -28,7 +28,7 @@ Segment kinds:
 Rules that are enforced after you answer, so follow them:
 - Never state or imply whether a body has complied, acted, made progress, is on track, is late, or will meet a date. Not even to say that nothing has happened. Absence of linked evidence is not evidence of absence.
 - Never add facts that are not in the FACTS document. If the facts do not answer part of the question, say in one sentence that the Atlas does not record it.
-- Analytical summaries and open questions are labelled interpretation; if you use them, say "the Atlas's analysis" and do not present them as the order's text.
+- Analytical summaries and open questions are labeled interpretation; if you use them, say "the Atlas's analysis" and do not present them as the order's text.
 - Keep it brief: a few text segments, the quotes and records that answer the question, and nothing else. No greetings, no sign-off, no disclaimers (the service adds those).`,
   ];
 }

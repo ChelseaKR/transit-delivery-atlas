@@ -63,7 +63,7 @@ function parseArguments(argv) {
 
 /**
  * The date the log is stamped with. `ATLAS_BUILD_DATE` keeps a run reproducible,
- * the same override `scripts/validate-data.mjs` already honours.
+ * the same override `scripts/validate-data.mjs` already honors.
  */
 function checkedOnDate() {
   const override = process.env.ATLAS_BUILD_DATE?.trim();

@@ -16,7 +16,7 @@ status. Every structural rule below exists to protect that.
 |---|---|---|
 | Source | `data/directives.json`, `data/sources.json`, `corpus/` | Reviewed excerpts of the signed order, locators, named bodies, timing text and its arithmetic |
 | Evidence | `data/evidence.json` | Dated public artifacts that explicitly cite the order, with hash, locator, review date, limitations, plus the committed source list and sweep log |
-| Analysis | `data/analysis.json` | Labelled interpretation: summaries, inferred outputs, dependencies, open questions |
+| Analysis | `data/analysis.json` | Labeled interpretation: summaries, inferred outputs, dependencies, open questions |
 | Context | `data/watchlist.json` | Research leads that do not meet the evidence rule |
 
 A change to one layer is reviewed on its own. Never let model prose, an

@@ -1191,7 +1191,7 @@ const changeEntries = deriveChanges({
 });
 for (const entryRecord of changeEntries) {
   if (!Object.hasOwn(CHANGE_KINDS, entryRecord.kind)) {
-    throw new Error(`Change entry ${entryRecord.id} carries an uncategorised kind.`);
+    throw new Error(`Change entry ${entryRecord.id} carries an uncategorized kind.`);
   }
 }
 console.log(

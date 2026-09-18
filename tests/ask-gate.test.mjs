@@ -39,7 +39,7 @@ test("the ordinary build configures no service and renders no panel on any direc
   }
 });
 
-test("a build with a configured service renders the panel, labelled and opt-in", async (t) => {
+test("a build with a configured service renders the panel, labeled and opt-in", async (t) => {
   t.diagnostic("builds the site a second time into an isolated export directory");
   const exportDir = "out-ask-gate";
   const target = new URL(`../${exportDir}/directives/n-7-26-1a/index.html`, import.meta.url);

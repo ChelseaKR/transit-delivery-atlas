@@ -513,7 +513,7 @@ const directiveRelationshipsCsv = [
 // --- Frictionless Data Package and DCAT record ----------------------------------
 //
 // The exports are the machine-readable product, and their contract lived in prose plus
-// one JSON Schema. A data package makes the CSV columns typed and the licence and
+// one JSON Schema. A data package makes the CSV columns typed and the license and
 // provenance travel with the files, so a consumer loading them with `frictionless` or
 // `pandas` reads the same rules a reader of the site does.
 //
@@ -534,7 +534,7 @@ const directiveRelationshipsCsv = [
 // in `/version.json`, and the package points at it. `dataReviewedThrough` — a real
 // review date, derived from the records — is what dates the data itself.
 //
-// A single SPDX licence identifier is not, because the licence genuinely is split. The
+// A single SPDX license identifier is not, because the license genuinely is split. The
 // analytical fields are CC BY 4.0; the signed order's excerpts, agency names and
 // government publications are not relicensed by this project. Naming only CC BY 4.0 at
 // the top would be a claim this project is not entitled to make about the source layer.
@@ -621,7 +621,7 @@ const tabularResources = [
     description:
       "One row per non-evidentiary research lead. These records are deliberately outside " +
       "the evidence layer: the evidence-boundary columns record why each one is not " +
-      "evidence and when that judgement was last checked.",
+      "evidence and when that judgment was last checked.",
     columns: watchlistCsvColumns,
     rows: watchlistCsvRows,
   },
@@ -630,7 +630,7 @@ const tabularResources = [
     file: "directive-organizations.csv",
     title: "Directive-to-organization links, by source role",
     description:
-      "One row per (directive, organization) pair, labelled with the source role the " +
+      "One row per (directive, organization) pair, labeled with the source role the " +
       "signed text gives it: explicit lead, explicit collaborator, or other named party. " +
       "These are roles the instrument states, not an assignment of responsibility by this " +
       "project.",
@@ -706,7 +706,7 @@ const dataPackage = {
   description:
     "An independent, unofficial crosswalk of a signed California transit executive order: " +
     "its directive units, the organizations it names, the public artifacts reviewed " +
-    "against them, and a separately labelled analytical layer. Source, evidence, analysis " +
+    "against them, and a separately labeled analytical layer. Source, evidence, analysis " +
     "and context are separate layers and never blur; every column name says which layer " +
     "it belongs to.",
   homepage: `${SITE_ORIGIN}/data`,

@@ -51,19 +51,19 @@ test("the sweep reads the whole static export, not a sample of it", async () => 
 
 test("no exported page publishes a verdict about a directive", async () => {
   const pages = await exportedPages();
-  const offences = [];
+  const offenses = [];
 
   for (const page of pages) {
     const html = await readFile(page, "utf8");
     for (const finding of unregisteredVerdictSentences(html)) {
-      offences.push(`${relative(page)}\n    ${finding.pattern}\n    ${finding.sentence}`);
+      offenses.push(`${relative(page)}\n    ${finding.pattern}\n    ${finding.sentence}`);
     }
   }
 
   assert.deepEqual(
-    offences,
+    offenses,
     [],
-    `The site published ${offences.length} sentence(s) carrying verdict language with no registered reason.\n\n${offences.join(
+    `The site published ${offenses.length} sentence(s) carrying verdict language with no registered reason.\n\n${offenses.join(
       "\n\n",
     )}\n\nEither reword the prose, or, if the sentence disclaims the verdict rather than making one, register it in PERMITTED_VERDICT_SENTENCES with the reason it is not a finding.`,
   );

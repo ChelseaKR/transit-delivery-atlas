@@ -84,7 +84,7 @@ and GA records nothing.
   referrer, title, browser and device data and an approximate location, and
   outside the EEA, UK and Switzerland sets the `_ga` cookies for up to two
   years. `/privacy`, linked from every footer and listed in the sitemap, says
-  so, along with retention, the regional behaviour, and how to turn it off.
+  so, along with retention, the regional behavior, and how to turn it off.
 - The rendered-HTML host allowlist gains `www.googletagmanager.com`, the one
   host a page fetches from.
 - `tests/analytics.test.mjs` runs the loader in a Node `vm` against stubbed

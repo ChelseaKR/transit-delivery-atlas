@@ -9,10 +9,10 @@ import { PROMPT_VERSION, StructuredQuestionSchema, type StructuredQuestion } fro
  * A deterministic pre-classifier runs first and last. The model is asked only
  * when the question is not already a verdict request, and its answer is
  * re-checked: directive IDs must resolve, a verdict intent from the model is
- * honoured, and a verdict the model missed is still caught by the lexicon.
+ * honored, and a verdict the model missed is still caught by the lexicon.
  */
 
-// A number, optionally followed by a parenthesised letter ("1(a)", "3 (b)") or
+// A number, optionally followed by a parenthesized letter ("1(a)", "3 (b)") or
 // an attached letter ("1a"). A space-separated letter is not a sub-item, so
 // "directive 4 and" does not read as 4(a). A digit or decimal after the number
 // ("5307", "4.2") is not a directive reference.

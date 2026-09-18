@@ -7,7 +7,7 @@ import {
   withholdVerdictSentences,
 } from "../lib/verdict-language.mjs";
 
-test("verdict questions are recognised across phrasings", () => {
+test("verdict questions are recognized across phrasings", () => {
   const verdicts = [
     "Is Caltrans complying?",
     "Are they on track?",
@@ -65,7 +65,7 @@ test("the site's own permitted wording is not withheld", () => {
   for (const sentence of permitted) assert.equal(verdictPatternIn(sentence), null, sentence);
 });
 
-test("sentence splitting keeps quoted and parenthesised openings together", () => {
+test("sentence splitting keeps quoted and parenthesized openings together", () => {
   assert.deepEqual(splitSentences('First. “Second” here. (Third) there.'), ["First.", "“Second” here.", "(Third) there."]);
   assert.deepEqual(splitSentences("Section 1(a) applies. It is dated 2026-06-26."), ["Section 1(a) applies.", "It is dated 2026-06-26."]);
 });

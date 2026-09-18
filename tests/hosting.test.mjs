@@ -102,7 +102,7 @@ test("sitemap lists every static route and every directive record exactly once",
 
 test("every sitemap date is one the committed records support, and none is the build's", async () => {
   // Read back out of the exported artifact, not out of the function that wrote it.
-  // `app/sitemap.ts` derives the dates and Next serialises them; those are two pieces
+  // `app/sitemap.ts` derives the dates and Next serializes them; those are two pieces
   // of code and only the second one is published. The sprout lane hit exactly this: a
   // build that printed an honest count while the file beside it carried the build date
   // on every URL.

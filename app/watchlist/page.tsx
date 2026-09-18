@@ -77,7 +77,7 @@ export default function WatchlistPage() {
                         `${id} (${daysOverdue} day${daysOverdue === 1 ? "" : "s"} overdue)`,
                     )
                     .join(", ")}
-                  . Those cards are labelled <em>Review overdue</em>. Read them
+                  . Those cards are labeled <em>Review overdue</em>. Read them
                   as a record of their last review date, not as a statement
                   about today.
                 </p>
