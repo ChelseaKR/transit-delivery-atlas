@@ -7,6 +7,28 @@ recorded here.
 
 ### Added
 
+- **Google Analytics 4 on the pages, and a `/privacy` page that says what it
+  records (ADR-0003).** Per the owner's 2026-09-17 decision to run GA4 on every
+  public site in the portfolio. `lib/analytics.ts` holds the measurement ID
+  (`G-SEHF9W5L74`) and an inline loader `app/layout.tsx` puts in every page's
+  `<head>`. It loads nothing off `transit.chelseakr.com`, so no local, test or
+  CI build contacts Google, and nothing under Global Privacy Control, Do Not
+  Track, or the new footer "Opt out of analytics" control, which is remembered
+  in `localStorage` under `transit-delivery-atlas:analytics-opt-out`. Google
+  signals and ad personalization are off, the three advertising consent
+  settings are denied everywhere, and `analytics_storage` is denied by default
+  in the EEA, the UK and Switzerland (cookieless pings there) and granted
+  elsewhere. Links navigate on the client, so gtag's own page view is off and
+  `components/AnalyticsPageViews.tsx` sends one per route, with the query string
+  cut to `utm_*` parameters: the explorers keep what a reader types there. The
+  CloudFront CSP in `infra/static-site.json` now allows
+  `www.googletagmanager.com` for scripts and `*.google-analytics.com` and
+  `*.analytics.google.com` for connections and images; that takes a stack
+  update to reach the live site. This reverses the site's earlier "no
+  analytics" position; README, SECURITY.md, CONTRIBUTING.md,
+  `docs/DATA-CARD.md`, `docs/AI-SERVICE.md` and the two entries below were
+  changed to match.
+
 - **The review sweep can now be run, not only attested.** `docs/EVIDENCE-MODEL.md`
   commits this project to periodically checking the official sources that would
   publish an artifact citing the order, and every sweep so far has been a manual
@@ -58,9 +80,9 @@ recorded here.
   for a reader to learn that it had learned something without loading the site and
   comparing it with what they remembered. `/changes.xml` is an Atom 1.0 feed and
   `/changes.json` the same entries as data, with a filtered feed per directive at
-  `/directives/<id>/changes.xml`. The site has no accounts, no analytics and no
-  subscriptions by design, and a static feed is the one push channel that keeps all
-  three true.
+  `/directives/<id>/changes.xml`. The site has no accounts and no subscriptions by
+  design, and a static feed is the one push channel that keeps both true; a feed
+  carries no script, so reading one is not measured.
 
   Entries are derived, not written: review sweeps and the evidence records each sweep
   added, re-reviews on both curated layers, cited-artifact re-checks read from the
@@ -404,8 +426,9 @@ recorded here.
 ### Added
 
 - Ko-fi support link in the site footer, using a self-hosted copy of the button
-  image so the page makes no third-party request and stays within the site's
-  `img-src 'self' data:` content-security policy
+  image so the page makes no request to Ko-fi and stays within the site's
+  content-security policy, which allows images only from this origin (and, since
+  the GA4 entry above, Google Analytics' collection hosts)
 - "Ask about this directive": an explicit opt-in AI panel on each directive
   page. Until a reader opens it and submits a question the page performs no
   request of any kind (`lib/ask-client.ts` is constructed with an injectable

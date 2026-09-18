@@ -125,7 +125,8 @@ a production deployment must record that subprocessor relationship.
 Nothing below is provisioned. It is the shape a deployment would take so the
 decision is concrete:
 
-- **Same-origin path, no CSP change.** The site's CSP is `connect-src 'self'`.
+- **Same-origin path, no CSP change.** The site's CSP allows `connect-src`
+  only to its own origin and Google Analytics' collection hosts (ADR-0003).
   Run the service behind the existing CloudFront distribution as a second
   origin with a behavior for `/api/ask*` (origin: a Lambda function URL or a
   small App Runner/Fargate service running `npm run ask:serve`). The page then
