@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import { PageStructuredData } from "@/components/PageStructuredData";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
 import {
@@ -6,16 +6,11 @@ import {
   OPT_OUT_STORAGE_KEY,
   analyticsEnabled,
 } from "@/lib/analytics";
+import { pageMetadata } from "@/lib/routes";
 
 const enabled = analyticsEnabled();
 
-export const metadata: Metadata = {
-  title: "Privacy",
-  description: enabled
-    ? "What Google Analytics records when you read Transit Delivery Atlas, what is switched off, and how to turn it off."
-    : "Transit Delivery Atlas runs no analytics and sets no cookies.",
-  alternates: { canonical: "/privacy" },
-};
+export const metadata = pageMetadata("/privacy");
 
 function Hosting() {
   return (
@@ -36,6 +31,7 @@ function Hosting() {
 export default function PrivacyPage() {
   return (
     <>
+      <PageStructuredData path="/privacy" />
       <SiteHeader />
       <main id="main-content" className="document-page" tabIndex={-1}>
         <header className="document-hero">

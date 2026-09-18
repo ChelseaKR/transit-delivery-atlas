@@ -6,28 +6,13 @@ import evidenceVerificationRaw from "@/data/evidence-verification.json";
 import watchlistRaw from "@/data/watchlist.json";
 import { BUILD_DATE } from "@/lib/build-date";
 import { deriveChanges } from "@/lib/changes.mjs";
+import { routes } from "@/lib/routes";
+import { absoluteUrl, servedPath } from "@/lib/site";
 import { lastModifiedByRoute } from "@/lib/sitemap-lastmod.mjs";
 
 // Required for `output: "export"`: without this, Next.js treats sitemap.ts as
 // a dynamic route and the static export build fails.
 export const dynamic = "force-static";
-
-const SITE_URL = "https://transit.chelseakr.com";
-
-// Static, non-directive routes with a stable `alternates.canonical` entry.
-// Keep this list in sync with the canonical path declared on each page.
-const staticRoutes = [
-  "/",
-  "/handoffs",
-  "/evidence",
-  "/watchlist",
-  "/research/tda-ntd",
-  "/methodology",
-  "/accessibility",
-  "/privacy",
-  "/data",
-  "/corrections",
-];
 
 // When each route last changed, from the record-level change log rather than from
 // one field on the directive record and rather than from the build. The reasoning
@@ -45,27 +30,22 @@ const lastModified = lastModifiedByRoute({
 });
 
 /**
- * One sitemap entry, carrying a `<lastmod>` only where a dated record supports one.
+ * Every route the site serves, read from the same records the pages build their
+ * canonical, title and description from. The static half used to be a literal
+ * list here under a comment asking whoever edited it to keep it in step with the
+ * pages; nothing enforced that, and a page could be added with no sitemap entry
+ * or an entry could outlive its page.
  *
  * `<lastmod>` is optional, and an omitted element is a valid sitemap that says
- * nothing false. An element defaulted to the build date would be a claim that every
- * page changed this morning, which is true of the bytes and false of the document.
+ * nothing false. An element defaulted to the build date would be a claim that
+ * every page changed this morning, which is true of the bytes and false of the
+ * document.
  */
-function entry(url: string, route: string): MetadataRoute.Sitemap[number] {
-  const changed = lastModified.get(route);
-  return changed === undefined ? { url } : { url, lastModified: changed };
-}
-
 export default function sitemap(): MetadataRoute.Sitemap {
-  const staticEntries: MetadataRoute.Sitemap = staticRoutes.map((path) => {
-    const route = path === "/" ? "/" : `${path}/`;
-    return entry(`${SITE_URL}${route}`, route);
+  return routes.map(({ path }) => {
+    const changed = lastModified.get(servedPath(path));
+    return changed === undefined
+      ? { url: absoluteUrl(path) }
+      : { url: absoluteUrl(path), lastModified: changed };
   });
-
-  const directiveEntries: MetadataRoute.Sitemap = directivesRaw.directives.map((directive) => {
-    const route = `/directives/${directive.id}/`;
-    return entry(`${SITE_URL}${route}`, route);
-  });
-
-  return [...staticEntries, ...directiveEntries];
 }

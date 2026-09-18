@@ -190,6 +190,11 @@ test("this build configures no question service, so it offers no AI affordance",
   // Nothing on any page loads a resource from ko-fi.com, which is what this
   // check is really guarding: `default-src 'self'` means an origin named here
   // can be navigated TO, never fetched FROM.
+  // `schema.org` is the `@context` of the page's structured data: a vocabulary
+  // identifier, not an address. Nothing resolves it -- a consumer that knows
+  // schema.org already knows what the terms mean, and one that does not is not
+  // served by this page fetching anything. It is named here for the same reason
+  // the others are: so that adding an origin to a page stays a decision.
   // `www.googletagmanager.com` is the one host a page does fetch from: the
   // GA4 loader (lib/analytics.ts, ADR-0003) names gtag.js and requests it only
   // on the production host and never under GPC, DNT or the footer opt-out.
@@ -200,6 +205,7 @@ test("this build configures no question service, so it offers no AI affordance",
     "dot.ca.gov",
     "github.com",
     "ko-fi.com",
+    "schema.org",
     "www.googletagmanager.com",
   ]);
   const hosts = new Set();
