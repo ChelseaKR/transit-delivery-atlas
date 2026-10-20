@@ -484,7 +484,7 @@ test("context watchlist is selective, non-evidentiary, and actionably reviewed",
     origin: "artifact-header",
   });
   assert.equal(hearing.directiveLinks[0].relationship, "process-adjacency");
-  assert.equal(hearing.nextReviewOn, "2026-10-16");
+  assert.equal(hearing.nextReviewOn, "2026-12-07");
   assert.ok(hearing.lastReviewedOn >= "2026-08-21", "the lapsed hearing lead was re-reviewed");
 
   const meeting = watchlist.items.find(
@@ -492,14 +492,14 @@ test("context watchlist is selective, non-evidentiary, and actionably reviewed",
   );
   assert.equal(meeting.evidenceBoundary.reason, "no-explicit-order-citation");
   assert.match(meeting.editorialSummary, /evidence register/);
-  assert.equal(meeting.nextReviewOn, "2026-10-16");
+  assert.equal(meeting.nextReviewOn, "2026-12-07");
 
   const funding = watchlist.items.find(
     ({ id }) => id === "fta-2026-07-27-bus-low-no-nofo",
   );
   assert.match(funding.editorialSummary, /\$21 million/);
   assert.match(funding.editorialSummary, /\$589 million/);
-  assert.equal(funding.nextReviewOn, "2026-09-21");
+  assert.equal(funding.nextReviewOn, "2026-12-07");
 
   const district = watchlist.items.find(
     ({ id }) => id === "caltrans-2026-07-17-d4-transit-needs-assessment",

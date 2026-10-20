@@ -216,8 +216,8 @@ test("empty-state fidelity: the site's own wording is inserted and model prose a
   assert.ok(empty, "an empty-state block is present by construction");
   assert.equal(empty.directiveId, "n-7-26-1a");
   assert.match(empty.statement, /No reviewed public artifact is linked to this directive\./);
-  assert.match(empty.statement, /last checked on 2026-08-21/);
-  assert.match(empty.statement, /next planned check of the listed sources is 2026-09-18/);
+  assert.match(empty.statement, /last checked on 2026-10-19/);
+  assert.match(empty.statement, /next planned check of the listed sources is 2026-10-30/);
   assert.match(empty.statement, /not evidence that no implementation activity or public record exists/);
   assert.equal(result.withheld.items.filter(({ kind }) => kind === "verdict").length, 1);
   assert.ok(!result.blocks.some((block) => block.type === "text" && /Nothing has happened/.test(block.text)));
@@ -248,11 +248,11 @@ test("freshness: every evidence answer carries review dates for every directive 
   const five = freshness.items[0];
   assert.equal(five.coverageState, "linked");
   assert.ok(five.evidence.every(({ lastReviewedOn }) => /^\d{4}-\d{2}-\d{2}$/.test(lastReviewedOn)));
-  assert.equal(five.sourcesLastCheckedOn, "2026-08-21");
+  assert.equal(five.sourcesLastCheckedOn, "2026-10-19");
   const four = freshness.items[1];
   assert.equal(four.coverageState, "checked-none-found");
   assert.match(four.statement, /could not be retrieved/);
-  assert.equal(four.nextReviewOn, "2026-09-18");
+  assert.equal(four.nextReviewOn, "2026-10-30");
 });
 
 test("a directive-only answer carries no freshness block and no empty state", async () => {
