@@ -1,7 +1,7 @@
 {
   "schemaVersion": "0.1.0",
   "scope": "selective-context",
-  "lastUpdatedOn": "2026-08-21",
+  "lastUpdatedOn": "2026-10-19",
   "boundaryNote": "This curated research watchlist contains official public items selected for topical relevance to one or more directives even though the reviewed item does not currently meet the Atlas evidence rule. It is selective, not comprehensive or live. Editorial relevance does not establish causation, implementation activity, progress, completion, compliance, or performance. Omission has no negative meaning.",
   "items": [
     {
@@ -23,15 +23,15 @@
         "kind": "scheduled-event",
         "origin": "artifact-header"
       },
-      "retrievedOn": "2026-07-28",
-      "lastReviewedOn": "2026-08-21",
-      "editorialSummary": "The Commission agenda scheduled a northern hearing on the proposed 2026 Solutions for Congested Corridors Program guidelines for August 3, 2026. The Commission's August 20–21, 2026 meeting book items state that the North Hearing was held on that date; no hearing record, transcript, or recording was found on the Commission pages reviewed.",
-      "whyTracked": "Directive 5 names the Solutions for Congested Corridors Program among the state funding programs whose guidelines are to be updated. The adoption book item that followed the hearing is in the evidence register; this lead now watches for a hearing record, minutes, or an adopted resolution that documents the outcome.",
+      "retrievedOn": "2026-10-19",
+      "lastReviewedOn": "2026-10-19",
+      "editorialSummary": "The Commission agenda scheduled a northern hearing on the proposed 2026 Solutions for Congested Corridors Program guidelines for August 3, 2026. The Commission's August 20–21, 2026 meeting book items state that the North Hearing was held on that date. The Commission's meetings page now lists the hearing's presentation and a recording link beside the agenda. The presentation cites Order 5 and is recorded in the evidence register; the recording was not reviewed.",
+      "whyTracked": "Directive 5 names the Solutions for Congested Corridors Program among the state funding programs whose guidelines are to be updated. The adoption book item that followed the hearing and the hearing presentation are in the evidence register; this lead now watches for a hearing record or adopted resolution text that documents the outcome.",
       "evidenceBoundary": {
         "reason": "no-explicit-order-citation",
-        "checkedOn": "2026-08-21",
+        "checkedOn": "2026-10-19",
         "explicitOrderCitation": false,
-        "note": "The reviewed agenda does not cite N-7-26, Executive Order N-7-26, or Order 5, and it does not record an adoption or hearing outcome. The August 20–21 book items that say the hearing occurred are separate artifacts and are recorded in the evidence register on their own citation."
+        "note": "The agenda, re-read on 2026-10-19, does not cite N-7-26, Executive Order N-7-26, or Order 5, and it does not record an adoption or hearing outcome. The hearing presentation that does cite Order 5 is a separate artifact with its own evidence record. The recording listed on the Commission's meetings page was not reviewed, so this note makes no statement about it."
       },
       "directiveLinks": [
         {
@@ -40,14 +40,21 @@
           "rationale": "The scheduled hearing concerns proposed guidelines for a funding program explicitly named in directive 5."
         }
       ],
-      "nextReviewOn": "2026-10-16",
+      "nextReviewOn": "2026-12-07",
       "watchFor": [
-        "Minutes, a hearing record, a recording, or an adopted resolution for the 2026 SCCP guidelines that explicitly cites N-7-26.",
+        "A hearing record or the text of adopted Resolution G-26-60 that explicitly cites N-7-26.",
         "Language showing whether the July 15 transit-priority and first- and last-mile proposals were retained in the adopted guidelines."
       ],
       "limitations": [
-        "A scheduled hearing does not establish that any proposal was retained or that guidelines were adopted; the statement that the hearing occurred comes from a later staff memorandum, not from this agenda."
-      ]
+        "A scheduled hearing does not establish that any proposal was retained or that guidelines were adopted; the statement that the hearing occurred comes from a later staff memorandum, not from this agenda.",
+        "The hearing recording was listed on the Commission's meetings page but was not viewed or transcribed for this review."
+      ],
+      "lastObservation": {
+        "sha256": "91824b9527422e49174641285c4d33b8e9a87153692d565e7060db076b303374",
+        "basis": "bytes",
+        "mentionsOrder": null,
+        "observedOn": "2026-10-19"
+      }
     },
     {
       "id": "ctc-2026-08-20-21-meeting-materials-watch",
@@ -72,15 +79,15 @@
         "kind": "scheduled-event",
         "origin": "page-header"
       },
-      "retrievedOn": "2026-07-28",
-      "lastReviewedOn": "2026-08-21",
-      "editorialSummary": "The Commission's page for its August 20–21, 2026 meeting now lists the agenda, the complete meeting book, individual book items, supplemental letters, presentations, and a draft change list. The book items for the 2026 SCCP and Local Partnership Competitive Program guidelines adoptions cite Order 5 and are recorded in the evidence register; the page itself, the agenda, and the change list do not cite the order, and no minutes, adopted resolution, or recording for this meeting had been published at review time.",
-      "whyTracked": "The two guideline-adoption book items for programs named in directive 5 are now evidence records. This page remains the publication checkpoint for the meeting's minutes, adopted resolutions G-26-60 and G-26-64, and any recording, which would document whether the guidelines were adopted as proposed.",
+      "retrievedOn": "2026-10-19",
+      "lastReviewedOn": "2026-10-19",
+      "editorialSummary": "The Commission's page for its August 20–21, 2026 meeting lists the agenda, the complete meeting book, individual book items, supplemental letters, presentations, a draft change list and webcast recordings for both days. The book items for the 2026 SCCP and Local Partnership Competitive Program guidelines adoptions cite Order 5 and are recorded in the evidence register; the page itself, the agenda, and the change list do not cite the order. Minutes are not on this page, but the Commission's October 15–16, 2026 meeting materials include them, published October 2, 2026 for approval, and they list Resolutions G-26-60 and G-26-64 as approved without citing the order.",
+      "whyTracked": "The two guideline-adoption book items for programs named in directive 5 are now evidence records. This page remains the publication checkpoint for the text of adopted resolutions G-26-60 and G-26-64 and for the final guidelines, which would document what was adopted.",
       "evidenceBoundary": {
         "reason": "no-explicit-order-citation",
-        "checkedOn": "2026-08-21",
+        "checkedOn": "2026-10-19",
         "explicitOrderCitation": false,
-        "note": "The meeting page, agenda, and draft change list reviewed on this date do not cite N-7-26, Executive Order N-7-26, or Order 5. The individual book items that do cite the order are separate artifacts with their own evidence records; this lead stays context-only because the page does not yet carry an adoption record."
+        "note": "The meeting page, agenda, and draft change list re-read on 2026-10-19 do not cite N-7-26, Executive Order N-7-26, or Order 5, and neither do the August 20–21 minutes it leads to. The individual book items that do cite the order are separate artifacts with their own evidence records; this lead stays context-only because the page carries no resolution text or final guidelines."
       },
       "directiveLinks": [
         {
@@ -89,15 +96,22 @@
           "rationale": "The page may later publish final or adopted SCCP and Local Partnership Program materials for programs named in directive 5."
         }
       ],
-      "nextReviewOn": "2026-10-16",
+      "nextReviewOn": "2026-12-07",
       "watchFor": [
-        "Minutes or adopted resolutions G-26-60 and G-26-64 that explicitly cite N-7-26.",
-        "An adoption date and exact locator for any Order 5 guideline language in the final guidelines."
+        "The text of adopted resolutions G-26-60 and G-26-64, or the final guidelines, explicitly citing N-7-26.",
+        "An exact locator for any Order 5 guideline language in the final guidelines."
       ],
       "limitations": [
         "The existence of a meeting page with staff recommendations does not establish that any item was heard or adopted as proposed.",
-        "The displayed date is the scheduled first day of a two-day meeting."
-      ]
+        "The displayed date is the scheduled first day of a two-day meeting.",
+        "The minutes were published for approval at the October 15–16 meeting. The materials reviewed do not say whether the minutes were approved."
+      ],
+      "lastObservation": {
+        "sha256": "06916896d7fb7c45b0685881feb9a702dd61a0b4e1d624e0566d039afff972d4",
+        "basis": "text",
+        "mentionsOrder": false,
+        "observedOn": "2026-10-19"
+      }
     },
     {
       "id": "fta-2026-07-27-bus-low-no-nofo",
@@ -118,15 +132,15 @@
         "kind": "published",
         "origin": "page-header"
       },
-      "retrievedOn": "2026-07-28",
-      "lastReviewedOn": "2026-07-28",
-      "editorialSummary": "FTA announced approximately $21 million for the FY 2026 Buses and Bus Facilities Program and approximately $589 million for the FY 2026 Low or No Emission Program. Applications are due September 21, 2026.",
+      "retrievedOn": "2026-10-19",
+      "lastReviewedOn": "2026-10-19",
+      "editorialSummary": "FTA announced approximately $21 million for the FY 2026 Buses and Bus Facilities Program and approximately $589 million for the FY 2026 Low or No Emission Program. The page lists the opportunity as closed on September 21, 2026, the application deadline, and states that FTA will make selections within 75 days of that date. No selections were announced on the page at the October 19, 2026 review.",
       "whyTracked": "Directive 5 directs Caltrans to identify federal funding programs for transit-priority infrastructure and first- and last-mile projects. This new federal opportunity is a plausible program for later California guidance or identification, subject to project eligibility and scope.",
       "evidenceBoundary": {
         "reason": "no-explicit-order-citation",
-        "checkedOn": "2026-07-28",
+        "checkedOn": "2026-10-19",
         "explicitOrderCitation": false,
-        "note": "The federal notice does not cite N-7-26 and is not a Caltrans or CalSTA identification action under directive 5."
+        "note": "The federal notice, re-read on 2026-10-19, does not cite N-7-26 and does not mention California, Caltrans or CalSTA. It is not a Caltrans or CalSTA identification action under directive 5."
       },
       "directiveLinks": [
         {
@@ -135,7 +149,7 @@
           "rationale": "The opportunity funds buses and supporting facilities and may become relevant to directive 5's federal-program-identification clause."
         }
       ],
-      "nextReviewOn": "2026-09-21",
+      "nextReviewOn": "2026-12-07",
       "watchFor": [
         "Caltrans or CalSTA applicant guidance that identifies this program in connection with N-7-26.",
         "A later California funding crosswalk or award record with an explicit directive citation."
@@ -143,7 +157,13 @@
       "limitations": [
         "The opportunity is nationwide, and not every eligible project is transit-priority infrastructure or a first- or last-mile project.",
         "Topical relevance does not show that California will apply, identify the program under the order, or receive an award."
-      ]
+      ],
+      "lastObservation": {
+        "sha256": "520119aaf9b632445423f0aa8de8f5a9c3dca18d780b4a0bb45481f8369ae45d",
+        "basis": "text",
+        "mentionsOrder": false,
+        "observedOn": "2026-10-19"
+      }
     },
     {
       "id": "caltrans-2026-07-17-d4-transit-needs-assessment",

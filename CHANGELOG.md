@@ -7,6 +7,21 @@ recorded here.
 
 ### Added
 
+- **The October 2026 review of the planned review dates is recorded.** Four items had
+  passed their planned review date: the evidence collection, the FTA Buses and Low-No
+  notice, the August 3 SCCP hearing agenda and the August 20-21 Commission meeting page.
+  Each source was read again on 2026-10-19 and the dates moved for the sources that were read.
+  The sweep covers five of the seven listed review sources; the High-Speed Rail Authority
+  newsroom (bot protection) and the Caltrans Rail and Mass Transportation page (it now
+  returns a "Content Not Available" page) could not be read, so their records are
+  unchanged. One evidence record was added: the Commission's August 3 SCCP hearing
+  presentation, which cites Order 5 on page 13. The FTA notice shows its application
+  deadline as closed and announces no selections. The Commission's October 15-16 meeting
+  materials carry the August 20-21 minutes, which list Resolutions G-26-60 and G-26-64 as
+  approved without citing the order. The three context items are next reviewed on
+  2026-12-07 and the evidence collection on 2026-10-30, in the week after the 2026-10-24
+  calculated planning date.
+
 - **Every body and role group the order names now has its own record page.** The
   handoff view indexed the 23 registered bodies and gave none of them a permalink, so
   the three things a reader of one body needs -- what the signed order says about it,

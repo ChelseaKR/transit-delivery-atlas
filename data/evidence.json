@@ -1,8 +1,8 @@
 {
   "schemaVersion": "0.3.0",
   "scope": "selective",
-  "lastUpdatedOn": "2026-08-21",
-  "nextReviewOn": "2026-09-18",
+  "lastUpdatedOn": "2026-10-19",
+  "nextReviewOn": "2026-10-30",
   "reviewCommitment": "The sources listed in reviewSources are re-checked on or before nextReviewOn, and again in the week after the 2026-10-24 calculated planning date shared by directives 1(a) through 1(g). Each sweep is recorded in sweeps whether or not it adds a record. A lapsed nextReviewOn is published as lapsed and blocks a release after the same grace window the context watchlist uses.",
   "coverageNote": "This curated layer contains reviewed public artifacts selected for a documented relationship to a directive. It is selective, not comprehensive or live. Inclusion documents a source relationship; it does not establish implementation status, completion, compliance, or performance. Omission is not evidence that no implementation activity or public record exists.",
   "reviewSources": [
@@ -14,9 +14,15 @@
       "coversDirectiveIds": [
         "n-7-26-5"
       ],
-      "lastCheckedOn": "2026-08-21",
+      "lastCheckedOn": "2026-10-19",
       "lastCheckOutcome": "checked",
-      "note": "The August 20–21, 2026 agenda and the Tab 18, 19, 22, and 24 book items were read in full. Tabs 19 and 24 cite N-7-26 and were added as evidence records."
+      "note": "The meetings page now lists the October 15–16, 2026 meeting. Its agenda, complete meeting book, change list, the Tab 16, 17, 19, 23, 78 and 90 materials, and the August 20–21 minutes (Reference 1.2) were text-searched for N-7-26 and Order 5, and none cites the order. The minutes were published October 2, 2026 for approval and list Resolutions G-26-60 and G-26-64 as approved. The page also lists a presentation and a recording for the August 3 SCCP hearing. The presentation cites Order 5 on page 13 and was added as an evidence record; the recording was not reviewed.",
+      "lastObservation": {
+        "sha256": "fc0d717b4e192e6d364b35fdffe2e4da69e4edcb3024e208a107823f0688b498",
+        "basis": "text",
+        "mentionsOrder": false,
+        "observedOn": "2026-10-19"
+      }
     },
     {
       "id": "ctc-workshops",
@@ -26,9 +32,15 @@
       "coversDirectiveIds": [
         "n-7-26-5"
       ],
-      "lastCheckedOn": "2026-08-21",
+      "lastCheckedOn": "2026-10-19",
       "lastCheckOutcome": "checked",
-      "note": "No workshop entries were added after the July 15, 2026 Efficient Land Use and Housing workshop whose materials are already in the register."
+      "note": "Two workshop entries follow the July 15, 2026 Efficient Land Use and Housing workshop: a September 16 Toll Facility Project Applications Guidelines update (agenda, draft guidelines and presentation read) and an October 6 Local Streets and Roads training flyer. None cites N-7-26 or Order 5. The only listing that names the order is the July 15 resource material already in the register.",
+      "lastObservation": {
+        "sha256": "90f17c796ed8e3da3656e7ea91fc60b03999e92a136b8f8d78b504a7d8f71dd5",
+        "basis": "text",
+        "mentionsOrder": true,
+        "observedOn": "2026-10-19"
+      }
     },
     {
       "id": "calsta-press-releases",
@@ -39,9 +51,15 @@
         "n-7-26-4",
         "n-7-26-5"
       ],
-      "lastCheckedOn": "2026-08-21",
+      "lastCheckedOn": "2026-10-19",
       "lastCheckOutcome": "checked",
-      "note": "One release since the last sweep (August 12, 2026, Interagency Equity Advisory Committee applicants). No release on the page cites N-7-26."
+      "note": "Page one lists releases through August 12, 2026 (Interagency Equity Advisory Committee applicants), which was already recorded; no newer release appears. No release on the page cites N-7-26.",
+      "lastObservation": {
+        "sha256": "ad98a1fa96060e20dd290d48a8a5edae1e673942cd4af8f53382c47dd631be9f",
+        "basis": "text",
+        "mentionsOrder": false,
+        "observedOn": "2026-10-19"
+      }
     },
     {
       "id": "caltrans-news-releases",
@@ -70,9 +88,15 @@
         "n-7-26-5",
         "n-7-26-6"
       ],
-      "lastCheckedOn": "2026-08-21",
+      "lastCheckedOn": "2026-10-19",
       "lastCheckOutcome": "checked",
-      "note": "Ten releases listed, the most recent dated August 18, 2026 (Sustainable Transportation Planning Grants). None cites N-7-26."
+      "note": "Ten releases are listed, the most recent dated October 8, 2026. All ten were opened and text-searched for N-7-26 and Order 5, including the four dated after August 18, 2026 (September 2 and 17, October 1 and 8), and none cites the order.",
+      "lastObservation": {
+        "sha256": "5fa2767ebf1f49b46e1bc9cedf63303e216f4e05762e8d28c73f59a2693ca0c6",
+        "basis": "text",
+        "mentionsOrder": false,
+        "observedOn": "2026-10-19"
+      }
     },
     {
       "id": "caltrans-rail-and-mass-transportation",
@@ -90,7 +114,7 @@
       ],
       "lastCheckedOn": "2026-08-21",
       "lastCheckOutcome": "checked",
-      "note": "The page text contains no reference to N-7-26 or to an executive order."
+      "note": "The page text contains no reference to N-7-26 or to an executive order. On 2026-10-19 the same URL returned a “Content Not Available” page instead of program content, so it was not re-read and this check stands as of its date."
     },
     {
       "id": "governor-newsroom",
@@ -120,9 +144,15 @@
         "n-7-26-5",
         "n-7-26-6"
       ],
-      "lastCheckedOn": "2026-08-21",
+      "lastCheckedOn": "2026-10-19",
       "lastCheckOutcome": "checked",
-      "note": "The first page of the newsroom (entries dated August 17–21, 2026) contains no transit, Caltrans, or executive-order item. Only the first page was read."
+      "note": "The newsroom page now lists only entries from October 14, 2026, so the site's public posts feed was read instead. All 166 entries dated August 21 through October 19, 2026 were text-searched for N-7-26 and Order 5, and none cites the order, including the August 28 announcement of transportation project funding. The paginated newsroom pages themselves were not read.",
+      "lastObservation": {
+        "sha256": "26745e95229517c0841d7ed8ece4863d1eec56bce519ef6df445b3dd7c02172e",
+        "basis": "text",
+        "mentionsOrder": false,
+        "observedOn": "2026-10-19"
+      }
     },
     {
       "id": "chsra-newsroom",
@@ -134,7 +164,7 @@
       ],
       "lastCheckedOn": "2026-08-21",
       "lastCheckOutcome": "retrieval-failed",
-      "note": "The page returned a bot-protection interstitial instead of content on the sweep date, so it was not reviewed. Directive 4 should be treated as not yet reviewed at this source."
+      "note": "The page returned a bot-protection interstitial instead of content on the sweep date, so it was not reviewed. Directive 4 should be treated as not yet reviewed at this source. A second attempt on 2026-10-19 returned a bot-protection page again, so directive 4 is still not reviewed at this source."
     }
   ],
   "sweeps": [
@@ -154,6 +184,20 @@
         "ctc-2026-08-20-lpp-c-guidelines-adoption-item"
       ],
       "note": "First recorded sweep. Six of seven listed sources were read; the High-Speed Rail Authority newsroom could not be retrieved. Two Commission meeting book items citing Order 5 were added. No artifact citing N-7-26 was found for any other directive at the sources checked."
+    },
+    {
+      "sweptOn": "2026-10-19",
+      "sourceIds": [
+        "ctc-commission-meetings",
+        "ctc-workshops",
+        "calsta-press-releases",
+        "caltrans-news-releases",
+        "governor-newsroom"
+      ],
+      "addedEvidenceIds": [
+        "ctc-2026-08-03-sccp-north-hearing-presentation"
+      ],
+      "note": "Five of seven listed sources were read. The High-Speed Rail Authority newsroom returned a bot-protection page again and the Caltrans Rail and Mass Transportation URL returned a “Content Not Available” page, so neither was re-read and their last-check records are unchanged. One artifact citing Order 5 was added: the August 3 SCCP hearing presentation (page 13). No artifact citing N-7-26 was found for any other directive at the sources checked."
     }
   ],
   "evidence": [
@@ -332,6 +376,48 @@
         "This is a staff recommendation published before the August 20–21, 2026 meeting. It does not establish that Resolution G-26-64 was adopted, that the attached guidelines took effect, or that any other program named in directive 5 changed; an adoption record would be a separate artifact.",
         "The explicit citation appears in the staff memorandum's summary of changes. The attached guideline text (Attachment B) was not separately reviewed line by line for order citations in this record.",
         "The record covers only the Local Partnership Competitive Program state-guideline clause of directive 5. It does not address the SCCP (a separate book item), the Local Partnership Formulaic Program, ATP, TIRCP, or Caltrans's federal-funding-identification clause, and it does not establish completion, compliance, or agency performance."
+      ]
+    },
+    {
+      "id": "ctc-2026-08-03-sccp-north-hearing-presentation",
+      "title": "2026 North SCCP Hearing Presentation",
+      "titleOrigin": "publisher",
+      "publisher": "California Transportation Commission",
+      "evidenceType": "meeting-material",
+      "datedOn": "2026-08-03",
+      "dateKind": "scheduled-event",
+      "dateOrigin": "artifact-header",
+      "url": "https://catc.ca.gov/-/media/ctc-media/documents/programs/shopp/2026/final-2026-north-sccp-hearing-a11y.pdf",
+      "contextUrl": "https://catc.ca.gov/meetings-events/commission-meetings",
+      "retrievedOn": "2026-10-19",
+      "lastReviewedOn": "2026-10-19",
+      "sha256": "9d1c10a65ce5e6775b8c4829717c1d6ca570c9fd07d94d424387fdf42a6ca404",
+      "mediaType": "application/pdf",
+      "pageCount": 23,
+      "accessibility": {
+        "tagged": true,
+        "note": "PDF metadata reports a tagged document and text extraction was readable; this record does not make an accessibility conformance claim."
+      },
+      "editorialSummary": "The Commission's presentation for its August 3, 2026 northern hearing on the proposed 2026 Solutions for Congested Corridors Program guidelines includes a slide titled “Proposed updates per California Executive Order N-7-26.” It says that, as presented at the July 2026 workshop and pursuant to Order 5, the Accessibility evaluation criterion was amended to emphasize first- and last-mile connectivity to transit infrastructure, and it shows the revised criterion text.",
+      "directiveLinks": [
+        {
+          "directiveId": "n-7-26-5",
+          "relationship": "explicit-citation",
+          "excerpt": "pursuant to the June 26, 2026, Executive Order N-7-26 (Order #5), the Accessibility evaluation criterion was amended to emphasize the delivery of first- and last-mile connectivity to transit infrastructure.",
+          "locator": {
+            "pages": [
+              13
+            ],
+            "locations": [
+              "Page 13: slide “Proposed updates per California Executive Order N-7-26,” Accessibility criterion"
+            ]
+          }
+        }
+      ],
+      "limitations": [
+        "The presentation documents proposals shown at one hearing; it is not a final guideline, an adoption record, or a performance measure.",
+        "It addresses only the Accessibility criterion of the SCCP guidelines. It does not show whether that language appears in the guidelines the Commission later considered, and it does not address the other programs named in directive 5.",
+        "The date comes from the title slide (August 3, 2026); PDF metadata shows the file was created on July 31, 2026. The hearing recording listed beside the presentation on the Commission's meetings page was not reviewed."
       ]
     }
   ]

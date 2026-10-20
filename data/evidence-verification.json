@@ -1,10 +1,10 @@
 {
   "schemaVersion": "0.1.0",
-  "checkedOn": "2026-09-06",
+  "checkedOn": "2026-10-20",
   "records": [
     {
       "id": "ctc-2026-07-15-order-5-reference-material",
-      "checkedOn": "2026-09-06",
+      "checkedOn": "2026-10-20",
       "artifact": {
         "url": "https://catc.ca.gov/-/media/ctc-media/documents/programs/senate-bill-1/july-15-sccp-and-lpp-c-workshop-transit-eo-resource-material-002-a11y.pdf",
         "outcome": "intact",
@@ -24,7 +24,7 @@
     },
     {
       "id": "ctc-2026-07-15-order-5-workshop-presentation",
-      "checkedOn": "2026-09-06",
+      "checkedOn": "2026-10-20",
       "artifact": {
         "url": "https://catc.ca.gov/-/media/ctc-media/documents/programs/senate-bill-1/07-15-2026-2026-eluh-workshop-v-4-5-final-a11y.pdf",
         "outcome": "intact",
@@ -44,7 +44,7 @@
     },
     {
       "id": "ctc-2026-08-20-sccp-guidelines-adoption-item",
-      "checkedOn": "2026-09-06",
+      "checkedOn": "2026-10-20",
       "artifact": {
         "url": "https://catc.ca.gov/-/media/ctc-media/documents/ctc-meetings/2026/2026-08/19-4-6-a11y.pdf",
         "outcome": "intact",
@@ -64,7 +64,7 @@
     },
     {
       "id": "ctc-2026-08-20-lpp-c-guidelines-adoption-item",
-      "checkedOn": "2026-09-06",
+      "checkedOn": "2026-10-20",
       "artifact": {
         "url": "https://catc.ca.gov/-/media/ctc-media/documents/ctc-meetings/2026/2026-08/24-4-10-a11y.pdf",
         "outcome": "intact",
@@ -80,6 +80,26 @@
         "detail": "answered HTTP 200",
         "httpStatus": 200,
         "servedFrom": "https://catc.ca.gov/meetings-events/commission-meetings/2026-08-20-21"
+      }
+    },
+    {
+      "id": "ctc-2026-08-03-sccp-north-hearing-presentation",
+      "checkedOn": "2026-10-20",
+      "artifact": {
+        "url": "https://catc.ca.gov/-/media/ctc-media/documents/programs/shopp/2026/final-2026-north-sccp-hearing-a11y.pdf",
+        "outcome": "intact",
+        "detail": "bytes match the reviewed artifact",
+        "httpStatus": 200,
+        "servedFrom": "https://catc.ca.gov/-/media/ctc-media/documents/programs/shopp/2026/final-2026-north-sccp-hearing-a11y.pdf",
+        "observedSha256": "9d1c10a65ce5e6775b8c4829717c1d6ca570c9fd07d94d424387fdf42a6ca404",
+        "observedMediaType": "application/pdf"
+      },
+      "context": {
+        "url": "https://catc.ca.gov/meetings-events/commission-meetings",
+        "outcome": "reachable",
+        "detail": "answered HTTP 200",
+        "httpStatus": 200,
+        "servedFrom": "https://catc.ca.gov/meetings-events/commission-meetings"
       }
     }
   ]

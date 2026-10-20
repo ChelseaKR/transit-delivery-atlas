@@ -6,7 +6,7 @@
   "description": "An independent, unofficial crosswalk of a signed California transit executive order: its directive units, the organizations it names, the public artifacts reviewed against them, and a separately labeled analytical layer. Source, evidence, analysis and context are separate layers and never blur; every column name says which layer it belongs to.",
   "homepage": "https://transit.chelseakr.com/data",
   "version": "0.3.0",
-  "created": "2026-08-21",
+  "created": "2026-10-19",
   "keywords": [
     "california",
     "transit",
@@ -23,7 +23,7 @@
   ],
   "licenseNotes": "CC BY 4.0 covers this project's original analytical content and the analytical columns derived from it. Source excerpts, government publications, agency names and other third-party material are NOT relicensed by this notice and remain under their own terms. See CONTENT-LICENSE.md.",
   "buildCommit": "https://transit.chelseakr.com/version.json",
-  "dataReviewedThrough": "2026-08-21",
+  "dataReviewedThrough": "2026-10-19",
   "sources": [
     {
       "title": "Executive Order N-7-26",

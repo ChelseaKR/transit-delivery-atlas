@@ -15,7 +15,7 @@
     "foaf:name": "Transit Delivery Atlas contributors"
   },
   "dct:issued": "2026-07-12",
-  "dct:modified": "2026-08-21",
+  "dct:modified": "2026-10-19",
   "dct:license": "https://creativecommons.org/licenses/by/4.0/legalcode",
   "dct:rights": "CC BY 4.0 covers this project's original analytical content and the analytical columns derived from it. Source excerpts, government publications, agency names and other third-party material are NOT relicensed by this notice and remain under their own terms. See CONTENT-LICENSE.md.",
   "dct:accrualPeriodicity": "The sources listed in reviewSources are re-checked on or before nextReviewOn, and again in the week after the 2026-10-24 calculated planning date shared by directives 1(a) through 1(g). Each sweep is recorded in sweeps whether or not it adds a record. A lapsed nextReviewOn is published as lapsed and blocks a release after the same grace window the context watchlist uses.",
